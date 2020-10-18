@@ -11,6 +11,7 @@ namespace dotNet5781_00_6671_6650
         static void Main(string[] args)
         {
             Welcome6671();
+            Welcome6650();
             Console.ReadKey();
 
         }
