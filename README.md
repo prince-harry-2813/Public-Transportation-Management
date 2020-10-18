@@ -1,2 +1,5 @@
 # dotNet_5781_6650
-hello motherfuckers
+
+Wellcom to our fantastic project 
+by Arie Rosental & Yossef Steinmetz 
+we are happy to share our work 
