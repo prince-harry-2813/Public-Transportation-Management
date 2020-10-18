@@ -13,7 +13,7 @@ namespace dotNet5781_00_6671_6650
         /// </summary>
         static partial void Welcome6650()
         {
-            Console.WriteLine("Trobles in haven ");
+            Console.WriteLine("Hey i'm here too");
         }
     }
 }
