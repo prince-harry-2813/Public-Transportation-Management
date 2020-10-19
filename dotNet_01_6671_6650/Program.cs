@@ -13,8 +13,15 @@ namespace dotNet_01_6671_6650
         /// User option selector
         /// </summary>
         private static int option = -1;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static List<Bus> BusList { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool Flag { get; set; } = true;
 
 
@@ -55,6 +62,18 @@ namespace dotNet_01_6671_6650
            
         }
 
+        /// <summary>
+        /// Write Method that willl display bus data licence numbe with range of km since last treatment
+        /// </summary>
+        public static void DispalyBusesInfo()
+        {
+
+        }
+
+        /// <summary>
+        /// Progarm entry point
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             do
@@ -70,6 +89,7 @@ namespace dotNet_01_6671_6650
                 if (option == -1)
                 {
                     Console.WriteLine("Wrong input, please try again");
+                    continue;
                 }
 
 
