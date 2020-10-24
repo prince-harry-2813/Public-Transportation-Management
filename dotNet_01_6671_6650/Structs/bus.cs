@@ -53,9 +53,9 @@ namespace dotNet_01_6671_6650.Structs
         /// <param name="firstRegistration"></param>
         /// <param name="fuel"></param>
         /// <param name="maintenence"></param>
-        public Bus(int licensNumber, DateTime firstRegistration, int fuel = 0, int maintenence = 0, int totalKM = 0)
+        public Bus(string licensNumber, DateTime firstRegistration, int fuel = 0, int maintenence = 0, int totalKM = 0)
         {
-            LicensNmuber = licensNumber;
+            SetLicenseNumber(licensNumber);
             FirstRegistration = firstRegistration;
             Fuel = fuel;
             Maintenance = maintenence;
@@ -78,7 +78,7 @@ namespace dotNet_01_6671_6650.Structs
         /// In case There isn't enough Gas or range km since last treament return false
         /// </summary>
         /// <param name="rideRange"></param>
-        /// <returns></returns>
+        /// <returns>bool type</returns>
         public bool CanTakeRide(int rideRange)
         {
             if (rideRange <= Fuel && Maintenance + rideRange < 20000)
