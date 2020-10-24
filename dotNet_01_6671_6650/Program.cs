@@ -35,7 +35,10 @@ namespace dotNet_01_6671_6650
         /// <param name="totalKM"></param>
         public static void InsertBus(int licensNumber, DateTime firstRegistration, int fuel = 0, int maintenence = 0, int totalKM = 0)
         {
+
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
+            if (BusList.Exists((b) => b.LicensNmuber == bus.LicensNmuber))
+                return;
             BusList.Add(bus);
         }
 
@@ -46,7 +49,7 @@ namespace dotNet_01_6671_6650
         /// <param name="licensNumber"></param>
         /// <param name="rideRange"></param>
         /// <returns></returns>
-        public static Bus ChooseBus(int licensNumber ,  int rideRange)
+        public static Bus ChooseBus(int licensNumber, int rideRange)
         {
             return (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber && b.CanTakeRide(rideRange));
         }
@@ -59,7 +62,7 @@ namespace dotNet_01_6671_6650
         public static void RefuelAndMaintainBus(int licensNumber)
         {
             Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
-           
+
         }
 
         /// <summary>
@@ -86,12 +89,33 @@ namespace dotNet_01_6671_6650
                                      
                                      0 : Exit");
                 int.TryParse(Console.ReadLine(), out option);
-                if (option == -1)
-                {
-                    Console.WriteLine("Wrong input, please try again");
-                    continue;
-                }
 
+
+
+
+
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("Please enter details for the new vehicle");
+                        InsertBus(int.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()));
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 0:
+                        Console.WriteLine("Good Bye");
+                        Flag = false;
+                        break;
+                    default:
+                        Flag = true;
+                        Console.WriteLine("Wrong input, please try again");
+
+                        break;
+                }
 
             } while (Flag);
         }
