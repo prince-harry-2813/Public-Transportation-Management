@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +15,11 @@ namespace dotNet_01_6671_6650
         /// </summary>
         private static int option = -1;
 
+        public static Random random = new Random(DateTime.Now.Millisecond);
         /// <summary>
         /// buses list of main program
         /// </summary>
-        public static List<Bus> BusList { get; set; }
+        public static List<Bus> BusList { get; set; } = new List<Bus>();
 
         /// <summary>
         /// Boolian to exit out of the program 
@@ -33,7 +35,7 @@ namespace dotNet_01_6671_6650
         /// <param name="fuel"></param>
         /// <param name="maintenence"></param>
         /// <param name="totalKM"></param>
-        public static void InsertBus(int licensNumber, DateTime firstRegistration, int fuel = 0, int maintenence = 0, int totalKM = 0)
+        public static void InsertBus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
         {
 
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
@@ -49,9 +51,20 @@ namespace dotNet_01_6671_6650
         /// <param name="licensNumber"></param>
         /// <param name="rideRange"></param>
         /// <returns></returns>
-        public static Bus ChooseBus(int licensNumber, int rideRange)
+        public static void ChooseBus(int licensNumber, int rideRange)
         {
-            return (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber && b.CanTakeRide(rideRange));
+            var a = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
+            if (a == null)
+            {
+                Console.WriteLine("bus dosen't exsist");
+            }
+            else if (a.CanTakeRide(rideRange))
+            {
+                a.updateRide(rideRange);
+
+            }
+            else
+                return;
         }
 
 
@@ -97,10 +110,15 @@ namespace dotNet_01_6671_6650
                 switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Please enter details for the new vehicle");
-                        InsertBus(int.Parse(Console.ReadLine()), DateTime.Parse(Console.ReadLine()));
+                        Console.WriteLine("Please enter licens number for the new vehicle");
+                        var newLicens = Console.ReadLine();
+                        Console.WriteLine("Please enter date of registration (dd/mm/yyyy):");
+                        var newDateReg = Console.ReadLine();
+                        InsertBus(newLicens, DateTime.ParseExact(newDateReg, "dd/MM/yyyy", null));
                         break;
                     case 2:
+                        Console.WriteLine("Please enter the licens number of the vehicle");
+                        ChooseBus(int.Parse(Console.ReadLine()), random.Next(1, 1200));
                         break;
                     case 3:
                         break;

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNet5781_00_6671_6650", "dotNet5781_00_6671_6650\dotNet5781_00_6671_6650.csproj", "{4BFF8915-59BF-401D-98F9-1EA16EE764DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNet_01_6671_6650", "dotNet_01_6671_6650\dotNet_01_6671_6650.csproj", "{E5415C23-5E99-47F4-9B45-B915B3270BE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotNet5781_01_6671_6650", "dotNet_01_6671_6650\dotNet5781_01_6671_6650.csproj", "{E5415C23-5E99-47F4-9B45-B915B3270BE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

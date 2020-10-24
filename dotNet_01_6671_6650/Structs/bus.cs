@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Xceed.Wpf.Toolkit;
 
 namespace dotNet_01_6671_6650.Structs
 {
@@ -22,14 +16,14 @@ namespace dotNet_01_6671_6650.Structs
         /// tow option to registration
         /// 7 or 8 digits
         /// </summary>
-        public int LicensNmuber { get; private set; } = 0;
+        public int LicensNmuber { get; private set; } =0;
         /// <summary>
         /// Fuel status
         /// between 0 - 1200 
         /// </summary>
         public int Fuel { get; private set; } = 0;
         /// <summary>
-        /// KM since last tritment
+        /// KM since last tritment or travel
         /// between 0 - 20,000
         /// </summary>
         public int Maintenance { get; private set; } = 0;
@@ -62,6 +56,12 @@ namespace dotNet_01_6671_6650.Structs
             TotalKM = totalKM;
         }
 
+        public void updateRide(int km)
+        {
+            SetTotalKM(km);
+            Fuel -= km;
+            Maintenance += km;
+        }
         /// <summary>
         /// Sets the bus toal KM and evoid decreasing its value 
         /// </summary>
@@ -85,6 +85,7 @@ namespace dotNet_01_6671_6650.Structs
             {
                 return true;
             }
+            Console.WriteLine("This bus can't perform the ride");
             return false;
         }
 
@@ -108,7 +109,7 @@ namespace dotNet_01_6671_6650.Structs
 
         /// <summary>
         /// Sets bus licence number and checks if its between 7 - 8 digits 
-        /// and return flase if the number 
+        /// and return false if the number incorrect 
         /// </summary>
         public bool SetLicenseNumber(string licenseNumber)
         {
