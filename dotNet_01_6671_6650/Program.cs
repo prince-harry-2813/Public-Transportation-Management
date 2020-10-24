@@ -15,12 +15,12 @@ namespace dotNet_01_6671_6650
         private static int option = -1;
 
         /// <summary>
-        /// 
+        /// buses list of main program
         /// </summary>
         public static List<Bus> BusList { get; set; }
 
         /// <summary>
-        /// 
+        /// Boolian to exit out of the program 
         /// </summary>
         public static bool Flag { get; set; } = true;
 
@@ -59,7 +59,7 @@ namespace dotNet_01_6671_6650
         public static void RefuelAndMaintainBus(int licensNumber)
         {
             Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
-           
+            bus.ReFuelBus();
         }
 
         /// <summary>
@@ -92,6 +92,11 @@ namespace dotNet_01_6671_6650
                     continue;
                 }
 
+                switch (option)
+                {
+                    default:
+                        break;
+                }
 
             } while (Flag);
         }
