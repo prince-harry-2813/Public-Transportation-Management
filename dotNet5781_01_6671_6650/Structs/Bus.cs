@@ -4,7 +4,7 @@ using System.Text;
 
 namespace dotNet5781_01_6671_6650.Structs
 {
-    public class Bus
+    public class Bus : IComparable<Bus>
     {
         /// <summary>
         /// Date of last treatment
@@ -60,7 +60,6 @@ namespace dotNet5781_01_6671_6650.Structs
         {
             SetTotalKM(km);
             Fuel -= km;
-            Maintenance += km;
         }
         /// <summary>
         /// Sets the bus toal KM and evoid decreasing its value 
@@ -144,9 +143,9 @@ namespace dotNet5781_01_6671_6650.Structs
         /// Gets th ebu snumber and display it with wite space and seperators
         /// </summary>
         /// <param name="licenceNumber"></param>
-        public void DisplayBusNumber(int licenceNumber)
+        public string DisplayBusNumber()
         {
-            string number = licenceNumber.ToString();
+            string number = this.LicensNmuber;
             StringBuilder displayNumber = new StringBuilder(number.Length * 2);
 
             if (number.Length == 8)
@@ -157,7 +156,7 @@ namespace dotNet5781_01_6671_6650.Structs
 
                     if (i == 2 || i == 4)
                     {
-                        displayNumber.Append(" - ");
+                        displayNumber.Append("-");
                     }
                 }
             }
@@ -170,12 +169,27 @@ namespace dotNet5781_01_6671_6650.Structs
 
                     if (i == 1 || i == 4)
                     {
-                        displayNumber.Append(" - ");
+                        displayNumber.Append("-");
                     }
                 }
             }
 
-            Console.WriteLine(displayNumber);
+            return (displayNumber.ToString());
+        }
+
+        public int CompareTo(Bus other)
+        {
+
+            if (int.Parse(other.LicensNmuber) == int.Parse(this.LicensNmuber))
+            {
+                return 0;
+            }
+            else if
+                (int.Parse(other.LicensNmuber) < int.Parse(this.LicensNmuber))
+            {
+                return 1;
+            }
+            else return -1;
         }
     }
 }

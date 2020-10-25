@@ -74,7 +74,7 @@ namespace dotNet5781_01_6671_6650
         /// <param name="licensNumber"></param>
         public static void RefuelAndMaintainBus(string licensNumber)
         {
-            Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
+            Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber).FirstOrDefault();
             if (bus == null)
             {
                 Console.WriteLine("bus dosen't exsist");
@@ -87,7 +87,7 @@ namespace dotNet5781_01_6671_6650
                     case "1" :bus.ReFuelBus();
                         Console.WriteLine("Refuel complete");
                         break;
-                    case "2":bus.MaintaineBus();
+                    case "2": bus.MaintaineBus();
                         Console.WriteLine("maintaince complete");
                         break;
                      default:
@@ -99,11 +99,20 @@ namespace dotNet5781_01_6671_6650
         }
 
         /// <summary>
-        /// Write Method that willl display bus data licence numbe with range of km since last treatment
+        /// Write Method that willl display bus data licence number with range of km since last treatment
         /// </summary>
         public static void DispalyBusesInfo()
         {
-
+            if (BusList.Count() != 0)
+            {
+                BusList.Sort();
+                foreach (var item in BusList)
+                {
+                    Console.WriteLine($"Bus number: {item.DisplayBusNumber()}. The last treatment was at {item.Maintenance}, Since then the bus drove for {item.TotalKM - item.Maintenance}-KM");
+                }
+            }
+            else
+                Console.WriteLine("there is no registred buses");
         }
 
         /// <summary>
@@ -145,9 +154,12 @@ namespace dotNet5781_01_6671_6650
                         RefuelAndMaintainBus(Console.ReadLine());
                         break;
                     case 4:
+                        Console.WriteLine("View info:");
+                        DispalyBusesInfo();
                         break;
                     case 0:
                         Console.WriteLine("Good Bye");
+                        Console.ReadKey();
                         Flag = false;
                         break;
                     default:
