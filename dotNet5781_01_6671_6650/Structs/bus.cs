@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace dotNet_01_6671_6650.Structs
+namespace dotNet5781_01_6671_6650.Structs
 {
     public class Bus
     {
@@ -16,7 +16,7 @@ namespace dotNet_01_6671_6650.Structs
         /// tow option to registration
         /// 7 or 8 digits
         /// </summary>
-        public int LicensNmuber { get; private set; } =0;
+        public int LicensNmuber { get; private set; } = 0;
         /// <summary>
         /// Fuel status
         /// between 0 - 1200 
@@ -125,7 +125,7 @@ namespace dotNet_01_6671_6650.Structs
             if (number.Length > 8)
             {
                 Console.WriteLine("Licence Number too long \n" +
-                    "Licence can contain between 7 - 8 digits no more or no less", " ", System.Windows.MessageBoxButton.OK);
+                    "Licence can contain between 7 - 8 digits no more or no less", " ");
                 return false;
             }
 

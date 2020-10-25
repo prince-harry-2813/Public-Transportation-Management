@@ -1,4 +1,4 @@
-﻿using dotNet_01_6671_6650.Structs;
+﻿using dotNet5781_01_6671_6650.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotNet_01_6671_6650
+namespace dotNet5781_01_6671_6650
 {
     class Program
     {
