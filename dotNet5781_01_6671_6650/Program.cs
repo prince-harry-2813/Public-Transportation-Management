@@ -51,9 +51,9 @@ namespace dotNet5781_01_6671_6650
         /// <param name="licensNumber"></param>
         /// <param name="rideRange"></param>
         /// <returns></returns>
-        public static void ChooseBus(int licensNumber, int rideRange)
+        public static void ChooseBus(string licensNumber, int rideRange)
         {
-            var a = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
+            var a = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber).FirstOrDefault();
             if (a == null)
             {
                 Console.WriteLine("bus dosen't exsist");
@@ -72,10 +72,30 @@ namespace dotNet5781_01_6671_6650
         /// 
         /// </summary>
         /// <param name="licensNumber"></param>
-        public static void RefuelAndMaintainBus(int licensNumber)
+        public static void RefuelAndMaintainBus(string licensNumber)
         {
             Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber);
-            bus.ReFuelBus();
+            if (bus == null)
+            {
+                Console.WriteLine("bus dosen't exsist");
+            }
+            else
+            {
+                Console.WriteLine("Choose 1 for refuel or 2 for main maintaince");
+                switch (Console.ReadLine())
+                {
+                    case "1" :bus.ReFuelBus();
+                        Console.WriteLine("Refuel complete");
+                        break;
+                    case "2":bus.MaintaineBus();
+                        Console.WriteLine("maintaince complete");
+                        break;
+                     default:
+                        Console.WriteLine("ERROR");
+                        break;
+                }
+            }
+                
         }
 
         /// <summary>
@@ -118,9 +138,11 @@ namespace dotNet5781_01_6671_6650
                         break;
                     case 2:
                         Console.WriteLine("Please enter the licens number of the vehicle");
-                        ChooseBus(int.Parse(Console.ReadLine()), random.Next(1, 1200));
+                        ChooseBus(Console.ReadLine(), random.Next(1, 1200));
                         break;
                     case 3:
+                        Console.WriteLine("Please enter the licens number of the vehicle");
+                        RefuelAndMaintainBus(Console.ReadLine());
                         break;
                     case 4:
                         break;
