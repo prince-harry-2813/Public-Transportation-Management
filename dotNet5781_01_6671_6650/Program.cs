@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_6671_6650
 {
+    
     class Program
     {
         /// <summary>
         /// User option selector
         /// </summary>
-        private static int option = -1;
+        private static int Option = -1;
 
-        public static Random random = new Random(DateTime.Now.Millisecond);
+        public static Random Random = new Random(DateTime.Now.Millisecond);
         /// <summary>
         /// buses list of main program
         /// </summary>
         public static List<Bus> BusList { get; set; } = new List<Bus>();
 
         /// <summary>
-        /// Boolian to exit out of the program 
+        /// Boolean to exit out of the program 
         /// </summary>
         public static bool Flag { get; set; } = true;
 
 
         /// <summary>
-        /// Insert new sequence of a bus by licence number and first registration by mendetory and optinal properties
+        /// Insert new instance of a bus by license number and first registration by mandatory and optional properties
         /// </summary>
         /// <param name="licensNumber"></param>
         /// <param name="firstRegistration"></param>
@@ -39,13 +40,13 @@ namespace dotNet5781_01_6671_6650
         {
 
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
-            if (BusList.Exists((b) => b.LicensNmuber == bus.LicensNmuber))
+            if (BusList.Exists((b) => b.LicensNmuber == bus.LicensNmuber)||licensNumber=="")
                 return;
             BusList.Add(bus);
         }
 
         /// <summary>
-        /// Return Instance of a bus incase its exsist and can take the ride 
+        /// Return Instance of a bus in case its exist and can take the ride 
         /// else return false
         /// </summary>
         /// <param name="licensNumber"></param>
@@ -56,20 +57,20 @@ namespace dotNet5781_01_6671_6650
             var a = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber).FirstOrDefault();
             if (a == null)
             {
-                Console.WriteLine("bus dosen't exsist");
+                Console.WriteLine("bus doesn't exist");
             }
             else if (a.CanTakeRide(rideRange))
             {
-                a.updateRide(rideRange);
+                a.UpdateRide(rideRange);
 
             }
             else
                 return;
         }
-
+        
 
         /// <summary>
-        /// 
+        /// Method to handle with refuel and maintenance request.
         /// </summary>
         /// <param name="licensNumber"></param>
         public static void RefuelAndMaintainBus(string licensNumber)
@@ -77,18 +78,18 @@ namespace dotNet5781_01_6671_6650
             Bus bus = (Bus)BusList.Where((b) => b.LicensNmuber == licensNumber).FirstOrDefault();
             if (bus == null)
             {
-                Console.WriteLine("bus dosen't exsist");
+                Console.WriteLine("bus doesn't exist");
             }
             else
             {
-                Console.WriteLine("Choose 1 for refuel or 2 for main maintaince");
+                Console.WriteLine("Choose 1 for refuel or 2 for main maintenance");
                 switch (Console.ReadLine())
                 {
                     case "1" :bus.ReFuelBus();
                         Console.WriteLine("Refuel complete");
                         break;
                     case "2": bus.MaintaineBus();
-                        Console.WriteLine("maintaince complete");
+                        Console.WriteLine("maintenance complete");
                         break;
                      default:
                         Console.WriteLine("ERROR");
@@ -99,7 +100,7 @@ namespace dotNet5781_01_6671_6650
         }
 
         /// <summary>
-        /// Write Method that willl display bus data licence number with range of km since last treatment
+        /// Write Method that will display bus data license number with range of km since last treatment
         /// </summary>
         public static void DispalyBusesInfo()
         {
@@ -108,49 +109,50 @@ namespace dotNet5781_01_6671_6650
                 BusList.Sort();
                 foreach (var item in BusList)
                 {
-                    Console.WriteLine($"Bus number: {item.DisplayBusNumber()}. The last treatment was at {item.Maintenance}, Since then the bus drove for {item.TotalKM - item.Maintenance}-KM");
+                    Console.WriteLine($"Bus number: {item.DisplayBusNumber()}. The last treatment was at {item.Maintenance}-KM" +
+                        $", Since then the bus drove for {item.TotalKM - item.Maintenance}-KM");
                 }
             }
             else
-                Console.WriteLine("there is no registred buses");
+                Console.WriteLine("there is no registered buses");
         }
 
         /// <summary>
-        /// Progarm entry point
+        /// Program entry point
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
             do
             {
-                Console.WriteLine(@"PLease Choose An Oparation :
+                Console.WriteLine(@"PLease Choose An Operation :
                                      1 : Register new Bus
                                      2 : Choose a Bus for a ride 
-                                     3 : Refule or mantainance
+                                     3 : Refuel or maintenance
                                      4 : Display Buses KM range since last treatment
                                      
                                      0 : Exit");
-                int.TryParse(Console.ReadLine(), out option);
+                int.TryParse(Console.ReadLine(), out Option);
 
 
 
 
 
-                switch (option)
+                switch (Option)
                 {
                     case 1:
-                        Console.WriteLine("Please enter licens number for the new vehicle");
+                        Console.WriteLine("Please enter license number for the new vehicle");
                         var newLicens = Console.ReadLine();
                         Console.WriteLine("Please enter date of registration (dd/mm/yyyy):");
                         var newDateReg = Console.ReadLine();
                         InsertBus(newLicens, DateTime.ParseExact(newDateReg, "dd/MM/yyyy", null));
                         break;
                     case 2:
-                        Console.WriteLine("Please enter the licens number of the vehicle");
-                        ChooseBus(Console.ReadLine(), random.Next(1, 1200));
+                        Console.WriteLine("Please enter the license number of the vehicle");
+                        ChooseBus(Console.ReadLine(), Random.Next(1, 1200));
                         break;
                     case 3:
-                        Console.WriteLine("Please enter the licens number of the vehicle");
+                        Console.WriteLine("Please enter the license number of the vehicle");
                         RefuelAndMaintainBus(Console.ReadLine());
                         break;
                     case 4:
@@ -163,7 +165,7 @@ namespace dotNet5781_01_6671_6650
                         Flag = false;
                         break;
                     default:
-                        Flag = true;
+                        
                         Console.WriteLine("Wrong input, please try again");
 
                         break;

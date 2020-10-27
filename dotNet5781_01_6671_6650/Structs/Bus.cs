@@ -12,7 +12,7 @@ namespace dotNet5781_01_6671_6650.Structs
         /// </summary>
         public DateTime LastTreatment { get; private set; }
         /// <summary>
-        /// Bus key
+        /// Bus key,
         /// tow option to registration
         /// 7 or 8 digits
         /// </summary>
@@ -23,13 +23,13 @@ namespace dotNet5781_01_6671_6650.Structs
         /// </summary>
         public int Fuel { get; private set; } = 1200;
         /// <summary>
-        /// KM since last tritment or travel
+        /// KM since last treatment or travel
         /// between 0 - 20,000
         /// </summary>
         public int Maintenance { get; private set; } = 0;
         /// <summary>
         /// Sum of all KM since first travel
-        /// can't bre reduce
+        /// can't re reduce
         /// </summary>
         public int TotalKM { get; private set; } = 0;
         /// <summary>
@@ -40,29 +40,33 @@ namespace dotNet5781_01_6671_6650.Structs
         //
         //
         /// <summary>
-        /// Ctor that accept at least tow params for licens and date
+        /// Ctor that accept at least tow param's for license and date
         /// if there is no other arguments initial default values.
         /// </summary>
         /// <param name="licensNumber"></param>
         /// <param name="firstRegistration"></param>
         /// <param name="fuel"></param>
         /// <param name="maintenence"></param>
-        public Bus(string licensNumber, DateTime firstRegistration, int fuel = 0, int maintenence = 0, int totalKM = 0)
+        public Bus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
         {
-            SetLicenseNumber(licensNumber);
             FirstRegistration = firstRegistration;
+            SetLicenseNumber(licensNumber);
             Fuel = fuel;
             Maintenance = maintenence;
             TotalKM = totalKM;
+            LastTreatment = firstRegistration;
         }
-
-        public void updateRide(int km)
+        /// <summary>
+        /// If bus can take a ride updating the data of the vehicle
+        /// </summary>
+        /// <param name="km">KM to ride</param>
+        public void UpdateRide(int km)
         {
             SetTotalKM(km);
             Fuel -= km;
         }
         /// <summary>
-        /// Sets the bus toal KM and evoid decreasing its value 
+        /// Sets the bus total KM and avoid decreasing its value 
         /// </summary>
         /// <param name="newKM"></param>
         public void SetTotalKM(int newKM)
@@ -74,10 +78,10 @@ namespace dotNet5781_01_6671_6650.Structs
 
 
         /// <summary>
-        /// In case There isn't enough Gas or range km since last treament return false
+        /// In case There isn't enough Gas or range km since last treatment return false
         /// </summary>
         /// <param name="rideRange"></param>
-        /// <returns>bool type</returns>
+        /// <returns> </returns>
         public bool CanTakeRide(int rideRange)
         {
             if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) < 20000)
@@ -107,7 +111,7 @@ namespace dotNet5781_01_6671_6650.Structs
         }
 
         /// <summary>
-        /// Sets bus licence number and checks if its between 7 - 8 digits 
+        /// Sets bus license number and checks if its between 7 - 8 digits 
         /// and return false if the number incorrect 
         /// </summary>
         public bool SetLicenseNumber(string licenseNumber)
@@ -123,24 +127,30 @@ namespace dotNet5781_01_6671_6650.Structs
 
             if (number.Length > 8)
             {
-                Console.WriteLine("Licence Number too long \n" +
-                    "Licence can contain between 7 - 8 digits no more or no less", " ");
+                Console.WriteLine("License Number too long \n" +
+                    "License can contain between 7 - 8 digits no more or no less", " ");
                 return false;
             }
 
             if (number.Length < 7)
             {
-                Console.WriteLine("Licence Number too short \n" +
-                   "Licence can contain between 7 - 8 digits no more or no less");
+                Console.WriteLine("License Number too short \n" +
+                   "License can contain between 7 - 8 digits no more or no less");
                 return false;
             }
+            if ((number.Length == 7 && this.FirstRegistration.Year < 2018) || (number.Length == 8 && this.FirstRegistration.Year >= 2018))
+                LicensNmuber = number.ToString();
+            else
+            {
+                Console.WriteLine("Car license doesn't match to year of registered");
+                return false;
 
-            LicensNmuber = number.ToString();
+            }
             return true;
         }
 
         /// <summary>
-        /// Gets th ebu snumber and display it with wite space and seperators
+        /// Gets the bus number and display it with separators
         /// </summary>
         /// <param name="licenceNumber"></param>
         public string DisplayBusNumber()
@@ -176,7 +186,11 @@ namespace dotNet5781_01_6671_6650.Structs
 
             return (displayNumber.ToString());
         }
-
+        /// <summary>
+        /// implement of IComparable for sort method
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Bus other)
         {
 
