@@ -84,7 +84,8 @@ namespace dotNet5781_01_6671_6650.Structs
         /// <returns> </returns>
         public bool CanTakeRide(int rideRange)
         {
-            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) < 20000)
+            TimeSpan span = DateTime.Now - this.LastTreatment;
+            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) < 20000 && span.Days < 365)
             {
                 return true;
             }
