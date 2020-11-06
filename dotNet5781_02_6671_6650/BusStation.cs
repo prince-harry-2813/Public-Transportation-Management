@@ -8,7 +8,7 @@ namespace dotNet5781_02_6671_6650
 {
     abstract class BusStation
     {
-        protected int stationCode { get; private set; } = 0;
+        internal int stationCode { get; private set; } = 0;
         string adress { get; set; } 
         double latitude { get; set; }
         double longitude { get; set; }
