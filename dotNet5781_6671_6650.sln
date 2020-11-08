@@ -12,21 +12,35 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Debug|x64.ActiveCfg = Debug|x64
+		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Debug|x64.Build.0 = Debug|x64
 		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Release|x64.ActiveCfg = Release|x64
+		{4BFF8915-59BF-401D-98F9-1EA16EE764DE}.Release|x64.Build.0 = Release|x64
 		{E350703F-58EF-4B95-8799-B035EF273EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E350703F-58EF-4B95-8799-B035EF273EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E350703F-58EF-4B95-8799-B035EF273EA1}.Debug|x64.ActiveCfg = Debug|x64
+		{E350703F-58EF-4B95-8799-B035EF273EA1}.Debug|x64.Build.0 = Debug|x64
 		{E350703F-58EF-4B95-8799-B035EF273EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E350703F-58EF-4B95-8799-B035EF273EA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E350703F-58EF-4B95-8799-B035EF273EA1}.Release|x64.ActiveCfg = Release|x64
+		{E350703F-58EF-4B95-8799-B035EF273EA1}.Release|x64.Build.0 = Release|x64
 		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Debug|x64.ActiveCfg = Debug|x64
+		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Debug|x64.Build.0 = Debug|x64
 		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Release|x64.ActiveCfg = Release|x64
+		{5D696ED7-2766-4CDE-B2E1-116C49A928F8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -33,7 +33,7 @@ namespace dotNet5781_02_6671_6650
             get
             {
 
-                return this.busCollection.FirstOrDefault(BusLine => BusLine.lineKey == i);
+                return this.busCollection.FirstOrDefault(BusLine => BusLine.LineKey == i);
             }
         }
     }
