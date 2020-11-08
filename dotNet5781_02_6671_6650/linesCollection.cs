@@ -27,13 +27,11 @@ namespace dotNet5781_02_6671_6650
         }
 
         // Define the indexer to allow client code to use [] notation.
-        public BusLine this[int i]
+        public List <BusLine> this[int i]
         {
-
             get
             {
-
-                return this.busCollection.FirstOrDefault(BusLine => BusLine.lineKey == i);
+                return this.busCollection.FindAll(BusLine => BusLine.lineKey == i);
             }
         }
     }
