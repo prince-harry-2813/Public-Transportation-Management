@@ -22,38 +22,40 @@ namespace dotNet5781_02_6671_6650
     /// </summary>
    internal class BusLine : IComparable
     {
+        public BusLine(int lineKey, int firstStop, int lastStop, Area area = Area.General)
+        {
+            LineKey = lineKey;
+            FirstStation = new BusStop(firstStop);
+        }
         internal  int LineKey { get; set; }
 
         /// <summary>
-        /// First station of bust route must open th estation line
+        /// First station of bust route must open the station line
         /// </summary>
         public BusStop FirstStation { get; set; }
 
         /// <summary>
-        /// Last staionn of bus route must be the depote
+        /// Last station of bus route must be the 
         /// </summary>
         public BusStop LastStaion { get; set; }
+      
         /// <summary>
-        /// Enumuartion
+        /// Enumeration of services area
         /// </summary>
         public Area Area { get; set; } = Area.General;
 
 
         /// <summary>
-        /// Bus stops line firt and last one must be respectevlu with first/last stop properties
+        /// Bus stops line first and last one must be respectively with first/last stop properties
         /// </summary>
         public List<BusStop> LineStations = new List<BusStop>();
         /// <summary>
         /// Add stop to route of the line 
         /// </summary>
         /// <param name="stop"></param>
-        public void addStop(BusStop stop)
+        public void AddStop(BusStop stop)
         {
-            if (stop == FirstStation || stop == LastStaion)
-            {
-                Console.WriteLine("First and last stop can't be removed");
-                return;
-            }
+           
             LineStations.Add(stop);
         }
         /// <summary>
@@ -67,20 +69,20 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// check if the stop in the route of this line
         /// </summary>
-        /// <returns>false if station doesnt exsist</returns>
-        public bool isExist(int stationCode)
+        /// <returns>false if station doesn't exist in list</returns>
+        public bool IsExist(int stationCode)
         {
             return LineStations.Any((l) => l.StationCode == stationCode);
         }
         /// <summary>
         /// calculate the distance between tow stations (Not necessarily close)
         /// </summary>
-        /// <param name="current">Left stop to evalutae</param>
+        /// <param name="current">Left stop to evaluate</param>
         /// <param name="other"> right stop to evaluate </param>
         /// <returns> left - right</returns>
         public double calculateDistance(BusStop current , BusStop other)
         {
-            return current.GetDistance(other);
+            return 0.0;
         }
         /// <summary>
         /// Calculate time of traveling from station to other(Not necessarily close)
@@ -97,7 +99,7 @@ namespace dotNet5781_02_6671_6650
         /// <param name="first"></param>
         /// <param name="last"></param>
         /// <returns></returns>
-        public List<BusStop> subLine(BusStop first, BusStop last)
+        public List<BusStop> SubLine(BusStop first, BusStop last)
         {
             List<BusStop> subBusLines = new List<BusStop>();
             var enumerator = LineStations.Where((l) => l == first).GetEnumerator();

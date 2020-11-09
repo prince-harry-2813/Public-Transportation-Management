@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace dotNet5781_02_6671_6650
 {
 
     /// <summary>
-    /// Bus Stop Calculate all details of given bus stop location address ect'
+    /// Bus Stop hold all details of given bus stop location address etc.
     /// </summary>
     internal class BusStop : BusStation
     {
-        #region Properties Decleration
+        #region Properties Deceleration
         public double distance { get; set; }
         public TimeSpan arrivingTime { get; set; }
         #endregion
 
+        public BusStop(int _code) : base(_code)
+        {
+
+        }
         /// <summary>
         /// Ctor
         /// </summary>
@@ -29,14 +28,25 @@ namespace dotNet5781_02_6671_6650
 
         }
 
+
         /// <summary>
-        /// calculate the distance between previous station to current 
+        /// calculate the distance between previous station to current
+        /// This uses the Haversine formula to calculate the short distance between tow coordinates on sphere surface  
         /// </summary>
-        /// <param name="other"> previous station </param>
-        /// <returns></returns>
+        /// <param name="other"> previous or other station </param>
+        /// <returns>Short distance in meters </returns>
         public double calculateDistance(BusStop other)
         {
-            return GetDistance(Longitude, Latitude, other.Longitude, other.Latitude);
+            double earthRadius = 6371e3;
+            double l1 = this.Latitude * (Math.PI / 180);
+            double l2 = other.Latitude * (Math.PI / 180);
+            double l1_2 = (other.Latitude - this.Latitude) * (Math.PI / 180);
+            double lo_1 = (other.Longitude - this.Longitude) * (Math.PI / 180);
+            double a = (Math.Sin(l1_2 / 2) * Math.Sin(l1_2 / 2))+
+                Math.Cos(l1) * Math.Cos(l2) *
+               (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return (earthRadius);
         }
 
         /// <summary>
@@ -60,38 +70,8 @@ namespace dotNet5781_02_6671_6650
             return $" Bus Station Code: {StationCode},  {Latitude}˚N, {Longitude}˚E {Address}";
         }
 
-        /// <summary>
-        /// calculate distance between to geo coordinates
-        /// </summary>
-        /// <param name="longitude"></param>
-        /// <param name="latitude"></param>
-        /// <param name="otherLongitude"></param>
-        /// <param name="otherLatitude"></param>
-        /// <returns>Distance as meters</returns>
-        public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
-        {
-            var d1 = latitude * (Math.PI / 180.0);
-            var num1 = longitude * (Math.PI / 180.0);
-            var d2 = otherLatitude * (Math.PI / 180.0);
-            var num2 = otherLongitude * (Math.PI / 180.0) - num1;
-            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
 
-            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
-        }
 
-        /// <summary>
-        /// Calculate distance between two given bus stops
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns>Left parmeter bus stop - right parameter bus stop in meters</returns>
-        public double GetDistance(BusStop other)
-        {
-            double latitude = Latitude;
-            double longitude = Longitude;
-            double otherLatitude = other.Latitude;
-            double otherLongitude = other.Longitude;
 
-            return GetDistance(longitude, latitude, otherLongitude, otherLatitude);
-        }
     }
 }
