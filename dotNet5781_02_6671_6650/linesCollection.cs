@@ -13,8 +13,10 @@ namespace dotNet5781_02_6671_6650
 
         public List<BusLine> linesOnStation(int stopCode)
         {
-            return null;
+            var busLine = busCollection.Where((b) => b.IsExist(stopCode)).ToList();
+            return busLine ?? throw new FieldAccessException("There Isn't any Exsisting station with dedecated code");
         }
+
         public void Add(BusLine newer)
         {
             if (this.busCollection.Exists(BusLine => BusLine.LineKey == newer.LineKey && BusLine.FirstStation.StationCode == newer.FirstStation.StationCode))
