@@ -8,8 +8,8 @@ namespace dotNet5781_02_6671_6650
     internal class BusStop : BusStation
     {
         #region Properties Deceleration
-        public double distance { get; set; }
-        public TimeSpan arrivingTime { get; set; }
+        public double Distance { get; set; }
+        public TimeSpan ArrivingTime { get; set; }
         #endregion
 
         public BusStop(int _code) : base(_code)
@@ -55,8 +55,8 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public TimeSpan calculateTime()
         {
-            this.arrivingTime = TimeSpan.Zero;
-            return arrivingTime += TimeSpan.FromMinutes(this.distance);
+            this.ArrivingTime = TimeSpan.Zero;
+            return ArrivingTime += TimeSpan.FromMinutes(this.Distance);
         }
 
 
