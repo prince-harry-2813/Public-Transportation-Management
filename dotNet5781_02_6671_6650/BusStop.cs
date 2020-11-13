@@ -3,19 +3,26 @@ namespace dotNet5781_02_6671_6650
 {
 
     /// <summary>
-    /// Bus Stop hold all details of given bus stop location address etc.
+    /// Bus Stop hold all details of given bus stop: location, address etc.
     /// </summary>
     internal class BusStop : BusStation
     {
         #region Properties Deceleration
-        public double distance { get; set; }
-        public TimeSpan arrivingTime { get; set; }
-        #endregion
 
+        public double distance { get ; set; } = 0;
+        public TimeSpan arrivingTime { get; set; } = TimeSpan.Zero;
+        
+        #endregion
+        
+        /// <summary>
+        /// Ctor with random parameters
+        /// </summary>
+        /// <param name="_code">station code</param>
         public BusStop(int _code) : base(_code)
         {
 
         }
+
         /// <summary>
         /// Ctor
         /// </summary>
@@ -25,7 +32,7 @@ namespace dotNet5781_02_6671_6650
         /// <param name="_adress"></param>
         public BusStop(int _code, double _lat, double _long, string _adress = "") : base(_code, _lat, _long, _adress)
         {
-
+            
         }
 
 
@@ -46,7 +53,9 @@ namespace dotNet5781_02_6671_6650
                 Math.Cos(l1) * Math.Cos(l2) *
                (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return (earthRadius);
+            distance = (earthRadius * c)/1000;
+            calculateTime();
+            return distance;
         }
 
         /// <summary>
@@ -55,8 +64,7 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public TimeSpan calculateTime()
         {
-            this.arrivingTime = TimeSpan.Zero;
-            return arrivingTime += TimeSpan.FromMinutes(this.distance);
+            return arrivingTime += TimeSpan.FromMinutes(this.distance/1000);
         }
 
 

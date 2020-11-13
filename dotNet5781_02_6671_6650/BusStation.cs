@@ -18,7 +18,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// store bus Latitude location 
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get;  set; }
         /// <summary>
         /// Store bus Longitude location
         /// </summary>
