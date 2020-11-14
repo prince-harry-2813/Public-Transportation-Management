@@ -57,7 +57,7 @@ namespace dotNet5781_02_6671_6650
             int.TryParse(Console.ReadLine(), out input[1]);
             Console.WriteLine("Please enter last station Id");
             int.TryParse(Console.ReadLine(), out input[2]);
-            var newBus = new BusLine(input[0],input[1],input[2]);
+            var newBus = new BusLine(input[0], input[1], input[2]);
             systemCollection.Add(newBus);
         }
 
@@ -91,7 +91,7 @@ namespace dotNet5781_02_6671_6650
             systemCollection[line].AddStop(new BusStop(stopCode));
         }
         /// <summary>
-        /// 
+        /// the method 
         /// </summary>
         private static void removeLine()
         {
@@ -138,28 +138,57 @@ namespace dotNet5781_02_6671_6650
             int.TryParse(Console.ReadLine(), out stop[0]);
             Console.WriteLine("Please enter your destination station number");
             int.TryParse(Console.ReadLine(), out stop[1]);
+            LinesCollection driveOption = new LinesCollection();
             foreach (BusLine item in systemCollection)
             {
-                if (item.IsExist(stop[0]) && item.IsExist(stop[1]))
+                if (item.IsExist(stop[0]) && item.IsExist(stop[1]) && item.LineStations.FindIndex(l => l.StationCode == stop[0]) < item.LineStations.FindIndex(l => l.StationCode == stop[1]))
                 {
-
+                    driveOption.Add(item);
                 }
             }
-
+            Console.WriteLine($"The fastest best option to arrive your destination:");
+            driveOption.sorterLines();
+            foreach (BusLine item in driveOption)
+            {
+                
+                Console.WriteLine($"Line number: {item.LineKey}, time of ride on this line: {item.calculateRideTime(item.LineStations.Find(b => b.StationCode == stop[0]), item.LineStations.Find(b => b.StationCode == stop[1]))}");
+            }
         }
         /// <summary>
         /// 
         /// </summary>
         private static void printLinesInfo()
         {
-
+            String output = "\n";
+            foreach (BusLine item in systemCollection)
+            {
+                output += item.LineKey.ToString();
+            }
         }
         /// <summary>
-        /// 
+        /// Go over every bus in system, using union method to get all stations number one time.
+        /// Then for every line check if is have a stop in that station. 
         /// </summary>
         private static void printStaionInfo()
         {
-
+            IEnumerable<BusStop> stations = new List<BusStop>();
+            String output = "These are all active stations in the system: \n";
+            foreach (BusLine item in systemCollection)
+            {
+                stations = stations.Union(item.LineStations);
+            }
+            foreach (BusStop stop in stations)
+            {
+                output += $"This is the lines that have a stop at station number {stop.StationCode}:\n";
+                foreach (BusLine item in systemCollection)
+                {
+                    if (item.IsExist(stop.StationCode))
+                    {
+                        output += $"- {item.LineKey}\n";
+                    }
+                }
+            }
+            Console.WriteLine();
         }
         #endregion
 
