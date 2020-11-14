@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dotNet5781_02_6671_6650
 {
     class LinesCollection : IEnumerable<BusLine>
     {
-       /// <summary>
-       /// Implement of new exception type for station that no have a use
-       /// </summary>
+        /// <summary>
+        /// Implement of new exception type for station that no have a use
+        /// </summary>
         [Serializable]
         public class StationNotUsedException : Exception
         {
@@ -26,6 +24,7 @@ namespace dotNet5781_02_6671_6650
                 return ("There is no line's that using this station" + Message);
             }
         }
+
         List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
@@ -48,9 +47,9 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         /// <param name="stopCode"></param>
         /// <returns></returns>
-        public List<BusLine> linesOnStation(int stopCode)
+        public List<BusLine> LinesOnStation(int stopCode)
         {
-            List<BusLine> linesOfStop = new List<BusLine>(); 
+            List<BusLine> linesOfStop = new List<BusLine>();
             foreach (BusLine item in this)
             {
                 if (item.IsExist(stopCode))
@@ -58,7 +57,7 @@ namespace dotNet5781_02_6671_6650
                     linesOfStop.Add(item);
                 }
             }
-            return linesOfStop.Count!=0? linesOfStop:throw new StationNotUsedException("Line over this Station: 0");
+            return linesOfStop.Count != 0 ? linesOfStop : throw new StationNotUsedException("Line over this Station: 0");
         }
         /// <summary>
         /// 
@@ -72,19 +71,19 @@ namespace dotNet5781_02_6671_6650
             }
             else if (busCollection.Exists(BusLine => BusLine.LineKey == newer.LineKey))
             {
-               newer.FirstStation = this[newer.LineKey].LastStaion;
-               newer.LastStaion = this[newer.LineKey].FirstStation;
+                newer.FirstStation = this[newer.LineKey].LastStaion;
+                newer.LastStaion = this[newer.LineKey].FirstStation;
             }
-                
-                busCollection.Add(newer);
+
+            busCollection.Add(newer);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public LinesCollection sorterLines()
+        public LinesCollection SorterLines()
         {
-           
+
             this.busCollection.Sort();
             this.GetEnumerator().Reset();
             return this;

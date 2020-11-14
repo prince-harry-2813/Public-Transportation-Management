@@ -53,6 +53,7 @@ namespace dotNet5781_02_6671_6650
         /// <returns>true if value was assigned </returns>
         private bool SetStationCode(int stationCode)
         {
+         
             if (stationCode >= 1000000 || stationCode <= 0)
             {
 
@@ -69,11 +70,9 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public void SetLatitude(double latitude)
         {
-            if (latitude < 31 || latitude > 33.3)
-            {
+            
                 latitude = (latitude < 31) ? 31 : (latitude > 33.3) ? 33.3 : latitude;
                 Latitude = latitude;
-            }
         }
 
         /// <summary>

@@ -63,6 +63,18 @@ namespace dotNet5781_02_6671_6650
             systemCollection.Add(newBus);
         }
 
+        private static bool isNewExist(int line, int stopCode,int? pos= null)
+        {
+            foreach (BusLine item in systemCollection)
+            {
+                if (item.IsExist(stopCode))
+                {
+                    systemCollection[line].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)),pos);
+                    return true;
+                }
+            }
+            return false;
+        }
         /// <summary>
         /// method to adding stop to line.
         /// this method check if the new station is already exist, assign it (with the same details) to this line 
@@ -71,14 +83,8 @@ namespace dotNet5781_02_6671_6650
         {
             Console.WriteLine($"Please enter the station number");
             int.TryParse(Console.ReadLine(), out int stopCode);
-            foreach (BusLine item in systemCollection)
-            {
-                if (item.IsExist(stopCode))
-                {
-                    systemCollection[line].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)));
-                    return;
-                }
-            }
+            if (isNewExist(line, stopCode))
+                return;
             Console.WriteLine("Do you want to assign the properties of this station? choose no if you want to generate it randomly (Y/N)");
             switch ("" + Console.ReadLine().ToUpper())
             {
@@ -92,7 +98,7 @@ namespace dotNet5781_02_6671_6650
             systemCollection[line].AddStop(new BusStop(stopCode));
         }
         /// <summary>
-        /// the method 
+        ///The method remove Line and from system
         /// </summary>
         private static void RemoveLine()
         {
@@ -102,7 +108,7 @@ namespace dotNet5781_02_6671_6650
             systemCollection.Remove(systemCollection[input[0]]);
         }
         /// <summary>
-        /// 
+        /// Remove stop from requested line
         /// </summary>
         private static void RemoveStopfromLine()
         {
@@ -114,7 +120,7 @@ namespace dotNet5781_02_6671_6650
             systemCollection[input[0]].RemoveStop(input[1]);
         }
         /// <summary>
-        /// 
+        /// print the lines that have a stop in specific station 
         /// </summary>
         private static void SearchLines()
         {
@@ -129,7 +135,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
         /// <summary>
-        /// 
+        /// Find and print all the lines that have requested route 
         /// </summary>
         private static void FindRoute()
         {
@@ -155,12 +161,11 @@ namespace dotNet5781_02_6671_6650
             }
         }
         /// <summary>
-        /// 
+        /// Print all the Lines in system
         /// </summary>
         private static void PrintLinesInfo()
         {
             String output = "\n";
-            systemCollection.SorterLines();
             foreach (BusLine item in systemCollection)
             {
                 output += "Line number: " +item.LineKey.ToString()+"\n";
@@ -173,18 +178,22 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         private static void PrintStaionInfo()
         {
-            IEnumerable<BusStop> stations = new List<BusStop>();
+            List<int> stations = new List<int>();
             String output = "These are all active stations in the system: \n";
             foreach (BusLine item in systemCollection)
             {
-                stations = stations.Union(item.LineStations);
+                foreach(BusStop s in item.LineStations)
+                {
+                    if (!stations.Contains(s.StationCode))
+                        stations.Add(s.StationCode);
+                }
             }
-            foreach (BusStop stop in stations)
+            foreach (int stop in stations)
             {
-                output += $"This is the lines that have a stop at station number {stop.StationCode}:\n";
+                output += $"This is the lines that have a stop at station number {stop}:\n";
                 foreach (BusLine item in systemCollection)
                 {
-                    if (item.IsExist(stop.StationCode))
+                    if (item.IsExist(stop))
                     {
                         output += $"- {item.LineKey}\n";
                     }
@@ -196,14 +205,19 @@ namespace dotNet5781_02_6671_6650
 
         static void Main(string[] args)
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
-                systemCollection.Add(new BusLine(Random.Next(999), Random.Next(999999), Random.Next(999999)));
+                systemCollection.Add(new BusLine(Random.Next(1,999), Random.Next(1,100), Random.Next(100,200)));
             }
             foreach (BusLine item in systemCollection)
             {
-                for (int i = 0; i < 3; i++)
-                item.AddStop(new BusStop(Random.Next(999999)), item.LineStations.Count - 2);
+                for (int i = 0; i < 10; i++)
+                {
+                    BusStop stop = new BusStop(i + 300,Random.NextDouble() * 2.3 + 31,Random.NextDouble() * 1.2 + 34.3);
+                    if (isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 2))
+                        continue;
+                    item.AddStop(stop, item.LineStations.Count - 2);
+                }
             }
             do
             {
