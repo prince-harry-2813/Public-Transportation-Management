@@ -2,7 +2,9 @@
 
 namespace dotNet5781_02_6671_6650
 {
-    
+    /// <summary>
+    /// Represent a simple entity of station
+    /// </summary>
     public abstract class BusStation
     {
         public Random Random = new Random();
@@ -24,7 +26,10 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public double Longitude { get; set; }
         #endregion
-
+        /// <summary>
+        /// Ctor with random arguments
+        /// </summary>
+        /// <param name="_code"></param>
         public BusStation (int _code)
         {
             SetStationCode(_code);
@@ -32,7 +37,13 @@ namespace dotNet5781_02_6671_6650
             SetLongitude( Random.NextDouble()*1.2+34.3);
             Address = "";
         }
-
+        /// <summary>
+        /// Ctor with explicit arguments
+        /// </summary>
+        /// <param name="_code"></param>
+        /// <param name="_lat"></param>
+        /// <param name="_long"></param>
+        /// <param name="_adress"></param>
         public BusStation(int _code, double _lat, double _long, string _adress = "")
         {
 

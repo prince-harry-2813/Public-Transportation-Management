@@ -53,7 +53,7 @@ namespace dotNet5781_02_6671_6650
                 Math.Cos(l1) * Math.Cos(l2) *
                (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            Distance = (earthRadius * c)/1000;
+            Distance = (earthRadius * c);
             CalculateTime();
             return Distance;
         }
@@ -64,7 +64,8 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public TimeSpan CalculateTime()
         {
-            return ArrivingTime += TimeSpan.FromMinutes(this.Distance/1000);
+            ArrivingTime = TimeSpan.Zero;
+            return ArrivingTime += TimeSpan.FromMinutes(1+(this.Distance/28.0*60)/1000);
         }
 
 

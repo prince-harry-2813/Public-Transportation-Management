@@ -10,6 +10,9 @@ using System.Linq.Expressions;
 
 namespace dotNet5781_02_6671_6650
 {
+    /// <summary>
+    /// main class, with main methods 
+    /// </summary>
     class Program
     {
         #region properties
