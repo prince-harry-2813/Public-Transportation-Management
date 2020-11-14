@@ -24,6 +24,7 @@ namespace dotNet5781_02_6671_6650
                 return ("There is no line's that using this station" + Message);
             }
         }
+
         List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
@@ -46,7 +47,7 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         /// <param name="stopCode"></param>
         /// <returns></returns>
-        public List<BusLine> linesOnStation(int stopCode)
+        public List<BusLine> LinesOnStation(int stopCode)
         {
             List<BusLine> linesOfStop = new List<BusLine>();
             foreach (BusLine item in this)
@@ -80,7 +81,7 @@ namespace dotNet5781_02_6671_6650
         /// 
         /// </summary>
         /// <returns></returns>
-        public LinesCollection sorterLines()
+        public LinesCollection SorterLines()
         {
 
             this.busCollection.Sort();

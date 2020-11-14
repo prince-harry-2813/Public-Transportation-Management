@@ -9,8 +9,8 @@ namespace dotNet5781_02_6671_6650
     {
         #region Properties Deceleration
 
-        public double distance { get ; set; } = 0;
-        public TimeSpan arrivingTime { get; set; } = TimeSpan.Zero;
+        public double Distance { get ; set; } = 0;
+        public TimeSpan ArrivingTime { get; set; } = TimeSpan.Zero;
         
         #endregion
         
@@ -42,7 +42,7 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         /// <param name="other"> previous or other station </param>
         /// <returns>Short distance in meters </returns>
-        public double calculateDistance(BusStop other)
+        public double CalculateDistance(BusStop other)
         {
             double earthRadius = 6371e3;
             double l1 = this.Latitude * (Math.PI / 180);
@@ -53,18 +53,18 @@ namespace dotNet5781_02_6671_6650
                 Math.Cos(l1) * Math.Cos(l2) *
                (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            distance = (earthRadius * c)/1000;
-            calculateTime();
-            return distance;
+            Distance = (earthRadius * c)/1000;
+            CalculateTime();
+            return Distance;
         }
 
         /// <summary>
         /// calculate the time of ride to this station from previous 
         /// one KM per minute
         /// </summary>
-        public TimeSpan calculateTime()
+        public TimeSpan CalculateTime()
         {
-            return arrivingTime += TimeSpan.FromMinutes(this.distance/1000);
+            return ArrivingTime += TimeSpan.FromMinutes(this.Distance/1000);
         }
 
 

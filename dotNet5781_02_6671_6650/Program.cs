@@ -18,6 +18,8 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         internal static LinesCollection systemCollection = new LinesCollection();
 
+        public static Random Random = new Random();
+
         /// <summary>
         /// Boolean to exit out of the program 
         /// </summary>
@@ -35,7 +37,7 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         /// <param name="line">Line code</param>
         /// <param name="stop">Station code</param>
-        public static void addStopToLineExplicit(int line, int stop)
+        public static void AddStopToLineExplicit(int line, int stop)
         {
             double[] location = new double[2];
             Console.WriteLine("Enter latitude");
@@ -48,7 +50,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// Use to register new line to main collection of line's
         /// </summary>
-        private static void registerNewBus()
+        private static void RegisterNewBus()
         {
             Console.WriteLine("Please enter the new line number");
             int[] input = new int[3];
@@ -65,11 +67,10 @@ namespace dotNet5781_02_6671_6650
         /// method to adding stop to line.
         /// this method check if the new station is already exist, assign it (with the same details) to this line 
         /// </summary>
-        private static void addStopToLine(int line)
+        private static void AddStopToLine(int line)
         {
-            int stopCode;
             Console.WriteLine($"Please enter the station number");
-            int.TryParse(Console.ReadLine(), out stopCode);
+            int.TryParse(Console.ReadLine(), out int stopCode);
             foreach (BusLine item in systemCollection)
             {
                 if (item.IsExist(stopCode))
@@ -83,7 +84,7 @@ namespace dotNet5781_02_6671_6650
             {
                 case "YES":
                 case "Y":
-                    addStopToLineExplicit(line, stopCode);
+                    AddStopToLineExplicit(line, stopCode);
                     return;
                 default:
                     break;
@@ -93,7 +94,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// the method 
         /// </summary>
-        private static void removeLine()
+        private static void RemoveLine()
         {
             Console.WriteLine("Please enter the line number");
             int[] input = new int[2];
@@ -103,23 +104,22 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// 
         /// </summary>
-        private static void removeStopfromLine()
+        private static void RemoveStopfromLine()
         {
             Console.WriteLine("Please enter the line number");
             int[] input = new int[2];
             int.TryParse(Console.ReadLine(), out input[0]);
             Console.WriteLine("Please enter station number");
             int.TryParse(Console.ReadLine(), out input[1]);
-            systemCollection[input[0]].removeStop(input[1]);
+            systemCollection[input[0]].RemoveStop(input[1]);
         }
         /// <summary>
         /// 
         /// </summary>
-        private static void searchLines()
+        private static void SearchLines()
         {
             Console.WriteLine("Please enter the station number");
-            int input;
-            int.TryParse(Console.ReadLine(), out input);
+            int.TryParse(Console.ReadLine(), out int input);
             foreach (BusLine item in systemCollection)
             {
                 if (item.IsExist(input))
@@ -131,7 +131,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// 
         /// </summary>
-        private static void findRoute()
+        private static void FindRoute()
         {
             Console.WriteLine("Please enter your current station number");
             int[] stop = new int[2];
@@ -147,29 +147,31 @@ namespace dotNet5781_02_6671_6650
                 }
             }
             Console.WriteLine($"The fastest best option to arrive your destination:");
-            driveOption.sorterLines();
+            driveOption.SorterLines();
             foreach (BusLine item in driveOption)
             {
                 
-                Console.WriteLine($"Line number: {item.LineKey}, time of ride on this line: {item.calculateRideTime(item.LineStations.Find(b => b.StationCode == stop[0]), item.LineStations.Find(b => b.StationCode == stop[1]))}");
+                Console.WriteLine($"Line number: {item.LineKey}, time of ride on this line: {item.CalculateRideTime(item.LineStations.Find(b => b.StationCode == stop[0]), item.LineStations.Find(b => b.StationCode == stop[1]))}");
             }
         }
         /// <summary>
         /// 
         /// </summary>
-        private static void printLinesInfo()
+        private static void PrintLinesInfo()
         {
             String output = "\n";
+            systemCollection.SorterLines();
             foreach (BusLine item in systemCollection)
             {
-                output += item.LineKey.ToString();
+                output += "Line number: " +item.LineKey.ToString()+"\n";
             }
+            Console.WriteLine(output);
         }
         /// <summary>
         /// Go over every bus in system, using union method to get all stations number one time.
         /// Then for every line check if is have a stop in that station. 
         /// </summary>
-        private static void printStaionInfo()
+        private static void PrintStaionInfo()
         {
             IEnumerable<BusStop> stations = new List<BusStop>();
             String output = "These are all active stations in the system: \n";
@@ -188,12 +190,21 @@ namespace dotNet5781_02_6671_6650
                     }
                 }
             }
-            Console.WriteLine();
+            Console.WriteLine(output);
         }
         #endregion
 
         static void Main(string[] args)
         {
+            for (int i = 0; i < 20; i++)
+            {
+                systemCollection.Add(new BusLine(Random.Next(999), Random.Next(999999), Random.Next(999999)));
+            }
+            foreach (BusLine item in systemCollection)
+            {
+                for (int i = 0; i < 3; i++)
+                item.AddStop(new BusStop(Random.Next(999999)), item.LineStations.Count - 2);
+            }
             do
             {
                 Console.WriteLine(@"Hello
@@ -214,29 +225,29 @@ Please choose an operation that you'll like to operate:
                 switch (option)
                 {
                     case 1:
-                        registerNewBus();
+                        RegisterNewBus();
                         break;
                     case 2:
                         Console.WriteLine("Please enter the line number");
-                        addStopToLine(int.Parse(Console.ReadLine()));
+                        AddStopToLine(int.Parse(Console.ReadLine()));
                         break;
                     case 3:
-                        removeLine();
+                        RemoveLine();
                         break;
                     case 4:
-                        removeStopfromLine();
+                        RemoveStopfromLine();
                         break;
                     case 5:
-                        searchLines();
+                        SearchLines();
                         break;
                     case 6:
-                        findRoute();
+                        FindRoute();
                         break;
                     case 7:
-                        printLinesInfo();
+                        PrintLinesInfo();
                         break;
                     case 8:
-                        printStaionInfo();
+                        PrintStaionInfo();
                         break;
 
                     case 0:

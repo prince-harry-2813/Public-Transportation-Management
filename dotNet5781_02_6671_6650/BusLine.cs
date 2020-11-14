@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
 
 namespace dotNet5781_02_6671_6650
 {
@@ -39,7 +35,16 @@ namespace dotNet5781_02_6671_6650
         {
             LineKey = lineKey;
         }
-        internal int LineKey { get; set; }
+        private int linekey;
+        internal int LineKey
+        {
+            get => linekey; set
+            {
+                if (value < 1 && value > 999)
+                    throw new ArgumentOutOfRangeException("Line code must be positive and less than four digits");
+                linekey = value;
+            }
+        }
         #region Properties Declaration
 
         /// <summary>
@@ -61,7 +66,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// Bus stops line first and last one must be respectively with first/last stop properties
         /// </summary>
-        public List<BusStop> LineStations = new List<BusStop>(); 
+        public List<BusStop> LineStations = new List<BusStop>();
         #endregion
 
         /// <summary>
@@ -81,25 +86,25 @@ namespace dotNet5781_02_6671_6650
             {
                 LineStations.Insert((int)pos, stop);
                 if (pos > 0)
-                    LineStations.ElementAt((int)pos).calculateDistance(LineStations.ElementAt((int)pos - 1));
+                    LineStations.ElementAt((int)pos).CalculateDistance(LineStations.ElementAt((int)pos - 1));
                 if (pos < LineStations.Count - 1)
-                    LineStations.ElementAt((int)pos + 1).calculateDistance(LineStations.ElementAt((int)pos));
+                    LineStations.ElementAt((int)pos + 1).CalculateDistance(LineStations.ElementAt((int)pos));
                 return;
             }
             Console.WriteLine($"in this line there is {LineStations.Count} stations choose number within the range of 0 - {LineStations.Count}");
             int.TryParse(Console.ReadLine(), out int index);
             LineStations.Insert(index, stop);
             if (index > 0)
-                LineStations.ElementAt(index).calculateDistance(LineStations.ElementAt(index - 1));
+                LineStations.ElementAt(index).CalculateDistance(LineStations.ElementAt(index - 1));
             if (index < LineStations.Count - 1)
-                LineStations.ElementAt(index + 1).calculateDistance(LineStations.ElementAt(index));
+                LineStations.ElementAt(index + 1).CalculateDistance(LineStations.ElementAt(index));
 
         }
         /// <summary>
         /// remove stop from the line route
         /// </summary>
         /// <param name="stop"></param>
-        public void removeStop(int stop)
+        public void RemoveStop(int stop)
         {
             if (!IsExist(stop))
                 throw new ArgumentOutOfRangeException($"There is no station number {stop} in this line route");
@@ -125,7 +130,7 @@ namespace dotNet5781_02_6671_6650
             double distance = 0.0;
             for (int i = 1; i < bus.LineStations.Count; i++)
             {
-                distance += bus.LineStations.ElementAt(i).calculateDistance(bus.LineStations.ElementAt(i - 1));
+                distance += bus.LineStations.ElementAt(i).CalculateDistance(bus.LineStations.ElementAt(i - 1));
             }
             return distance;
         }
@@ -138,7 +143,7 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         /// <param name="other"></param>
         /// <returns>Riding time as TimeSpan</returns>
-        public TimeSpan calculateRideTime(BusStop current , BusStop other)
+        public TimeSpan CalculateRideTime(BusStop current, BusStop other)
         {
             TimeSpan time = TimeSpan.Zero;
             double rideDistance = 0.0 + CalculateDistance(current, other) / 1000;
@@ -187,7 +192,7 @@ namespace dotNet5781_02_6671_6650
         /// <returns></returns>
         public int CompareTo(BusLine other)
         {
-            return TimeSpan.Compare(this.calculateRideTime(FirstStation, LastStaion), other.calculateRideTime(other.FirstStation, other.LastStaion));
+            return TimeSpan.Compare(this.CalculateRideTime(FirstStation, LastStaion), other.CalculateRideTime(other.FirstStation, other.LastStaion));
         }
     }
 }

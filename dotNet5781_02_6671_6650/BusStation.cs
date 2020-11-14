@@ -28,8 +28,8 @@ namespace dotNet5781_02_6671_6650
         public BusStation (int _code)
         {
             SetStationCode(_code);
-            SetLatitude(Random.Next(31,33)+Random.NextDouble());
-            SetLongitude(Random.Next(34, 35) + Random.NextDouble());
+            SetLatitude(Random.NextDouble()*2.3+31);
+            SetLongitude( Random.NextDouble()*1.2+34.3);
             Address = "";
         }
 
@@ -71,7 +71,8 @@ namespace dotNet5781_02_6671_6650
         {
             if (latitude < 31 || latitude > 33.3)
             {
-                throw new ArgumentException("Bus Station key must be positive and can't include more then 6 digits");
+                latitude = (latitude < 31) ? 31 : (latitude > 33.3) ? 33.3 : latitude;
+                Latitude = latitude;
             }
         }
 
