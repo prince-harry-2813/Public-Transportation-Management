@@ -26,7 +26,7 @@ namespace dotNet5781_02_6671_6650
         /// Ctor
         /// </summary>
         /// <param name="lineKey">Bus Service Line Number</param>
-        /// <param name="firstStop">Mendetory</param>
+        /// <param name="firstStop"></param>
         /// <param name="lastStop"></param>
         /// <param name="area">Service Area</param>
         public BusLine(int lineKey, int firstStop, int lastStop, Area area = Area.General)
@@ -40,7 +40,7 @@ namespace dotNet5781_02_6671_6650
             LineKey = lineKey;
         }
         internal int LineKey { get; set; }
-        #region Poroperties Declaration
+        #region Properties Declaration
 
         /// <summary>
         /// First station of bust route must open the station line
@@ -119,7 +119,7 @@ namespace dotNet5781_02_6671_6650
         /// <param name="current">Left stop to evaluate</param>
         /// <param name="other"> right stop to evaluate </param>
         /// <returns> left - right</returns>
-        public double calculateDistance(BusStop current, BusStop other)
+        public double CalculateDistance(BusStop current, BusStop other)
         {
             BusLine bus = SubLine(current, other);
             double distance = 0.0;
@@ -131,21 +131,19 @@ namespace dotNet5781_02_6671_6650
         }
         /// <summary>
         /// Calculate time of traveling from station to other(Not necessarily close)
-        /// Calculate for Half of the Avarage driving range ph in orban area - Traffic lightes ect 
+        /// Calculate for Half of the Average driving range PH in urban area - Traffic lights etc. 
         /// and plus 1 min per stop 
         /// see https://tri.net.technion.ac.il/files/2016/08/%D7%A1%D7%A7%D7%A8-%D7%90%D7%A8%D7%A6%D7%99-%D7%A9%D7%9C-%D7%9E%D7%94%D7%99%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%A0%D7%A1%D7%99%D7%A2%D7%94-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%A1%D7%A7%D7%A8-%D7%9E%D7%94%D7%99%D7%A8%D7%95%D7%99%D7%95%D7%AA-2013.pdf
-        /// IN the day light 55 kmh im using for 28 kmh 
+        /// IN the day light 55 km/h I'm using for 28 km/h 
         /// </summary>
         /// <param name="other"></param>
         /// <returns>Riding time as TimeSpan</returns>
         public TimeSpan calculateRideTime(BusStop current , BusStop other)
         {
-            BusLine bus = SubLine(first, other);
             TimeSpan time = TimeSpan.Zero;
             double rideDistance = 0.0 + CalculateDistance(current, other) / 1000;
             time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
-            var busStops = SubLine(current, other);
-            time += TimeSpan.FromMinutes(busStops.Count());
+            time += TimeSpan.FromMinutes(LineStations.Count());
 
             return time;
         }
@@ -155,21 +153,21 @@ namespace dotNet5781_02_6671_6650
         /// <param name="first"></param>
         /// <param name="last"></param>
         /// <returns>New List of stations</returns>
-        public List<BusStop> SubLine(BusStop first, BusStop last)
+        public BusLine SubLine(BusStop first, BusStop last)
         {
-            BusLine subBusLines = new BusLine(this.LineKey);
+            BusLine subBusLine = new BusLine(this.LineKey);
             var enumerator = LineStations.Where((l) => l == first).GetEnumerator();
             while (enumerator.MoveNext())
             {
                 if (enumerator.Current.Equals(last))
                 {
-                    subBusLines.Add(enumerator.Current);
+                    subBusLine.LineStations.Add(enumerator.Current);
                     break;
                 }
-                subBusLines.LineStations.Add(enumerator.Current);
+                subBusLine.LineStations.Add(enumerator.Current);
             }
 
-            return subBusLines;
+            return subBusLine;
         }
 
 

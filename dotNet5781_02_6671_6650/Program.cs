@@ -57,7 +57,8 @@ namespace dotNet5781_02_6671_6650
             int.TryParse(Console.ReadLine(), out input[1]);
             Console.WriteLine("Please enter last station Id");
             int.TryParse(Console.ReadLine(), out input[2]);
-            var newBus = new BusLine(input[0]);
+            var newBus = new BusLine(input[0],input[1],input[2]);
+            systemCollection.Add(newBus);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace dotNet5781_02_6671_6650
                 if (item.IsExist(input))
                 {
                     Console.WriteLine($"Line number : {item.LineKey}.");
-                } 
+                }
             }
         }
         /// <summary>
@@ -133,11 +134,11 @@ namespace dotNet5781_02_6671_6650
         private static void findRoute()
         {
             Console.WriteLine("Please enter your current station number");
-            int[] stop  = new int[2];
+            int[] stop = new int[2];
             int.TryParse(Console.ReadLine(), out stop[0]);
             Console.WriteLine("Please enter your destination station number");
             int.TryParse(Console.ReadLine(), out stop[1]);
-            foreach(BusLine item in systemCollection)
+            foreach (BusLine item in systemCollection)
             {
                 if (item.IsExist(stop[0]) && item.IsExist(stop[1]))
                 {
@@ -220,7 +221,7 @@ Please choose an operation that you'll like to operate:
 
                         break;
                 }
-                
+
             } while (Flag);
         }
     }
