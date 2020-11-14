@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace dotNet5781_02_6671_6650
 {
+    /// <summary>
+    /// class that represent a system collection of lines, the class hold an private list of lines 
+    /// </summary>
     class LinesCollection : IEnumerable<BusLine>
     {
         /// <summary>
@@ -25,7 +28,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
 
-        List<BusLine> busCollection = new List<BusLine>();
+      private  List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
         /// </summary>
@@ -43,7 +46,7 @@ namespace dotNet5781_02_6671_6650
 
 
         /// <summary>
-        /// 
+        /// return list of lines that have a stop in the station
         /// </summary>
         /// <param name="stopCode"></param>
         /// <returns></returns>
@@ -60,7 +63,7 @@ namespace dotNet5781_02_6671_6650
             return linesOfStop.Count != 0 ? linesOfStop : throw new StationNotUsedException("Line over this Station: 0");
         }
         /// <summary>
-        /// 
+        /// method to register new line in the system collection
         /// </summary>
         /// <param name="newer"></param>
         public void Add(BusLine newer)
@@ -78,7 +81,7 @@ namespace dotNet5781_02_6671_6650
             busCollection.Add(newer);
         }
         /// <summary>
-        /// 
+        /// sort lines by time of riding
         /// </summary>
         /// <returns></returns>
         public LinesCollection SorterLines()
@@ -89,7 +92,7 @@ namespace dotNet5781_02_6671_6650
             return this;
         }
         /// <summary>
-        /// 
+        /// remove line from system collection
         /// </summary>
         /// <param name="delete"></param>
         public void Remove(BusLine delete)
