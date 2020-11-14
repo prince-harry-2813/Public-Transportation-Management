@@ -205,7 +205,7 @@ namespace dotNet5781_02_6671_6650
 
         static void Main(string[] args)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 systemCollection.Add(new BusLine(Random.Next(1,999), Random.Next(1,100), Random.Next(100,200)));
             }
