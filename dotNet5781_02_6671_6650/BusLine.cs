@@ -22,7 +22,13 @@ namespace dotNet5781_02_6671_6650
     /// </summary>
     class BusLine : IComparable<BusLine>
     {
-
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="lineKey">Bus Service Line Number</param>
+        /// <param name="firstStop">Mendetory</param>
+        /// <param name="lastStop"></param>
+        /// <param name="area">Service Area</param>
         public BusLine(int lineKey, int firstStop, int lastStop, Area area = Area.General)
         {
             LineKey = lineKey;
@@ -34,6 +40,7 @@ namespace dotNet5781_02_6671_6650
             LineKey = lineKey;
         }
         internal int LineKey { get; set; }
+        #region Poroperties Declaration
 
         /// <summary>
         /// First station of bust route must open the station line
@@ -54,7 +61,9 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// Bus stops line first and last one must be respectively with first/last stop properties
         /// </summary>
-        public List<BusStop> LineStations = new List<BusStop>();
+        public List<BusStop> LineStations = new List<BusStop>(); 
+        #endregion
+
         /// <summary>
         /// Add stop to route of the line 
         /// if index not passed insert the stop to the last station
@@ -122,32 +131,39 @@ namespace dotNet5781_02_6671_6650
         }
         /// <summary>
         /// Calculate time of traveling from station to other(Not necessarily close)
+        /// Calculate for Half of the Avarage driving range ph in orban area - Traffic lightes ect 
+        /// and plus 1 min per stop 
+        /// see https://tri.net.technion.ac.il/files/2016/08/%D7%A1%D7%A7%D7%A8-%D7%90%D7%A8%D7%A6%D7%99-%D7%A9%D7%9C-%D7%9E%D7%94%D7%99%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%A0%D7%A1%D7%99%D7%A2%D7%94-%D7%91%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%A1%D7%A7%D7%A8-%D7%9E%D7%94%D7%99%D7%A8%D7%95%D7%99%D7%95%D7%AA-2013.pdf
+        /// IN the day light 55 kmh im using for 28 kmh 
         /// </summary>
         /// <param name="other"></param>
-        public TimeSpan calculateRideTime(BusStop first, BusStop other)
+        /// <returns>Riding time as TimeSpan</returns>
+        public TimeSpan calculateRideTime(BusStop current , BusStop other)
         {
             BusLine bus = SubLine(first, other);
             TimeSpan time = TimeSpan.Zero;
-            foreach (var item in bus.LineStations)
-            {
-                time += item.arrivingTime;
-            }
+            double rideDistance = 0.0 + CalculateDistance(current, other) / 1000;
+            time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
+            var busStops = SubLine(current, other);
+            time += TimeSpan.FromMinutes(busStops.Count());
+
             return time;
         }
         /// <summary>
-        /// return new line bus that have some of the current route stops
+        /// Return new line bus that have some of the current route stops
         /// </summary>
         /// <param name="first"></param>
         /// <param name="last"></param>
-        /// <returns></returns>
-        public BusLine SubLine(BusStop first, BusStop last)
+        /// <returns>New List of stations</returns>
+        public List<BusStop> SubLine(BusStop first, BusStop last)
         {
             BusLine subBusLines = new BusLine(this.LineKey);
             var enumerator = LineStations.Where((l) => l == first).GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (enumerator.Current == last)
+                if (enumerator.Current.Equals(last))
                 {
+                    subBusLines.Add(enumerator.Current);
                     break;
                 }
                 subBusLines.LineStations.Add(enumerator.Current);

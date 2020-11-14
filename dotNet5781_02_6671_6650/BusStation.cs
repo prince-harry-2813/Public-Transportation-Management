@@ -69,17 +69,10 @@ namespace dotNet5781_02_6671_6650
         /// </summary>
         public void SetLatitude(double latitude)
         {
-            if (latitude < 31)
+            if (latitude < 31 || latitude > 33.3)
             {
-                latitude = 31;
+                throw new ArgumentException("Bus Station key must be positive and can't include more then 6 digits");
             }
-
-            if (latitude > 33.3)
-            {
-                latitude = 33.3;
-            }
-
-            Latitude = latitude;
         }
 
         /// <summary>
