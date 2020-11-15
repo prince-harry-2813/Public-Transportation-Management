@@ -5,7 +5,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// Bus Stop hold all details of given bus stop: location, address etc.
     /// </summary>
-    internal class BusStop : BusStation
+    public class BusStop : BusStation
     {
         #region Properties Deceleration
 
