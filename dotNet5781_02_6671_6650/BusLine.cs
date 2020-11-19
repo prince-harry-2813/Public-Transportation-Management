@@ -16,7 +16,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// Represent a single Bus line  Identify bus line key and first and last stop
     /// </summary>
-    class BusLine : IComparable<BusLine>
+    public class BusLine : IComparable<BusLine>
     {
         /// <summary>
         /// Ctor

@@ -8,7 +8,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// class that represent a system collection of lines, the class hold an private list of lines 
     /// </summary>
-    class LinesCollection : IEnumerable<BusLine>
+   public class LinesCollection : IEnumerable<BusLine>
     {
         /// <summary>
         /// Implement of new exception type for station that no have a use

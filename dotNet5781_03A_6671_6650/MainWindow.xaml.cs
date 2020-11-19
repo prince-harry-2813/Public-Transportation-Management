@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using dotNet5781_02_6671_6650;
 namespace dotNet5781_03A_6671_6650
 {
     /// <summary>
@@ -22,6 +22,7 @@ namespace dotNet5781_03A_6671_6650
     {
         public MainWindow()
         {
+            LinesCollection lines = new LinesCollection();
             InitializeComponent();
         }
     }
