@@ -8,7 +8,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// class that represent a system collection of lines, the class hold an private list of lines 
     /// </summary>
-    class LinesCollection : IEnumerable<BusLine>
+    public class LinesCollection : IEnumerable<BusLine>
     {
         /// <summary>
         /// Implement of new exception type for station that no have a use
@@ -28,7 +28,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
 
-      private  List<BusLine> busCollection = new List<BusLine>();
+      public   List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
         /// </summary>
@@ -43,7 +43,10 @@ namespace dotNet5781_02_6671_6650
             return ((IEnumerable)busCollection).GetEnumerator();
         }
 
+        public LinesCollection()
+        {
 
+        }
 
         /// <summary>
         /// return list of lines that have a stop in the station
@@ -122,7 +125,7 @@ namespace dotNet5781_02_6671_6650
                         line.Add(item);
                     }
                 };
-                if (line.Count == 1)
+                if (line.Count <= 1)
                 {
                     return line.First<BusLine>();
                 }

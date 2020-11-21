@@ -5,7 +5,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// Bus Stop hold all details of given bus stop: location, address etc.
     /// </summary>
-    internal class BusStop : BusStation
+    public class BusStop : BusStation
     {
         #region Properties Deceleration
 
@@ -76,7 +76,7 @@ namespace dotNet5781_02_6671_6650
         /// <returns></returns>
         public override string ToString()
         {
-            return $" Bus Station Code: {StationCode},  {Latitude}˚N, {Longitude}˚E {Address}";
+            return $" Bus Station Code: {StationCode},  {Latitude}˚N, {Longitude}˚E {Address} {ArrivingTime.ToString(@"\ h\:mm")}";
         }
 
 
