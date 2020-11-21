@@ -9,7 +9,7 @@
     Width="800"
     Height="640"
     mc:Ignorable="d">
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Margin="10">
         <Grid
             x:Name="UpGrid"
             Grid.Row="0"
@@ -26,35 +26,54 @@
             <ComboBox
                 Name="cbBusLines"
                 Grid.Column="1"
-                Width="120"
+                Width="100"
+                Height="25.6"
+                Margin="10.2,19,83.4,21.6"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" />
+                VerticalAlignment="Stretch"
+                SelectionChanged="cbBusLines_SelectionChanged" />
             <TextBox
                 Name="tbArea"
                 Grid.Column="3"
                 Width="120"
                 Height="23"
+                Margin="4.2,21,68.6,21.6"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Text="{Binding Path=Area}"
-                TextWrapping="Wrap" />
+                Text="{Binding Area}"
+                TextWrapping="Wrap" 
+                />
+
             <Label
+                x:Name="arealabel"
                 Grid.Column="2"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Content="Label" />
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                Content="Activity area:"
+                FontFamily="Nirmala UI"
+                FontSize="18"
+                FontWeight="Bold" />
+
             <Label
+                Name="chooseBusLabel"
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Content="Label" />
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Choose a line:"
+                FontFamily="Nirmala UI"
+                FontSize="18"
+                FontWeight="Bold" />
         </Grid>
         <ListBox
             Name="lbBusLineStation"
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            ItemsSource="{Binding}"/>
+            ItemsSource="{Binding}" />
         <Grid.RowDefinitions>
             <RowDefinition Height="50*" />
             <RowDefinition Height="400*" />

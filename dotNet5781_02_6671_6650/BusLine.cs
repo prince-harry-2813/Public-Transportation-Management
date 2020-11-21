@@ -36,7 +36,7 @@ namespace dotNet5781_02_6671_6650
             LineKey = lineKey;
         }
         private int linekey;
-        internal int LineKey
+        public int LineKey
         {
             get => linekey; set
             {

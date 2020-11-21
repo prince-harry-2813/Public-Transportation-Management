@@ -76,7 +76,7 @@ namespace dotNet5781_02_6671_6650
         /// <returns></returns>
         public override string ToString()
         {
-            return $" Bus Station Code: {StationCode},  {Latitude}˚N, {Longitude}˚E {Address}";
+            return $" Bus Station Code: {StationCode},  {Latitude}˚N, {Longitude}˚E {Address},   Arriving from station before: {ArrivingTime.ToString(@"\ h\:mm")}";
         }
 
 

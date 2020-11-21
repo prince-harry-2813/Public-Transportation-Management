@@ -7,7 +7,7 @@ namespace dotNet5781_02_6671_6650
     /// </summary>
     public abstract class BusStation
     {
-        public Random Random = new Random();
+        public Random Random = new Random(DateTime.Now.Millisecond);
         #region Properties Deceleration
 
         public int StationCode { get; private set; } = 0;
@@ -20,7 +20,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// store bus Latitude location 
         /// </summary>
-        public double Latitude { get;  set; }
+        public double Latitude { get; set; }
         /// <summary>
         /// Store bus Longitude location
         /// </summary>
@@ -30,11 +30,11 @@ namespace dotNet5781_02_6671_6650
         /// Ctor with random arguments
         /// </summary>
         /// <param name="_code"></param>
-        public BusStation (int _code)
+        public BusStation(int _code)
         {
             SetStationCode(_code);
-            SetLatitude(Random.NextDouble()*2.3+31);
-            SetLongitude( Random.NextDouble()*1.2+34.3);
+            SetLatitude();
+            SetLongitude();
             Address = "";
         }
         /// <summary>
@@ -51,7 +51,7 @@ namespace dotNet5781_02_6671_6650
             SetLatitude(_lat);
             SetLongitude(_long);
             Address = _adress;
-                  
+
         }
 
         public override string ToString() => $"Bus Station Code: {StationCode}, {Latitude}°N {Longitude}°E ,{Address}\n";
@@ -64,12 +64,12 @@ namespace dotNet5781_02_6671_6650
         /// <returns>true if value was assigned </returns>
         private bool SetStationCode(int stationCode)
         {
-         
+
             if (stationCode >= 1000000 || stationCode <= 0)
             {
 
                 throw new ArgumentException("Bus Station key must be positive and can't include more then 6 digits");
-               
+
             }
             StationCode = stationCode;
             return true;
@@ -79,11 +79,17 @@ namespace dotNet5781_02_6671_6650
         /// Set Latitude value inside of Israel Land 
         /// The function takes the minimum or maximum value respectively in case latitude is out of range 
         /// </summary>
-        public void SetLatitude(double latitude)
+        public void SetLatitude(double? latitude = null)
         {
-            
+            if (latitude != null)
+            {
                 latitude = (latitude < 31) ? 31 : (latitude > 33.3) ? 33.3 : latitude;
-                Latitude = latitude;
+                Latitude = (double)latitude;
+                return;
+            }
+            var rand = Random.NextDouble();
+
+            Latitude = rand * 2.3 + 31;
         }
 
         /// <summary>
@@ -91,10 +97,16 @@ namespace dotNet5781_02_6671_6650
         /// The function takes the minimum or maximum value respectively in case latitude is out of range 
         /// </summary>
         /// <param name="longitude">[34.3, 35.5] </param>
-        public void SetLongitude(double longitude)
+        public void SetLongitude(double? longitude=null)
         {
-            longitude = (longitude < 34.3) ? 34.3 : (longitude > 35.5) ? 35.5 : longitude;
-            Longitude = longitude;
+            if (longitude != null)
+            {
+                longitude = (longitude < 34.3) ? 34.3 : (longitude > 35.5) ? 35.5 : longitude;
+                Longitude = (double)longitude;
+                return;
+            }
+            var rand = Random.NextDouble();
+            Longitude = rand * 1.2 + 34.3;
         }
         #endregion
     }
