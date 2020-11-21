@@ -43,8 +43,8 @@ namespace dotNet5781_03A_6671_6650
                     for (int i = 0; i < 10; i++)
                     {
                         BusStop stop = new BusStop(i + 300, Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
-                        //if (isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 2))
-                        // continue;
+                        if(isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 2))
+                         continue;
                         item.AddStop(stop, item.LineStations.Count - 2);
                     }
                 }
@@ -61,7 +61,20 @@ namespace dotNet5781_03A_6671_6650
             cbBusLines.SelectedIndex = 0;
             ShowBusLine(BusLines.FirstOrDefault().LineKey);
         }
-         
+
+        private bool isNewExist(int lineKey, int stationCode, int v)
+        {
+            foreach (BusLine item in BusLines)
+            {
+                if (item.IsExist(stationCode))
+                {
+                    BusLines[lineKey].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stationCode)), v);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void ShowBusLine(int index)
         {
             currentDisplayBusLine = BusLines[index];

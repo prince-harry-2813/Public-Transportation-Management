@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:dotNet5781_03A_6671_6650"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-    Title="MainWindow"
+    Title="Bus info"
     Width="800"
     Height="640"
     mc:Ignorable="d">
@@ -45,11 +45,10 @@
 
             <Label
                 Grid.Column="0"
-                Margin="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Left"
-                FontWeight="SemiBold">
+                FontWeight="SemiBold" Height="29" Margin="40,10,40,0.2">
                 Bus Line Number :
             </Label>
 
@@ -67,12 +66,12 @@
 
             <Label
                 Grid.Column="2"
-                Margin="10"
+                Margin="65.2,1,56.6,0.2"
                 FontSize="22"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Left"
-                FontWeight="SemiBold">
+                FontWeight="SemiBold" Height="38">
                 Area :
             </Label>
 
