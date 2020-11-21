@@ -8,7 +8,7 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// class that represent a system collection of lines, the class hold an private list of lines 
     /// </summary>
-    class LinesCollection : IEnumerable<BusLine>
+    public class LinesCollection : IEnumerable<BusLine>
     {
         /// <summary>
         /// Implement of new exception type for station that no have a use
@@ -28,7 +28,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
 
-      private  List<BusLine> busCollection = new List<BusLine>();
+        private List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
         /// </summary>
@@ -133,7 +133,7 @@ namespace dotNet5781_02_6671_6650
                 else
                 {
                     Console.WriteLine("There is tow direction for this line, To complete your operation please choose one by press 1 or 2");
-                    return line.ElementAt(int.Parse(Console.ReadLine()) - 1);
+                    return line.FirstOrDefault(bus => bus.LineKey == i);
                 }
             }
         }
