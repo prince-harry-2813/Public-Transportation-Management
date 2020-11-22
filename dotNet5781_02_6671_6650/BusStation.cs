@@ -44,9 +44,9 @@ namespace dotNet5781_02_6671_6650
         /// <param name="_lat"></param>
         /// <param name="_long"></param>
         /// <param name="_adress"></param>
-        public BusStation(int _code, double _lat, double _long, string _adress = "")
+        public BusStation(int _code, double _lat, double _long, string _adress = "") 
         {
-
+            
             SetStationCode(_code);
             SetLatitude(_lat);
             SetLongitude(_long);
@@ -87,9 +87,7 @@ namespace dotNet5781_02_6671_6650
                 Latitude = (double)latitude;
                 return;
             }
-            var rand = Random.NextDouble();
-
-            Latitude = rand * 2.3 + 31;
+            Latitude = double.Parse(Random.NextDouble().ToString()) * 2.3 + 31;
         }
 
         /// <summary>
@@ -105,8 +103,7 @@ namespace dotNet5781_02_6671_6650
                 Longitude = (double)longitude;
                 return;
             }
-            var rand = Random.NextDouble();
-            Longitude = rand * 1.2 + 34.3;
+            Longitude = double.Parse(Random.NextDouble().ToString()) * 1.2 + 34.3;
         }
         #endregion
     }

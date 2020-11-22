@@ -26,7 +26,7 @@ namespace dotNet5781_03A_6671_6650
 
         private BusLine currentDisplayBusLine;
 
-        public Random Random = new Random(DateTime.Now.Millisecond);
+        public volatile Random Random = new Random(DateTime.Now.Millisecond);
 
         /// <summary>
         /// 
@@ -40,7 +40,7 @@ namespace dotNet5781_03A_6671_6650
             tbArea.DataContext = currentDisplayBusLine.Area;
 
         }
-        
+
 
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace dotNet5781_03A_6671_6650
             {
                 if (item.IsExist(stopCode))
                 {
-                    lines[line].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)), pos);
+                    lines[line].AddStop(new BusStop( stopCode,item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Latitude, item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Longitude), pos);
                     return true;
                 }
             }
@@ -79,28 +79,25 @@ namespace dotNet5781_03A_6671_6650
 
                 InitializeComponent();
                 List<BusStop> stops = new List<BusStop>();
-                for (int i = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
                 {
-                    lines.Add(new BusLine(Random.Next(i, 999)));
-                    stops.Add(new BusStop(Random.Next(0, 1000000)));
-                    lines.LastOrDefault().AddStop(stops.LastOrDefault(),lines.LastOrDefault().LineStations.Count);
-
-
+                    lines.Add(new BusLine(Random.Next(j, 999)));
+                    for (int i = 0; i < 10; i++)
+                    {
+                        BusStop stop = new BusStop((i + j + 300), Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
+                        if (isNewExist(lines.Last().LineKey, stop.StationCode, lines.Last().LineStations.Count))
+                            continue;
+                        lines.Last().AddStop(stop, lines.Last().LineStations.Count);
+                    }
                 }
                 foreach (BusLine item in lines)
                 {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        BusStop stop = new BusStop(i + 300, Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
-                        if (isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 1))
-                            continue;
-                        item.AddStop(stop, item.LineStations.Count - 1);
-                    }
+
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show( e.ToString());
+                MessageBox.Show(e.GetType().ToString() + ' ' + e.Message.ToString());
 
             }
             cbBusLines.ItemsSource = lines;
@@ -109,6 +106,6 @@ namespace dotNet5781_03A_6671_6650
             ShowBusline(lines.FirstOrDefault().LineKey);
         }
 
-        
+
     }
 }
