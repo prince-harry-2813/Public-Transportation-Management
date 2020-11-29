@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject>dotNet5781_03A_6671_6650.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Route.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
@@ -106,6 +109,12 @@
       <Project>{5d696ed7-2766-4cde-b2e1-116c49a928f8}</Project>
       <Name>dotNet5781_02_6671_6650</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Route.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Route.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
