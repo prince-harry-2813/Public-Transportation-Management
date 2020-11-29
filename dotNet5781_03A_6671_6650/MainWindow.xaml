@@ -56,15 +56,16 @@
                 FontWeight="Bold" />
 
             <Label
+                
                 Name="chooseBusLabel"
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
+                HorizontalContentAlignment="Right"
                 VerticalContentAlignment="Center"
                 Content="Choose a line:"
                 FontFamily="Nirmala UI"
-                FontSize="18"
+                FontSize="14"
                 FontWeight="Bold" />
         </Grid>
         <ListBox
