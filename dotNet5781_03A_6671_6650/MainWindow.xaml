@@ -6,7 +6,7 @@
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:local="clr-namespace:dotNet5781_03A_6671_6650"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    Title="Lines info"
     Width="800"
     Height="640"
     mc:Ignorable="d">
@@ -94,9 +94,14 @@
                 <DataTemplate>
                     <Border
                         HorizontalAlignment="Stretch"
-                        BorderThickness="1" BorderBrush="#FF4F14BF">
+                        BorderBrush="#FF4F14BF"
+                        BorderThickness="1">
 
-                        <Label Margin="2" Content="{Binding}" />
+                        <Label
+                            Margin="2"
+                            Content="{Binding}"
+                            FontSize="15"
+                            Foreground="White" />
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
