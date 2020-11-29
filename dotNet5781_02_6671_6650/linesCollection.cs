@@ -28,11 +28,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
 
-        /// <summary>
-        /// an private collection of line service  
-        /// </summary>
-        private List<BusLine> busCollection = new List<BusLine>();
-        
+      public   List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
         /// </summary>
@@ -47,7 +43,10 @@ namespace dotNet5781_02_6671_6650
             return ((IEnumerable)busCollection).GetEnumerator();
         }
 
+        public LinesCollection()
+        {
 
+        }
 
         /// <summary>
         /// return list of lines that have a stop in the station
@@ -66,7 +65,6 @@ namespace dotNet5781_02_6671_6650
             }
             return linesOfStop.Count != 0 ? linesOfStop : throw new StationNotUsedException("Line over this Station: 0");
         }
-
         /// <summary>
         /// method to register new line in the system collection
         /// </summary>
@@ -85,18 +83,17 @@ namespace dotNet5781_02_6671_6650
 
             busCollection.Add(newer);
         }
-
         /// <summary>
         /// sort lines by time of riding
         /// </summary>
         /// <returns></returns>
         public LinesCollection SorterLines()
         {
+
             this.busCollection.Sort();
             this.GetEnumerator().Reset();
             return this;
         }
-
         /// <summary>
         /// remove line from system collection
         /// </summary>
@@ -106,6 +103,8 @@ namespace dotNet5781_02_6671_6650
             this.busCollection.Remove(delete);
             Console.WriteLine("Remove complete");
         }
+
+
 
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace dotNet5781_02_6671_6650
                         line.Add(item);
                     }
                 };
-                if (line.Count >= 1)
+                if (line.Count == 1)
                 {
                     return line.First<BusLine>();
                 }
@@ -136,8 +135,8 @@ namespace dotNet5781_02_6671_6650
                 }
                 else
                 {
-                    Console.WriteLine("There is tow direction for this line, return the default direction");
-                    return line.FirstOrDefault(bus => bus.LineKey == i);
+                    Console.WriteLine("There is tow direction for this line, To complete your operation please choose one by press 1 or 2");
+                    return line.ElementAt(int.Parse(Console.ReadLine()) - 1);
                 }
             }
         }

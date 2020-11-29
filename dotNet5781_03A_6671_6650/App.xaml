@@ -1,9 +1,8 @@
-﻿<Application x:Class="dotNet5781_03A_6671_6650.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:dotNet5781_03A_6671_6650"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-       
-    </Application.Resources>
+﻿<Application
+    x:Class="dotNet5781_03A_6671_6650.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:dotNet5781_03A_6671_6650"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources />
 </Application>
