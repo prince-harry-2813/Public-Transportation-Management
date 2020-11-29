@@ -13,13 +13,13 @@ namespace dotNet5781_02_6671_6650
     /// <summary>
     /// main class, with main methods 
     /// </summary>
-   public class Program
+    class Program   
     {
         #region properties
         /// <summary>
         /// initial collection of bus line
         /// </summary>
-        internal static LinesCollection systemCollection = new LinesCollection();
+        public static LinesCollection systemCollection = new LinesCollection();
 
         public static Random Random = new Random();
 
