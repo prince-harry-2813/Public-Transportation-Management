@@ -30,22 +30,41 @@ namespace dotNet5781_02_6671_6650
             LineKey = lineKey;
             FirstStation = new BusStop(firstStop);
             LastStaion = new BusStop(lastStop);
+            
         }
+        /// <summary>
+        /// Ctor with only line key argument, for initialize example bus line in main program.
+        /// </summary>
+        /// <param name="lineKey"></param>
         public BusLine(int lineKey)
         {
             LineKey = lineKey;
         }
+        /// <summary>
+        /// Ctor that accept Bus- stop argument for first and last station
+        /// </summary>
+        /// <param name="lineKey"></param>
+        /// <param name="first"></param>
+        /// <param name="last"></param>
+        public BusLine(int lineKey, BusStop first, BusStop last)
+        {
+            LineKey = lineKey;
+            FirstStation = new BusStop(first.StationCode, first.Latitude, first.Longitude, first.Address);
+            LastStaion = new BusStop(last.StationCode, last.Latitude, last.Longitude, last.Address);
+        }
+
+        #region Properties Declaration
+
         private int linekey;
         public int LineKey
         {
-            get => linekey; set
-            {
+            get => linekey;
+            set {
                 if (value < 1 && value > 999)
                     throw new ArgumentOutOfRangeException("Line code must be positive and less than four digits");
                 linekey = value;
             }
         }
-        #region Properties Declaration
 
         /// <summary>
         /// First station of bust route must open the station line
@@ -60,7 +79,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// Enumeration of services area
         /// </summary>
-        public Area Area { get; set; } = Area.General;
+        public Area Area { get; set ; } = Area.General;
 
 
         /// <summary>
@@ -69,6 +88,17 @@ namespace dotNet5781_02_6671_6650
         public List<BusStop> LineStations = new List<BusStop>();
         #endregion
 
+        /// <summary>
+        /// After updating the stops list recalculate the distance between the line stops 
+        /// </summary>
+        public void UpdatingDistance()
+        {
+            LineStations.First().Distance = 0;
+            for (int index = 1; index < LineStations.Count; index++)
+            {
+                LineStations.ElementAt(index).CalculateDistance(LineStations.ElementAt(index - 1));
+            }
+        }
         /// <summary>
         /// Add stop to route of the line 
         /// if index not passed insert the stop to the last station
@@ -85,21 +115,15 @@ namespace dotNet5781_02_6671_6650
             if (pos != null)
             {
                 LineStations.Insert((int)pos, stop);
-                if (pos > 0)
-                    LineStations.ElementAt((int)pos).CalculateDistance(LineStations.ElementAt((int)pos - 1));
-                if (pos < LineStations.Count - 1)
-                    LineStations.ElementAt((int)pos + 1).CalculateDistance(LineStations.ElementAt((int)pos));
+                UpdatingDistance();
                 return;
             }
             Console.WriteLine($"in this line there is {LineStations.Count} stations choose number within the range of 0 - {LineStations.Count}");
             int.TryParse(Console.ReadLine(), out int index);
             LineStations.Insert(index, stop);
-            if (index > 0)
-                LineStations.ElementAt(index).CalculateDistance(LineStations.ElementAt(index - 1));
-            if (index < LineStations.Count - 1)
-                LineStations.ElementAt(index + 1).CalculateDistance(LineStations.ElementAt(index));
-
+            UpdatingDistance();
         }
+
         /// <summary>
         /// remove stop from the line route
         /// </summary>
@@ -109,7 +133,9 @@ namespace dotNet5781_02_6671_6650
             if (!IsExist(stop))
                 throw new ArgumentOutOfRangeException($"There is no station number {stop} in this line route");
             LineStations.Remove(LineStations.FirstOrDefault(station => station.StationCode == stop));
+            UpdatingDistance();
         }
+        
         /// <summary>
         /// check if the stop in the route of this line
         /// </summary>
@@ -118,6 +144,7 @@ namespace dotNet5781_02_6671_6650
         {
             return LineStations.Any(BusStop => BusStop.StationCode == stationCode);
         }
+        
         /// <summary>
         /// calculate the distance between tow stations (Not necessarily close)
         /// </summary>
@@ -134,6 +161,7 @@ namespace dotNet5781_02_6671_6650
             }
             return distance;
         }
+        
         /// <summary>
         /// Calculate time of traveling from station to other(Not necessarily close)
         /// Calculate for Half of the Average driving range PH in urban area - Traffic lights etc. 
@@ -152,6 +180,7 @@ namespace dotNet5781_02_6671_6650
 
             return time;
         }
+        
         /// <summary>
         /// Return new line bus that have some of the current route stops
         /// </summary>
@@ -185,6 +214,7 @@ namespace dotNet5781_02_6671_6650
             return $"Line number :{LineKey}, activity Area: {Area:g}, \n list of station numbers:\n {stops}";
 
         }
+        
         /// <summary>
         /// implementation of comparable to compare time travel of buses from current stop to traveler destination 
         /// </summary>

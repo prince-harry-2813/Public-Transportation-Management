@@ -22,69 +22,86 @@ namespace dotNet5781_03A_6671_6650
     public partial class MainWindow : Window
     {
 
-        public BusLine currentDisplayBusLine;
-        public LinesCollection BusLines;
+        public LinesCollection lines = new LinesCollection();
 
-        public static Random Random = new Random();
+        private BusLine currentDisplayBusLine;
 
-        public MainWindow()
+        public volatile Random Random = new Random(DateTime.Now.Millisecond);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lineKey"></param>
+        private void ShowBusline(int lineKey)
         {
-            try
-            {
-                InitializeComponent();
-                BusLines = new LinesCollection() { };
+            currentDisplayBusLine = lines[lineKey];
+            UpGrid.DataContext = currentDisplayBusLine;
+            lbBusLineStation.DataContext = currentDisplayBusLine.LineStations;
+          
 
-                for (int i = 0; i < 20; i++)
-                {
-                    BusLines.Add(new BusLine(Random.Next(1, 999), Random.Next(1, 100), Random.Next(100, 200)));
-                }
-                foreach (BusLine item in BusLines)
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        BusStop stop = new BusStop(i + 300, Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
-                        if(isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 2))
-                         continue;
-                        item.AddStop(stop, item.LineStations.Count - 2);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message.ToString());
-            }
-
-            
-
-            cbBusLines.ItemsSource = BusLines;
-            cbBusLines.DisplayMemberPath = "LineKey";
-            cbBusLines.SelectedIndex = 0;
-            ShowBusLine(BusLines.FirstOrDefault().LineKey);
         }
 
-        private bool isNewExist(int lineKey, int stationCode, int v)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (BusLine item in BusLines)
+            ShowBusline((cbBusLines.SelectedValue as BusLine).LineKey);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="stopCode"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public bool isNewExist(int line, int stopCode, int? pos = null)
+        {
+            foreach (BusLine item in lines)
             {
-                if (item.IsExist(stationCode))
+                if (item.IsExist(stopCode))
                 {
-                    BusLines[lineKey].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stationCode)), v);
+                    lines[line].AddStop(new BusStop( stopCode,item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Latitude, item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Longitude), pos);
                     return true;
                 }
             }
             return false;
         }
 
-        private void ShowBusLine(int index)
+        public MainWindow()
         {
-            currentDisplayBusLine = BusLines[index];
-            UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStations.DataContext = currentDisplayBusLine.LineStations;
+            try
+            {
+
+
+                InitializeComponent();
+                for (int j = 0; j <= 20; j++)
+                {
+                    lines.Add(new BusLine(Random.Next(j, 999)));
+                    for (int i = 0; i <= 20; i++)
+                    {
+                        BusStop stop = new BusStop((i + j + 300), Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
+                        if (isNewExist(lines.Last().LineKey, stop.StationCode, lines.Last().LineStations.Count))
+                            continue;
+                        lines.Last().AddStop(stop, lines.Last().LineStations.Count);
+                    }
+                }
+                
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.GetType().ToString() + ' ' + e.Message.ToString());
+
+            }
+            cbBusLines.ItemsSource = lines;
+            cbBusLines.DisplayMemberPath = "LineKey";
+            cbBusLines.SelectedIndex = 0;
+            ShowBusline(lines.FirstOrDefault().LineKey);
         }
 
-        private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ShowBusLine((cbBusLines.SelectedValue as BusLine).LineKey);
-        }
+
     }
 }
