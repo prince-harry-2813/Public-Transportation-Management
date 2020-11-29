@@ -10,6 +10,12 @@
     Width="800"
     Height="640"
     mc:Ignorable="d">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Offset="0" Color="#FF8DD6DA" />
+            <GradientStop Offset="1" Color="#FFFCFCFC" />
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid x:Name="MainGrid" Margin="10">
         <Grid
             x:Name="UpGrid"
@@ -67,18 +73,34 @@
                 FontSize="14"
                 FontWeight="Bold" />
             <fa:ImageAwesome
-                Icon="Bus"
+                Margin="10"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Left">
-                
-            </fa:ImageAwesome>
+                Icon="Bus" />
         </Grid>
         <ListBox
             Name="lbBusLineStation"
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            ItemsSource="{Binding}" />
+            ItemsSource="{Binding}">
+            <ListBox.Background>
+                <LinearGradientBrush MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#FF296BBD" />
+                    <GradientStop Offset="0.606" Color="#FF2AD7DA" />
+                </LinearGradientBrush>
+            </ListBox.Background>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        HorizontalAlignment="Stretch"
+                        BorderThickness="1" BorderBrush="#FF4F14BF">
+
+                        <Label Margin="2" Content="{Binding}" />
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*" />
             <RowDefinition Height="400*" />

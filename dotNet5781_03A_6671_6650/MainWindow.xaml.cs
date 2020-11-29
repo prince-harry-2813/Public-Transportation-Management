@@ -78,11 +78,10 @@ namespace dotNet5781_03A_6671_6650
 
 
                 InitializeComponent();
-                List<BusStop> stops = new List<BusStop>();
-                for (int j = 0; j < 20; j++)
+                for (int j = 0; j <= 20; j++)
                 {
                     lines.Add(new BusLine(Random.Next(j, 999)));
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i <= 20; i++)
                     {
                         BusStop stop = new BusStop((i + j + 300), Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
                         if (isNewExist(lines.Last().LineKey, stop.StationCode, lines.Last().LineStations.Count))
@@ -90,10 +89,7 @@ namespace dotNet5781_03A_6671_6650
                         lines.Last().AddStop(stop, lines.Last().LineStations.Count);
                     }
                 }
-                foreach (BusLine item in lines)
-                {
-
-                }
+                
             }
             catch (Exception e)
             {
