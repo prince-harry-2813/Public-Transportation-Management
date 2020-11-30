@@ -24,7 +24,7 @@ namespace dotNet5781_03A_6671_6650
 
         public LinesCollection lines = new LinesCollection();
 
-        private BusLine currentDisplayBusLine;
+        private BusLine aq;
 
         public volatile Random Random = new Random(DateTime.Now.Millisecond);
 
@@ -34,11 +34,7 @@ namespace dotNet5781_03A_6671_6650
         /// <param name="lineKey"></param>
         private void ShowBusline(int lineKey)
         {
-            currentDisplayBusLine = lines[lineKey];
-            UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStation.DataContext = currentDisplayBusLine.LineStations;
-          
-
+            
         }
 
 

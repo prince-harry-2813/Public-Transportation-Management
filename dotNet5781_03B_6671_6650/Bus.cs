@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dotNet5781_03B_6671_6650.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,9 @@ namespace dotNet5781_03B_6671_6650
 {
     public class Bus : IComparable<Bus>
     {
+
+        public StatusEnum  BusStaus { get; set; }
+
         /// <summary>
         /// Date of last treatment
         /// enter dateTime.now
@@ -57,6 +61,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = maintenence;
             TotalKM = totalKM;
             LastTreatment = firstRegistration;
+            BusStaus = StatusEnum.Ok;
         }
         /// <summary>
         /// If bus can take a ride updating the data of the vehicle
@@ -207,6 +212,11 @@ namespace dotNet5781_03B_6671_6650
                 return 1;
             }
             else return -1;
+        }
+
+        public override string ToString()
+        {
+            return $"Bus Licence Number : {LicensNmuber}";
         }
     }
 }
