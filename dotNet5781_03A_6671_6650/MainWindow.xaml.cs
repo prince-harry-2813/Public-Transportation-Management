@@ -16,7 +16,7 @@ using dotNet5781_02_6671_6650;
 
 namespace dotNet5781_03A_6671_6650
 {
-    /// <summary>
+    /// <summary>          
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
@@ -34,7 +34,7 @@ namespace dotNet5781_03A_6671_6650
         /// <param name="lineKey"></param>
         private void ShowBusline(int lineKey)
         {
-            
+             
         }
 
 
