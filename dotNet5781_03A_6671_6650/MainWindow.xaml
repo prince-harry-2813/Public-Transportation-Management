@@ -101,7 +101,8 @@
                             Margin="2"
                             Content="{Binding}"
                             FontSize="15"
-                            Foreground="White" />
+                             />
+                        
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>

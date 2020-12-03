@@ -27,6 +27,8 @@ namespace dotNet5781_03B_6671_6650
     public partial class MainWindow : Window 
     {
         public List<Bus> BusesList { get; set; }
+        public delegate void refuleAction();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -48,7 +50,7 @@ namespace dotNet5781_03B_6671_6650
 
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine();  
         }
 
         private void LbBuses_SelectionChanged(object sender, SelectionChangedEventArgs e)

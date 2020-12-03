@@ -69,11 +69,9 @@ namespace dotNet5781_03A_6671_6650
 
         public MainWindow()
         {
+            InitializeComponent();
             try
             {
-
-
-                InitializeComponent();
                 for (int j = 0; j <= 20; j++)
                 {
                     lines.Add(new BusLine(Random.Next(j, 999)));
@@ -84,8 +82,7 @@ namespace dotNet5781_03A_6671_6650
                             continue;
                         lines.Last().AddStop(stop, lines.Last().LineStations.Count);
                     }
-                }
-                
+                }   
             }
             catch (Exception e)
             {
