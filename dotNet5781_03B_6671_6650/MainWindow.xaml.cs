@@ -1,4 +1,5 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
+using dotNet5781_03B_6671_6650.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using dotNet5781_03B_6671_6650.Content;
 namespace dotNet5781_03B_6671_6650
 {
 
@@ -26,22 +27,23 @@ namespace dotNet5781_03B_6671_6650
     /// </summary>
     public partial class MainWindow : Window 
     {
-        public List<Bus> BusesList { get; set; }
         public delegate void refuleAction();
-        
-        public MainWindow()
+       public static List<Bus> BusesList = BusCarsCollection.BusesCollection;
+
+       
+            public MainWindow()
         {
             InitializeComponent();
-            BusesList = new List<Bus>() ;
             InsertBus("87654321", DateTime.Now, 1200, DateTime.Now.Day - 10);
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 int z = i + int.Parse("87654321");
-                InsertBus(z.ToString() ,  DateTime.Now , 1200, DateTime.Now.Day - 10 + i);
+                InsertBus(z.ToString() ,  DateTime.Now , 1200, DateTime.Now.Day - 11 + i);
             }
             LbBuses.DataContext = BusesList;
-            LbBuses.SelectedItem = BusesList[0];
+            LbBuses.SelectedItem = BusesList;
         }
+
 
         private void ChooseBusButton_Click(object sender, RoutedEventArgs e)
         {
@@ -50,13 +52,9 @@ namespace dotNet5781_03B_6671_6650
 
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine();  
         }
 
-        private void LbBuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ShowBusline(4);
-        }
+        
 
         #region Initialization Methods
 
@@ -72,7 +70,11 @@ namespace dotNet5781_03B_6671_6650
         {
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
             if (BusesList.Exists((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
-                return;
+            {
+                MessageBox.Show("This license number already exist","Registration not complete",MessageBoxButton.OK,MessageBoxImage.Warning);
+                return; 
+                
+            }
             BusesList.Add(bus);
         }
         #endregion
@@ -83,6 +85,29 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="lineKey"></param>
         private void ShowBusline(int lineKey)
         {
+
+        }
+
+       
+
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.Hide();
+            Bus bus = e.Source as Bus;
+            BusDetails current = new BusDetails();
+            current.Show();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            AddBus newer = new AddBus();
+            newer.Show();
+        }
+
+        private void updateList(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
 
         }
     }

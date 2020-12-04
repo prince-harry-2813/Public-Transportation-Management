@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,9 +20,12 @@ namespace dotNet5781_03B_6671_6650.Views
     /// </summary>
     public partial class BusDetails : Window
     {
+
+
         public BusDetails()
         {
             InitializeComponent();
+            
         }
     }
 }

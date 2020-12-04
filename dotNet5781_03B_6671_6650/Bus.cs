@@ -16,7 +16,7 @@ namespace dotNet5781_03B_6671_6650
         /// Date of last treatment
         /// enter dateTime.now
         /// </summary>
-        public DateTime LastTreatment { get; private set; }
+        public DateTime LastTreatment { get; private set; } 
         /// <summary>
         /// Bus key,
         /// tow option to registration
@@ -41,7 +41,7 @@ namespace dotNet5781_03B_6671_6650
         /// <summary>
         /// Date of the get in to service 
         /// </summary>
-        public DateTime FirstRegistration { get; set; }
+        public DateTime FirstRegistration { get;private set; }
         //
         //
         //
@@ -63,6 +63,15 @@ namespace dotNet5781_03B_6671_6650
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
         }
+        public Bus() 
+        { }
+        
+        public void SetFirstRegistration (DateTime date)
+        {
+            FirstRegistration = date;
+            LastTreatment = date;
+        }
+        
         /// <summary>
         /// If bus can take a ride updating the data of the vehicle
         /// </summary>
@@ -150,11 +159,13 @@ namespace dotNet5781_03B_6671_6650
                 LicensNmuber = number.ToString();
             else
             {
+                System.Windows.MessageBox.Show("Car license doesn't match to year of registered","Date mismatch",System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
                 Console.WriteLine("Car license doesn't match to year of registered");
                 return false;
 
             }
             return true;
+            
         }
 
         /// <summary>
@@ -216,7 +227,7 @@ namespace dotNet5781_03B_6671_6650
 
         public override string ToString()
         {
-            return $"Bus Licence Number : {LicensNmuber}";
+            return $"Bus License Number : {LicensNmuber}";
         }
     }
 }
