@@ -119,6 +119,7 @@ namespace dotNet5781_03B_6671_6650
             //thread.Start();
             BusDetails current = new BusDetails(bus.DataContext as Bus);
             current.Show();
+            this.Hide();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

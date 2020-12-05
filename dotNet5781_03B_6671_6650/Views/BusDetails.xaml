@@ -9,6 +9,7 @@
     xmlns:fa="http://schemas.fontawesome.com/icons/"
     Width="600"
     Height="379.6"
+    Closing="Window_Closing"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
     <StackPanel

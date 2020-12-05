@@ -59,7 +59,7 @@ namespace dotNet5781_03B_6671_6650.Views
             });
             busPropertyInfos.Add(new BusPropertyInfo
             {
-                PropertyKey = "Licens Nmuber :"
+                PropertyKey = "License Number :"
                ,
                 PropertyValue = SelectedBus.LicensNmuber.ToString(),
             });
@@ -101,6 +101,11 @@ namespace dotNet5781_03B_6671_6650.Views
                 Thread.Sleep(6 * 24 * 1000);
                 SelectedBus.BusStaus = StatusEnum.Ok;
             });
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.Current.MainWindow.Show();
         }
     }
 
