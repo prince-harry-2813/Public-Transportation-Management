@@ -35,7 +35,7 @@ namespace dotNet5781_03B_6671_6650.Converters
                         break;
                     case StatusEnum.Warning:
                         color = new SolidColorBrush(Colors.Yellow);
-                        break;
+                        break;  
                     default:
                         color = new SolidColorBrush(Colors.White);
                         break;

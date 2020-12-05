@@ -96,18 +96,20 @@
                         </Grid.ColumnDefinitions>
 
                         <Label
+                            MinWidth="150"
                             FontWeight="Heavy"
                             HorizontalAlignment="Left"
                             FontSize="8pt"
                             Content="{Binding PropertyKey}">
                         </Label>
                         <Label
+                            MinWidth="150"
                             BorderBrush="Black"
                             BorderThickness="0.5"
                             HorizontalAlignment="Left"
                             Grid.Column="1"
                             FontSize="8pt"
-                            Content="{Binding PropertyValue}">
+                            Content="{Binding PropertyValue , NotifyOnSourceUpdated=True}">
                         </Label>
                     </Grid>
                 </DataTemplate>

@@ -67,6 +67,7 @@ namespace dotNet5781_03B_6671_6650
 
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         
@@ -93,14 +94,6 @@ namespace dotNet5781_03B_6671_6650
             BusesList.Add(bus);
         }
         #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="lineKey"></param>
-      
-
-       
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
