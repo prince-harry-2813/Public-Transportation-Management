@@ -1,6 +1,8 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,15 +23,76 @@ namespace dotNet5781_03B_6671_6650.Views
     /// <summary>
     /// Interaction logic for BusDetails.xaml
     /// </summary>
-    public partial class BusDetails : Window
+    public partial class BusDetails : Window , INotifyPropertyChanged
     {
-        public Bus SelectedBus { get; set; }
-        List<BusPropertyInfo> busPropertyInfos { get; set; } = new List<BusPropertyInfo>();
+        private Bus _selectedBus;
+        public Bus SelectedBus
+        {
+            get { return _selectedBus; }
+            set {
+                _selectedBus = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus")); }
+        }
+        ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
 
         public BusDetails(Bus bus)
         {
+            InitializeComponent();
+            ShowBusDetalis(bus);
+        }
 
-            SelectedBus = bus;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, e);
+            }
+        }
+
+        private void RefuleButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedBus.ReFuelBus();
+            SelectedBus.BusStaus = StatusEnum.NOk;
+            ShowBusDetalis(SelectedBus);
+            Thread thread = new Thread(() =>
+            {
+                Thread.Sleep(1200);
+            });
+
+            thread.Start();
+
+
+            //Task.Factory.StartNew(() =>
+            //{
+            //    var obj = Dispatcher.BeginInvoke(new Action(() => Thread.Sleep(12000)));
+            //    obj.Wait(); 
+
+            //    this.Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.NOk));
+            //    Thread.Sleep(12000);
+            //    Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.Ok));
+            //});
+        }
+
+        private void TreatmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedBus.MaintaineBus();
+            SelectedBus.BusStaus = StatusEnum.NOk;
+            ShowBusDetalis(SelectedBus);
+
+            Task.Factory.StartNew(() =>
+            {
+                this.Dispatcher.BeginInvoke(new Action(() => { SelectedBus.BusStaus = StatusEnum.NOk;
+                    ShowBusDetalis(SelectedBus); })).Wait();
+                Thread.Sleep(6 * 24 * 1000);
+                //SelectedBus.BusStaus = StatusEnum.Ok;
+            });
+        }
+
+        public void ShowBusDetalis(Bus bus)
+        {
+            busPropertyInfos.Clear();
+            SelectedBus = new Bus(bus);
             busPropertyInfos.Add(new BusPropertyInfo
             {
                 PropertyKey = "Bus Status :"
@@ -77,30 +140,7 @@ namespace dotNet5781_03B_6671_6650.Views
                ,
                 PropertyValue = SelectedBus.TotalKM.ToString(),
             });
-            InitializeComponent();
             lbBusDetails.ItemsSource = busPropertyInfos;
-            //PropertyInfo propertyInfo;
-            //propertyInfo.
-        }
-
-        private void RefuleButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedBus.ReFuelBus();
-            Task.Factory.StartNew(() => {
-                SelectedBus.BusStaus = StatusEnum.NOk;
-                Thread.Sleep(12000);
-                SelectedBus.BusStaus = StatusEnum.Ok;
-            });
-        }
-
-        private void TreatmentButton_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedBus.MaintaineBus();
-            Task.Factory.StartNew(() => {
-                SelectedBus.BusStaus = StatusEnum.NOk;
-                Thread.Sleep(6 * 24 * 1000);
-                SelectedBus.BusStaus = StatusEnum.Ok;
-            });
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

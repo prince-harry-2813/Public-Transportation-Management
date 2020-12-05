@@ -63,6 +63,18 @@ namespace dotNet5781_03B_6671_6650
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
         }
+
+        public Bus(Bus bus)
+        {
+            FirstRegistration = bus.FirstRegistration;
+            SetLicenseNumber(bus.LicensNmuber);
+            Fuel = bus.Fuel;
+            Maintenance = bus.Maintenance;
+            TotalKM = bus.TotalKM;
+            LastTreatment = bus.FirstRegistration;
+            BusStaus = bus.BusStaus;
+        }
+
         public Bus() 
         { }
         
