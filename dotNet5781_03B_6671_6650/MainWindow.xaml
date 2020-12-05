@@ -101,7 +101,6 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            DataContextChanged="updateList"
             ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

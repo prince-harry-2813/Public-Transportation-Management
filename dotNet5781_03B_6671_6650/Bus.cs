@@ -227,7 +227,7 @@ namespace dotNet5781_03B_6671_6650
 
         public override string ToString()
         {
-            return $"Bus License Number : {LicensNmuber}";
+            return $"Bus License Number : {DisplayBusNumber()}";
         }
     }
 }

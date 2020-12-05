@@ -34,11 +34,11 @@ namespace dotNet5781_03B_6671_6650
             public MainWindow()
         {
             InitializeComponent();
-            InsertBus("87654321", DateTime.Now, 1200, DateTime.Now.Day - 10);
+            InsertBus("87654321", DateTime.Now, 1200);
             for (int i = 1; i < 10; i++)
             {
                 int z = i + int.Parse("87654321");
-                InsertBus(z.ToString() ,  DateTime.Now , 1200, DateTime.Now.Day - 11 + i);
+                InsertBus(z.ToString() ,  DateTime.Now , 1200);
             }
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
@@ -47,7 +47,19 @@ namespace dotNet5781_03B_6671_6650
 
         private void ChooseBusButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Hide();
+            Button button = sender as Button;
+            Bus busToRide = button.DataContext as Bus;
+            if((int)busToRide.BusStaus !=1)
+            {
+                MessageBox.Show("this bus is current unavailable", "Cannot take a ride",MessageBoxButton.OK,MessageBoxImage.Warning);
+                this.Show();
+            }
+            else
+            {
+                AddRideDistance addRide = new AddRideDistance(busToRide);
+                addRide.Show();
+            }
         }
 
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
@@ -83,10 +95,7 @@ namespace dotNet5781_03B_6671_6650
         /// 
         /// </summary>
         /// <param name="lineKey"></param>
-        private void ShowBusline(int lineKey)
-        {
-
-        }
+      
 
        
 
@@ -105,10 +114,6 @@ namespace dotNet5781_03B_6671_6650
             newer.Show();
         }
 
-        private void updateList(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
-
-        }
+       
     }
 }

@@ -36,7 +36,9 @@
                     FontFamily="Nirmala UI"
                     FontWeight="Bold"
                     RenderTransformOrigin="0.497,1.829" />
-                <DatePicker Name="RegistrationDate" />
+                <DatePicker 
+                    
+                    Name="RegistrationDate" />
 
             </WrapPanel>
             <WrapPanel
@@ -64,7 +66,6 @@
                     LostKeyboardFocus="checkLicense"
                     MaxLength="8"
                     PreviewTextInput="NumbersValidation"
-                    RenderTransformOrigin="0.589,1.267"
                     TextWrapping="Wrap" />
 
             </WrapPanel>

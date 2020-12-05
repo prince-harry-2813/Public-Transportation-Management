@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using dotNet5781_03B_6671_6650.Content;
+using System;
 using System.Collections.ObjectModel;
-
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using dotNet5781_03B_6671_6650;
-using dotNet5781_03B_6671_6650.Content;
 
 namespace dotNet5781_03B_6671_6650.Views
 {
@@ -27,10 +15,13 @@ namespace dotNet5781_03B_6671_6650.Views
 
         private Bus temp = new Bus();
 
+        bool isClosed;
 
         public AddBus()
         {
             InitializeComponent();
+            isClosed = false;
+            
             licenseNumBox.Focus();
 
         }
@@ -41,6 +32,7 @@ namespace dotNet5781_03B_6671_6650.Views
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            isClosed = true;
             App.Current.MainWindow.Show();
 
         }
@@ -52,19 +44,30 @@ namespace dotNet5781_03B_6671_6650.Views
         /// <param name="e"></param>
         private void checkLicense(object sender, RoutedEventArgs e)
         {
-            if (licenseNumBox.Text.Length < 7 && !licenseNumBox.Focusable)
+
+            if (licenseNumBox.Text.Length < 7 && !isClosed
+                //&& !licenseNumBox.Focusable
+                )
             {
 
                 licenseNumBox.Text = "";
                 MessageBox.Show("Please enter valid number, must contain at least 7 digits");
                 licenseNumBox.Focus();
-
             }
-
+            else if (licenseNumBox.Text.Length == 7) 
+            {
+                RegistrationDate.DisplayDateEnd = new DateTime(2017, 12, 31);
+                RegistrationDate.DisplayDateStart = new DateTime(2000, 1, 1);
+            }
+            else
+            {
+                RegistrationDate.DisplayDateStart = new DateTime(2018, 01, 01);
+                RegistrationDate.DisplayDateEnd = DateTime.Now;
+            }
             licenseNumBox.Focus();
 
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -83,15 +86,26 @@ namespace dotNet5781_03B_6671_6650.Views
         /// <param name="e"></param>
         private void enterKey(object sender, KeyEventArgs e)
         {
-            if (e.Key==Key.Enter)
+            if (e.Key == Key.Enter)
             {
-                if (licenseNumBox.Text.Length>=7)
+                if (licenseNumBox.Text.Length >= 7)
                 {
                     temp.SetFirstRegistration(RegistrationDate.DisplayDate);
-                  if (temp.SetLicenseNumber(licenseNumBox.Text)) 
+                    if (temp.SetLicenseNumber(licenseNumBox.Text))
                     {
-                        MessageBox.Show("Added successfully", "Bus Added", MessageBoxButton.OK, MessageBoxImage.Information);
                         ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
+
+                        foreach (Bus bus in carsCollection)
+                        {
+                            if (bus.LicensNmuber == licenseNumBox.Text)
+                            {
+                                licenseNumBox.Text = "";
+                                MessageBox.Show("This License number already exist in system");
+                                return;
+                            }
+                        }
+                        MessageBox.Show("Added successfully", "Bus Added", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         carsCollection.Add(new Bus(temp.LicensNmuber, temp.FirstRegistration));
                         this.Close();
 
