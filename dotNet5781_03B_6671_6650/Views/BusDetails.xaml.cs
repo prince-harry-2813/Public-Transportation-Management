@@ -86,17 +86,21 @@ namespace dotNet5781_03B_6671_6650.Views
         private void RefuleButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedBus.ReFuelBus();
-            SelectedBus.BusStaus = StatusEnum.NOk;
-            Thread.Sleep(12000);
-            SelectedBus.BusStaus = StatusEnum.Ok;
+            Task.Factory.StartNew(() => {
+                SelectedBus.BusStaus = StatusEnum.NOk;
+                Thread.Sleep(12000);
+                SelectedBus.BusStaus = StatusEnum.Ok;
+            });
         }
 
         private void TreatmentButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedBus.MaintaineBus();
-            SelectedBus.BusStaus = StatusEnum.NOk;
-            Thread.Sleep(6 * 24 * 1000);
-            SelectedBus.BusStaus = StatusEnum.Ok;
+            Task.Factory.StartNew(() => {
+                SelectedBus.BusStaus = StatusEnum.NOk;
+                Thread.Sleep(6 * 24 * 1000);
+                SelectedBus.BusStaus = StatusEnum.Ok;
+            });
         }
     }
 
