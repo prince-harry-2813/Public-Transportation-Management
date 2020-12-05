@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,16 @@ namespace dotNet5781_03B_6671_6650.Content
     {
         private BusCarsCollection()
         {
-            BusesCollection = new List<Bus>();
+           ObservableCollection<Bus> BusesCollection = new ObservableCollection<Bus>();
 
         }
          static BusCarsCollection()
         {
-            BusesCollection = new List<Bus>();
+            BusesCollection = new ObservableCollection<Bus>();
         }
         private static readonly object obj = new object();
         private static BusCarsCollection instance = null;
-        public static List<Bus> BusesCollection { get; set; }
+        public static ObservableCollection<Bus> BusesCollection { get; set; }
         public static BusCarsCollection Instance
         {
             get

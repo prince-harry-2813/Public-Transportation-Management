@@ -28,7 +28,7 @@ namespace dotNet5781_03B_6671_6650
     public partial class MainWindow : Window 
     {
         public delegate void refuleAction();
-       public static List<Bus> BusesList = BusCarsCollection.BusesCollection;
+       public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
 
        
             public MainWindow()
@@ -69,7 +69,7 @@ namespace dotNet5781_03B_6671_6650
         public void InsertBus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
         {
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
-            if (BusesList.Exists((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
+            if (BusesList.Any((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
             {
                 MessageBox.Show("This license number already exist","Registration not complete",MessageBoxButton.OK,MessageBoxImage.Warning);
                 return; 

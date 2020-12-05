@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -89,7 +91,7 @@ namespace dotNet5781_03B_6671_6650.Views
                   if (temp.SetLicenseNumber(licenseNumBox.Text)) 
                     {
                         MessageBox.Show("Added successfully", "Bus Added", MessageBoxButton.OK, MessageBoxImage.Information);
-                        List<Bus> carsCollection = BusCarsCollection.BusesCollection;
+                        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
                         carsCollection.Add(new Bus(temp.LicensNmuber, temp.FirstRegistration));
                         this.Close();
 
