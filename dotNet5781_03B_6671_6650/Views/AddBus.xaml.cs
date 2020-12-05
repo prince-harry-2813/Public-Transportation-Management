@@ -105,7 +105,6 @@ namespace dotNet5781_03B_6671_6650.Views
                             }
                         }
                         MessageBox.Show("Added successfully", "Bus Added", MessageBoxButton.OK, MessageBoxImage.Information);
-
                         carsCollection.Add(new Bus(temp.LicensNmuber, temp.FirstRegistration));
                         this.Close();
 
