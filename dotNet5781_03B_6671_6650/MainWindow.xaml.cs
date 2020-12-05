@@ -93,8 +93,9 @@ namespace dotNet5781_03B_6671_6650
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Hide();
-            Bus bus = e.Source as Bus;
-            BusDetails current = new BusDetails();
+            Label bus = sender as Label;
+            
+            BusDetails current = new BusDetails(bus.DataContext as Bus);
             current.Show();
         }
 
