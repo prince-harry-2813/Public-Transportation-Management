@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.ObjectModel;
+
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -24,7 +26,7 @@ namespace dotNet5781_03B_6671_6650.Views
     public partial class BusDetails : Window
     {
         public Bus SelectedBus { get; set; }
-        List<BusPropertyInfo> busPropertyInfos { get; set; } = new List<BusPropertyInfo>();
+       ObservableCollection <BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
 
         public BusDetails(Bus bus)
         {

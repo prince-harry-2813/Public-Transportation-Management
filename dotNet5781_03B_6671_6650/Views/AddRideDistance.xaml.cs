@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,8 +42,11 @@ namespace dotNet5781_03B_6671_6650.Views
                 {
                     
                     this.bus.UpdateRide(int.Parse(DistanceOfRide.Text));
+                    Thread.Sleep(int.Parse(DistanceOfRide.Text)/ 50*1000*6);
                     MessageBox.Show("Ride confirm", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                  
                     this.Close();
+
                 }
                 else 
                 {
