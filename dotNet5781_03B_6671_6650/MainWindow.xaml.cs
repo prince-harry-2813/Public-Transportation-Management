@@ -19,6 +19,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using dotNet5781_03B_6671_6650.Content;
+using System.Threading;
+using System.Windows.Threading;
+
 namespace dotNet5781_03B_6671_6650
 {
 
@@ -101,9 +104,20 @@ namespace dotNet5781_03B_6671_6650
 
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.Hide();
-            Bus bus = e.Source as Bus;
-            BusDetails current = new BusDetails();
+            ////this.Hide();
+            Label bus = sender as Label;
+            //Thread thread = new Thread(() =>
+            //{
+            //    BusDetails current = new BusDetails(bus.DataContext as Bus);
+            //    current.Show();
+            //    SynchronizationContext.SetSynchronizationContext(
+            //        new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+            //    Dispatcher.Run();
+                
+            //});
+            //thread.SetApartmentState(ApartmentState.STA);
+            //thread.Start();
+            BusDetails current = new BusDetails(bus.DataContext as Bus);
             current.Show();
         }
 
