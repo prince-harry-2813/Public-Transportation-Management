@@ -80,6 +80,10 @@ namespace dotNet5781_03B_6671_6650
         {
             SetTotalKM(km);
             Fuel -= km;
+            if (Fuel==0||TotalKM-Maintenance==20000)
+            {
+                this.BusStaus = StatusEnum.Warning;
+            }
         }
         /// <summary>
         /// Sets the bus total KM and avoid decreasing its value 
