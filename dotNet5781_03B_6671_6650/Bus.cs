@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace dotNet5781_03B_6671_6650
@@ -17,7 +18,7 @@ namespace dotNet5781_03B_6671_6650
         /// Date of last treatment
         /// enter dateTime.now
         /// </summary>
-        public DateTime LastTreatment { get; private set; } 
+        public DateTime LastTreatment { get; private  set ;  } 
         /// <summary>
         /// Bus key,
         /// tow option to registration
@@ -43,9 +44,7 @@ namespace dotNet5781_03B_6671_6650
         /// Date of the get in to service 
         /// </summary>
         public DateTime FirstRegistration { get;private set; }
-        //
-        //
-        //
+        
         /// <summary>
         /// Ctor that accept at least tow param's for license and date
         /// if there is no other arguments initial default values.
@@ -64,7 +63,10 @@ namespace dotNet5781_03B_6671_6650
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
         }
-
+        /// <summary>
+        /// Copy Ctor 
+        /// </summary>
+        /// <param name="bus"></param>
         public Bus(Bus bus)
         {
             FirstRegistration = bus.FirstRegistration;
@@ -78,7 +80,10 @@ namespace dotNet5781_03B_6671_6650
 
         public Bus() 
         { }
-        
+        /// <summary>
+        /// Setter of First Registration 
+        /// </summary>
+        /// <param name="date"></param>
         public void SetFirstRegistration (DateTime date)
         {
             FirstRegistration = date;
@@ -93,10 +98,6 @@ namespace dotNet5781_03B_6671_6650
         {
             SetTotalKM(km);
             Fuel -= km;
-            if (Fuel==0||TotalKM-Maintenance==20000)
-            {
-                this.BusStaus = StatusEnum.InRefuling;
-            }
         }
         /// <summary>
         /// Sets the bus total KM and avoid decreasing its value 
@@ -128,11 +129,15 @@ namespace dotNet5781_03B_6671_6650
 
 
         /// <summary>
-        /// Refuel gas bus gas tank 
+        /// Refuel bus gas tank
+        /// simulate real time by using thread to run in background with waiting 
         /// </summary>
         public void ReFuelBus()
         {
             this.Fuel = 1200;
+            this.BusStaus = StatusEnum.InRefuling;
+            Thread.CurrentThread.Join(12000);
+            this.BusStaus = StatusEnum.Ok;
         }
 
         /// <summary>

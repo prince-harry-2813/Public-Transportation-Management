@@ -1,40 +1,29 @@
-﻿using dotNet5781_03B_6671_6650.Converters;
+﻿using dotNet5781_03B_6671_6650.Content;
 using dotNet5781_03B_6671_6650.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using dotNet5781_03B_6671_6650.Content;
-using System.Threading;
-using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
+    delegate void RefuleAction();
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public delegate void refuleAction();
-       public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
+        static RefuleAction refuleAction;
+
+        public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,21 +31,26 @@ namespace dotNet5781_03B_6671_6650
             for (int i = 1; i < 10; i++)
             {
                 int z = i + int.Parse("87654321");
-                InsertBus(z.ToString() ,  DateTime.Now , 1200);
+                InsertBus(z.ToString(), DateTime.Now, 1200);
             }
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
         }
 
-
+        /// <summary>
+        /// Button to operate ride. 
+        /// when click open new window of ride details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChooseBusButton_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
             Button button = sender as Button;
             Bus busToRide = button.DataContext as Bus;
-            if((int)busToRide.BusStaus !=1)
+            if ((int)busToRide.BusStaus != 1)
             {
-                MessageBox.Show("this bus is current unavailable", "Cannot take a ride",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("this bus is current unavailable", "Cannot take a ride", MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.Show();
             }
             else
@@ -68,10 +62,26 @@ namespace dotNet5781_03B_6671_6650
 
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
         {
+            Button refuelBtn = sender as Button;
+            Bus busToRefuel = refuelBtn.DataContext as Bus;
+            if ((int)busToRefuel.BusStaus == 3 || busToRefuel.Fuel == 1200)
+            {
+                MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
+            // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
+            new Thread(() =>
+            {
+                busToRefuel.ReFuelBus();
+                //                refuleAction();
+                // Thread.Sleep(12000);
+            }).Start();
+            busToRefuel.BusStaus = Converters.StatusEnum.Ok;
 
         }
 
-        
+
 
         #region Initialization Methods
 
@@ -88,9 +98,9 @@ namespace dotNet5781_03B_6671_6650
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
             if (BusesList.Any((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
             {
-                MessageBox.Show("This license number already exist","Registration not complete",MessageBoxButton.OK,MessageBoxImage.Warning);
-                return; 
-                
+                MessageBox.Show("This license number already exist", "Registration not complete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+
             }
             BusesList.Add(bus);
         }
@@ -107,7 +117,7 @@ namespace dotNet5781_03B_6671_6650
             //    SynchronizationContext.SetSynchronizationContext(
             //        new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
             //    Dispatcher.Run();
-                
+
             //});
             //thread.SetApartmentState(ApartmentState.STA);
             //thread.Start();
@@ -123,6 +133,6 @@ namespace dotNet5781_03B_6671_6650
             newer.Show();
         }
 
-       
+
     }
 }

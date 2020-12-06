@@ -1,20 +1,12 @@
 ﻿using dotNet5781_03B_6671_6650.Content;
 using dotNet5781_03B_6671_6650.Converters;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 
 namespace dotNet5781_03B_6671_6650.Views
 {
@@ -38,7 +30,7 @@ namespace dotNet5781_03B_6671_6650.Views
 
         public BusDetails(Bus bus)
         {
-            carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber);
+            SelectedBus = carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber);
             InitializeComponent();
             ShowBusDetalis(carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber));
         }
@@ -123,7 +115,7 @@ namespace dotNet5781_03B_6671_6650.Views
             {
                 PropertyKey = "Last Treatment :"
                ,
-                PropertyValue = SelectedBus.LastTreatment.ToString(),
+                PropertyValue = SelectedBus.LastTreatment.ToString("dd/MM/yyyy"),
 
             });
             busPropertyInfos.Add(new BusPropertyInfo

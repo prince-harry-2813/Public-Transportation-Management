@@ -38,7 +38,9 @@ namespace dotNet5781_03B_6671_6650.Views
         }
 
         /// <summary>
-        /// 
+        /// When the text box lost focus check if the input length is more then 7 digits
+        /// when input length is 7 digits the date picker configure to show dates between 2000 - 2018
+        /// when input length is 8 digits the date picker configure to show dates between 2018 - now
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -69,7 +71,7 @@ namespace dotNet5781_03B_6671_6650.Views
         }
 
         /// <summary>
-        /// 
+        /// Validate input of text box to accept only numbers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

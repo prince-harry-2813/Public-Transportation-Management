@@ -18,7 +18,8 @@ namespace dotNet5781_03B_6671_6650.Views
         }
 
         /// <summary>
-        /// 
+        /// Accept enter key press to proceed in ride operation.
+        /// enter work only if there is valid number of KM to drive
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
