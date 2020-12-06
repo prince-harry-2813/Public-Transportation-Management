@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace dotNet5781_03B_6671_6650.Views
 {
@@ -38,18 +26,18 @@ namespace dotNet5781_03B_6671_6650.Views
         {
             if (e.Key == Key.Enter)
             {
-                if (DistanceOfRide.Text != string.Empty && int.Parse(DistanceOfRide.Text)!=0 && this.bus.CanTakeRide(int.Parse(DistanceOfRide.Text)))
+                if (DistanceOfRide.Text != string.Empty && int.Parse(DistanceOfRide.Text) != 0 && this.bus.CanTakeRide(int.Parse(DistanceOfRide.Text)))
                 {
-                    
+
                     this.bus.UpdateRide(int.Parse(DistanceOfRide.Text));
                     MessageBox.Show("Ride confirm", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                  
+
                     this.Close();
 
                 }
-                else 
+                else
                 {
-                    MessageBox.Show("Cannot perform a ride","Error!",MessageBoxButton.OK,MessageBoxImage.Error);
+                    MessageBox.Show("Cannot perform a ride", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                     DistanceOfRide.Text = "";
                     DistanceOfRide.Focus();
                 }

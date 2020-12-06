@@ -1,4 +1,5 @@
-﻿using dotNet5781_03B_6671_6650.Converters;
+﻿using dotNet5781_03B_6671_6650.Content;
+using dotNet5781_03B_6671_6650.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,25 +15,23 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using dotNet5781_03B_6671_6650.Content;
 
 namespace dotNet5781_03B_6671_6650.Views
 {
     /// <summary>
     /// Interaction logic for BusDetails.xaml
     /// </summary>
-    public partial class BusDetails : Window , INotifyPropertyChanged
+    public partial class BusDetails : Window, INotifyPropertyChanged
     {
         private Bus _selectedBus;
         public Bus SelectedBus
         {
             get { return _selectedBus; }
-            set {
+            set
+            {
                 _selectedBus = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus")); }
+                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            }
         }
         ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
         ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
@@ -56,7 +55,7 @@ namespace dotNet5781_03B_6671_6650.Views
         private void RefuleButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedBus.ReFuelBus();
-            SelectedBus.BusStaus = StatusEnum.NOk;
+            SelectedBus.BusStaus = StatusEnum.InRefuling;
             ShowBusDetalis(SelectedBus);
             Thread thread = new Thread(() =>
             {
@@ -71,7 +70,7 @@ namespace dotNet5781_03B_6671_6650.Views
             //    var obj = Dispatcher.BeginInvoke(new Action(() => Thread.Sleep(12000)));
             //    obj.Wait(); 
 
-            //    this.Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.NOk));
+            //    this.Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.InRide));
             //    Thread.Sleep(12000);
             //    Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.Ok));
             //});
@@ -80,17 +79,21 @@ namespace dotNet5781_03B_6671_6650.Views
         private void TreatmentButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedBus.MaintaineBus();
-            SelectedBus.BusStaus = StatusEnum.NOk;
+            SelectedBus.BusStaus = StatusEnum.InMaintainceing;
             ShowBusDetalis(SelectedBus);
 
             Task.Factory.StartNew(() =>
             {
-                this.Dispatcher.BeginInvoke(new Action(() => { SelectedBus.BusStaus = StatusEnum.NOk;
-                    ShowBusDetalis(SelectedBus); })).Wait();
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    SelectedBus.BusStaus = StatusEnum.InMaintainceing;
+                    ShowBusDetalis(SelectedBus);
+                })).Wait();
                 Thread.Sleep(6 * 24 * 1000);
-                //SelectedBus.BusStaus = StatusEnum.Ok;
+                SelectedBus.BusStaus = StatusEnum.Ok;
             });
         }
+
 
         public void ShowBusDetalis(Bus bus)
         {

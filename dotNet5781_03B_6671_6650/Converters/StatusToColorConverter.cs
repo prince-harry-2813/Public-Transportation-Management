@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace dotNet5781_03B_6671_6650.Converters
 {
-    public enum StatusEnum 
+    /// <summary>
+    /// current Status of the bus
+    /// </summary>
+    public enum StatusEnum
     {
         Ok = 1,
-        NOk = 2,
-        Warning
+        InRide,
+        InRefuling,
+        InMaintainceing
     }
-
+/// <summary>
+///   converter from status of bus to current situation color 
+/// </summary>
     public class StatusToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,12 +32,15 @@ namespace dotNet5781_03B_6671_6650.Converters
                     case StatusEnum.Ok:
                         color = new SolidColorBrush(Colors.Green);
                         break;
-                    case StatusEnum.NOk:
+                    case StatusEnum.InRide:
                         color = new SolidColorBrush(Colors.Red);
                         break;
-                    case StatusEnum.Warning:
+                    case StatusEnum.InRefuling:
                         color = new SolidColorBrush(Colors.Yellow);
-                        break;  
+                        break;
+                    case StatusEnum.InMaintainceing:
+                        color = new SolidColorBrush(Colors.Chocolate);
+                        break;
                     default:
                         color = new SolidColorBrush(Colors.White);
                         break;
