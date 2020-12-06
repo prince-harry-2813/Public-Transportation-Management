@@ -10,7 +10,8 @@ namespace dotNet5781_03B_6671_6650
     public class Bus : IComparable<Bus>
     {
 
-        public StatusEnum  BusStaus { get; set; }
+        public StatusEnum  BusStaus 
+        { get; set; }
 
         /// <summary>
         /// Date of last treatment

@@ -4,10 +4,11 @@ namespace dotNet5781_03B_6671_6650.Content
 {
     public class BusCarsCollection
     {
+        
         private BusCarsCollection()
         {
             ObservableCollection<Bus> BusesCollection = new ObservableCollection<Bus>();
-
+           
         }
         static BusCarsCollection()
         {

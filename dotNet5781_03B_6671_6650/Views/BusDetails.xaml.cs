@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.ObjectModel;
-
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using dotNet5781_03B_6671_6650.Content;
 
 namespace dotNet5781_03B_6671_6650.Views
 {
@@ -36,11 +35,13 @@ namespace dotNet5781_03B_6671_6650.Views
                 OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus")); }
         }
         ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
+        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
 
         public BusDetails(Bus bus)
         {
+            carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber);
             InitializeComponent();
-            ShowBusDetalis(bus);
+            ShowBusDetalis(carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -94,7 +95,7 @@ namespace dotNet5781_03B_6671_6650.Views
         public void ShowBusDetalis(Bus bus)
         {
             busPropertyInfos.Clear();
-            SelectedBus = new Bus(bus);
+            SelectedBus = bus;
             busPropertyInfos.Add(new BusPropertyInfo
             {
                 PropertyKey = "Bus Status :"
@@ -106,7 +107,7 @@ namespace dotNet5781_03B_6671_6650.Views
             {
                 PropertyKey = "First Registration :"
               ,
-                PropertyValue = SelectedBus.FirstRegistration.ToString(),
+                PropertyValue = SelectedBus.FirstRegistration.ToString("dd/MM/yyyy"),
 
             }); busPropertyInfos.Add(new BusPropertyInfo
             {

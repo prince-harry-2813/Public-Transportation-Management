@@ -28,13 +28,14 @@ namespace dotNet5781_03B_6671_6650
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window 
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public delegate void refuleAction();
        public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
 
-       
-            public MainWindow()
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public MainWindow()
         {
             InitializeComponent();
             InsertBus("87654321", DateTime.Now, 1200);

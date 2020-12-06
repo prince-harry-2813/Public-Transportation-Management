@@ -44,7 +44,7 @@ namespace dotNet5781_03B_6671_6650.Views
         /// <param name="e"></param>
         private void checkLicense(object sender, RoutedEventArgs e)
         {
-
+            
             if (licenseNumBox.Text.Length < 7 && !isClosed
                 //&& !licenseNumBox.Focusable
                 )
@@ -59,7 +59,7 @@ namespace dotNet5781_03B_6671_6650.Views
                 RegistrationDate.DisplayDateEnd = new DateTime(2017, 12, 31);
                 RegistrationDate.DisplayDateStart = new DateTime(2000, 1, 1);
             }
-            else
+            else if(licenseNumBox.Text.Length == 8)
             {
                 RegistrationDate.DisplayDateStart = new DateTime(2018, 01, 01);
                 RegistrationDate.DisplayDateEnd = DateTime.Now;
@@ -99,8 +99,8 @@ namespace dotNet5781_03B_6671_6650.Views
                         {
                             if (bus.LicensNmuber == licenseNumBox.Text)
                             {
-                                licenseNumBox.Text = "";
                                 MessageBox.Show("This License number already exist in system");
+                                Console.WriteLine(sender);
                                 return;
                             }
                         }

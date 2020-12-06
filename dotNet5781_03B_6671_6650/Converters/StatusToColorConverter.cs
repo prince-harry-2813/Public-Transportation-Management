@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace dotNet5781_03B_6671_6650.Converters
 {
-    public enum StatusEnum
+    public enum StatusEnum 
     {
         Ok = 1,
         NOk = 2,
