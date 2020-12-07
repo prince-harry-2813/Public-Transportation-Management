@@ -135,9 +135,10 @@ namespace dotNet5781_03B_6671_6650
         public void ReFuelBus()
         {
             this.Fuel = 1200;
-            this.BusStaus = StatusEnum.InRefuling;
-            Thread.CurrentThread.Join(12000);
-            this.BusStaus = StatusEnum.Ok;
+
+          //  this.BusStaus = StatusEnum.InRefuling;
+          ////  Thread.CurrentThread.Join(5000);
+          //  this.BusStaus = StatusEnum.Ok;
         }
 
         /// <summary>

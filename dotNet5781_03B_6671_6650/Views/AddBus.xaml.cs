@@ -113,6 +113,18 @@ namespace dotNet5781_03B_6671_6650.Views
                     }
                 }
             }
+            if (e.Key == Key.Escape)
+                this.Close();
+        }
+
+        /// <summary>
+        /// allow to drag the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddBusWin_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

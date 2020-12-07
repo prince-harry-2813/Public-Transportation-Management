@@ -48,21 +48,34 @@
             VerticalAlignment="Center">
 
             <!--  Add bus Button  -->
-            <StackPanel HorizontalAlignment="Center">
+            <StackPanel Height="73" HorizontalAlignment="Center">
                 <Button
                     x:Name="AddButton"
-                    Height="30pt"
+                    Width="53"
+                    Height="46"
                     Margin="2"
-                    Click="AddButton_Click">
+                    Background="{x:Null}"
+                    BorderBrush="#FFFAFAFA"
+                    Click="AddButton_Click"
+                    Foreground="White" Padding="0,-4,0,0">
                     <Button.Content>
                         <fa:ImageAwesome
-                            Margin="2"
-                            Foreground="DarkBlue"
-                            Icon="Solid_Plus" />
+                            Width="43"
+                            Height="36"
+                            Margin="0"
+                            Icon="Solid_PlusSquare">
+                            <fa:ImageAwesome.Foreground>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="#FF28369D" />
+                                    <GradientStop Offset="1" Color="#FF5D65A0" />
+                                </LinearGradientBrush>
+                            </fa:ImageAwesome.Foreground>
+                        </fa:ImageAwesome>
                     </Button.Content>
                 </Button>
                 <Label
-                    Padding="2"
+                    Margin="0"
+                    Padding="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     VerticalContentAlignment="Top"
@@ -101,6 +114,7 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
+            DataContextChanged="FontAwesome_DataContextChanged"
             ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -114,7 +128,8 @@
 
                         <fa:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding BusStaus, Converter={StaticResource StatusToColorConverter}}"
+                            DataContextChanged="FontAwesome_DataContextChanged"
+                            Foreground="{Binding BusStaus, Converter={StaticResource StatusToColorConverter}, Mode=OneWay}"
                             Icon="Solid_Bus" />
 
                         <Label

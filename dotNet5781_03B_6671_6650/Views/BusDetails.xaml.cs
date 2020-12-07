@@ -36,6 +36,7 @@ namespace dotNet5781_03B_6671_6650.Views
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null)
@@ -46,15 +47,40 @@ namespace dotNet5781_03B_6671_6650.Views
 
         private void RefuleButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedBus.ReFuelBus();
-            SelectedBus.BusStaus = StatusEnum.InRefuling;
-            ShowBusDetalis(SelectedBus);
-            Thread thread = new Thread(() =>
+            if ((int)SelectedBus.BusStaus == 3 || SelectedBus.Fuel == 1200)
             {
-                Thread.Sleep(1200);
-            });
+                MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
+            //// refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
+            //new Thread(() =>
+            //{
+            //    SelectedBus.ReFuelBus();
 
-            thread.Start();
+            //    ShowBusDetalis(SelectedBus);
+
+            //    //                refuleAction();
+            //    // Thread.Sleep(12000);
+            //}).Start();
+            //SelectedBus.BusStaus = StatusEnum.Ok;
+            //ShowBusDetalis(SelectedBus);
+
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
+                );
+            SelectedBus.BusStaus = StatusEnum.InRefuling;
+            OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            ShowBusDetalis(SelectedBus);
+            backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += ((s, e2) =>
+            {
+                SelectedBus.BusStaus = StatusEnum.Ok;
+                SelectedBus.ReFuelBus();
+
+                ShowBusDetalis(SelectedBus);
+                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            });
 
 
             //Task.Factory.StartNew(() =>

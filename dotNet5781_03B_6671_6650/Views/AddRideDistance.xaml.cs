@@ -15,6 +15,9 @@ namespace dotNet5781_03B_6671_6650.Views
             InitializeComponent();
             this.bus = bus;
             DistanceOfRide.Text = "1";
+            DistanceOfRide.SelectAll();
+            DistanceOfRide.Focus();
+
         }
 
         /// <summary>
@@ -43,17 +46,25 @@ namespace dotNet5781_03B_6671_6650.Views
                     DistanceOfRide.Focus();
                 }
             }
+            if (e.Key == Key.Escape)
+                this.Close();
         }
 
         /// <summary>
-        /// using Regular expression to validate input with only digits
+        /// using Regular expression to validate input with only digits 
+        /// make sure that the number begin with larger than zero digit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DistanceOfRide_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            if (DistanceOfRide.Text.StartsWith("0"))
+                DistanceOfRide.Text = DistanceOfRide.Text.Substring(1);
+
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+
+
         }
         /// <summary>
         /// When this window closed show back main window
@@ -63,6 +74,15 @@ namespace dotNet5781_03B_6671_6650.Views
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             App.Current.MainWindow.Show();
+        }
+        /// <summary>
+        /// allow to drag the window 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

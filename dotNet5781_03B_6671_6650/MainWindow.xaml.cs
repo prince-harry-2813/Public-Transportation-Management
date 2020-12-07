@@ -1,4 +1,5 @@
 ﻿using dotNet5781_03B_6671_6650.Content;
+using dotNet5781_03B_6671_6650.Converters;
 using dotNet5781_03B_6671_6650.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -11,19 +12,19 @@ using System.Windows.Input;
 
 namespace dotNet5781_03B_6671_6650
 {
-    delegate void RefuleAction();
+   
+    //delegate void RefuleAction();
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        static RefuleAction refuleAction;
-
+        // static RefuleAction refuleAction;
         public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -71,14 +72,17 @@ namespace dotNet5781_03B_6671_6650
             }
             // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
             // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
-            new Thread(() =>
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
+                );
+            busToRefuel.BusStaus = StatusEnum.InRefuling;
+            backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
+                busToRefuel.BusStaus = StatusEnum.Ok;
                 busToRefuel.ReFuelBus();
-                //                refuleAction();
-                // Thread.Sleep(12000);
-            }).Start();
-            busToRefuel.BusStaus = Converters.StatusEnum.Ok;
 
+            });
         }
 
 
@@ -122,8 +126,8 @@ namespace dotNet5781_03B_6671_6650
             //thread.SetApartmentState(ApartmentState.STA);
             //thread.Start();
             BusDetails current = new BusDetails(bus.DataContext as Bus);
-            current.Show();
-            this.Hide();
+            current.ShowDialog();
+            // this.Hide();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -134,5 +138,11 @@ namespace dotNet5781_03B_6671_6650
         }
 
 
+
+        private void FontAwesome_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.WriteLine(sender as FontAwesome5.FontAwesome);
+
+        }
     }
 }
