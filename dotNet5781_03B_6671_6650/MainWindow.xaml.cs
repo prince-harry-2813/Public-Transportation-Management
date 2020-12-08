@@ -9,10 +9,11 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
-   
+
     //delegate void RefuleAction();
 
     /// <summary>
@@ -24,7 +25,7 @@ namespace dotNet5781_03B_6671_6650
         public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +37,67 @@ namespace dotNet5781_03B_6671_6650
             }
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
+        }
+
+        #region Initialization Methods
+
+        /// <summary>
+        /// Insert new instance of a bus by license number and first registration by mandatory and optional properties
+        /// </summary>
+        /// <param name="licensNumber"></param>
+        /// <param name="firstRegistration"></param>
+        /// <param name="fuel"></param>
+        /// <param name="maintenence"></param>
+        /// <param name="totalKM"></param>
+        public void InsertBus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
+        {
+            Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
+            if (BusesList.Any((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
+            {
+                MessageBox.Show("This license number already exist", "Registration not complete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+
+            }
+            BusesList.Add(bus);
+        }
+        #endregion
+
+        /// <summary>
+        /// when double clicked on bus car label open new window of details 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ////this.Hide();
+            Label bus = sender as Label;
+            //Thread thread = new Thread(() =>
+            //{
+            //    BusDetails current = new BusDetails(bus.DataContext as Bus);
+            //    current.Show();
+            //    SynchronizationContext.SetSynchronizationContext(
+            //        new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+            //    Dispatcher.Run();
+
+            //});
+            //thread.SetApartmentState(ApartmentState.STA);
+            //thread.Start();
+
+            BusDetails current = new BusDetails(bus.DataContext as Bus);
+            current.ShowDialog();
+            // this.Hide();
+        }
+
+        /// <summary>
+        /// open new window to add new bus to system
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            AddBus newer = new AddBus();
+            newer.Show();
         }
 
         /// <summary>
@@ -61,6 +123,11 @@ namespace dotNet5781_03B_6671_6650
             }
         }
 
+        /// <summary>
+        /// Refuel bus from main window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefuleBusButton_Click(object sender, RoutedEventArgs e)
         {
             Button refuelBtn = sender as Button;
@@ -85,64 +152,5 @@ namespace dotNet5781_03B_6671_6650
             });
         }
 
-
-
-        #region Initialization Methods
-
-        /// <summary>
-        /// Insert new instance of a bus by license number and first registration by mandatory and optional properties
-        /// </summary>
-        /// <param name="licensNumber"></param>
-        /// <param name="firstRegistration"></param>
-        /// <param name="fuel"></param>
-        /// <param name="maintenence"></param>
-        /// <param name="totalKM"></param>
-        public void InsertBus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
-        {
-            Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
-            if (BusesList.Any((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
-            {
-                MessageBox.Show("This license number already exist", "Registration not complete", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-
-            }
-            BusesList.Add(bus);
-        }
-        #endregion
-
-        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ////this.Hide();
-            Label bus = sender as Label;
-            //Thread thread = new Thread(() =>
-            //{
-            //    BusDetails current = new BusDetails(bus.DataContext as Bus);
-            //    current.Show();
-            //    SynchronizationContext.SetSynchronizationContext(
-            //        new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
-            //    Dispatcher.Run();
-
-            //});
-            //thread.SetApartmentState(ApartmentState.STA);
-            //thread.Start();
-            BusDetails current = new BusDetails(bus.DataContext as Bus);
-            current.ShowDialog();
-            // this.Hide();
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            AddBus newer = new AddBus();
-            newer.Show();
-        }
-
-
-
-        private void FontAwesome_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Console.WriteLine(sender as FontAwesome5.FontAwesome);
-
-        }
     }
 }

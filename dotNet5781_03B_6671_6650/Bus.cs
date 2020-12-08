@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
@@ -44,6 +45,8 @@ namespace dotNet5781_03B_6671_6650
         /// Date of the get in to service 
         /// </summary>
         public DateTime FirstRegistration { get;private set; }
+
+        public DispatcherTimer DispatcherTimerBus { get; set; } = new DispatcherTimer();
         
         /// <summary>
         /// Ctor that accept at least tow param's for license and date
@@ -62,6 +65,9 @@ namespace dotNet5781_03B_6671_6650
             TotalKM = totalKM;
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
+            this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
+            this.DispatcherTimerBus.Tick += DispatcherTimer_Tick;
+            DispatcherTimerBus.Start();
         }
         /// <summary>
         /// Copy Ctor 
@@ -76,6 +82,10 @@ namespace dotNet5781_03B_6671_6650
             TotalKM = bus.TotalKM;
             LastTreatment = bus.FirstRegistration;
             BusStaus = bus.BusStaus;
+            this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
+            this.DispatcherTimerBus.Tick += DispatcherTimer_Tick;
+            DispatcherTimerBus.Start();
+           
         }
 
         public Bus() 
@@ -98,7 +108,15 @@ namespace dotNet5781_03B_6671_6650
         {
             SetTotalKM(km);
             Fuel -= km;
+          
+
         }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// Sets the bus total KM and avoid decreasing its value 
         /// </summary>
@@ -250,7 +268,7 @@ namespace dotNet5781_03B_6671_6650
 
         public override string ToString()
         {
-            return $"Bus License Number : {DisplayBusNumber()}";
+            return $"{DisplayBusNumber()}";
         }
     }
 }
