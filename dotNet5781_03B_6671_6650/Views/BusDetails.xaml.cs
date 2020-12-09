@@ -42,6 +42,7 @@ namespace dotNet5781_03B_6671_6650.Views
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, e);
+                ShowBusDetalis(SelectedBus);
             }
         }
 
@@ -50,6 +51,11 @@ namespace dotNet5781_03B_6671_6650.Views
             if ((int)SelectedBus.BusStaus == 3 || SelectedBus.Fuel == 1200)
             {
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if ((int)SelectedBus.BusStaus != 1 && (int)SelectedBus.BusStaus != 3)
+            {
+                MessageBox.Show("This bus is busy right now","Can't perform operation",MessageBoxButton.OK,MessageBoxImage.Warning);
                 return;
             }
             // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
@@ -67,6 +73,9 @@ namespace dotNet5781_03B_6671_6650.Views
             //ShowBusDetalis(SelectedBus);
 
             BackgroundWorker backgroundWorker = new BackgroundWorker();
+            SelectedBus.CountDown = 12;
+            SelectedBus.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
+            SelectedBus.DispatcherTimerBus.Start();
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
             SelectedBus.BusStaus = StatusEnum.InRefuling;
@@ -75,11 +84,12 @@ namespace dotNet5781_03B_6671_6650.Views
             backgroundWorker.RunWorkerAsync();
             backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
+
                 SelectedBus.BusStaus = StatusEnum.Ok;
                 SelectedBus.ReFuelBus();
 
-                ShowBusDetalis(SelectedBus);
                 OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+                ShowBusDetalis(SelectedBus);
             });
 
 
@@ -92,6 +102,18 @@ namespace dotNet5781_03B_6671_6650.Views
             //    Thread.Sleep(12000);
             //    Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.Ok));
             //});
+        }
+
+        private void DispatcherTimerBus_Tick(object sender, EventArgs e)
+        {
+            if (SelectedBus.CountDown < 1)
+            {
+                SelectedBus.BusStaus = StatusEnum.Ok;
+                SelectedBus.DispatcherTimerBus.Stop();
+                return;
+            }
+            SelectedBus.CountDown = --SelectedBus.CountDown;
+            ShowBusDetalis(SelectedBus);
         }
 
         private void TreatmentButton_Click(object sender, RoutedEventArgs e)
@@ -164,7 +186,18 @@ namespace dotNet5781_03B_6671_6650.Views
                ,
                 PropertyValue = SelectedBus.TotalKM.ToString(),
             });
+            if (SelectedBus.CountDown > 0)
+            {
+                busPropertyInfos.Add(new BusPropertyInfo
+                {
+                    PropertyKey = "CountDown :"
+                   ,
+                    PropertyValue = SelectedBus.CountDown.ToString(),
+                });
+            }
             lbBusDetails.ItemsSource = busPropertyInfos;
+            
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

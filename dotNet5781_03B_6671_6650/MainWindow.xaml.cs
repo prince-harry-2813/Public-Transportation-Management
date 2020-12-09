@@ -37,6 +37,7 @@ namespace dotNet5781_03B_6671_6650
             }
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
+            
         }
 
         #region Initialization Methods
@@ -84,8 +85,8 @@ namespace dotNet5781_03B_6671_6650
             //thread.Start();
 
             BusDetails current = new BusDetails(bus.DataContext as Bus);
-            current.ShowDialog();
-            // this.Hide();
+            current.Show();
+             this.Hide();
         }
 
         /// <summary>
@@ -143,12 +144,15 @@ namespace dotNet5781_03B_6671_6650
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
             busToRefuel.BusStaus = StatusEnum.InRefuling;
+            busToRefuel.CountDown = 12;
+            busToRefuel.DispatcherTimerBus.Start();
             backgroundWorker.RunWorkerAsync();
             backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
                 busToRefuel.BusStaus = StatusEnum.Ok;
                 busToRefuel.ReFuelBus();
-
+                LbBuses.ItemsSource = BusesList;
+                
             });
         }
 

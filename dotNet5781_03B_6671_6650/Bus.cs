@@ -1,6 +1,7 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -47,7 +48,8 @@ namespace dotNet5781_03B_6671_6650
         public DateTime FirstRegistration { get;private set; }
 
         public DispatcherTimer DispatcherTimerBus { get; set; } = new DispatcherTimer();
-        
+
+        public int CountDown { get; set; } = 0; 
         /// <summary>
         /// Ctor that accept at least tow param's for license and date
         /// if there is no other arguments initial default values.
@@ -66,8 +68,6 @@ namespace dotNet5781_03B_6671_6650
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
             this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
-            this.DispatcherTimerBus.Tick += DispatcherTimer_Tick;
-            DispatcherTimerBus.Start();
         }
         /// <summary>
         /// Copy Ctor 
@@ -83,9 +83,7 @@ namespace dotNet5781_03B_6671_6650
             LastTreatment = bus.FirstRegistration;
             BusStaus = bus.BusStaus;
             this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
-            this.DispatcherTimerBus.Tick += DispatcherTimer_Tick;
-            DispatcherTimerBus.Start();
-           
+
         }
 
         public Bus() 
@@ -106,17 +104,15 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="km">KM to ride</param>
         public void UpdateRide(int km)
         {
+            this.BusStaus = StatusEnum.InRide;
             SetTotalKM(km);
             Fuel -= km;
-          
+            DispatcherTimerBus.Start();
+            CountDown = km /8;
 
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-
-        }
-
+        
         /// <summary>
         /// Sets the bus total KM and avoid decreasing its value 
         /// </summary>

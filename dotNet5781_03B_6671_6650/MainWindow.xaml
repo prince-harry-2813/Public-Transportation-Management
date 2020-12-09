@@ -10,6 +10,7 @@
     Title="Bus Mangment"
     Width="600"
     Height="450"
+    
     Background="WhiteSmoke"
     mc:Ignorable="d">
     <Window.Resources>
@@ -120,8 +121,8 @@
                 <DataTemplate>
                     <Grid Margin="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="16*"/>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -140,8 +141,9 @@
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding DispatcherTimerBus}"
-                            Foreground="Black" />
+                            Content="{Binding CountDown}"
+                            Foreground="Black"
+                            MouseDoubleClick="Label_MouseDoubleClick" />
                         <Button
                             Grid.Column="3"
                             Height="18pt"
