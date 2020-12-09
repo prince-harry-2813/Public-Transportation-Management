@@ -108,7 +108,7 @@ namespace dotNet5781_03B_6671_6650
             SetTotalKM(km);
             Fuel -= km;
             DispatcherTimerBus.Start();
-            CountDown = km /8;
+            CountDown = km /8; // 48 KM per Hour
 
         }
 
