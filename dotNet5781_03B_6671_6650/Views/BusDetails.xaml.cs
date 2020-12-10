@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace dotNet5781_03B_6671_6650.Views
@@ -15,7 +14,13 @@ namespace dotNet5781_03B_6671_6650.Views
     /// </summary>
     public partial class BusDetails : Window, INotifyPropertyChanged
     {
+
         private Bus _selectedBus;
+
+        ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
+        
+        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
+
         public Bus SelectedBus
         {
             get { return _selectedBus; }
@@ -25,27 +30,37 @@ namespace dotNet5781_03B_6671_6650.Views
                 OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
             }
         }
-        ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
-        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
 
+
+        /// <summary>
+        /// Ctor of window
+        /// initialize bus to show info from global collection
+        /// </summary>
+        /// <param name="bus">Bus instance to show</param>
         public BusDetails(Bus bus)
         {
-            SelectedBus = carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber);
             InitializeComponent();
+            SelectedBus = carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber);
             ShowBusDetalis(carsCollection.First(b => b.LicensNmuber == bus.LicensNmuber));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        /// <summary>
+        /// update view when property has changed
+        /// </summary>
+        /// <param name="e"></param>
         public void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, e);
+        { 
+                PropertyChanged?.Invoke(this, e);
                 ShowBusDetalis(SelectedBus);
-            }
+          
         }
 
+        /// <summary>
+        /// when refuel button has pressed start refuel process
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefuleButton_Click(object sender, RoutedEventArgs e)
         {
             if ((int)SelectedBus.BusStaus == 3 || SelectedBus.Fuel == 1200)
@@ -53,12 +68,12 @@ namespace dotNet5781_03B_6671_6650.Views
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if ((int)SelectedBus.BusStaus != 1 && (int)SelectedBus.BusStaus != 3)
+            if ((int)SelectedBus.BusStaus != 1 && (int)SelectedBus.BusStaus != 5)
             {
-                MessageBox.Show("This bus is busy right now","Can't perform operation",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("This bus is busy right now", "Can't perform operation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
+            // busToRefuel.BusStaus = Converters.StatusEnum.In_Refuling;
             //// refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
             //new Thread(() =>
             //{
@@ -78,14 +93,14 @@ namespace dotNet5781_03B_6671_6650.Views
             SelectedBus.DispatcherTimerBus.Start();
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
-            SelectedBus.BusStaus = StatusEnum.InRefuling;
+            SelectedBus.BusStaus = StatusEnum.In_Refuling;
             OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
             ShowBusDetalis(SelectedBus);
             backgroundWorker.RunWorkerAsync();
             backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
 
-                SelectedBus.BusStaus = StatusEnum.Ok;
+                SelectedBus.BusStaus  = StatusEnum.Ok;
                 SelectedBus.ReFuelBus();
 
                 OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
@@ -98,12 +113,16 @@ namespace dotNet5781_03B_6671_6650.Views
             //    var obj = Dispatcher.BeginInvoke(new Action(() => Thread.Sleep(12000)));
             //    obj.Wait(); 
 
-            //    this.Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.InRide));
+            //    this.Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.In_Ride));
             //    Thread.Sleep(12000);
             //    Dispatcher.Invoke(new Action(() => SelectedBus.BusStaus = StatusEnum.Ok));
             //});
         }
-
+        /// <summary>
+        /// when the timer has launched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DispatcherTimerBus_Tick(object sender, EventArgs e)
         {
             if (SelectedBus.CountDown < 1)
@@ -116,25 +135,45 @@ namespace dotNet5781_03B_6671_6650.Views
             ShowBusDetalis(SelectedBus);
         }
 
+        /// <summary>
+        /// when button pressed treatment bus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TreatmentButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedBus.MaintaineBus();
-            SelectedBus.BusStaus = StatusEnum.InMaintainceing;
-            ShowBusDetalis(SelectedBus);
 
-            Task.Factory.StartNew(() =>
+            if ((int)SelectedBus.BusStaus != 1 && (int)SelectedBus.BusStaus != 5)
             {
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    SelectedBus.BusStaus = StatusEnum.InMaintainceing;
-                    ShowBusDetalis(SelectedBus);
-                })).Wait();
-                Thread.Sleep(6 * 24 * 1000);
+                MessageBox.Show("This bus is busy right now", "Can't perform operation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            ///
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            SelectedBus.CountDown = 144;
+            SelectedBus.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
+            SelectedBus.DispatcherTimerBus.Start();
+            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(6 * 24 * 1000); }
+                );
+            SelectedBus.BusStaus = StatusEnum.In_Maintainceing;
+            OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            ShowBusDetalis(SelectedBus);
+            backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += ((s, e2) =>
+            {
+
                 SelectedBus.BusStaus = StatusEnum.Ok;
+                SelectedBus.MaintaineBus();
+
+                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+                ShowBusDetalis(SelectedBus);
             });
         }
 
-
+        /// <summary>
+        /// re initial bus info to show when property change
+        /// </summary>
+        /// <param name="bus"></param>
         public void ShowBusDetalis(Bus bus)
         {
             busPropertyInfos.Clear();
@@ -143,7 +182,7 @@ namespace dotNet5781_03B_6671_6650.Views
             {
                 PropertyKey = "Bus Status :"
                 ,
-                PropertyValue = SelectedBus.BusStaus.ToString(),
+                PropertyValue = SelectedBus.BusStaus.ToString().Replace('_',' '),
 
             });
             busPropertyInfos.Add(new BusPropertyInfo
@@ -175,28 +214,28 @@ namespace dotNet5781_03B_6671_6650.Views
 
             busPropertyInfos.Add(new BusPropertyInfo
             {
-                PropertyKey = "Maintenance :"
+                PropertyKey = "Maintenance was at :"
                ,
-                PropertyValue = SelectedBus.Maintenance.ToString(),
+                PropertyValue = SelectedBus.Maintenance.ToString() + " - KM",
             });
 
             busPropertyInfos.Add(new BusPropertyInfo
             {
                 PropertyKey = "Total KM :"
                ,
-                PropertyValue = SelectedBus.TotalKM.ToString(),
+                PropertyValue = SelectedBus.TotalKM.ToString() + " - KM",
             });
             if (SelectedBus.CountDown > 0)
             {
                 busPropertyInfos.Add(new BusPropertyInfo
                 {
-                    PropertyKey = "CountDown :"
+                    PropertyKey = "Count-Down :"
                    ,
                     PropertyValue = SelectedBus.CountDown.ToString(),
                 });
             }
             lbBusDetails.ItemsSource = busPropertyInfos;
-            
+
 
         }
 
@@ -206,9 +245,14 @@ namespace dotNet5781_03B_6671_6650.Views
         }
     }
 
-    class BusPropertyInfo
+    /// <summary>
+    /// Represent of bus info property
+    /// </summary>
+    class BusPropertyInfo 
     {
         public string PropertyKey { get; set; }
         public string PropertyValue { get; set; }
+
+     
     }
 }

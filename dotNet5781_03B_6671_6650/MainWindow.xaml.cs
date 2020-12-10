@@ -19,12 +19,10 @@ namespace dotNet5781_03B_6671_6650
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window 
     {
         // static RefuleAction refuleAction;
         public static ObservableCollection<Bus> BusesList = BusCarsCollection.BusesCollection;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow()
         {
@@ -35,9 +33,13 @@ namespace dotNet5781_03B_6671_6650
                 int z = i + int.Parse("87654321");
                 InsertBus(z.ToString(), DateTime.Now, 1200);
             }
+            BusesList.Add(new Bus("1234567", new DateTime(2011, 02, 03), new DateTime(2009, 02, 03), 1200, 0, 0, StatusEnum.Not_Available));
+            BusesList.Add(new Bus("1234568", new DateTime(2011, 02, 03), DateTime.Now, 1200,0, 19000, StatusEnum.Ok));
+            BusesList.Add(new Bus("1234569", new DateTime(2011, 02, 03), DateTime.Now, 90, 0, 0, StatusEnum.Ok));
+           
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
-            
+
         }
 
         #region Initialization Methods
@@ -70,23 +72,11 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="e"></param>
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ////this.Hide();
             Label bus = sender as Label;
-            //Thread thread = new Thread(() =>
-            //{
-            //    BusDetails current = new BusDetails(bus.DataContext as Bus);
-            //    current.Show();
-            //    SynchronizationContext.SetSynchronizationContext(
-            //        new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
-            //    Dispatcher.Run();
-
-            //});
-            //thread.SetApartmentState(ApartmentState.STA);
-            //thread.Start();
 
             BusDetails current = new BusDetails(bus.DataContext as Bus);
             current.Show();
-             this.Hide();
+            this.Hide();
         }
 
         /// <summary>
@@ -138,12 +128,12 @@ namespace dotNet5781_03B_6671_6650
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // busToRefuel.BusStaus = Converters.StatusEnum.InRefuling;
+            // busToRefuel.BusStaus = Converters.StatusEnum.In_Refuling;
             // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
-            busToRefuel.BusStaus = StatusEnum.InRefuling;
+            busToRefuel.BusStaus = StatusEnum.In_Refuling;
             busToRefuel.CountDown = 12;
             busToRefuel.DispatcherTimerBus.Start();
             backgroundWorker.RunWorkerAsync();
@@ -152,8 +142,9 @@ namespace dotNet5781_03B_6671_6650
                 busToRefuel.BusStaus = StatusEnum.Ok;
                 busToRefuel.ReFuelBus();
                 LbBuses.ItemsSource = BusesList;
-                
+
             });
+
         }
 
     }

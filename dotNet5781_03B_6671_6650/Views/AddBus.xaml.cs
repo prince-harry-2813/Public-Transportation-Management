@@ -102,7 +102,6 @@ namespace dotNet5781_03B_6671_6650.Views
                             if (bus.LicensNmuber == licenseNumBox.Text)
                             {
                                 MessageBox.Show("This License number already exist in system");
-                                Console.WriteLine(sender);
                                 return;
                             }
                         }

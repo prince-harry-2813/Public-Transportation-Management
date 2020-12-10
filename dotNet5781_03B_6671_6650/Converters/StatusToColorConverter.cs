@@ -11,12 +11,13 @@ namespace dotNet5781_03B_6671_6650.Converters
     public  enum StatusEnum
     {
         Ok = 1,
-        InRide,
-        InRefuling,
-        InMaintainceing
+        In_Ride,
+        In_Refuling,
+        In_Maintainceing,
+        Not_Available
     }
     /// <summary>
-    ///   converter from status of bus to current situation color 
+    ///  available converter from status of bus to current situation color 
     /// </summary>
     public class StatusToColorConverter : IValueConverter
     {
@@ -32,14 +33,17 @@ namespace dotNet5781_03B_6671_6650.Converters
                     case StatusEnum.Ok:
                         color = new SolidColorBrush(Colors.Green);
                         break;
-                    case StatusEnum.InRide:
-                        color = new SolidColorBrush(Colors.Red);
+                    case StatusEnum.In_Ride:
+                        color = new SolidColorBrush(Colors.DarkCyan);
                         break;
-                    case StatusEnum.InRefuling:
+                    case StatusEnum.In_Refuling:
                         color = new SolidColorBrush(Colors.Yellow);
                         break;
-                    case StatusEnum.InMaintainceing:
+                    case StatusEnum.In_Maintainceing:
                         color = new SolidColorBrush(Colors.Chocolate);
+                        break;
+                    case StatusEnum.Not_Available:
+                        color = new SolidColorBrush(Colors.Red);
                         break;
                     default:
                         color = new SolidColorBrush(Colors.White);

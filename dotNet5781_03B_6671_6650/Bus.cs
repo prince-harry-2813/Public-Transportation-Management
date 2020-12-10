@@ -1,11 +1,7 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
@@ -13,14 +9,14 @@ namespace dotNet5781_03B_6671_6650
     public class Bus : IComparable<Bus>
     {
 
-        public StatusEnum  BusStaus 
+        public StatusEnum BusStaus
         { get; set; }
 
         /// <summary>
         /// Date of last treatment
         /// enter dateTime.now
         /// </summary>
-        public DateTime LastTreatment { get; private  set ;  } 
+        public DateTime LastTreatment { get; private set; }
         /// <summary>
         /// Bus key,
         /// tow option to registration
@@ -45,11 +41,34 @@ namespace dotNet5781_03B_6671_6650
         /// <summary>
         /// Date of the get in to service 
         /// </summary>
-        public DateTime FirstRegistration { get;private set; }
+        public DateTime FirstRegistration { get; private set; }
 
         public DispatcherTimer DispatcherTimerBus { get; set; } = new DispatcherTimer();
 
-        public int CountDown { get; set; } = 0; 
+        public int CountDown { get; set; } = 0;
+
+        /// <summary>
+        /// Ctor with all explicit arguments to specify bus
+        /// </summary>
+        /// <param name="licensNumber"></param>
+        /// <param name="firstRegistration"></param>
+        /// <param name="lastTreatment"></param>
+        /// <param name="fuel"></param>
+        /// <param name="maintenence"></param>
+        /// <param name="totalKM"></param>
+        /// <param name="status"></param>
+        public Bus(string licensNumber, DateTime firstRegistration, DateTime lastTreatment, int fuel = 1200, int maintenence = 0, int totalKM = 0, StatusEnum status = StatusEnum.Ok) : this()
+        {
+            FirstRegistration = firstRegistration;
+            SetLicenseNumber(licensNumber);
+            Fuel = fuel;
+            Maintenance = maintenence;
+            TotalKM = totalKM;
+            LastTreatment = lastTreatment;
+            BusStaus = status;
+
+        }
+
         /// <summary>
         /// Ctor that accept at least tow param's for license and date
         /// if there is no other arguments initial default values.
@@ -58,7 +77,7 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="firstRegistration"></param>
         /// <param name="fuel"></param>
         /// <param name="maintenence"></param>
-        public Bus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0)
+        public Bus(string licensNumber, DateTime firstRegistration, int fuel = 1200, int maintenence = 0, int totalKM = 0) : this()
         {
             FirstRegistration = firstRegistration;
             SetLicenseNumber(licensNumber);
@@ -67,13 +86,12 @@ namespace dotNet5781_03B_6671_6650
             TotalKM = totalKM;
             LastTreatment = firstRegistration;
             BusStaus = StatusEnum.Ok;
-            this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
         }
         /// <summary>
         /// Copy Ctor 
         /// </summary>
         /// <param name="bus"></param>
-        public Bus(Bus bus)
+        public Bus(Bus bus) : this()
         {
             FirstRegistration = bus.FirstRegistration;
             SetLicenseNumber(bus.LicensNmuber);
@@ -82,37 +100,41 @@ namespace dotNet5781_03B_6671_6650
             TotalKM = bus.TotalKM;
             LastTreatment = bus.FirstRegistration;
             BusStaus = bus.BusStaus;
-            this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
 
         }
-
-        public Bus() 
-        { }
+        /// <summary>
+        /// default ctor with no param's for adding new bus
+        /// only initial interval for timer 
+        /// </summary>
+        public Bus()
+        {
+            this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
+        }
         /// <summary>
         /// Setter of First Registration 
         /// </summary>
         /// <param name="date"></param>
-        public void SetFirstRegistration (DateTime date)
+        public void SetFirstRegistration(DateTime date)
         {
             FirstRegistration = date;
             LastTreatment = date;
         }
-        
+
         /// <summary>
         /// If bus can take a ride updating the data of the vehicle
         /// </summary>
         /// <param name="km">KM to ride</param>
         public void UpdateRide(int km)
         {
-            this.BusStaus = StatusEnum.InRide;
+            this.BusStaus = StatusEnum.In_Ride;
             SetTotalKM(km);
             Fuel -= km;
             DispatcherTimerBus.Start();
-            CountDown = km /8; // 48 KM per Hour
+            CountDown = km / 8; // 48 KM per Hour
 
         }
 
-        
+
         /// <summary>
         /// Sets the bus total KM and avoid decreasing its value 
         /// </summary>
@@ -137,6 +159,10 @@ namespace dotNet5781_03B_6671_6650
             {
                 return true;
             }
+            if ((TotalKM - Maintenance) > 20000 && span.Days > 365)
+            {
+                this.BusStaus = StatusEnum.Not_Available;
+            }
             Console.WriteLine("This bus can't perform the ride");
             return false;
         }
@@ -150,9 +176,9 @@ namespace dotNet5781_03B_6671_6650
         {
             this.Fuel = 1200;
 
-          //  this.BusStaus = StatusEnum.InRefuling;
-          ////  Thread.CurrentThread.Join(5000);
-          //  this.BusStaus = StatusEnum.Ok;
+            //  this.BusStaus = StatusEnum.In_Refuling;
+            ////  Thread.CurrentThread.Join(5000);
+            //  this.BusStaus = StatusEnum.Ok;
         }
 
         /// <summary>
@@ -196,13 +222,13 @@ namespace dotNet5781_03B_6671_6650
                 LicensNmuber = number.ToString();
             else
             {
-                System.Windows.MessageBox.Show("Car license doesn't match to year of registered","Date mismatch",System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
+                System.Windows.MessageBox.Show("Car license doesn't match to year of registered", "Date mismatch", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
                 Console.WriteLine("Car license doesn't match to year of registered");
                 return false;
 
             }
             return true;
-            
+
         }
 
         /// <summary>
