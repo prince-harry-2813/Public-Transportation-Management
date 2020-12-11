@@ -1,16 +1,25 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
+using dotNet5781_03B_6671_6650.Views;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
-    public class Bus : IComparable<Bus>
+    public class Bus : IComparable<Bus>, INotifyPropertyChanged
     {
-
+        private StatusEnum _busStaus;
         public StatusEnum BusStaus
-        { get; set; }
+        {
+            get => _busStaus; set
+            {
+                _busStaus = value;
+                OnPropertyChanged("BusStaus");
+            }
+        }
 
         /// <summary>
         /// Date of last treatment
@@ -45,7 +54,15 @@ namespace dotNet5781_03B_6671_6650
 
         public DispatcherTimer DispatcherTimerBus { get; set; } = new DispatcherTimer();
 
-        public int CountDown { get; set; } = 0;
+        private int _countDown = 0;
+        public int CountDown
+        {
+            get => _countDown; set
+            {
+                _countDown = value;
+                OnPropertyChanged("CountDown");
+            }
+        }
 
         /// <summary>
         /// Ctor with all explicit arguments to specify bus
@@ -66,7 +83,6 @@ namespace dotNet5781_03B_6671_6650
             TotalKM = totalKM;
             LastTreatment = lastTreatment;
             BusStaus = status;
-
         }
 
         /// <summary>
@@ -109,7 +125,12 @@ namespace dotNet5781_03B_6671_6650
         public Bus()
         {
             this.DispatcherTimerBus.Interval = TimeSpan.FromSeconds(1);
+            DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
+
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Setter of First Registration 
         /// </summary>
@@ -174,21 +195,54 @@ namespace dotNet5781_03B_6671_6650
         /// </summary>
         public void ReFuelBus()
         {
-            this.Fuel = 1200;
 
-            //  this.BusStaus = StatusEnum.In_Refuling;
-            ////  Thread.CurrentThread.Join(5000);
-            //  this.BusStaus = StatusEnum.Ok;
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            CountDown = 12;
+            DispatcherTimerBus.Start();
+            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
+                );
+            BusStaus = StatusEnum.In_Refuling;
+            backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += ((s, e2) =>
+            {
+
+                BusStaus = StatusEnum.Ok;
+                this.Fuel = 1200;
+
+            });
         }
+
+        private void DispatcherTimerBus_Tick(object sender, EventArgs e)
+        {
+            if (CountDown < 1)
+            {
+                BusStaus = StatusEnum.Ok;
+                DispatcherTimerBus.Stop();
+                return;
+            }
+            CountDown = --CountDown;
+        }
+
 
         /// <summary>
         /// Sets km since lest treatment to 0 and the date 
         /// </summary>
         public void MaintaineBus()
         {
-            Maintenance = TotalKM;
-            LastTreatment = DateTime.Now;
+            BackgroundWorker background = new BackgroundWorker();
+            CountDown = 144;
+            DispatcherTimerBus.Start();
+            background.DoWork += ((s, e1) => { Thread.Sleep(144000); });
+            BusStaus = StatusEnum.In_Maintainceing;
+            background.RunWorkerAsync();
+            background.RunWorkerCompleted += ((s, e2) =>
+            {
+                Maintenance = TotalKM;
+                LastTreatment = DateTime.Now;
+            });
         }
+
+
 
         /// <summary>
         /// Sets bus license number and checks if its between 7 - 8 digits 
@@ -292,5 +346,15 @@ namespace dotNet5781_03B_6671_6650
         {
             return $"{DisplayBusNumber()}";
         }
+
+        #region Interface Implementation
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            //App.Current.Windows.OfType<BusDetails>().FirstOrDefault()?.OnPropertyChanged("");
+        }
+
+        #endregion
     }
 }

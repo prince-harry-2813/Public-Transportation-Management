@@ -9,6 +9,7 @@
     Title="Bus details"
     Width="600"
     Height="379.6"
+    
     Closing="Window_Closing"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
@@ -98,7 +99,7 @@
                             HorizontalAlignment="Left"
                             BorderBrush="Black"
                             BorderThickness="0.5"
-                            Content="{Binding PropertyValue, NotifyOnSourceUpdated=True}"
+                            Content="{Binding PropertyValue}"
                             FontSize="8pt" />
                     </Grid>
                 </DataTemplate>

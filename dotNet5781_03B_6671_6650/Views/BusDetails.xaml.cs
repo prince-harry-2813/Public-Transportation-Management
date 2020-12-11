@@ -19,7 +19,7 @@ namespace dotNet5781_03B_6671_6650.Views
 
         ObservableCollection<BusPropertyInfo> busPropertyInfos { get; set; } = new ObservableCollection<BusPropertyInfo>();
         
-        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
+        ObservableCollection<Bus> carsCollection = BusCarsCollection.Instance.BusesCollection;
 
         public Bus SelectedBus
         {
@@ -52,7 +52,7 @@ namespace dotNet5781_03B_6671_6650.Views
         public void OnPropertyChanged(PropertyChangedEventArgs e)
         { 
                 PropertyChanged?.Invoke(this, e);
-                ShowBusDetalis(SelectedBus);
+            //    ShowBusDetalis(SelectedBus);
           
         }
 
@@ -87,25 +87,25 @@ namespace dotNet5781_03B_6671_6650.Views
             //SelectedBus.BusStaus = StatusEnum.Ok;
             //ShowBusDetalis(SelectedBus);
 
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
-            SelectedBus.CountDown = 12;
-            SelectedBus.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
-            SelectedBus.DispatcherTimerBus.Start();
-            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
-                );
-            SelectedBus.BusStaus = StatusEnum.In_Refuling;
-            OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
-            ShowBusDetalis(SelectedBus);
-            backgroundWorker.RunWorkerAsync();
-            backgroundWorker.RunWorkerCompleted += ((s, e2) =>
-            {
+            //BackgroundWorker backgroundWorker = new BackgroundWorker();
+            //SelectedBus.CountDown = 12;
+            //SelectedBus.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
+            //SelectedBus.DispatcherTimerBus.Start();
+            //backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
+            //    );
+            //SelectedBus.BusStaus = StatusEnum.In_Refuling;
+            //OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            //ShowBusDetalis(SelectedBus);
+            //backgroundWorker.RunWorkerAsync();
+            //backgroundWorker.RunWorkerCompleted += ((s, e2) =>
+            //{
 
-                SelectedBus.BusStaus  = StatusEnum.Ok;
+            //    SelectedBus.BusStaus  = StatusEnum.Ok;
                 SelectedBus.ReFuelBus();
 
-                OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
-                ShowBusDetalis(SelectedBus);
-            });
+            //    OnPropertyChanged(new PropertyChangedEventArgs("SelectedBus"));
+            //    ShowBusDetalis(SelectedBus);
+            //});
 
 
             //Task.Factory.StartNew(() =>
@@ -131,7 +131,6 @@ namespace dotNet5781_03B_6671_6650.Views
                 SelectedBus.DispatcherTimerBus.Stop();
                 return;
             }
-            SelectedBus.CountDown = --SelectedBus.CountDown;
             ShowBusDetalis(SelectedBus);
         }
 

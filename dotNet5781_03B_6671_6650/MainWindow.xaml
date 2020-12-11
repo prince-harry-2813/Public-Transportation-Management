@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Bus Mangment"
     Width="600"
-    Height="450"
+    Height="700"
     
     Background="WhiteSmoke"
     mc:Ignorable="d">
@@ -137,7 +137,9 @@
                             Grid.Column="1"
                             Content="{Binding}"
                             MouseDoubleClick="Label_MouseDoubleClick" />
-                        <Frame
+                        
+                        <Label
+                            
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"

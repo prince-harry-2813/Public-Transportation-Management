@@ -95,7 +95,7 @@ namespace dotNet5781_03B_6671_6650.Views
                     temp.SetFirstRegistration(RegistrationDate.DisplayDate);
                     if (temp.SetLicenseNumber(licenseNumBox.Text))
                     {
-                        ObservableCollection<Bus> carsCollection = BusCarsCollection.BusesCollection;
+                        ObservableCollection<Bus> carsCollection = BusCarsCollection.Instance.BusesCollection;
 
                         foreach (Bus bus in carsCollection)
                         {
