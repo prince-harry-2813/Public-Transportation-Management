@@ -16,7 +16,7 @@ using dotNet5781_02_6671_6650;
 
 namespace dotNet5781_03A_6671_6650
 {
-    /// <summary>
+    /// <summary>          
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
@@ -29,7 +29,7 @@ namespace dotNet5781_03A_6671_6650
         public volatile Random Random = new Random(DateTime.Now.Millisecond);
 
         /// <summary>
-        /// 
+        /// appear the line info in the list box 
         /// </summary>
         /// <param name="lineKey"></param>
         private void ShowBusline(int lineKey)
@@ -37,13 +37,11 @@ namespace dotNet5781_03A_6671_6650
             currentDisplayBusLine = lines[lineKey];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStation.DataContext = currentDisplayBusLine.LineStations;
-          
-
         }
 
 
         /// <summary>
-        /// 
+        /// When the selected line at combo-box have change calling to show bus line method to appear the line info in the list box 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -52,7 +50,7 @@ namespace dotNet5781_03A_6671_6650
             ShowBusline((cbBusLines.SelectedValue as BusLine).LineKey);
         }
         /// <summary>
-        /// 
+        /// Util' method to check if there is a instance of some station in system
         /// </summary>
         /// <param name="line"></param>
         /// <param name="stopCode"></param>
@@ -73,11 +71,9 @@ namespace dotNet5781_03A_6671_6650
 
         public MainWindow()
         {
+            InitializeComponent();
             try
             {
-
-
-                InitializeComponent();
                 for (int j = 0; j <= 20; j++)
                 {
                     lines.Add(new BusLine(Random.Next(j, 999)));
@@ -88,8 +84,7 @@ namespace dotNet5781_03A_6671_6650
                             continue;
                         lines.Last().AddStop(stop, lines.Last().LineStations.Count);
                     }
-                }
-                
+                }   
             }
             catch (Exception e)
             {

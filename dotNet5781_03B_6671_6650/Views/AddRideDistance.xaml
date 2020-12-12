@@ -1,0 +1,104 @@
+﻿<Window
+    x:Class="dotNet5781_03B_6671_6650.Views.AddRideDistance"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:local="clr-namespace:dotNet5781_03B_6671_6650.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="AddRideDistance"
+    Width="450"
+    Height="250"
+    MaxWidth="450"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    MaxHeight="250"
+    Closing="Window_Closing"
+    KeyDown="DistanceOfRide_KeyDown"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="TakeRideBG.jpg"/>
+    </Window.Background>
+    <Grid Margin="0">
+        <WrapPanel
+            Height="45"
+            Margin="0"
+            VerticalAlignment="Top">
+            <Label
+                Width="394"
+                Height="56"
+                HorizontalAlignment="Stretch"
+                Content="Enter your ride distance in KM:"
+                FontFamily="Nirmala UI"
+                FontSize="24"
+                FontWeight="Bold" >
+                <Label.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD64500" Offset="0.399"/>
+                        <GradientStop Color="#FFEBEBEB" Offset="0.493"/>
+                    </LinearGradientBrush>
+                </Label.Foreground>
+            </Label>
+        </WrapPanel>
+        <Grid
+            Height="176"
+            Margin="0,0,-0.4,-0.4"
+            VerticalAlignment="Bottom" Background="#19FFFFFF">
+            <TextBox
+                x:Name="DistanceOfRide"
+                Height="25"
+                Margin="103,46,268,105"
+                FontSize="18"
+                MaxLength="4"
+                PreviewTextInput="DistanceOfRide_PreviewTextInput"
+                TextWrapping="Wrap" Background="#BFFFFFFF" BorderBrush="#FFFF8900" />
+            <Label
+                Width="45"
+                Height="25"
+                Margin="187,46,218,105"
+                HorizontalContentAlignment="Stretch"
+                Content="KM"
+                FontSize="14"
+                FontWeight="Bold"
+                RenderTransformOrigin="0.502,0.504" >
+                <Label.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD64500"/>
+                        <GradientStop Color="White" Offset="0.934"/>
+                        <GradientStop Color="White" Offset="0.444"/>
+                    </LinearGradientBrush>
+                </Label.Foreground>
+            </Label>
+            <WrapPanel Margin="134,129,0,0" FlowDirection="RightToLeft">
+                <fa:ImageAwesome
+                    Width="40"
+                    Margin="2,0,0,0"
+                    Icon="Solid_ShuttleVan" Height="42">
+                    <fa:ImageAwesome.Foreground>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Offset="0" Color="#FFD64500" />
+                            <GradientStop Offset="0.197" Color="#FFF4D5C6" />
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </fa:ImageAwesome.Foreground>
+                </fa:ImageAwesome>
+                <Label
+                    Width="160"
+                    Height="51"
+                    Padding="0"
+                    Content="Press enter to proceed &#xA;Esc to cancel"
+                    FontFamily="Nirmala UI"
+                    FontWeight="Bold" FontSize="14" VerticalContentAlignment="Stretch" Margin="0" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" >
+                    <Label.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFD64500" Offset="0"/>
+                            <GradientStop Color="White" Offset="0.459"/>
+                        </LinearGradientBrush>
+                    </Label.Foreground>
+                </Label>
+            </WrapPanel>
+        </Grid>
+
+    </Grid>
+</Window>
