@@ -10,11 +10,7 @@ namespace dotNet5781_03B_6671_6650.Content
     /// </summary>
     public sealed class BusCarsCollection : DependencyObject , INotifyPropertyChanged
     {
-        //private BusCarsCollection()
-        //{
-        //    ObservableCollection<Bus> BusesCollection = new ObservableCollection<Bus>();
-        //}
-     
+        
         BusCarsCollection()
         {
             BusesCollection = new ObservableCollection<Bus>();
@@ -43,7 +39,6 @@ namespace dotNet5781_03B_6671_6650.Content
             PropertyChanged?.Invoke(this, e);
         }
 
-        //public static ObservableCollection<Bus> BusesCollection { get; set; }
 
         public static BusCarsCollection Instance
         {

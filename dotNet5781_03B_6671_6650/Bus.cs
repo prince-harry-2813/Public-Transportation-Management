@@ -1,5 +1,4 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
-using dotNet5781_03B_6671_6650.Views;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -176,7 +175,7 @@ namespace dotNet5781_03B_6671_6650
         public bool CanTakeRide(int rideRange)
         {
             TimeSpan span = DateTime.Now - this.LastTreatment;
-            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) < 20000 && span.Days < 365)
+            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) <= 20000 && span.Days < 365)
             {
                 return true;
             }
@@ -216,7 +215,9 @@ namespace dotNet5781_03B_6671_6650
         {
             if (CountDown < 1)
             {
-                BusStaus = StatusEnum.Ok;
+
+                TimeSpan time = DateTime.Now - this.LastTreatment;
+                BusStaus = (this.Fuel == 0 || TotalKM - Maintenance >= 20000 || time.Days > 365) ? StatusEnum.Not_Available : StatusEnum.Ok;
                 DispatcherTimerBus.Stop();
                 return;
             }

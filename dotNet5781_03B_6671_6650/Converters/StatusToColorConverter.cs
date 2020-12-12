@@ -34,10 +34,10 @@ namespace dotNet5781_03B_6671_6650.Converters
                         color = new SolidColorBrush(Colors.Green);
                         break;
                     case StatusEnum.In_Ride:
-                        color = new SolidColorBrush(Colors.DarkCyan);
+                        color = new SolidColorBrush(Colors.Blue);
                         break;
                     case StatusEnum.In_Refuling:
-                        color = new SolidColorBrush(Colors.Yellow);
+                        color = new SolidColorBrush(Colors.Gold);
                         break;
                     case StatusEnum.In_Maintainceing:
                         color = new SolidColorBrush(Colors.Chocolate);

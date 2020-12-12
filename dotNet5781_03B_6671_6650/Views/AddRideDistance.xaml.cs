@@ -35,7 +35,7 @@ namespace dotNet5781_03B_6671_6650.Views
 
                     this.bus.UpdateRide(int.Parse(DistanceOfRide.Text));
                     MessageBox.Show("Ride confirm", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    bus.BusStaus = Converters.StatusEnum.Ok;
+
                     this.Close();
 
                 }

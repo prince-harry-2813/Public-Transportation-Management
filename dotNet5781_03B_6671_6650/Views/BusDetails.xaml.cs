@@ -59,7 +59,6 @@ namespace dotNet5781_03B_6671_6650.Views
         public void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             PropertyChanged?.Invoke(this, e);
-            //    ShowBusDetalis(SelectedBus);
 
         }
 
@@ -72,7 +71,7 @@ namespace dotNet5781_03B_6671_6650.Views
         {
             if ((int)SelectedBus.BusStaus == 3 || SelectedBus.Fuel == 1200)
             {
-                MessageBox.Show("This bus is already fueled / in refueld", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("This bus is already fueled / in refuel", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if ((int)SelectedBus.BusStaus != 1 && (int)SelectedBus.BusStaus != 5)
@@ -82,11 +81,11 @@ namespace dotNet5781_03B_6671_6650.Views
             }
 
             SelectedBus.ReFuelBus();
-            RunWindowDispatcher(14);
+            RunWindowDispatcher(12);
         }
 
         /// <summary>
-        /// Keep Update window details for given secondes
+        /// Keep Update window details for given seconds
         /// </summary>
         /// <param name="seconds"></param>
         void RunWindowDispatcher(int seconds)
