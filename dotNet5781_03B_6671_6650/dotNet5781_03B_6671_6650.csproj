@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Content\BusCarsCollection.cs" />
+    <Compile Include="Converters\NumberToVisibiltyConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="Views\AddBus.xaml.cs">
       <DependentUpon>AddBus.xaml</DependentUpon>

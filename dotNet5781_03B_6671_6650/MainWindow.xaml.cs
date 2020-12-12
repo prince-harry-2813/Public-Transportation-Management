@@ -129,23 +129,7 @@ namespace dotNet5781_03B_6671_6650
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // busToRefuel.BusStaus = Converters.StatusEnum.In_Refuling;
-            // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
-            //BackgroundWorker backgroundWorker = new BackgroundWorker();
-            //backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
-            //    );
-            //busToRefuel.BusStaus = StatusEnum.In_Refuling;
-            //busToRefuel.CountDown = 12;
-            //busToRefuel.DispatcherTimerBus.Start();
-            //busToRefuel.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
-            //backgroundWorker.RunWorkerAsync();
-            //backgroundWorker.RunWorkerCompleted += ((s, e2) =>
-            //{
-            //    busToRefuel.BusStaus = StatusEnum.Ok;
-            //    busToRefuel.ReFuelBus();
-            //    LbBuses.ItemsSource = BusesList;
 
-            //});
             busToRefuel.ReFuelBus();
         }
 

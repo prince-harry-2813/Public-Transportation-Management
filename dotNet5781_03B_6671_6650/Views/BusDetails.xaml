@@ -9,7 +9,6 @@
     Title="Bus details"
     Width="600"
     Height="379.6"
-    
     Closing="Window_Closing"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
@@ -32,12 +31,14 @@
                     Name="TreatmentButton"
                     Height="30pt"
                     Margin="5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
                     Click="TreatmentButton_Click">
                     <Button.Content>
                         <fa:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
-                            Icon="Brands_Dyalog" />
+                            Icon="Solid_Screwdriver" />
                     </Button.Content>
                 </Button>
                 <Label
@@ -56,6 +57,8 @@
                     x:Name="RefuleButton"
                     Height="30pt"
                     Margin="5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
                     Click="RefuleButton_Click">
                     <Button.Content>
                         <fa:ImageAwesome
