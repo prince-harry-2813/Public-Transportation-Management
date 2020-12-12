@@ -130,7 +130,7 @@
 
                         <fa:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding BusStaus, Converter={StaticResource StatusToColorConverter} }"
+                            Foreground="{Binding BusStatus, Converter={StaticResource StatusToColorConverter} }"
                             Icon="Solid_Bus" />
 
                         <Label

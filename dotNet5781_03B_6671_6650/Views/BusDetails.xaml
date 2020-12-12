@@ -71,7 +71,7 @@
                     VerticalContentAlignment="Top"
                     FontSize="10pt"
                     Foreground="Blue">
-                    Refule Bus
+                    Refuel Bus
                 </Label>
             </StackPanel>
         </WrapPanel>

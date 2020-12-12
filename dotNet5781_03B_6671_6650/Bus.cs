@@ -11,13 +11,13 @@ namespace dotNet5781_03B_6671_6650
 {
     public class Bus : IComparable<Bus>, INotifyPropertyChanged
     {
-        private StatusEnum _busStaus;
-        public StatusEnum BusStaus
+        private StatusEnum _busStatus;
+        public StatusEnum BusStatus
         {
-            get => _busStaus; set
+            get => _busStatus; set
             {
-                _busStaus = value;
-                OnPropertyChanged("BusStaus");
+                _busStatus = value;
+                OnPropertyChanged("BusStatus");
             }
         }
 
@@ -82,7 +82,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = maintenence;
             TotalKM = totalKM;
             LastTreatment = lastTreatment;
-            BusStaus = status;
+            BusStatus = status;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = maintenence;
             TotalKM = totalKM;
             LastTreatment = firstRegistration;
-            BusStaus = StatusEnum.Ok;
+            BusStatus = StatusEnum.Ok;
         }
         /// <summary>
         /// Copy Ctor 
@@ -115,7 +115,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = bus.Maintenance;
             TotalKM = bus.TotalKM;
             LastTreatment = bus.FirstRegistration;
-            BusStaus = bus.BusStaus;
+            BusStatus = bus.BusStatus;
 
         }
         /// <summary>
@@ -147,7 +147,7 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="km">KM to ride</param>
         public void UpdateRide(int km)
         {
-            this.BusStaus = StatusEnum.In_Ride;
+            this.BusStatus = StatusEnum.In_Ride;
             SetTotalKM(km);
             Fuel -= km;
             DispatcherTimerBus.Start();
@@ -182,7 +182,7 @@ namespace dotNet5781_03B_6671_6650
             }
             if ((TotalKM - Maintenance) > 20000 && span.Days > 365)
             {
-                this.BusStaus = StatusEnum.Not_Available;
+                this.BusStatus = StatusEnum.Not_Available;
             }
             Console.WriteLine("This bus can't perform the ride");
             return false;
@@ -201,12 +201,12 @@ namespace dotNet5781_03B_6671_6650
             DispatcherTimerBus.Start();
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
-            BusStaus = StatusEnum.In_Refuling;
+            BusStatus = StatusEnum.In_Refuling;
             backgroundWorker.RunWorkerAsync();
             backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
 
-                BusStaus = StatusEnum.Ok;
+                BusStatus = StatusEnum.Ok;
                 this.Fuel = 1200;
 
             });
@@ -216,7 +216,7 @@ namespace dotNet5781_03B_6671_6650
         {
             if (CountDown < 1)
             {
-                BusStaus = StatusEnum.Ok;
+                BusStatus = StatusEnum.Ok;
                 DispatcherTimerBus.Stop();
                 return;
             }
@@ -233,7 +233,7 @@ namespace dotNet5781_03B_6671_6650
             CountDown = 144;
             DispatcherTimerBus.Start();
             background.DoWork += ((s, e1) => { Thread.Sleep(144000); });
-            BusStaus = StatusEnum.In_Maintainceing;
+            BusStatus = StatusEnum.In_Maintainceing;
             background.RunWorkerAsync();
             background.RunWorkerCompleted += ((s, e2) =>
             {

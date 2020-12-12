@@ -103,7 +103,7 @@ namespace dotNet5781_03B_6671_6650
             this.Hide();
             Button button = sender as Button;
             Bus busToRide = button.DataContext as Bus;
-            if ((int)busToRide.BusStaus != 1)
+            if ((int)busToRide.BusStatus != 1)
             {
                 MessageBox.Show("this bus is current unavailable", "Cannot take a ride", MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.Show();
@@ -124,24 +124,24 @@ namespace dotNet5781_03B_6671_6650
         {
             Button refuelBtn = sender as Button;
             Bus busToRefuel = refuelBtn.DataContext as Bus;
-            if ((int)busToRefuel.BusStaus == 3 || busToRefuel.Fuel == 1200)
+            if ((int)busToRefuel.BusStatus == 3 || busToRefuel.Fuel == 1200)
             {
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // busToRefuel.BusStaus = Converters.StatusEnum.In_Refuling;
+            // busToRefuel.BusStatus = Converters.StatusEnum.In_Refuling;
             // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
             //BackgroundWorker backgroundWorker = new BackgroundWorker();
             //backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
             //    );
-            //busToRefuel.BusStaus = StatusEnum.In_Refuling;
+            //busToRefuel.BusStatus = StatusEnum.In_Refuling;
             //busToRefuel.CountDown = 12;
             //busToRefuel.DispatcherTimerBus.Start();
             //busToRefuel.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
             //backgroundWorker.RunWorkerAsync();
             //backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             //{
-            //    busToRefuel.BusStaus = StatusEnum.Ok;
+            //    busToRefuel.BusStatus = StatusEnum.Ok;
             //    busToRefuel.ReFuelBus();
             //    LbBuses.ItemsSource = BusesList;
 
