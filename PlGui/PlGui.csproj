@@ -99,5 +99,8 @@
       <Version>8.0.0.1909</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PO\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
