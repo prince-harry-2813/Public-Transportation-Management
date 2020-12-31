@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    public enum StatusEnum
-    {
-        Ok = 1,
-        In_Ride,
-        In_Refuling,
-        In_Maintainceing,
-        Not_Available
-    }
+    
+    /// <summary>
+    /// Bus vehicle
+    /// </summary>
     class Bus
     {
         public int LicenseNum { get; set; }

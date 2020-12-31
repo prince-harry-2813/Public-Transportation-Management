@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    /// Tow Adjacent Stations in line route
+    /// </summary>
     class AdjacentStations
     {
         public int Id { get; set; }

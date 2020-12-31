@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    /// Stop station at line route
+    /// </summary>
     class LineStation
     {
+        public int LineId { get; set; }
+        public int Station { get; set; }
+        public int LineStationIndex { get; set; }
+        public int PrevStation { get; set; }
+        public int NextStation { get; set; }
     }
 }

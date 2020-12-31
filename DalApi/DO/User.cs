@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    /// <summary>
+    /// Traveler 
+    /// </summary>
     class User
     {
         public string UserName { get; set; }
