@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     /// Details of line service time
     /// </summary>
-    class LineTrip
+    public class LineTrip
     {
         public int Id { get; set; }
         public int LineId { get; set; }

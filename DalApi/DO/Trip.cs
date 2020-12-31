@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     /// Planned trip exclusively for the user
     /// </summary>
-    class Trip
+    public class Trip
     {
         public int Id { get; set; }
         public string  UserName { get; set; }

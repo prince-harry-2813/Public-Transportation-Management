@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     /// Stop station at line route
     /// </summary>
-    class LineStation
+    public class LineStation
     {
         public int LineId { get; set; }
         public int Station { get; set; }

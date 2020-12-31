@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DalFactory.cs" />
     <Compile Include="DO\AdjacentStations.cs" />
     <Compile Include="DO\Bus.cs" />
     <Compile Include="DO\BusOnTrip.cs" />
@@ -52,6 +52,7 @@
     <Compile Include="DO\Station.cs" />
     <Compile Include="DO\Trip.cs" />
     <Compile Include="DO\User.cs" />
+    <Compile Include="IDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

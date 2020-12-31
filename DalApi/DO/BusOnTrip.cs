@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     /// Bus vehicle on line route
     /// </summary>
-    class BusOnTrip
+    public class BusOnTrip
     {
         public int Id { get; set; }
         public int LicenseNum { get; set; }

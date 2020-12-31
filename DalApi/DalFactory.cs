@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS
+namespace DalApi
 {
-    public class Class1
+    public static class DalFactory
     {
     }
 }

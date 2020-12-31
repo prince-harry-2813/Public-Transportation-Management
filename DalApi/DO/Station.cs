@@ -9,7 +9,7 @@ namespace DO
     /// <summary>
     /// Bus Station (can have several lines)
     /// </summary>
-    class Station
+    public class Station
     {
         public int Code { get; set; }
         public string Name { get; set; }
