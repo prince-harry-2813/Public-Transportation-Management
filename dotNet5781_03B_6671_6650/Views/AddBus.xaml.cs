@@ -21,10 +21,9 @@ namespace dotNet5781_03B_6671_6650.Views
         {
             InitializeComponent();
             isClosed = false;
-            
             licenseNumBox.Focus();
-
         }
+
         /// <summary>
         /// when the details window closed, open back the main window;
         /// </summary>

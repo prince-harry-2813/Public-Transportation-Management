@@ -13,15 +13,11 @@ using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
-
-    //delegate void RefuleAction();
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window 
     {
-        // static RefuleAction refuleAction;
         public  ObservableCollection<Bus> BusesList = BusCarsCollection.Instance.BusesCollection;
 
         public MainWindow()
@@ -34,7 +30,7 @@ namespace dotNet5781_03B_6671_6650
                 InsertBus(z.ToString(), DateTime.Now, 1200);
             }
             BusesList.Add(new Bus("1234567", new DateTime(2011, 02, 03), new DateTime(2009, 02, 03), 1200, 0, 0, StatusEnum.Not_Available));
-            BusesList.Add(new Bus("1234568", new DateTime(2011, 02, 03), DateTime.Now, 1200,0, 19000, StatusEnum.Ok));
+            BusesList.Add(new Bus("1234568", new DateTime(2011, 02, 03), DateTime.Now, 1200,0, 19900, StatusEnum.Ok));
             BusesList.Add(new Bus("1234569", new DateTime(2011, 02, 03), DateTime.Now, 90, 0, 0, StatusEnum.Ok));
            
             LbBuses.DataContext = BusesList;
@@ -103,7 +99,7 @@ namespace dotNet5781_03B_6671_6650
             this.Hide();
             Button button = sender as Button;
             Bus busToRide = button.DataContext as Bus;
-            if ((int)busToRide.BusStatus != 1)
+            if ((int)busToRide.BusStaus != 1)
             {
                 MessageBox.Show("this bus is current unavailable", "Cannot take a ride", MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.Show();
@@ -124,28 +120,12 @@ namespace dotNet5781_03B_6671_6650
         {
             Button refuelBtn = sender as Button;
             Bus busToRefuel = refuelBtn.DataContext as Bus;
-            if ((int)busToRefuel.BusStatus == 3 || busToRefuel.Fuel == 1200)
+            if ((int)busToRefuel.BusStaus == 3 || busToRefuel.Fuel == 1200)
             {
                 MessageBox.Show("This bus is already fueled", "Bus Fueled", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // busToRefuel.BusStatus = Converters.StatusEnum.In_Refuling;
-            // refuleAction = new RefuleAction(()=> busToRefuel.ReFuelBus());
-            //BackgroundWorker backgroundWorker = new BackgroundWorker();
-            //backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
-            //    );
-            //busToRefuel.BusStatus = StatusEnum.In_Refuling;
-            //busToRefuel.CountDown = 12;
-            //busToRefuel.DispatcherTimerBus.Start();
-            //busToRefuel.DispatcherTimerBus.Tick += DispatcherTimerBus_Tick;
-            //backgroundWorker.RunWorkerAsync();
-            //backgroundWorker.RunWorkerCompleted += ((s, e2) =>
-            //{
-            //    busToRefuel.BusStatus = StatusEnum.Ok;
-            //    busToRefuel.ReFuelBus();
-            //    LbBuses.ItemsSource = BusesList;
 
-            //});
             busToRefuel.ReFuelBus();
         }
 

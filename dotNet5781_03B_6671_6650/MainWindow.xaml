@@ -10,11 +10,11 @@
     Title="Bus Mangment"
     Width="600"
     Height="700"
-    
     Background="WhiteSmoke"
     mc:Ignorable="d">
     <Window.Resources>
         <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
+        <converters:NumberToVisibiltyConverter x:Key="NumberToVisibiltyConverter" />
     </Window.Resources>
 
     <Window.InputBindings>
@@ -23,8 +23,8 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1.4*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.8*" />
             <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
 
@@ -139,7 +139,7 @@
                             MouseDoubleClick="Label_MouseDoubleClick" />
                         
                         <Label
-                            
+                            Visibility="{Binding CountDown , Converter={StaticResource NumberToVisibiltyConverter} }"
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"

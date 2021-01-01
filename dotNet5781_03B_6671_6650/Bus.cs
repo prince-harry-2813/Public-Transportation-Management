@@ -1,5 +1,4 @@
 ﻿using dotNet5781_03B_6671_6650.Converters;
-using dotNet5781_03B_6671_6650.Views;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -11,13 +10,13 @@ namespace dotNet5781_03B_6671_6650
 {
     public class Bus : IComparable<Bus>, INotifyPropertyChanged
     {
-        private StatusEnum _busStatus;
-        public StatusEnum BusStatus
+        private StatusEnum _busStaus;
+        public StatusEnum BusStaus
         {
-            get => _busStatus; set
+            get => _busStaus; set
             {
-                _busStatus = value;
-                OnPropertyChanged("BusStatus");
+                _busStaus = value;
+                OnPropertyChanged("BusStaus");
             }
         }
 
@@ -82,7 +81,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = maintenence;
             TotalKM = totalKM;
             LastTreatment = lastTreatment;
-            BusStatus = status;
+            BusStaus = status;
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = maintenence;
             TotalKM = totalKM;
             LastTreatment = firstRegistration;
-            BusStatus = StatusEnum.Ok;
+            BusStaus = StatusEnum.Ok;
         }
         /// <summary>
         /// Copy Ctor 
@@ -115,7 +114,7 @@ namespace dotNet5781_03B_6671_6650
             Maintenance = bus.Maintenance;
             TotalKM = bus.TotalKM;
             LastTreatment = bus.FirstRegistration;
-            BusStatus = bus.BusStatus;
+            BusStaus = bus.BusStaus;
 
         }
         /// <summary>
@@ -147,7 +146,7 @@ namespace dotNet5781_03B_6671_6650
         /// <param name="km">KM to ride</param>
         public void UpdateRide(int km)
         {
-            this.BusStatus = StatusEnum.In_Ride;
+            this.BusStaus = StatusEnum.In_Ride;
             SetTotalKM(km);
             Fuel -= km;
             DispatcherTimerBus.Start();
@@ -176,13 +175,13 @@ namespace dotNet5781_03B_6671_6650
         public bool CanTakeRide(int rideRange)
         {
             TimeSpan span = DateTime.Now - this.LastTreatment;
-            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) < 20000 && span.Days < 365)
+            if (rideRange <= Fuel && (TotalKM - Maintenance + rideRange) <= 20000 && span.Days < 365)
             {
                 return true;
             }
             if ((TotalKM - Maintenance) > 20000 && span.Days > 365)
             {
-                this.BusStatus = StatusEnum.Not_Available;
+                this.BusStaus = StatusEnum.Not_Available;
             }
             Console.WriteLine("This bus can't perform the ride");
             return false;
@@ -201,12 +200,12 @@ namespace dotNet5781_03B_6671_6650
             DispatcherTimerBus.Start();
             backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(12000); }
                 );
-            BusStatus = StatusEnum.In_Refuling;
+            BusStaus = StatusEnum.In_Refuling;
             backgroundWorker.RunWorkerAsync();
             backgroundWorker.RunWorkerCompleted += ((s, e2) =>
             {
 
-                BusStatus = StatusEnum.Ok;
+                BusStaus = StatusEnum.Ok;
                 this.Fuel = 1200;
 
             });
@@ -216,7 +215,9 @@ namespace dotNet5781_03B_6671_6650
         {
             if (CountDown < 1)
             {
-                BusStatus = StatusEnum.Ok;
+
+                TimeSpan time = DateTime.Now - this.LastTreatment;
+                BusStaus = (this.Fuel == 0 || TotalKM - Maintenance >= 20000 || time.Days > 365) ? StatusEnum.Not_Available : StatusEnum.Ok;
                 DispatcherTimerBus.Stop();
                 return;
             }
@@ -233,7 +234,7 @@ namespace dotNet5781_03B_6671_6650
             CountDown = 144;
             DispatcherTimerBus.Start();
             background.DoWork += ((s, e1) => { Thread.Sleep(144000); });
-            BusStatus = StatusEnum.In_Maintainceing;
+            BusStaus = StatusEnum.In_Maintainceing;
             background.RunWorkerAsync();
             background.RunWorkerCompleted += ((s, e2) =>
             {
