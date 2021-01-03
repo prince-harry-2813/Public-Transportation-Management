@@ -6,7 +6,7 @@
         /// <summary>
         /// crate single instance for singleton class
         /// </summary>
-        static readonly DalObject instance = new DalObject();
+        private static readonly DalObject instance = new DalObject();
         /// <summary>
         /// define static Ctor for singleton class
         /// </summary>

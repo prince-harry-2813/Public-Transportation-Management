@@ -15,7 +15,7 @@ namespace DO
     {
         Ok = 1,
         In_Ride,
-        In_Refuling,
+        In_Refueling,
         In_Maintainceing,
         Not_Available
     }
