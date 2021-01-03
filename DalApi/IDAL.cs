@@ -75,11 +75,7 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.Bus> GetAllBuses();
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bus"></param>
+        IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate);
         void AddBus(DO.Bus bus);
         
         /// <summary>
@@ -159,11 +155,7 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.Line> GetAllLines();
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
+        IEnumerable<DO.Line> GetAllLinesBy(Predicate<DO.Line> predicate);
         void AddLine(DO.Line line);
         
         /// <summary>
@@ -196,25 +188,8 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.LineStation> GetAllLinesStation();
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
-        void AddLine(DO.LineStation line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
-        void UpdateLineStation(DO.LineStation line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="lineId"></param>
-        /// <param name="stationCode"></param>
-        /// <param name="update"></param>
+        void AddLine(DO.LineStation lineStation);
+        void UpdateLineStation(DO.LineStation lineStation);
         void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update);
         
         /// <summary>
@@ -240,25 +215,8 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.LineTrip> GetAllLinesTrip();
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <
-        /// param name="line"></param>
-        void AddLineTrip(DO.LineTrip line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
-        void UpdateLineTrip(DO.LineTrip line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="update"></param>
+        void AddLineTrip(DO.LineTrip lineTrip);
+        void UpdateLineTrip(DO.LineTrip lineTrip);
         void UpdateLineTrip(int id, Action<DO.LineTrip> update);
         
         /// <summary>
@@ -283,24 +241,10 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.Station> GetAllStation();
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
-        void AddStation(DO.Station line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="line"></param>
-        void UpdateStation(DO.Station line);
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="update"></param>
+        IEnumerable<DO.Station> GetAllStationsBy(Predicate<DO.Station> predicate);
+
+        void AddStation(DO.Station station);
+        void UpdateStation(DO.Station station);
         void UpdateStation(int id, Action<DO.Station> update);
         
         /// <summary>
@@ -308,8 +252,28 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         void DeleteStation(int id);
-
         #endregion
+
+        #region Trip
+        DO.Trip trip(int id);
+        IEnumerable<DO.Trip> GetAllTrips();
+        void AddTrip(DO.Trip trip);
+        void UpdateTrip(DO.Trip user);
+        void UpdateTrip(int id, Action<DO.Trip> update);
+        void DeleteTrip(int id);
+        #endregion
+
+        #region User
+        DO.User user(int id);
+        IEnumerable<DO.User> GetAllUsers();
+        IEnumerable<DO.User> GetAllUsersBy(Predicate<DO.User> predicate);
+        void AddUser(DO.User user);
+        void UpdateUser(DO.User user);
+        void UpdateUser(int id, Action<DO.User> update);
+        void DeleteUser(int id);
+        #endregion 
+
+
     }
 
 }
