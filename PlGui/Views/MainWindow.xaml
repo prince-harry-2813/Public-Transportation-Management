@@ -1,10 +1,95 @@
-﻿<Window x:Class="PlGui.Views.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:prism="http://prismlibrary.com/"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525">
-    <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-    </Grid>
-</Window>
+﻿<Window
+    x:Class="PlGui.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:converters="clr-namespace:PlGui.Converters"
+    xmlns:ns="clr-namespace:PlGui.ViewModels"
+    Title="{Binding Title}"
+    Width="525"
+    Height="350"
+    SizeToContent="WidthAndHeight"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="WhiteSmoke">
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter"/>
+    </Window.Resources>
+
+
+    <StackPanel>
+        <DockPanel
+            Margin="1"
+            HorizontalAlignment="Left">
+            <Button
+                BorderBrush="Transparent"
+                Margin="1"
+                Command="{Binding NavigationPanelCommand}"
+                CommandParameter="Back"
+                ToolTip="Back"
+                Background="Transparent">
+                <Button.Content>
+                    <fa:ImageAwesome
+                        Icon="Solid_ArrowLeft"
+                        Height="10">
+                    </fa:ImageAwesome>
+                </Button.Content>
+            </Button>
+
+            <!--Forward Button-->
+            <Button
+                BorderBrush="Transparent"
+                Margin="1"
+                Command="{Binding NavigationPanelCommand}"
+                CommandParameter="Forward"
+                Background="Transparent"
+                ToolTip="Forward">
+                <Button.Content>
+                    <fa:ImageAwesome
+                        Icon="Solid_ArrowRight"
+                        Height="10">
+                    </fa:ImageAwesome>
+                </Button.Content>
+            </Button>
+
+            <!--<Home Button-->
+            <Button
+                Margin="1"
+                Command="{Binding NavigationPanelCommand}"
+                CommandParameter="Home"
+                ToolTip="Home"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                >
+                <Button.Content
+                    >
+                    <fa:ImageAwesome
+                        Icon="Solid_Home"
+                        Height="10">
+                    </fa:ImageAwesome>
+                </Button.Content>
+            </Button>
+
+            <!--Clone Button-->
+            <Button
+                Margin="1"
+                Command="{Binding NavigationPanelCommand}"
+                CommandParameter="Clone"
+                ToolTip="Clone"
+                BorderBrush="Transparent"
+                Background="Transparent">
+                <Button.Content>
+                    <fa:ImageAwesome
+                        Icon="Solid_Share"
+                        Height="10">
+                    </fa:ImageAwesome>
+                </Button.Content>
+            </Button>
+        </DockPanel>
+
+        <!--Main Region-->
+        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+
+    </StackPanel>
+    </Window>

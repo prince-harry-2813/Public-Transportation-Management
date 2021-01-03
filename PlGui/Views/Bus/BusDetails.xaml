@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="PlGui.Views.Bus.BusDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlGui.Views" xmlns:fa="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel
+        Width="580"
+        Margin="10"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <WrapPanel Margin="10" HorizontalAlignment="Center">
+            <fa:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
+            <Label FontSize="14pt" FontWeight="SemiBold">
+                Bus Details
+            </Label>
+        </WrapPanel>
+
+        <WrapPanel Margin="10">
+            <!--  Display Bus Info  -->
+            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
+                <Button
+                    Name="TreatmentButton"
+                    Height="30pt"
+                    Margin="5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
+                    Click="TreatmentButton_OnClick">
+                    <Button.Content>
+                        <fa:ImageAwesome
+                            Margin="2"
+                            Foreground="Blue"
+                            Icon="Solid_Screwdriver" />
+                    </Button.Content>
+                </Button>
+                <Label
+                    Padding="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    VerticalContentAlignment="Top"
+                    FontSize="10pt"
+                    Foreground="Blue">
+                    Treatment
+                </Label>
+            </StackPanel>
+            <!--  Display Bus Info  -->
+            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
+                <Button
+                    x:Name="RefuleButton"
+                    Height="30pt"
+                    Margin="5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
+                    Click="RefuleButton_OnClick">
+                    <Button.Content>
+                        <fa:ImageAwesome
+                            Margin="2"
+                            Foreground="Blue"
+                            Icon="Solid_GasPump" />
+                    </Button.Content>
+                </Button>
+                <Label
+                    Padding="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    VerticalContentAlignment="Top"
+                    FontSize="10pt"
+                    Foreground="Blue">
+                    Refule Bus
+                </Label>
+            </StackPanel>
+        </WrapPanel>
+        <ListBox
+            x:Name="lbBusDetails"
+            Margin="10"
+            HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            MinWidth="150"
+                            HorizontalAlignment="Left"
+                            Content="{Binding PropertyKey}"
+                            FontSize="8pt"
+                            FontWeight="Heavy" />
+                        <Label
+                            Grid.Column="1"
+                            MinWidth="150"
+                            HorizontalAlignment="Left"
+                            BorderBrush="Black"
+                            BorderThickness="0.5"
+                            Content="{Binding PropertyValue}"
+                            FontSize="8pt" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </StackPanel>
+</UserControl>

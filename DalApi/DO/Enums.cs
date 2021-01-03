@@ -11,7 +11,7 @@ namespace DO
     /// <summary>
     /// Current status of bus vehicle
     /// </summary>
-    public enum StatusEnum
+    public enum BusStatusEnum
     {
         Ok = 1,
         In_Ride,

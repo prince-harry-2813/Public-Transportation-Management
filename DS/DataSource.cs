@@ -9,6 +9,6 @@ namespace DS
 {
     public static class DataSource
     {
-        public static List<Bus>
+        public static List<Bus> a = new List<Bus>();
     }
 }

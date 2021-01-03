@@ -1,0 +1,82 @@
+﻿<UserControl
+    x:Class="PlGui.Views.ManagerLogin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:convert="clr-namespace:PlGui.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:local="clr-namespace:PlGui.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sn="clr-namespace:PlGui.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    Background="WhiteSmoke">
+    <UserControl.Resources>
+        <convert:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+    </UserControl.Resources>
+
+    <UniformGrid Margin="15" Rows="1">
+
+        <!--Buses View Button-->
+        <StackPanel Margin="10"
+                    VerticalAlignment="Center">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="{x:Static sn:StringNames.BusesView}">
+                <fa:ImageAwesome
+                    MaxHeight="150"
+                    Margin="10"
+                    Icon="Solid_Bus" />
+            </Button>
+
+            <Label
+                HorizontalAlignment="Center"
+                FontSize="20pt"
+                Content="{Binding 
+                Source={x:Static sn:StringNames.BusesView} , 
+                Converter={StaticResource ParameterToTitleConverter}}">
+            </Label>
+        </StackPanel>
+
+        <!--Lines View Button-->
+        <StackPanel 
+            VerticalAlignment="Center"
+            Margin="10">
+            <Button Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static sn:StringNames.LinesView}">
+                <fa:ImageAwesome
+                    MaxHeight="150"
+                    Margin="10"
+                    Icon="Solid_MapSigns" />
+            </Button>
+
+            <Label 
+                HorizontalAlignment="Center"
+                FontSize="20pt" Content="{Binding 
+                Source={x:Static sn:StringNames.LinesView}, 
+                Converter={StaticResource ParameterToTitleConverter}}" />
+        </StackPanel>
+
+        <!--Bus Stops Button-->
+        <StackPanel 
+            VerticalAlignment="Center"
+            Margin="10">
+            <Button Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static  sn:StringNames.BusStopsView}">
+                <fa:ImageAwesome
+                    MaxHeight="150"
+                    Margin="10"
+                    Icon="Solid_Store" />
+            </Button>
+
+            <Label
+                FontSize="20pt"
+                HorizontalAlignment="Center"
+                Content="{Binding
+                Source={x:Static sn:StringNames.BusStopsView },
+                Converter={StaticResource ParameterToTitleConverter}}">
+            </Label>
+        </StackPanel>
+
+
+    </UniformGrid>
+</UserControl>
