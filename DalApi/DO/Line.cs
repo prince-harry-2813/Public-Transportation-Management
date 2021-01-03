@@ -16,5 +16,7 @@ namespace DO
         public Area Area { get; set; }
         public int FirstStation { get; set; }
         public int LastStation { get; set; }
+        public bool isActive { get; set; }
+
     }
 }

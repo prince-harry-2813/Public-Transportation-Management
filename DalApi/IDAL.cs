@@ -24,6 +24,7 @@ namespace DalApi
         #region Bus
         DO.Bus GetBus(int id);
         IEnumerable<DO.Bus> GetAllBuses();
+        IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate);
         void AddBus(DO.Bus bus);
         void UpdateBus(DO.Bus bus);
         void UpdateBus(int id, Action<DO.Bus> update); 
@@ -42,6 +43,7 @@ namespace DalApi
         #region Line
         DO.Line GetLine(int id);
         IEnumerable<DO.Line> GetAllLines();
+        IEnumerable<DO.Line> GetAllLinesBy(Predicate<DO.Line> predicate);
         void AddLine(DO.Line line);
         void UpdateLine(DO.Line line);
         void UpdateLine(int id, Action<DO.Line> update);
@@ -51,8 +53,8 @@ namespace DalApi
         #region LineStation
         DO.LineStation GetLineStation(int lineId,int stationCode);
         IEnumerable<DO.LineStation> GetAllLinesStation();
-        void AddLine(DO.LineStation line);
-        void UpdateLineStation(DO.LineStation line);
+        void AddLine(DO.LineStation lineStation);
+        void UpdateLineStation(DO.LineStation lineStation);
         void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update);
         void DeleteLineStation(int lineId, int stationCode);
         #endregion
@@ -60,8 +62,8 @@ namespace DalApi
         #region LineTrip
         DO.LineTrip GetLineTrip(int id);
         IEnumerable<DO.LineTrip> GetAllLinesTrip();
-        void AddLineTrip(DO.LineTrip line);
-        void UpdateLineTrip(DO.LineTrip line);
+        void AddLineTrip(DO.LineTrip lineTrip);
+        void UpdateLineTrip(DO.LineTrip lineTrip);
         void UpdateLineTrip(int id, Action<DO.LineTrip> update);
         void DeleteLineTrip(int id);
         #endregion
@@ -69,12 +71,34 @@ namespace DalApi
         #region Station
         DO.Station station(int id);
         IEnumerable<DO.Station> GetAllStation();
-        void AddStation(DO.Station line);
-        void UpdateStation(DO.Station line);
+        IEnumerable<DO.Station> GetAllStationsBy(Predicate<DO.Station> predicate);
+
+        void AddStation(DO.Station station);
+        void UpdateStation(DO.Station station);
         void UpdateStation(int id, Action<DO.Station> update);
         void DeleteStation(int id);
-
         #endregion
+
+        #region Trip
+        DO.Trip trip(int id);
+        IEnumerable<DO.Trip> GetAllTrips();
+        void AddTrip(DO.Trip trip);
+        void UpdateTrip(DO.Trip user);
+        void UpdateTrip(int id, Action<DO.Trip> update);
+        void DeleteTrip(int id);
+        #endregion
+
+        #region User
+        DO.User user(int id);
+        IEnumerable<DO.User> GetAllUsers();
+        IEnumerable<DO.User> GetAllUsersBy(Predicate<DO.User> predicate);
+        void AddUser(DO.User user);
+        void UpdateUser(DO.User user);
+        void UpdateUser(int id, Action<DO.User> update);
+        void DeleteUser(int id);
+        #endregion 
+
+
     }
 
 }

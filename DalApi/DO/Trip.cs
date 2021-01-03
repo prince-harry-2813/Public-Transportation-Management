@@ -18,5 +18,7 @@ namespace DO
         public TimeSpan InAt { get; set; }
         public int OutStation { get; set; }
         public TimeSpan OutAt { get; set; }
+        public bool isActive { get; set; }
+
     }
 }

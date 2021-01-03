@@ -17,6 +17,7 @@ namespace DO
         public int TotalKM { get; set; }
         public int FuelStatus { get; set; }
         public StatusEnum Status { get; set; }
+        public bool isActive { get; set; }
 
     }
 }

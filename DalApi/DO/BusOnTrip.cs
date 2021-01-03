@@ -19,5 +19,7 @@ namespace DO
         public int PrevStation { get; set; }
         public TimeSpan PrevSatationAt { get; set; }
         public TimeSpan NextStationAt { get; set; }
+        public bool isActive { get; set; }
+
     }
 }
