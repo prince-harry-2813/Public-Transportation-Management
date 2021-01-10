@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using BL.BLApi;
+using PlGui.StaticClasses;
 using Prism.Regions;
 
 namespace PlGui.ViewModels.Lines
@@ -82,6 +83,7 @@ namespace PlGui.ViewModels.Lines
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
 
             #endregion
+            
             #region Properties Implementation
 
             InsertBusPropertiesToCollection(Line);
@@ -89,6 +91,7 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
         }
+        
         #region Command Implementation
 
         private void LineDetailsButton(string commandParameter)

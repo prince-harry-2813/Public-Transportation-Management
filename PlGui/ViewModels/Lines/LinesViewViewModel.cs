@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using BL.BLApi;
 using BL.BO;
+using PlGui.StaticClasses;
 using PlGui.Views.Lines;
 using Prism.Commands;
 using Prism.Mvvm;

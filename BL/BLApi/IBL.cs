@@ -39,5 +39,22 @@ namespace BL.BLApi
 
 
         #endregion
+
+        #region Bus Stop
+
+        void AddBusStop(BO.Station station);
+
+        void UpdateBusStop(BO.Station station);
+
+        void DeleteBusStop(BO.Station station);
+
+        BO.Bus GetBusStop(int lineId);
+
+        IEnumerable<BO.Station> GetAllBusStops();
+
+        IEnumerable<BO.Station> GetBusStopsBy(Predicate<BO.Station> predicate);
+
+
+        #endregion
     }
 }

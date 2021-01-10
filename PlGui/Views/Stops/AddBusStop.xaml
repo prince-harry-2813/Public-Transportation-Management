@@ -8,8 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <!--Main Grid-->
     <Grid
+        DataContext="{Binding BusStop}"
         Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -18,7 +20,8 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"
+                              MinWidth="120"/>
         </Grid.ColumnDefinitions>
 
         <!--#region Station Name Details -->
@@ -109,6 +112,16 @@
             Padding="1">
         </TextBox>
         <!--#endregion-->
-
+    <Button Grid.Row="4"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+        Margin="10"
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Center"
+        VerticalAlignment="Center"
+        VerticalContentAlignment="Center"
+        FontSize="14pt"
+        Content="Add"
+        Command="{Binding AddBusStopButtonCommand}"></Button>
     </Grid>
 </UserControl>

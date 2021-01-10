@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using BL.BLApi;
+using PlGui.StaticClasses;
 using Prism.Regions;
 
 namespace PlGui.ViewModels.Bus
 {
     public class AddBusViewModel
     {
-                #region Properties Decleration
+       #region Properties Decleration
 
         public IBL Bl { get; set; }
         

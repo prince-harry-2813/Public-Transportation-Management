@@ -23,7 +23,8 @@
             VerticalAlignment="Top"
             Margin="15"
             HorizontalAlignment="Left"
-            MaxHeight="50">
+            MaxHeight="50"
+            Height="Auto">
 
             <DockPanel>
                 <Button

@@ -207,7 +207,7 @@
                            MouseDoubleClick="OnContentChanged" />
 
                         <Label
-                            x:Name="frameLB"
+                            x:Name="av"
                             Grid.Column="2"
                             Width="Auto"
                             Content="{Binding Latitude}"
@@ -232,7 +232,7 @@
                             Margin="2"
                             Padding="3"
                             Command="{Binding ChooseLineButtonCommand}"
-                            Content="Choose Line" />
+                            Content="Choose BusStop" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

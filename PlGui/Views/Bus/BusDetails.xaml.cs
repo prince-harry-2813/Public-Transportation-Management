@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using PlGui.ViewModels.Bus;
+using Prism.Mvvm;
 
 namespace PlGui.Views.Bus
 {
@@ -14,6 +15,7 @@ namespace PlGui.Views.Bus
         public BusDetails()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
             viewModel = (BusDetailsViewModel) this.DataContext;
             lbBusDetails.DataContext = viewModel.Bl.GetBus(viewModel.LicenseNumber);
         }

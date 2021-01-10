@@ -30,7 +30,7 @@
                     BorderBrush="#00707070"
                     Command="{Binding LineDetailsButtonCommand}"
                     CommandParameter="Edit"
-                    ToolTip="Edit Line Properties">
+                    ToolTip="Edit BusStop Properties">
                     <Button.Content>
                         <fa5:ImageAwesome
                             Margin="2"
@@ -58,7 +58,7 @@
                     Margin="5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
-                    ToolTip="Delete Line"
+                    ToolTip="Delete BusStop"
                     Command="{ Binding LineDetailsButtonCommand}">
                     <Button.Content>
                         <fa5:ImageAwesome

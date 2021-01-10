@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using PlGui.ViewModels;
 using PlGui.ViewModels.Bus;
+using Prism.Mvvm;
 
 namespace PlGui.Views.Bus
 {
@@ -22,6 +23,7 @@ namespace PlGui.Views.Bus
         public AddBus()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(AddBus).ToString(), typeof(AddBusViewModel));
             ViewModel = (AddBusViewModel) this.DataContext;
         }
 

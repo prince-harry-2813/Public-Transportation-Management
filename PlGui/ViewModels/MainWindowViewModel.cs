@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using BL.BLApi;
+using PlGui.StaticClasses;
 using PlGui.Views;
 using PlGui.Views.Lines;
 using PlGui.Views.Stops;
@@ -106,7 +107,7 @@ namespace PlGui.ViewModels
             parm.Add("BL" , Bl);
             
             unityContainer.RegisterType(typeof(object), viewType , commandParameter);
-            regionManager.RequestNavigate( StringNames.MainRegion , commandParameter , parm);
+            regionManager.RequestNavigate(StringNames.MainRegion , commandParameter , parm);
             
             foreach (var view in regionManager.Regions[StringNames.MainRegion].Views)
             {
@@ -140,16 +141,5 @@ namespace PlGui.ViewModels
         #endregion
     }
 
-    public static class StringNames
-    {
-        public static string MainRegion = "MainRegion";
-        public static string ManagerLogin = "ManagerLogin";
-        public static string ClientLogin = "ClientLogin";
-        public static string BusesView = "BusesView";
-        public static string LinesView = "LinesView";
-        public static string BusStopsView = "BusStopsView";
-        public static string StartPage = "StartPage";
-        public static string BL = "BL";
-        public static string SelectedBus = "SelectedBus";
-    }
+   
 }

@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PlGui.ViewModels.Bus;
+using PlGui.ViewModels.Lines;
+using PlGui.Views.Lines;
+using Prism.Mvvm;
 
 namespace PlGui.Views.Stops
 {
@@ -23,6 +27,7 @@ namespace PlGui.Views.Stops
         public AddBusStop()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(AddBusStop).ToString(), typeof(AddBusViewModel));
         }
     }
 }

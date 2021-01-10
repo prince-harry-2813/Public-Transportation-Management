@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PlGui.ViewModels.Lines;
+using Prism.Mvvm;
 
 namespace PlGui.Views.Lines
 {
@@ -23,6 +25,7 @@ namespace PlGui.Views.Lines
         public LinesView()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(LinesView).ToString(), typeof(LinesViewViewModel));
         }
     }
 }

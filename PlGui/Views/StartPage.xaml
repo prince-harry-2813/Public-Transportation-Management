@@ -7,6 +7,8 @@
              xmlns:converters="clr-namespace:PlGui.Converters"
              xmlns:ns="clr-namespace:PlGui.ViewModels"
              xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:plGui="clr-namespace:PlGui"
+             xmlns:staticClasses="clr-namespace:PlGui.StaticClasses"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -39,7 +41,7 @@
                         <Label 
                             HorizontalAlignment="Center"
                             FontSize="25pt"
-                            Content="{Binding Source={x:Static ns:StringNames.ManagerLogin} , 
+                            Content="{Binding Source={x:Static staticClasses:StringNames.ManagerLogin} , 
                                         Converter={StaticResource ParameterToTitleConverter}}"/>
                     </StackPanel>
                 </Button.Content>
@@ -63,7 +65,7 @@
                         ></fa5:ImageAwesome>
                         <Label 
                             HorizontalAlignment="Center"
-                            Content="{Binding Source={x:Static ns:StringNames.ClientLogin} , 
+                            Content="{Binding Source={x:Static staticClasses:StringNames.ClientLogin} , 
                                         Converter={StaticResource ParameterToTitleConverter}}"
                             FontSize="25pt"/>
                     </StackPanel>

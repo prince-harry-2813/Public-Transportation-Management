@@ -9,6 +9,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Unity;
 using BL;
+using PlGui.StaticClasses;
 using AddBus = PlGui.Views.Bus.AddBus;
 using BusDetails = PlGui.Views.Bus.BusDetails;
 
@@ -96,9 +97,6 @@ namespace PlGui.ViewModels.Bus
 
             #endregion
         }
-
-
-
 
         #region Command Implementation
 

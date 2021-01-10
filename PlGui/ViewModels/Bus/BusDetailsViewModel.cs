@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BL.BLApi;
+using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;

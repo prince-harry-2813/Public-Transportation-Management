@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PlGui.ViewModels.Lines;
 
 namespace PlGui.Views.Lines
 {
@@ -23,6 +25,7 @@ namespace PlGui.Views.Lines
         public AddLine()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(AddLine).ToString(), typeof(AddLineViewModel));
         }
     }
 }

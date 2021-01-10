@@ -1,4 +1,8 @@
 ﻿using System.Windows.Controls;
+using PlGui.ViewModels.Lines;
+using PlGui.ViewModels.Stops;
+using PlGui.Views.Lines;
+using Prism.Mvvm;
 
 namespace PlGui.Views.Stops
 {
@@ -10,6 +14,8 @@ namespace PlGui.Views.Stops
         public BusStopsView()
         {
             InitializeComponent();
+            ViewModelLocationProvider.Register(typeof(BusStopsView).ToString(), typeof(BusStopsViewViewModel));
+
         }
     }
 }

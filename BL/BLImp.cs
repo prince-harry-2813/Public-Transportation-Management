@@ -51,7 +51,10 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        
+
+
+        #endregion
+
         #region Line Implementation
 
         void IBL.AddLine(Line line)
@@ -82,8 +85,41 @@ namespace BL
         IEnumerable<Line> IBL.GetLineBy(Predicate<Line> predicate)
         {
             throw new NotImplementedException();
-        } 
+        }
+
+
         #endregion
+
+        #region Bus Stop Implementation
+        void IBL.AddBusStop(Station station)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBL.UpdateBusStop(Station station)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBL.DeleteBusStop(Station station)
+        {
+            throw new NotImplementedException();
+        }
+
+        Bus IBL.GetBusStop(int lineId)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Station> IBL.GetAllBusStops()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Station> IBL.GetBusStopsBy(Predicate<Station> predicate)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
