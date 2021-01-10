@@ -6,7 +6,109 @@
              xmlns:local="clr-namespace:PlGui.Views.Stops"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <!--Main Grid-->
+    <Grid
+        Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region Station Name Details -->
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="10"
+            FontSize="14pt"
+            Content="Name"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+           >
+        </Label>
+
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+                 Text="{Binding Name}"
+                 Margin="10"
+                 FontSize="12pt"
+                 Padding="1">
+        </TextBox>
+        <!--#endregion-->
+
+        <!--#region  Station Code Details -->
+        <Label
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            Grid.Column="0"
+            Margin="10"
+            FontSize="14pt"
+            Content="Code"
+            HorizontalAlignment="Left">
+        </Label>
+
+        <TextBox
+            VerticalAlignment="Center"
+            Grid.Row="1"
+            Grid.Column="1"
+            Text="{Binding Code}"
+            Margin="10"
+            FontSize="12pt"
+            Padding="1">
+        </TextBox>
+        <!--#endregion-->
+
+        <!--#region Longitude Details -->
+        <Label
+            VerticalAlignment="Center"
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="10"
+            FontSize="14pt"
+            Content="Longitude"
+            HorizontalAlignment="Left">
+        </Label>
+
+        <TextBox
+            VerticalAlignment="Center"
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="{Binding Longitude}"
+            Margin="10"
+            FontSize="12pt"
+            Padding="1">
+        </TextBox>
+        <!--#endregion-->
+
+        <!--#region Latitude Details -->
+        <Label
+            Grid.Row="3"
+            VerticalAlignment="Center"
+            Grid.Column="0"
+            Margin="10"
+            FontSize="14pt"
+            Content="Latitude"
+            HorizontalAlignment="Left">
+        </Label>
+
+        <TextBox
+            VerticalAlignment="Center"
+            Grid.Row="3"
+            Grid.Column="1"
+            Text="{Binding Latitude}"
+            Margin="10"
+            FontSize="12pt"
+            Padding="1">
+        </TextBox>
+        <!--#endregion-->
+
     </Grid>
 </UserControl>

@@ -4,9 +4,114 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PlGui.Views.Lines"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel
+        Width="580"
+        Margin="10"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <WrapPanel Margin="10" HorizontalAlignment="Center">
+            <fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
+            <Label FontSize="14pt" FontWeight="SemiBold">
+                Bus Details
+            </Label>
+        </WrapPanel>
+
+        <WrapPanel Margin="10">
+            <!--  Edit Bus Button  -->
+            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
+                <Button
+                    Name="TreatmentButton"
+                    Height="30pt"
+                    Margin="20, 5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
+                    Command="{Binding LineDetailsButtonCommand}"
+                    CommandParameter="Edit"
+                    ToolTip="Edit Line Properties">
+                    <Button.Content>
+                        <fa5:ImageAwesome
+                            Margin="2"
+                            Foreground="Blue"
+                            Icon="Regular_Edit" />
+                    </Button.Content>
+                </Button>
+
+                <Label
+                    Padding="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    VerticalContentAlignment="Top"
+                    FontSize="10pt"
+                    Foreground="Blue">
+                    Edit
+                </Label>
+            </StackPanel>
+
+            <!--  Delete Bus Button -->
+            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
+                <Button
+                    x:Name="RefuleButton"
+                    Height="30pt"
+                    Margin="5"
+                    Background="#00DDDDDD"
+                    BorderBrush="#00707070"
+                    ToolTip="Delete Line"
+                    Command="{ Binding LineDetailsButtonCommand}">
+                    <Button.Content>
+                        <fa5:ImageAwesome
+                            Margin="2"
+                            Foreground="Blue"
+                            Icon="Solid_Trash" />
+                    </Button.Content>
+                </Button>
+
+                <Label
+                    Padding="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    VerticalContentAlignment="Top"
+                    FontSize="10pt"
+                    Foreground="Blue">
+                    Delete
+                </Label>
+            </StackPanel>
+        </WrapPanel>
+
+        <ListBox
+            x:Name="lbLineDetails"
+            Margin="10"
+            HorizontalContentAlignment="Stretch"
+            ItemsSource="{Binding LbItemSource}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="20, 5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            MinWidth="150"
+                            HorizontalAlignment="Left"
+                            Content="{Binding PropertyKey , Mode=OneWay}"
+                            FontSize="8pt"
+                            FontWeight="Heavy" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            MinWidth="150"
+                            HorizontalAlignment="Left"
+                            BorderBrush="Black"
+                            BorderThickness="0.5"
+                            Text="{Binding PropertyValue , Mode=TwoWay , UpdateSourceTrigger=LostFocus}"
+                            FontSize="8pt" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+
 </UserControl>

@@ -168,14 +168,14 @@
             </StackPanel>
         </WrapPanel>
 
-        <!--  Display Lines Info  -->
+        <!--  Display Bus-Stops Info  -->
         <ListBox
             x:Name="LbBuses"
             Grid.Row="2"
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            ItemsSource="{Binding BusLines}">
+            ItemsSource="{Binding BusStops}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="2">
@@ -189,23 +189,30 @@
 
                         <fa5:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding LineStaus, Converter={StaticResource StatusToColorConverter} }"
+                            Foreground="{Binding Code, Converter={StaticResource StatusToColorConverter} }"
                             Icon="Solid_Bus" />
 
                         <Label
                             x:Name="LineNumberLabel"
                             Grid.Column="1"
-                            Content="{Binding LineNumber}"
+                            Content="{Binding Name}"
                             MouseDoubleClick="OnContentChanged" />
 
                         <Label
-                            Visibility="{Binding CountDown , Converter={StaticResource NumberToVisibiltyConverter} }"
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding CountDown}"
+                            Content="{Binding Longitude}"
                             Foreground="Black"
                            MouseDoubleClick="OnContentChanged" />
+
+                        <Label
+                            x:Name="frameLB"
+                            Grid.Column="2"
+                            Width="Auto"
+                            Content="{Binding Latitude}"
+                            Foreground="Black"
+                            MouseDoubleClick="OnContentChanged" />
 
                         <!--<Button
                             x:Name="RefuleBus"
