@@ -59,6 +59,7 @@
     <Compile Include="Converters\NumberToVisibiltyConverter.cs" />
     <Compile Include="Converters\ParameterToTitleConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
+    <Compile Include="ViewModels\Bus\BusDetailsViewModel.cs" />
     <Compile Include="ViewModels\Lines\AddLineViewModel.cs" />
     <Compile Include="ViewModels\Stops\BusStopsViewViewModel.cs" />
     <Compile Include="ViewModels\Bus\AddBusViewModel.cs" />

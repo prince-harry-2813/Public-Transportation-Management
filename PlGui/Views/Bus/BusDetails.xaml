@@ -19,22 +19,25 @@
         </WrapPanel>
 
         <WrapPanel Margin="10">
-            <!--  Display Bus Info  -->
+            <!--  Edit Bus Button  -->
             <StackPanel HorizontalAlignment="Center" Visibility="Visible">
                 <Button
                     Name="TreatmentButton"
                     Height="30pt"
-                    Margin="5"
+                    Margin="20, 5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
-                    Click="TreatmentButton_OnClick">
+                    Command="{Binding BusDetailsButtonCommand}"
+                    CommandParameter="Edit"
+                    ToolTip="Edit Bus Properties">
                     <Button.Content>
                         <fa:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
-                            Icon="Solid_Screwdriver" />
+                            Icon="Regular_Edit" />
                     </Button.Content>
                 </Button>
+
                 <Label
                     Padding="2"
                     HorizontalAlignment="Center"
@@ -42,10 +45,11 @@
                     VerticalContentAlignment="Top"
                     FontSize="10pt"
                     Foreground="Blue">
-                    Treatment
+                    Edit 
                 </Label>
             </StackPanel>
-            <!--  Display Bus Info  -->
+
+            <!--  Delete Bus Button -->
             <StackPanel HorizontalAlignment="Center" Visibility="Visible">
                 <Button
                     x:Name="RefuleButton"
@@ -53,14 +57,16 @@
                     Margin="5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
-                    Click="RefuleButton_OnClick">
+                    ToolTip="Delete Bus"
+                    Command="{ Binding BusDetailsButtonCommand}">
                     <Button.Content>
                         <fa:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
-                            Icon="Solid_GasPump" />
+                            Icon="Solid_Trash" />
                     </Button.Content>
                 </Button>
+
                 <Label
                     Padding="2"
                     HorizontalAlignment="Center"
@@ -68,17 +74,19 @@
                     VerticalContentAlignment="Top"
                     FontSize="10pt"
                     Foreground="Blue">
-                    Refule Bus
+                    Delete 
                 </Label>
             </StackPanel>
         </WrapPanel>
+
         <ListBox
             x:Name="lbBusDetails"
             Margin="10"
-            HorizontalContentAlignment="Stretch">
+            HorizontalContentAlignment="Stretch"
+            ItemsSource="{Binding LbItemSource}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="5">
+                    <Grid Margin="20, 5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
@@ -87,21 +95,23 @@
                         <Label
                             MinWidth="150"
                             HorizontalAlignment="Left"
-                            Content="{Binding PropertyKey}"
+                            Content="{Binding PropertyKey , Mode=OneWay}"
                             FontSize="8pt"
                             FontWeight="Heavy" />
-                        <Label
+
+                        <TextBox
                             Grid.Column="1"
                             MinWidth="150"
                             HorizontalAlignment="Left"
                             BorderBrush="Black"
                             BorderThickness="0.5"
-                            Content="{Binding PropertyValue}"
+                            Text="{Binding PropertyValue , Mode=TwoWay , UpdateSourceTrigger=LostFocus}"
                             FontSize="8pt" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
 
     </StackPanel>
 </UserControl>

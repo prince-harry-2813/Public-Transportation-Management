@@ -32,8 +32,9 @@
                     <StackPanel>
                         <fa5:ImageAwesome
                              Icon="Solid_Tasks"
-                             MaxHeight="200pt"
-                             Margin="40"
+                             MaxHeight="170pt"
+                             Margin="70"
+                             Height="100"
                             ></fa5:ImageAwesome>
                         <Label 
                             HorizontalAlignment="Center"
@@ -55,9 +56,10 @@
                 <Button.Content>
                     <StackPanel>
                         <fa5:ImageAwesome
-                            Margin="40"
+                            Margin="70"
+                            Height="100"
                             Icon="Regular_User"
-                            MaxHeight="200pt"
+                            MaxHeight="150pt"
                         ></fa5:ImageAwesome>
                         <Label 
                             HorizontalAlignment="Center"

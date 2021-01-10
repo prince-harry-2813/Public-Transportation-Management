@@ -174,7 +174,7 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            ItemsSource="{Binding }">
+            ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="2">
@@ -188,13 +188,13 @@
 
                         <fa:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding BusStaus, Converter={StaticResource StatusToColorConverter} }"
+                            Foreground="{Binding Status, Converter={StaticResource StatusToColorConverter} }"
                             Icon="Solid_ChartLine" />
 
                         <Label
                             x:Name="LicensNumberLabel"
                             Grid.Column="1"
-                            Content="{Binding}"
+                            Content="{Binding LicenseNum}"
                             MouseDoubleClick="LicensNumberLabel_OnMouseDoubleClick" />
 
                         <Label
@@ -214,7 +214,9 @@
                             Padding="3"
                             Command="{Binding RefuleBusButtonCommand}">
                             <Button.Content>
+
                                 <fa:ImageAwesome Icon="Solid_GasPump" />
+
                             </Button.Content>
                         </Button>
 

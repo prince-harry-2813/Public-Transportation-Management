@@ -13,28 +13,28 @@ namespace PlGui.Views.Bus
     /// </summary>
     public partial class BusesView : UserControl
     {
-        private BusesViewViewModel _viewModel;
+        private BusesViewViewModel viewModel;
         public BusesView()
         {
             InitializeComponent();
             ViewModelLocationProvider.Register(typeof(BusesView).ToString(), typeof(BusesViewViewModel));
-            _viewModel = (BusesViewViewModel) this.DataContext;
+            viewModel = (BusesViewViewModel) this.DataContext;
         }
 
 
         private void LicensNumberLabel_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.OnMouseDoubleClick.Execute(null);
+            viewModel.OnMouseDoubleClick.Execute(null);
         }
 
         private void FrameLB_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.OnMouseDoubleClick.Execute(null);
+            viewModel.OnMouseDoubleClick.Execute(null);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            viewModel.OnMouseDoubleClick.Execute(null);
         }
     }
 }

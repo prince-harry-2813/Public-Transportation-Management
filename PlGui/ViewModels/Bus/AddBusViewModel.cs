@@ -1,7 +1,17 @@
-﻿namespace PlGui.ViewModels.Bus
+﻿using System.Linq;
+using BL.BLApi;
+using Prism.Regions;
+
+namespace PlGui.ViewModels.Bus
 {
     public class AddBusViewModel
     {
+                #region Properties Decleration
+
+        public IBL Bl { get; set; }
+        
+        #endregion
+        
         public AddBusViewModel()
         {
             #region MyRegion
@@ -41,7 +51,6 @@
         //        RegistrationDate.DisplayDateEnd = DateTime.Now;
         //    }
         //    licenseNumBox.Focus();
-
         //}
 
         ///// <summary>
@@ -89,5 +98,26 @@
         //    if (e.Key == Key.Escape)
         //        this.Close();
         //}
+
+        #region Interface Implementaion
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// passing Parameters to the window 
+        /// </summary>
+        /// <param name="navigationContext"></param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+        }
+#endregion
     }
 }

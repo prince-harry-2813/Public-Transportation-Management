@@ -19,42 +19,46 @@
 
 
     <StackPanel>
-        <DockPanel
-            Margin="1"
-            HorizontalAlignment="Left">
-            <Button
+        <Viewbox
+            VerticalAlignment="Top"
+            Margin="15"
+            HorizontalAlignment="Left"
+            MaxHeight="50">
+
+            <DockPanel>
+                <Button
                 BorderBrush="Transparent"
                 Margin="1"
                 Command="{Binding NavigationPanelCommand}"
                 CommandParameter="Back"
                 ToolTip="Back"
                 Background="Transparent">
-                <Button.Content>
-                    <fa:ImageAwesome
+                    <Button.Content>
+                        <fa:ImageAwesome
                         Icon="Solid_ArrowLeft"
                         Height="10">
-                    </fa:ImageAwesome>
-                </Button.Content>
-            </Button>
+                        </fa:ImageAwesome>
+                    </Button.Content>
+                </Button>
 
-            <!--Forward Button-->
-            <Button
+                <!--Forward Button-->
+                <Button
                 BorderBrush="Transparent"
                 Margin="1"
                 Command="{Binding NavigationPanelCommand}"
                 CommandParameter="Forward"
                 Background="Transparent"
                 ToolTip="Forward">
-                <Button.Content>
-                    <fa:ImageAwesome
+                    <Button.Content>
+                        <fa:ImageAwesome
                         Icon="Solid_ArrowRight"
                         Height="10">
-                    </fa:ImageAwesome>
-                </Button.Content>
-            </Button>
+                        </fa:ImageAwesome>
+                    </Button.Content>
+                </Button>
 
-            <!--<Home Button-->
-            <Button
+                <!--<Home Button-->
+                <Button
                 Margin="1"
                 Command="{Binding NavigationPanelCommand}"
                 CommandParameter="Home"
@@ -62,31 +66,32 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 >
-                <Button.Content
+                    <Button.Content
                     >
-                    <fa:ImageAwesome
+                        <fa:ImageAwesome
                         Icon="Solid_Home"
                         Height="10">
-                    </fa:ImageAwesome>
-                </Button.Content>
-            </Button>
+                        </fa:ImageAwesome>
+                    </Button.Content>
+                </Button>
 
-            <!--Clone Button-->
-            <Button
+                <!--Clone Button-->
+                <Button
                 Margin="1"
                 Command="{Binding NavigationPanelCommand}"
                 CommandParameter="Clone"
                 ToolTip="Clone"
                 BorderBrush="Transparent"
                 Background="Transparent">
-                <Button.Content>
-                    <fa:ImageAwesome
+                    <Button.Content>
+                        <fa:ImageAwesome
                         Icon="Solid_Share"
                         Height="10">
-                    </fa:ImageAwesome>
-                </Button.Content>
-            </Button>
-        </DockPanel>
+                        </fa:ImageAwesome>
+                    </Button.Content>
+                </Button>
+            </DockPanel>
+        </Viewbox>
 
         <!--Main Region-->
         <ContentControl prism:RegionManager.RegionName="MainRegion" />

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
+using BL.BLApi;
 using PlGui.Views;
 using PlGui.Views.Lines;
 using PlGui.Views.Stops;
@@ -22,6 +23,7 @@ namespace PlGui.ViewModels
         private IUnityContainer unityContainer;
 
         #endregion
+        
         #region Properties Decleration
 
         private string _title = "Login Window";
@@ -31,6 +33,7 @@ namespace PlGui.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        private IBL Bl;
        
         #endregion
 
@@ -52,7 +55,7 @@ namespace PlGui.ViewModels
 
             #region Property Initialization
 
-
+            Bl = BLFactory.GetIBL();
 
             #endregion
 
@@ -73,8 +76,6 @@ namespace PlGui.ViewModels
                 
             #endregion
         }
-
-        
 
         #region Command Implementaion
 
@@ -101,8 +102,11 @@ namespace PlGui.ViewModels
                     break;
             }
 
+            var parm = new NavigationParameters();
+            parm.Add("BL" , Bl);
+            
             unityContainer.RegisterType(typeof(object), viewType , commandParameter);
-            regionManager.RequestNavigate( StringNames.MainRegion , commandParameter);
+            regionManager.RequestNavigate( StringNames.MainRegion , commandParameter , parm);
             
             foreach (var view in regionManager.Regions[StringNames.MainRegion].Views)
             {
@@ -125,7 +129,7 @@ namespace PlGui.ViewModels
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoForward();
                     break;
                 case "Home":
-                    regionManager.RequestNavigate(StringNames.MainRegion , StringNames.StartPage);
+                    regionManager.RequestNavigate(StringNames.MainRegion , StringNames.ManagerLogin);
                     break;
                 case "Clone":
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoBack();
@@ -145,5 +149,7 @@ namespace PlGui.ViewModels
         public static string LinesView = "LinesView";
         public static string BusStopsView = "BusStopsView";
         public static string StartPage = "StartPage";
+        public static string BL = "BL";
+        public static string SelectedBus = "SelectedBus";
     }
 }

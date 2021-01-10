@@ -215,9 +215,8 @@ namespace dotNet5781_03B_6671_6650.Views
                     PropertyValue = SelectedBus.CountDown.ToString(),
                 });
             }
+            
             lbBusDetails.ItemsSource = busPropertyInfos;
-
-
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

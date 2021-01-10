@@ -2,13 +2,14 @@
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
+using Prism.Unity;
 
 namespace PlGui
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public partial class App 
     {
         protected override Window CreateShell()
         {
@@ -17,7 +18,7 @@ namespace PlGui
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            
         }
     }
 }

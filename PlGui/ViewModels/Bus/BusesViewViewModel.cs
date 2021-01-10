@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
+using BL.BLApi;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using Unity;
+using BL;
 using AddBus = PlGui.Views.Bus.AddBus;
 using BusDetails = PlGui.Views.Bus.BusDetails;
 
@@ -30,12 +35,56 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
+        #region Properties Decleration
+
+        private BL.BO.Bus selectedItem;
+        /// <summary>
+        /// Selected Bus Form Buses list In list Box 
+        /// </summary>
+        public BL.BO.Bus SelectedItem
+        {
+            get
+            {
+                return selectedItem;
+            }
+            set
+            {
+                SetProperty(ref selectedItem, value);
+            }
+        }
+
+        private ObservableCollection<BL.BO.Bus> lbItemSource;
+
+        public ObservableCollection<BL.BO.Bus> LbItemSource
+        {
+            get
+            {
+                return lbItemSource;
+            }
+            set
+            {
+                SetProperty(ref lbItemSource, value);
+            }
+        }
+
+        public IBL Bl { get; set; }
+
+        #endregion
+
         public BusesViewViewModel(IRegionManager manager , IUnityContainer container)
         {
+            #region Properties Decleration
+
+            LbItemSource = (ObservableCollection<BL.BO.Bus>)Bl.GetAllBuses();
+            SelectedItem = lbItemSource.FirstOrDefault();
+
+            #endregion
+
             #region Service Initialization
 
             regionManager = manager;
             unityContainer = container;
+            
             #endregion
 
             #region Command Initialization
@@ -65,6 +114,9 @@ namespace PlGui.ViewModels.Bus
                 return;
             }
             NavigationParameters param = new NavigationParameters(commandParameter);
+            param.Add(StringNames.BL , Bl);
+            param.Add(StringNames.SelectedBus , SelectedItem);
+            
             unityContainer.RegisterType(typeof(object) , typeof(BusDetails) , "BusDetails");
             regionManager.RequestNavigate(StringNames.MainRegion , "BusDetails" , param);
         }
@@ -88,6 +140,28 @@ namespace PlGui.ViewModels.Bus
         }
 
 
+        #endregion
+
+        #region Interface Implementaion
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        /// <summary>
+        /// passing Parameters to the window 
+        /// </summary>
+        /// <param name="navigationContext"></param>
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+        }
+        
         #endregion
     }
 }

@@ -121,7 +121,6 @@
                 FontSize="18"
                 FontWeight="Bold"
                 Foreground="#FFD64500" />
-
         </WrapPanel>
     </Grid>
 </UserControl>
