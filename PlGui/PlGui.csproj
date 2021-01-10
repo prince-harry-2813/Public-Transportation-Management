@@ -61,6 +61,9 @@
     <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="ViewModels\Bus\BusDetailsViewModel.cs" />
     <Compile Include="ViewModels\Lines\AddLineViewModel.cs" />
+    <Compile Include="ViewModels\Lines\LineDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Stops\AddBusStopViewModel.cs" />
+    <Compile Include="ViewModels\Stops\BusStopDetailsVIewModel.cs" />
     <Compile Include="ViewModels\Stops\BusStopsViewViewModel.cs" />
     <Compile Include="ViewModels\Bus\AddBusViewModel.cs" />
     <Compile Include="ViewModels\Bus\BusesViewViewModel.cs" />

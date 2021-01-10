@@ -50,7 +50,40 @@ namespace BL
         public void UpdateBus(Bus bus)
         {
             throw new NotImplementedException();
+        }
+        
+        #region Line Implementation
+
+        void IBL.AddLine(Line line)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBL.UpdateLine(Line line)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBL.DeleteLine(Line line)
+        {
+            throw new NotImplementedException();
+        }
+
+        Bus IBL.GetLine(int lineId)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Line> IBL.GetAllLines()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Line> IBL.GetLineBy(Predicate<Line> predicate)
+        {
+            throw new NotImplementedException();
         } 
+        #endregion
         #endregion
     }
 }
