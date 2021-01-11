@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DalApi;
 using DO;
+using DS;
 
 namespace DalObject
 {
@@ -22,7 +24,7 @@ namespace DalObject
         /// </summary>
         public static DalObject Instance { get => instance; }
         #endregion
-        
+
         #region AdjacentStation CRUD Implemntation 
 
         public IEnumerable<AdjacentStations> GetAllAdjacentStations()
@@ -58,34 +60,50 @@ namespace DalObject
         public void DeleteAdjacentStations(int station1, int station2)
         {
             throw new NotImplementedException();
-        } 
+        }
         #endregion
 
         #region Bus CRUD Implementation
 
         public Bus GetBus(int id)
         {
-            throw new NotImplementedException();
+            DO.Bus bus = DataSource.Buses.Find(b => b.LicenseNum == id);
+            if (bus != null)
+                return bus;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<Bus> GetAllBuses()
         {
-            throw new NotImplementedException();
+            return from bus in DS.DataSource.Buses
+                   select bus;
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-            throw new NotImplementedException();
+            return from bus in DataSource.Buses
+                   where predicate(bus)
+                   select bus;
         }
 
         public void AddBus(Bus bus)
         {
-            throw new NotImplementedException();
+            if (DataSource.Buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum) != null)
+                throw new DuplicateObjExeption(bus.LicenseNum, "This bus already exist");
+            DataSource.Buses.Add(bus);
         }
 
         public void UpdateBus(Bus bus)
         {
-            throw new NotImplementedException();
+            Bus busUp = DataSource.Buses.Find(b => b.LicenseNum == bus.LicenseNum);
+            if (busUp != null)
+            {
+                DataSource.Buses.Remove(busUp);
+                DataSource.Buses.Add(bus);
+            }
+            else
+                throw new BadIdExeption(bus.LicenseNum, $"bus {bus.LicenseNum} not exist");
         }
 
         public void UpdateBus(int id, Action<Bus> update)
@@ -95,13 +113,18 @@ namespace DalObject
 
         public void DeleteBus(int id)
         {
-            throw new NotImplementedException();
+            Bus busDlt = DataSource.Buses.Find(bus => bus.LicenseNum == id);
+            if (busDlt != null)
+                DataSource.Buses.Remove(busDlt);
+            else
+                throw new BadIdExeption(busDlt.LicenseNum, $"bus {busDlt.LicenseNum} not exist");
+
         }
-        
+
         #endregion
 
-        #region Bus On Trip CRUP Implementaion 
-        
+        #region Bus On Trip CRUD Implementation 
+
         public BusOnTrip GetBusOnTrip(int id)
         {
             throw new NotImplementedException();
@@ -206,7 +229,7 @@ namespace DalObject
         #endregion
 
         #region LineTrip CRUD Implementation 
-        
+
         public LineTrip GetLineTrip(int id)
         {
             throw new NotImplementedException();
@@ -240,7 +263,7 @@ namespace DalObject
         #endregion
 
         #region Station CRUD Implementation
-        
+
         public Station station(int id)
         {
             throw new NotImplementedException();
@@ -310,7 +333,7 @@ namespace DalObject
         #endregion
 
         #region User CRUD Implementation
-        
+
         public User user(int id)
         {
             throw new NotImplementedException();
@@ -344,7 +367,7 @@ namespace DalObject
         public void DeleteUser(int id)
         {
             throw new NotImplementedException();
-        } 
+        }
         #endregion
     }
 }

@@ -36,10 +36,26 @@ namespace DS
         /// <summary>
         /// this method initial program with an initial information
         /// </summary>
-        private static void InitialDS()
+         static void InitialDS()
         {
-            
-            throw new NotImplementedException();
+            Buses = new List<Bus> {
+            new Bus
+            {
+                LicenseNum=12345678,
+                RegisDate = new DateTime(2019,10,10),
+                TotalKM =0,
+                FuelStatus=1200,
+                Status =BusStatusEnum.Ok,
+                isActive =true
+            }
+            };
+            BusesOnTrips = new List<BusOnTrip>();
+            Lines = new List<Line>();
+            LineStations = new List<LineStation>();
+            LineStations = new List<LineStation>();
+            LineTrips = new List<LineTrip>();
+            Trips = new List<Trip>();
+            Users = new List<User>();
         }
     }
     
