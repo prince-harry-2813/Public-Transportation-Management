@@ -24,7 +24,7 @@ namespace DS
         public static List<Station> Stations;
         public static List<Trip> Trips;
         public static List<User> Users;
-        
+        public static List<AdjacentStations> AdjacentStations;
         #endregion
         /// <summary>
         /// Static Ctor for Data object lists
@@ -68,6 +68,7 @@ namespace DS
             LineTrips = new List<LineTrip>();
             Trips = new List<Trip>();
             Users = new List<User>();
+            AdjacentStations = new List<AdjacentStations>();
         }
     }
     

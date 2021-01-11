@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DalApi;
+﻿using DalApi;
 using DO;
 using DS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DalObject
 {
@@ -25,31 +25,48 @@ namespace DalObject
         public static DalObject Instance { get => instance; }
         #endregion
 
-        #region AdjacentStation CRUD Implemntation 
+        #region AdjacentStation CRUD Implementation 
 
         public IEnumerable<AdjacentStations> GetAllAdjacentStations()
         {
-            throw new NotImplementedException();
+            return from adjs in DataSource.AdjacentStations
+                   select adjs;
         }
 
         public IEnumerable<AdjacentStations> GetAllAdjacentStationsBy(Predicate<AdjacentStations> predicate)
         {
-            throw new NotImplementedException();
+            return from adjs in DataSource.AdjacentStations
+                   where predicate(adjs)
+                   select adjs;
         }
 
-        public AdjacentStations GetAdjacentStations(int station1, int station2)
+        public AdjacentStations GetAdjacentStations(int id)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.FirstOrDefault(adj => adj.PairId == id);
+            if (stations != null)
+                return stations;
+            else
+                throw new BadIdExeption(id, $"there is no direct tripping between those stations");
         }
 
         public void AddAdjacentStations(AdjacentStations adjacentStations)
         {
-            throw new NotImplementedException();
+            if (DataSource.AdjacentStations.FirstOrDefault(adjs => adjs.PairId == adjacentStations.PairId) != null)
+                throw new DuplicateObjExeption(adjacentStations.PairId, "there is already an instance of this pair");
+            else
+                DataSource.AdjacentStations.Add(adjacentStations);
         }
 
         public void UpdateAdjacentStations(AdjacentStations adjacentStations)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.PairId == adjacentStations.PairId);
+            if (stations != null)
+            {
+                DataSource.AdjacentStations.Remove(stations);
+                DataSource.AdjacentStations.Add(adjacentStations);
+            }
+            else
+                throw new BadIdExeption(adjacentStations.PairId, "there is no direct tripping between those stations");
         }
 
         public void UpdateAdjacentStations(int station1, int station2, Action<AdjacentStations> update)
@@ -59,7 +76,11 @@ namespace DalObject
 
         public void DeleteAdjacentStations(int station1, int station2)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.Station1 == station1 && adj.Station2 == station2);
+            if (stations != null)
+                DataSource.AdjacentStations.Remove(stations);
+            else
+                throw new BadIdExeption(int.Parse(station1.ToString() + station2.ToString()), "there is no direct tripping between those stations");
         }
         #endregion
 
@@ -127,22 +148,45 @@ namespace DalObject
 
         public BusOnTrip GetBusOnTrip(int id)
         {
-            throw new NotImplementedException();
+            DO.BusOnTrip bus = DataSource.BusesOnTrips.Find(b => b.Id == id);
+            if (bus != null)
+                return bus;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
         {
-            throw new NotImplementedException();
+            return from bus in DS.DataSource.BusesOnTrips
+                   select bus;
         }
+
+        public IEnumerable<DO.BusOnTrip> GetAllBusesOnTripsBy(Predicate<DO.BusOnTrip> predicate)
+        {
+            return from busTrip in DataSource.BusesOnTrips
+                   where predicate(busTrip)
+                   select busTrip;
+        }
+
 
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+            if (DataSource.BusesOnTrips.FirstOrDefault(b => b.Id == busOnTrip.Id) != null)
+                throw new DuplicateObjExeption(busOnTrip.Id, "This bus already in drive");
+            DataSource.BusesOnTrips.Add(busOnTrip);
         }
 
         public void UpdateBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+            BusOnTrip busUp = DataSource.BusesOnTrips.Find(b => b.Id == busOnTrip.Id);
+            if (busUp != null)
+            {
+                DataSource.BusesOnTrips.Remove(busUp);
+                DataSource.BusesOnTrips.Add(busOnTrip);
+            }
+            else
+                throw new BadIdExeption(busOnTrip.LicenseNum, $"bus {busOnTrip.Id} not exist");
+
         }
 
         public void UpdateBusOnTrip(int id, Action<BusOnTrip> update)
@@ -152,7 +196,11 @@ namespace DalObject
 
         public void DeleteBusOnTrip(int id)
         {
-            throw new NotImplementedException();
+            BusOnTrip busDlt = DataSource.BusesOnTrips.Find(bus => bus.Id == id);
+            if (busDlt != null)
+                DataSource.BusesOnTrips.Remove(busDlt);
+            else
+                throw new BadIdExeption(busDlt.LicenseNum, $"bus {busDlt.Id} not exist");
         }
 
         #endregion
@@ -160,27 +208,44 @@ namespace DalObject
         #region Line CRUD Implementation 
         public Line GetLine(int id)
         {
-            throw new NotImplementedException();
+            DO.Line line = DataSource.Lines.Find(b => b.Id == id);
+            if (line != null)
+                return line;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<Line> GetAllLines()
         {
-            throw new NotImplementedException();
+            return from line in DS.DataSource.Lines
+                   select line;
         }
 
         public IEnumerable<Line> GetAllLinesBy(Predicate<Line> predicate)
         {
-            throw new NotImplementedException();
+            return from line in DataSource.Lines
+                   where predicate(line)
+                   select line;
         }
 
         public void AddLine(Line line)
         {
-            throw new NotImplementedException();
+            if (DataSource.Lines.FirstOrDefault(b => b.Id == line.Id) != null)
+                throw new DuplicateObjExeption(line.Id, "This line already signed");
+            DataSource.Lines.Add(line);
         }
 
         public void UpdateLine(Line line)
         {
-            throw new NotImplementedException();
+            Line lineUp = DataSource.Lines.Find(b => b.Id == line.Id);
+            if (lineUp != null)
+            {
+                DataSource.Lines.Remove(lineUp);
+                DataSource.Lines.Add(line);
+            }
+            else
+                throw new BadIdExeption(line.Id, $"line {line.Id} not exist");
+
         }
 
         public void UpdateLine(int id, Action<Line> update)
@@ -190,7 +255,12 @@ namespace DalObject
 
         public void DeleteLine(int id)
         {
-            throw new NotImplementedException();
+            Line lineDlt = DataSource.Lines.Find(line => line.Id == id);
+            if (lineDlt != null)
+                DataSource.Lines.Remove(lineDlt);
+            else
+                throw new BadIdExeption(lineDlt.Id, $"line {lineDlt.Id} not exist");
+
         }
 
         #endregion
@@ -198,22 +268,45 @@ namespace DalObject
         #region Line Station CRUD Implementation
         public LineStation GetLineStation(int lineId, int stationCode)
         {
-            throw new NotImplementedException();
+            DO.LineStation lineStation = DataSource.LineStations.Find(b => b.LineId == lineId && b.StationId == stationCode);
+            if (lineStation != null)
+                return lineStation;
+            else
+                throw new BadIdExeption(stationCode, $"Station number {stationCode} doesn't exist in line {lineId}");
         }
 
         public IEnumerable<LineStation> GetAllLinesStation()
         {
-            throw new NotImplementedException();
+            return from lineSt in DataSource.LineStations
+                   select lineSt;
+        }
+
+        public IEnumerable<LineStation> GetAllLinesStationBy(Predicate<LineStation> predicate)
+        {
+            return from lineSt in DataSource.LineStations
+                   where predicate(lineSt)
+                   select lineSt;
+
         }
 
         public void AddLine(LineStation lineStation)
         {
-            throw new NotImplementedException();
+            if (DataSource.LineStations.FirstOrDefault(l => l.LineId == lineStation.LineId && l.StationId==lineStation.StationId) != null)
+                throw new DuplicateObjExeption(lineStation.StationId, "This station already signed to line");
+            DataSource.LineStations.Add(lineStation);
         }
 
         public void UpdateLineStation(LineStation lineStation)
         {
-            throw new NotImplementedException();
+            LineStation lineUp = DataSource.LineStations.Find(l => l.LineId == lineStation.LineId&&l.StationId == lineStation.StationId) ;
+            if (lineUp != null)
+            {
+                DataSource.LineStations.Remove(lineUp);
+                DataSource.LineStations.Add(lineStation);
+            }
+            else
+                throw new BadIdExeption(lineStation.StationId, $"Station {lineStation.StationId} at line {lineStation.LineId} doesn't exist");
+
         }
 
         public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
@@ -223,7 +316,12 @@ namespace DalObject
 
         public void DeleteLineStation(int lineId, int stationCode)
         {
-            throw new NotImplementedException();
+
+            LineStation lineDlt = DataSource.LineStations.Find(line => line.LineId == lineId&& line.StationId == stationCode);
+            if (lineDlt != null)
+                DataSource.LineStations.Remove(lineDlt);
+            else
+                throw new BadIdExeption(stationCode, $"line {lineId} not having station {stationCode}");
         }
 
         #endregion
@@ -232,22 +330,45 @@ namespace DalObject
 
         public LineTrip GetLineTrip(int id)
         {
-            throw new NotImplementedException();
+            DO.LineTrip line = DataSource.LineTrips.Find(b => b.Id == id);
+            if (line != null)
+                return line;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<LineTrip> GetAllLinesTrip()
         {
-            throw new NotImplementedException();
+            return from lineTrip in DataSource.LineTrips
+                   select lineTrip;
         }
+
+        public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
+        {
+            return from lineTrip in DataSource.LineTrips
+                   where predicate(lineTrip)
+                   select lineTrip;
+        }
+
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-            throw new NotImplementedException();
+            if (DataSource.LineTrips.FirstOrDefault(l => l.Id == lineTrip.Id) != null)
+                throw new DuplicateObjExeption(lineTrip.Id, "This line already signed");
+            DataSource.LineTrips.Add(lineTrip);
         }
 
         public void UpdateLineTrip(LineTrip lineTrip)
         {
-            throw new NotImplementedException();
+            LineTrip lineUp = DataSource.LineTrips.Find(b => b.Id == lineTrip.Id);
+            if (lineUp != null)
+            {
+                DataSource.LineTrips.Remove(lineUp);
+                DataSource.LineTrips.Add(lineTrip);
+            }
+            else
+                throw new BadIdExeption(lineTrip.Id, $"line trip {lineTrip.Id} not exist");
+
         }
 
         public void UpdateLineTrip(int id, Action<LineTrip> update)
@@ -257,7 +378,11 @@ namespace DalObject
 
         public void DeleteLineTrip(int id)
         {
-            throw new NotImplementedException();
+            LineTrip lineDlt = DataSource.LineTrips.Find(line => line.Id == id);
+            if (lineDlt != null)
+                DataSource.LineTrips.Remove(lineDlt);
+            else
+                throw new BadIdExeption(lineDlt.Id, $"line trip {lineDlt.Id} not exist");
         }
 
         #endregion
@@ -266,27 +391,43 @@ namespace DalObject
 
         public Station station(int id)
         {
-            throw new NotImplementedException();
+            DO.Station station = DataSource.Stations.Find(b => b.Code == id);
+            if (station != null)
+                return station;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<Station> GetAllStation()
         {
-            throw new NotImplementedException();
+            return from station in DataSource.Stations
+                   select station;
         }
 
         public IEnumerable<Station> GetAllStationsBy(Predicate<Station> predicate)
         {
-            throw new NotImplementedException();
+            return from station in DataSource.Stations
+                   where predicate(station)
+                   select station;
         }
 
         public void AddStation(Station station)
         {
-            throw new NotImplementedException();
+            if (DataSource.Stations.FirstOrDefault(l => l.Code == station.Code) != null)
+                throw new DuplicateObjExeption(station.Code, "This station already exist");
+            DataSource.Stations.Add(station);
         }
 
         public void UpdateStation(Station station)
         {
-            throw new NotImplementedException();
+            Station stationUp = DataSource.Stations.Find(b => b.Code == station.Code);
+            if (stationUp != null)
+            {
+                DataSource.Stations.Remove(stationUp);
+                DataSource.Stations.Add(station);
+            }
+            else
+                throw new BadIdExeption(station.Code, $"station {station.Code} not exist");
         }
 
         public void UpdateStation(int id, Action<Station> update)
@@ -296,7 +437,11 @@ namespace DalObject
 
         public void DeleteStation(int id)
         {
-            throw new NotImplementedException();
+            Station station = DataSource.Stations.Find(s => s.Code == id);
+            if (station != null)
+                DataSource.Stations.Remove(station);
+            else
+                throw new BadIdExeption(id, $" station {id} not exist");
         }
         #endregion
 

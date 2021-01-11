@@ -19,7 +19,7 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        #region Properties Decleration
+        #region Properties Deceleration
 
         private DateTime displayDateEnd;
 

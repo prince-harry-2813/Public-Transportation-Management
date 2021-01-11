@@ -11,6 +11,7 @@ namespace DO
     /// </summary>
     public class AdjacentStations
     {
+        public int PairId { get; set; }
         public int Station1 { get; set; }// key 1
         public int Station2 { get; set; }// key 2
         public double Distance { get; set; }

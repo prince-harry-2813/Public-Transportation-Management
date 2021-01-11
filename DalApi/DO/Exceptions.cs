@@ -29,7 +29,7 @@ namespace DO
         protected DuplicateObjExeption(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-        public override string ToString() => base.ToString() + $", bad {base.Source} id: {ID}";
+        public override string ToString() => base.ToString() + $", Object {base.Source} id: {ID} already exist";
     }
 
 
