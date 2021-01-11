@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using BL.BLApi;
 using PlGui.StaticClasses;
@@ -19,6 +20,15 @@ namespace PlGui.ViewModels.Bus
     public class BusDetailsViewModel : BindableBase, INavigationAware
     {
         #region Properties Declaraion
+
+        private bool isInEditMode;
+        public bool IsInEditMode
+        {
+            get => isInEditMode;
+            set
+            {
+                SetProperty(ref isInEditMode, value);
+            }}
 
         private BL.BO.Bus bus;
         /// <summary>
@@ -59,6 +69,7 @@ namespace PlGui.ViewModels.Bus
         }
 
         public int LicenseNumber { get; set; }
+        
         #region Private Members
 
         private int licenseNum;
@@ -69,6 +80,8 @@ namespace PlGui.ViewModels.Bus
 
         #region Service Decleration
 
+        private IRegionManager regionManager;
+        
         public IBL Bl { get; set; }
 
         #endregion
@@ -79,13 +92,20 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        public BusDetailsViewModel()
+        public BusDetailsViewModel(IRegionManager manager)
         {
+            #region Service Initialization
+
+            regionManager = manager;
+
+            #endregion
+            
             #region Command Implemetaion
 
             BusDetailsButtonCommand = new DelegateCommand<string>(BusDetailsButton);
 
             #endregion
+            
             #region Properties Implementation
 
             InsertBusPropertiesToCollection(Bus);
@@ -93,22 +113,76 @@ namespace PlGui.ViewModels.Bus
 
             #endregion
         }
+        
         #region Command Implementation
 
         private void BusDetailsButton(string commandParameter)
         {
             switch (commandParameter)
             {
-                case "Edit": 
-                    //TODO: Implement Edit Implementation
+                case "Edit":
+                    EditButtonClicked();
                     break;
-                case "Remove": 
-                    //TODO: Add Remove Function 
+                case "Remove":
+                    RemoveBusButtomClicked();
                     break;
             }
         }
 
+        private void EditButtonClicked()
+        {
+            if(IsInEditMode)
+            {
+                IsInEditMode = true;
+                
+            }
+            else
+            {
+                IsInEditMode = false;
+                InsertCollectionToBus();
+                try
+                {
+                    if (Bus != null)
+                    {
+                        Bl.UpdateBus(Bus);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to update Bus \n" +
+                                    "Please try again", ex.Source, MessageBoxButton.OK
+                        , MessageBoxImage.Error);
+                    IsInEditMode = true;
+                }
+            }
+        }
+
+        private void RemoveBusButtomClicked()
+        {
+            bool sucssesFlag = true;
+            
+            try
+            {
+                Bl.DeleteBus(Bus);
+            }
+            
+            catch (Exception e)
+            {
+                sucssesFlag = false;
+                MessageBox.Show("Failed to delete bus " +
+                                "Please try again", e.Source, MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine(e);
+                throw;
+            }
+            
+            if (sucssesFlag)
+            {
+                regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoBack();
+            }
+        }
+        
         #endregion
+
         #region Interface Implementaion
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -118,6 +192,7 @@ namespace PlGui.ViewModels.Bus
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            
         }
 
         /// <summary>
@@ -126,6 +201,8 @@ namespace PlGui.ViewModels.Bus
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            if (navigationContext == null) return;
+            
             // Initialize Interface 
             Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
 
