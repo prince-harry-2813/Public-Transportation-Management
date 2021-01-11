@@ -105,8 +105,9 @@ namespace PlGui.ViewModels
 
             var parm = new NavigationParameters();
             parm.Add("BL" , Bl);
-            
-            unityContainer.RegisterType(typeof(object), viewType , commandParameter);
+
+
+            unityContainer.Resolve(viewType, commandParameter);
             regionManager.RequestNavigate(StringNames.MainRegion , commandParameter , parm);
             
             foreach (var view in regionManager.Regions[StringNames.MainRegion].Views)

@@ -36,6 +36,4 @@ namespace PlGui
             containerRegistry.Register(typeof(object), typeof(BusStopsView), StringNames.BusStopsView);
         }
     }
-    
-   
 }

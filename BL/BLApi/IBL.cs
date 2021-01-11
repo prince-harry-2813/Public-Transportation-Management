@@ -30,7 +30,7 @@ namespace BL.BLApi
 
         void DeleteLine(BO.Line line);
 
-        BO.Bus GetLine(int lineId);
+        BO.Line GetLine(int lineId);
 
         IEnumerable<BO.Line> GetAllLines();
 

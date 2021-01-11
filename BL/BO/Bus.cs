@@ -37,5 +37,15 @@ namespace BL.BO
         /// Is Bus Active in the system 
         /// </summary>
         public bool isActive { get; set; }
+
+        /// <summary>
+        /// Bus Last Maintainance
+        /// </summary>
+        public DateTime LastTreatment { get; set; }
+
+        /// <summary>
+        ///  Km on last maintainance
+        /// </summary>
+        public uint LastTreatmentKm { get; set; }
     }
 }

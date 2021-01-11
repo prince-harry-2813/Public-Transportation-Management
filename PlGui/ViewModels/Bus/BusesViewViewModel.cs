@@ -76,7 +76,14 @@ namespace PlGui.ViewModels.Bus
         {
             #region Properties Decleration
 
-            LbItemSource = (ObservableCollection<BL.BO.Bus>)Bl.GetAllBuses();
+            Bl = BLFactory.GetIBL();
+            
+            LbItemSource = new ObservableCollection<BL.BO.Bus>();
+            foreach (var VARIABLE in Bl.GetAllBuses())
+            {
+                LbItemSource.Add(VARIABLE);
+            }
+            //LbItemSource = (ObservableCollection<BL.BO.Bus>)Bl.GetAllBuses();
             SelectedItem = lbItemSource.FirstOrDefault();
 
             #endregion

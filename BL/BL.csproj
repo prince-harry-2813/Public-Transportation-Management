@@ -48,6 +48,7 @@
     <Compile Include="BO\Bus.cs" />
     <Compile Include="BO\BusOnTrip.cs" />
     <Compile Include="BO\Enums.cs" />
+    <Compile Include="BO\Exceptions.cs" />
     <Compile Include="BO\Line.cs" />
     <Compile Include="BO\LineStation.cs" />
     <Compile Include="BO\LineTrip.cs" />
@@ -63,8 +64,6 @@
       <Name>DalApi</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exeptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
