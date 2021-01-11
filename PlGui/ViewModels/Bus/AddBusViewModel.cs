@@ -148,7 +148,8 @@ namespace PlGui.ViewModels.Bus
                 }
                 else
                 {
-                    MessageBox.Show("Please Insert License number and Registration Date" , "Propertirs fault" , MessageBoxButton.OK , MessageBoxImage.Error)
+                    MessageBox.Show("Please Insert License number and Registration Date", "Propertirs fault",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

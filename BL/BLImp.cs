@@ -106,7 +106,7 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        Bus IBL.GetBusStop(int lineId)
+        Station IBL.GetBusStop(int lineId)
         {
             throw new NotImplementedException();
         }
