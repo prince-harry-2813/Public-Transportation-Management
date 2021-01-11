@@ -12,6 +12,12 @@
     <UserControl.Background>
         <ImageBrush ImageSource="../../Recources/AddBusBG.jpg" TileMode="Tile" />
     </UserControl.Background>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding EneterKeyCommand}"/>
+    </UserControl.InputBindings>
+
     <Grid Margin="10,10,10,10">
 
         <Grid Margin="10,90,10,9.6" Background="#4CFFFFFF">
@@ -29,9 +35,12 @@
                     FontFamily="Nirmala UI"
                     FontWeight="Bold"
                     Foreground="#FFD64500" />
+
                 <DatePicker
                     Name="RegistrationDate"
                     Width="100"
+                    DisplayDateEnd="{Binding DisplayDateEnd}"
+                    DisplayDateStart="{Binding DisplayDateStart}"
                     Height="23"
                     FontStyle="Italic"
                     Foreground="#FFD64500"
@@ -45,8 +54,8 @@
                         </LinearGradientBrush>
                     </DatePicker.BorderBrush>
                 </DatePicker>
-
             </WrapPanel>
+
             <WrapPanel
                 Width="228"
                 Margin="30,28,246,115"
@@ -111,6 +120,7 @@
                 FontWeight="Bold"
                 Foreground="#FFD64500" />
         </Grid>
+
         <WrapPanel Margin="10,10,9.6,192.2" Orientation="Vertical">
             <Label
                 Width="356"

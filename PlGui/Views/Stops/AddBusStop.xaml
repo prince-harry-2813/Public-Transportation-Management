@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:PlGui.Views.Stops"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding EneterKeyCommand}"/>
+    </UserControl.InputBindings>
     <!--Main Grid-->
     <Grid
         DataContext="{Binding BusStop}"

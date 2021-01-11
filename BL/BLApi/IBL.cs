@@ -22,7 +22,6 @@ namespace BL.BLApi
 
         #endregion
 
-
         #region Line
 
         void AddLine(BO.Line line);
@@ -48,7 +47,7 @@ namespace BL.BLApi
 
         void DeleteBusStop(BO.Station station);
 
-        BO.Bus GetBusStop(int lineId);
+        BO.Station GetBusStop(int lineId);
 
         IEnumerable<BO.Station> GetAllBusStops();
 

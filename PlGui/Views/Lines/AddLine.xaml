@@ -8,6 +8,10 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding EneterKeyCommand}"/>
+    </UserControl.InputBindings>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

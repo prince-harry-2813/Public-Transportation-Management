@@ -24,50 +24,49 @@ namespace dotNet5781_03B_6671_6650.Views
             licenseNumBox.Focus();
         }
 
-        /// <summary>
-        /// when the details window closed, open back the main window;
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            isClosed = true;
-            App.Current.MainWindow.Show();
-
-        }
-
-        /// <summary>
-        /// When the text box lost focus check if the input length is more then 7 digits
-        /// when input length is 7 digits the date picker configure to show dates between 2000 - 2018
-        /// when input length is 8 digits the date picker configure to show dates between 2018 - now
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkLicense(object sender, RoutedEventArgs e)
-        {
-            
-            if (licenseNumBox.Text.Length < 7 && !isClosed
-                //&& !licenseNumBox.Focusable
-                )
+            /// <summary>
+            /// when the details window closed, open back the main window;
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
             {
+                isClosed = true;
+                App.Current.MainWindow.Show();
 
-                licenseNumBox.Text = "";
-                MessageBox.Show("Please enter valid number, must contain at least 7 digits");
+            }
+
+            /// <summary>
+            /// When the text box lost focus check if the input length is more then 7 digits
+            /// when input length is 7 digits the date picker configure to show dates between 2000 - 2018
+            /// when input length is 8 digits the date picker configure to show dates between 2018 - now
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void checkLicense(object sender, RoutedEventArgs e)
+            {
+                if (licenseNumBox.Text.Length < 7 && !isClosed
+                    //&& !licenseNumBox.Focusable
+                    )
+                {
+
+                    licenseNumBox.Text = "";
+                    MessageBox.Show("Please enter valid number, must contain at least 7 digits");
+                    licenseNumBox.Focus();
+                }
+                else if (licenseNumBox.Text.Length == 7) 
+                {
+                    RegistrationDate.DisplayDateEnd = new DateTime(2017, 12, 31);
+                    RegistrationDate.DisplayDateStart = new DateTime(2000, 1, 1);
+                }
+                else if(licenseNumBox.Text.Length == 8)
+                {
+                    RegistrationDate.DisplayDateStart = new DateTime(2018, 01, 01);
+                    RegistrationDate.DisplayDateEnd = DateTime.Now;
+                }
                 licenseNumBox.Focus();
-            }
-            else if (licenseNumBox.Text.Length == 7) 
-            {
-                RegistrationDate.DisplayDateEnd = new DateTime(2017, 12, 31);
-                RegistrationDate.DisplayDateStart = new DateTime(2000, 1, 1);
-            }
-            else if(licenseNumBox.Text.Length == 8)
-            {
-                RegistrationDate.DisplayDateStart = new DateTime(2018, 01, 01);
-                RegistrationDate.DisplayDateEnd = DateTime.Now;
-            }
-            licenseNumBox.Focus();
 
-        }
+            }
 
         /// <summary>
         /// Validate input of text box to accept only numbers

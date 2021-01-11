@@ -1,21 +1,23 @@
-﻿<UserControl x:Class="PlGui.Views.Bus.BusesView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PlGui.Views" 
-             xmlns:fa="http://schemas.fontawesome.com/icons/"
-             xmlns:converters="clr-namespace:PlGui.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="PlGui.Views.Bus.BusesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:PlGui.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:local="clr-namespace:PlGui.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:ParameterToTitleConverter   x:Key="ParameterToTitleConverter"/>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converters:NumberToVisibiltyConverter x:Key="NumberToVisibiltyConverter"/>
-        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:NumberToVisibiltyConverter x:Key="NumberToVisibiltyConverter" />
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
     </UserControl.Resources>
 
-    <!--Main Grid-->
+    <!--  Main Grid  -->
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
@@ -123,11 +125,11 @@
                     Foreground="DarkBlue">
                     Remove
                 </Label>
-                </StackPanel>
+            </StackPanel>
 
-                <!--  Update bus Button  -->
-                <StackPanel Height="73" HorizontalAlignment="Center">
-                    <Button
+            <!--  Update bus Button  -->
+            <StackPanel Height="73" HorizontalAlignment="Center">
+                <Button
                     x:Name="UpdateBus"
                     Width="53"
                     Height="46"
@@ -138,22 +140,22 @@
                     Command="{Binding MainBusButtonCommand}"
                     CommandParameter="Update"
                     Foreground="White">
-                        <Button.Content>
-                            <fa:ImageAwesome
+                    <Button.Content>
+                        <fa:ImageAwesome
                             Width="43"
                             Height="36"
                             Margin="0"
                             Icon="Solid_Sync">
-                                <fa:ImageAwesome.Foreground>
-                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                        <GradientStop Offset="0" Color="#FF28369D" />
-                                        <GradientStop Offset="1" Color="#FF5D65A0" />
-                                    </LinearGradientBrush>
-                                </fa:ImageAwesome.Foreground>
-                            </fa:ImageAwesome>
-                        </Button.Content>
-                    </Button>
-                    <Label
+                            <fa:ImageAwesome.Foreground>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0" Color="#FF28369D" />
+                                    <GradientStop Offset="1" Color="#FF5D65A0" />
+                                </LinearGradientBrush>
+                            </fa:ImageAwesome.Foreground>
+                        </fa:ImageAwesome>
+                    </Button.Content>
+                </Button>
+                <Label
                     Margin="0"
                     Padding="0"
                     HorizontalAlignment="Center"
@@ -162,9 +164,9 @@
                     FontSize="10pt"
                     FontWeight="SemiBold"
                     Foreground="DarkBlue">
-                        Update
-                    </Label>
-                </StackPanel>
+                    Update
+                </Label>
+            </StackPanel>
         </WrapPanel>
 
         <!--  Display Bus Info  -->
@@ -180,7 +182,7 @@
                     <Grid Margin="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="16*"/>
+                            <ColumnDefinition Width="16*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -188,7 +190,7 @@
 
                         <fa:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding Status, Converter={StaticResource StatusToColorConverter} }"
+                            Foreground="{Binding Status, Converter={StaticResource StatusToColorConverter}}"
                             Icon="Solid_ChartLine" />
 
                         <Label
@@ -198,13 +200,13 @@
                             MouseDoubleClick="LicensNumberLabel_OnMouseDoubleClick" />
 
                         <Label
-                            Visibility="{Binding CountDown , Converter={StaticResource NumberToVisibiltyConverter} }"
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
                             Content="{Binding CountDown}"
                             Foreground="Black"
-                            MouseDoubleClick="FrameLB_OnMouseDoubleClick" />
+                            MouseDoubleClick="FrameLB_OnMouseDoubleClick"
+                            Visibility="{Binding CountDown, Converter={StaticResource NumberToVisibiltyConverter}}" />
 
                         <Button
                             x:Name="RefuleBus"

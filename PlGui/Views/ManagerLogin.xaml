@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <convert:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
     </UserControl.Resources>
-    
+
 
     <UniformGrid Margin="15" Rows="1">
 

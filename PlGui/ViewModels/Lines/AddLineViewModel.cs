@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using BL.BLApi;
+using BL.BO;
 using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -47,6 +48,7 @@ namespace PlGui.ViewModels.Lines
 
         #region Command Decleration
 
+        public ICommand EneterKeyCommand { get; set; }
         public ICommand AddLineButtonCommand { get; set; }
 
         #endregion
@@ -54,10 +56,22 @@ namespace PlGui.ViewModels.Lines
         public AddLineViewModel(IRegionManager manager , IUnityContainer container)
         {
             #region Properties Initiaization
+
+            Line = new Line()
+            {
+                Area = Area.Center,
+                Code = 0,
+                // TODO : Initialize First Station FirstStation;
+                // TODO : Initialize Last Station
+            };
             #endregion
 
+            #region Command Initialization
+
+            EneterKeyCommand = new DelegateCommand(EnterKey);
             AddLineButtonCommand = new DelegateCommand(AddLineButton);
 
+            #endregion
             #region Service Initalization
 
             regionManager = manager;
@@ -65,7 +79,7 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
         }
-        
+
         #region Command Implementation
 
         private void AddLineButton()
@@ -78,7 +92,18 @@ namespace PlGui.ViewModels.Lines
             {
                 MessageBox.Show("Couldn't Add line please check the new information");
             }
-        } 
+            finally
+            {
+                // GO Back to Bus Details Info 
+                regionManager.RequestNavigate(StringNames.MainRegion , new Uri(StringNames.LinesView , UriKind.Absolute));
+            }
+        }
+
+        private void EnterKey()
+        {
+            AddLineButton();
+        }
+        
         #endregion
 
         #region Interface Implementaion

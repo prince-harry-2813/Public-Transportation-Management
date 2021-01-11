@@ -12,7 +12,7 @@ using Unity;
 
 namespace PlGui.ViewModels.Stops
 {
-    public class AddBusStpoViewModel : BindableBase
+    public class AddBusStopViewModel : BindableBase
     {
         #region Service Decleration
 
@@ -49,7 +49,7 @@ namespace PlGui.ViewModels.Stops
 
         #endregion
 
-        public AddBusStpoViewModel(IRegionManager manager, IUnityContainer container)
+        public AddBusStopViewModel(IRegionManager manager, IUnityContainer container)
         {
             #region Properties Initiaization
             #endregion
@@ -75,6 +75,11 @@ namespace PlGui.ViewModels.Stops
             catch (Exception exception)
             {
                 MessageBox.Show("Couldn't Add Bus Stop please check the new information");
+            }
+            finally
+            {
+                // GO Back to Bus Details Info 
+                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.BusStopsView, UriKind.Absolute));
             }
         }
         #endregion
