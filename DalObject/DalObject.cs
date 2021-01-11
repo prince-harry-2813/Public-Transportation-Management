@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DalApi;
+﻿using DalApi;
 using DO;
 using DS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DalObject
 {
@@ -25,31 +25,48 @@ namespace DalObject
         public static DalObject Instance { get => instance; }
         #endregion
 
-        #region AdjacentStation CRUD Implemntation 
+        #region AdjacentStation CRUD Implementation 
 
         public IEnumerable<AdjacentStations> GetAllAdjacentStations()
         {
-            throw new NotImplementedException();
+            return from adjs in DataSource.AdjacentStations
+                   select adjs;
         }
 
         public IEnumerable<AdjacentStations> GetAllAdjacentStationsBy(Predicate<AdjacentStations> predicate)
         {
-            throw new NotImplementedException();
+            return from adjs in DataSource.AdjacentStations
+                   where predicate(adjs)
+                   select adjs;
         }
 
-        public AdjacentStations GetAdjacentStations(int station1, int station2)
+        public AdjacentStations GetAdjacentStations(int id)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.FirstOrDefault(adj => adj.PairId == id);
+            if (stations != null)
+                return stations;
+            else
+                throw new BadIdExeption(id, $"there is no direct tripping between those stations");
         }
 
         public void AddAdjacentStations(AdjacentStations adjacentStations)
         {
-            throw new NotImplementedException();
+            if (DataSource.AdjacentStations.FirstOrDefault(adjs => adjs.PairId == adjacentStations.PairId) != null)
+                throw new DuplicateObjExeption(adjacentStations.PairId, "there is already an instance of this pair");
+            else
+                DataSource.AdjacentStations.Add(adjacentStations);
         }
 
         public void UpdateAdjacentStations(AdjacentStations adjacentStations)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.PairId == adjacentStations.PairId);
+            if (stations != null)
+            {
+                DataSource.AdjacentStations.Remove(stations);
+                DataSource.AdjacentStations.Add(adjacentStations);
+            }
+            else
+                throw new BadIdExeption(adjacentStations.PairId, "there is no direct tripping between those stations");
         }
 
         public void UpdateAdjacentStations(int station1, int station2, Action<AdjacentStations> update)
@@ -59,7 +76,11 @@ namespace DalObject
 
         public void DeleteAdjacentStations(int station1, int station2)
         {
-            throw new NotImplementedException();
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.Station1 == station1 && adj.Station2 == station2);
+            if (stations != null)
+                DataSource.AdjacentStations.Remove(stations);
+            else
+                throw new BadIdExeption(int.Parse(station1.ToString() + station2.ToString()), "there is no direct tripping between those stations");
         }
         #endregion
 
@@ -127,22 +148,45 @@ namespace DalObject
 
         public BusOnTrip GetBusOnTrip(int id)
         {
-            throw new NotImplementedException();
+            DO.BusOnTrip bus = DataSource.BusesOnTrips.Find(b => b.Id == id);
+            if (bus != null)
+                return bus;
+            else
+                throw new BadIdExeption(id);
         }
 
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
         {
-            throw new NotImplementedException();
+            return from bus in DS.DataSource.BusesOnTrips
+                   select bus;
         }
+
+       public IEnumerable<DO.BusOnTrip> GetAllBusesOnTripsBy(Predicate<DO.BusOnTrip> predicate)
+        {
+            return from busTrip in DataSource.BusesOnTrips
+                   where predicate(busTrip)
+                   select busTrip;
+        }
+
 
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+            if (DataSource.BusesOnTrips.FirstOrDefault(b => b.Id == busOnTrip.Id) != null)
+                throw new DuplicateObjExeption(busOnTrip.Id, "This bus already in drive");
+            DataSource.BusesOnTrips.Add(busOnTrip);
         }
 
         public void UpdateBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+            BusOnTrip busUp = DataSource.BusesOnTrips.Find(b => b.Id == busOnTrip.Id);
+            if (busUp != null)
+            {
+                DataSource.BusesOnTrips.Remove(busUp);
+                DataSource.BusesOnTrips.Add(busOnTrip);
+            }
+            else
+                throw new BadIdExeption(busOnTrip.LicenseNum, $"bus {busOnTrip.Id} not exist");
+
         }
 
         public void UpdateBusOnTrip(int id, Action<BusOnTrip> update)

@@ -31,7 +31,7 @@ namespace DalApi
         /// <param name="station1"></param>
         /// <param name="station2"></param>
         /// <returns></returns>
-        DO.AdjacentStations GetAdjacentStations(int station1, int station2);
+        DO.AdjacentStations GetAdjacentStations(int pairId);
         
         /// <summary>
         /// 
@@ -113,7 +113,15 @@ namespace DalApi
         /// </summary>
         /// <returns></returns>
         IEnumerable<DO.BusOnTrip> GetAllBusOnTrips();
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        IEnumerable<DO.BusOnTrip> GetAllBusesOnTripsBy(Predicate<DO.BusOnTrip> predicate);
+
+
         /// <summary>
         /// 
         /// </summary>

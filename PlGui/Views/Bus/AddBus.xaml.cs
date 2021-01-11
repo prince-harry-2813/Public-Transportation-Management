@@ -58,7 +58,8 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = ViewModel.CheckLicenseInput(e.Text);
+            
+            e.Handled = this.ViewModel.CheckLicenseInput(e.Text);
         }
 
         /// <summary>
