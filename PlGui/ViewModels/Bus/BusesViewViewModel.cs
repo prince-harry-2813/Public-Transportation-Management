@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using BL.BLApi;
 using Prism.Commands;
@@ -15,13 +18,14 @@ using BusDetails = PlGui.Views.Bus.BusDetails;
 
 namespace PlGui.ViewModels.Bus
 {
-    public class BusesViewViewModel : BindableBase
+    public class BusesViewViewModel : BindableBase , INavigationAware
     {
         #region Service Decleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
-
+        public IBL Bl { get; set; }
+        
         #endregion
 
         #region Command Decleration
@@ -68,30 +72,31 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        public IBL Bl { get; set; }
+       
+
+        #region private Member
+
+        private BackgroundWorker refuleBusWorker;
 
         #endregion
+        #endregion
 
-        public BusesViewViewModel(IRegionManager manager , IUnityContainer container)
+        public BusesViewViewModel(IRegionManager manager , IUnityContainer container , IBL bl)
         {
-            #region Properties Decleration
+            #region Service Initialization
 
-            Bl = BLFactory.GetIBL();
-            
-            LbItemSource = new ObservableCollection<BL.BO.Bus>();
-            foreach (var VARIABLE in Bl.GetAllBuses())
-            {
-                LbItemSource.Add(VARIABLE);
-            }
-            //LbItemSource = (ObservableCollection<BL.BO.Bus>)Bl.GetAllBuses();
-            SelectedItem = lbItemSource.FirstOrDefault();
+            Bl = bl;
+            regionManager = manager;
+            unityContainer = container;
 
             #endregion
 
-            #region Service Initialization
+            #region Properties Decleration
 
-            regionManager = manager;
-            unityContainer = container;
+            LbItemSource = new ObservableCollection<BL.BO.Bus>();
+            RefreshView();
+            
+            SelectedItem = lbItemSource.FirstOrDefault();
             
             #endregion
 
@@ -108,42 +113,81 @@ namespace PlGui.ViewModels.Bus
         #region Command Implementation
 
         /// <summary>
-        /// Add new bus to the system
+        /// Open Add Bus Window on Add cliced
+        /// 
         /// </summary>
         private void MainBusButton(string commandParameter)
         {
+            NavigationParameters param = new NavigationParameters(commandParameter);
+            param.Add(StringNames.BL, Bl);
+            param.Add(StringNames.SelectedBus, SelectedItem);
+            
             if (commandParameter ==  "Add")
             {
-                unityContainer.RegisterType(typeof(object), typeof(AddBus), "AddBus");
-                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus");
+                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus" , param);
                 return;
             }
-            NavigationParameters param = new NavigationParameters(commandParameter);
-            param.Add(StringNames.BL , Bl);
-            param.Add(StringNames.SelectedBus , SelectedItem);
-            
-            unityContainer.RegisterType(typeof(object) , typeof(BusDetails) , "BusDetails");
-            regionManager.RequestNavigate(StringNames.MainRegion , "BusDetails" , param);
+
+            var flag = unityContainer.IsRegistered(typeof(BusDetails), StringNames.BusDetails);
+            Debug.Print(flag.ToString());
+            regionManager.RequestNavigate(StringNames.MainRegion , StringNames.BusDetails, param);
         }
 
         /// <summary>
-        /// On label button click that excute 
+        /// On label button click that excute
+        ///  Open Bus Details window 
         /// </summary>
         private void LicensNumberLabelClicked()
         {
-            throw new NotImplementedException();
+            MainBusButton("Update");
         }
 
+        /// <summary>
+        /// Open Bus Details window 
+        /// </summary>
         private void ChooseBusButton()
         {
-            throw new NotImplementedException();
+            MainBusButton("Update");
         }
 
+        /// <summary>
+        /// Reful Bus to Maximum 1200 liter
+        /// </summary>
         private void RefuleBusButton()
         {
-            throw new NotImplementedException();
+            if (refuleBusWorker != null)
+            {
+                refuleBusWorker.CancelAsync();
+            }
+            
+            SelectedItem.FuelStatus = 1200;
+            refuleBusWorker = new BackgroundWorker();
+            refuleBusWorker.WorkerSupportsCancellation = true;
+            refuleBusWorker.DoWork += (sender, args) =>
+            {
+                Bl.UpdateBus(SelectedItem);
+            };
+            refuleBusWorker.RunWorkerCompleted += (sender, args) =>
+            {
+                MessageBox.Show("Fuel Added Succsefuly"
+                    , "BRW", MessageBoxButton.OK
+                    , MessageBoxImage.Information);
+            };
+            RefreshView();
         }
 
+        #endregion
+
+        #region External Methoeds
+
+        private void RefreshView()
+        {
+            LbItemSource.Clear();
+            foreach (var VARIABLE in Bl.GetAllBuses())
+            {
+                LbItemSource.Add(VARIABLE);
+            }
+        }
 
         #endregion
 
@@ -164,7 +208,8 @@ namespace PlGui.ViewModels.Bus
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
+            RefreshView();
         }
         
         #endregion

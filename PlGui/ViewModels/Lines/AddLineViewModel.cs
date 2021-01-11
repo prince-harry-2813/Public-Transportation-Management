@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,9 @@ namespace PlGui.ViewModels.Lines
                 SetProperty(ref line, value);
             }
         }
+
+        private BackgroundWorker updaeteWorker;
+        private BackgroundWorker addWorker;
         
         public IBL Bl { get; set; }
 
@@ -50,6 +54,7 @@ namespace PlGui.ViewModels.Lines
 
         public ICommand EneterKeyCommand { get; set; }
         public ICommand AddLineButtonCommand { get; set; }
+        public ICommand UpdateLineButtonCommand { get; set; }
 
         #endregion
 
@@ -70,6 +75,7 @@ namespace PlGui.ViewModels.Lines
 
             EneterKeyCommand = new DelegateCommand(EnterKey);
             AddLineButtonCommand = new DelegateCommand(AddLineButton);
+            UpdateLineButtonCommand = new DelegateCommand(UpdateLineButton);
 
             #endregion
             #region Service Initalization
@@ -82,11 +88,38 @@ namespace PlGui.ViewModels.Lines
 
         #region Command Implementation
 
+        private void UpdateLineButton()
+        {
+            if (updaeteWorker != null)
+            {
+                updaeteWorker.CancelAsync();
+            }
+            updaeteWorker = new BackgroundWorker();
+            updaeteWorker.WorkerSupportsCancellation = true;
+            updaeteWorker.DoWork += (sender, args) =>
+            {
+                Bl.UpdateLine(Line);
+            };
+            updaeteWorker.RunWorkerAsync();
+        }
+
+
         private void AddLineButton()
         {
             try
             {
-                Bl.AddLine(Line);
+                if (addWorker != null) 
+                {
+                    addWorker.CancelAsync();
+                }
+
+                addWorker = new BackgroundWorker();
+                addWorker.DoWork += (sender, args) =>
+                {
+                    Bl.AddLine(Line);
+                };
+                addWorker.RunWorkerAsync();
+            
             }
             catch (Exception exception)
             {
@@ -115,6 +148,7 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            
         }
 
         /// <summary>

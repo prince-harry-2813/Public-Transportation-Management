@@ -176,7 +176,7 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            ItemsSource="{Binding}">
+            ItemsSource="{Binding LbItemSource}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="2">

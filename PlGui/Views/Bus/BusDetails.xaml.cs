@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using PlGui.ViewModels.Bus;
@@ -16,8 +17,7 @@ namespace PlGui.Views.Bus
         {
             InitializeComponent();
             ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
-            viewModel = (BusDetailsViewModel) this.DataContext;
-            lbBusDetails.DataContext = viewModel.Bl.GetBus(viewModel.LicenseNumber);
+            viewModel = (BusDetailsViewModel)this.DataContext;
         }
 
         private void RefuleButton_OnClick(object sender, RoutedEventArgs e)
@@ -28,6 +28,15 @@ namespace PlGui.Views.Bus
         private void TreatmentButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void LbBusDetails_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (viewModel == null)
+            {
+                viewModel = (BusDetailsViewModel)this.DataContext;
+            }
+            viewModel.ListBoxSelectionChanged();
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using PlGui.Views;
+﻿using System.Diagnostics;
+using PlGui.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
+using BL.BLApi;
 using PlGui.StaticClasses;
 using PlGui.Views.Bus;
 using PlGui.Views.Lines;
@@ -22,18 +24,20 @@ namespace PlGui
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register(typeof(object), typeof(StartPage), StringNames.StartPage);
-            containerRegistry.Register(typeof(object), typeof(ManagerLogin), StringNames.ManagerLogin);
-            containerRegistry.Register(typeof(object), typeof(BusStopsView), StringNames.BusStopsView);
-            containerRegistry.Register(typeof(object), typeof(AddBus), StringNames.AddBus);
-            containerRegistry.Register(typeof(object), typeof(BusDetails), StringNames.BusDetails);
-            containerRegistry.Register(typeof(object), typeof(BusesView), StringNames.BusesView);
-            containerRegistry.Register(typeof(object), typeof(AddLine), StringNames.AddLine);
-            containerRegistry.Register(typeof(object), typeof(LinesView), StringNames.LinesView);
-            containerRegistry.Register(typeof(object), typeof(LineDetails), StringNames.LineDetails);
-            containerRegistry.Register(typeof(object), typeof(AddBusStop), StringNames.AddBusStop);
-            containerRegistry.Register(typeof(object), typeof(BusStopDetails), StringNames.BusStopDetails);
-            containerRegistry.Register(typeof(object), typeof(BusStopsView), StringNames.BusStopsView);
+            containerRegistry.RegisterForNavigation<StartPage>(StringNames.StartPage);
+            containerRegistry.RegisterForNavigation<ManagerLogin>(StringNames.ManagerLogin);
+            containerRegistry.RegisterForNavigation<BusStopsView>(StringNames.BusStopsView);
+            containerRegistry.RegisterForNavigation<AddBus>(StringNames.AddBus);
+            containerRegistry.RegisterForNavigation<BusDetails>(StringNames.BusDetails);
+            containerRegistry.RegisterForNavigation<BusesView>(StringNames.BusesView);
+            containerRegistry.RegisterForNavigation<AddLine>(StringNames.AddLine);
+            containerRegistry.RegisterForNavigation<LinesView>(StringNames.LinesView);
+            containerRegistry.RegisterForNavigation<LineDetails>(StringNames.LineDetails);
+            containerRegistry.RegisterForNavigation<AddBusStop>(StringNames.AddBusStop);
+            containerRegistry.RegisterForNavigation<BusStopDetails>(StringNames.BusStopDetails);
+            containerRegistry.RegisterForNavigation<BusStopsView>(StringNames.BusStopsView);
+
+            containerRegistry.RegisterSingleton<IBL>(BLFactory.GetIBL);
         }
     }
 }

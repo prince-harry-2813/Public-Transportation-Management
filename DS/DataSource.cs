@@ -51,7 +51,18 @@ namespace DS
             }
             };
             BusesOnTrips = new List<BusOnTrip>();
-            Lines = new List<Line>();
+            Lines = new List<Line>()
+            {
+                new Line()
+                {
+                    LastStation = 12345, 
+                    FirstStation = 3523, 
+                    isActive = true,
+                    Area = Area.Center,
+                    Code = 321,
+                    Id = 43
+                }
+            };
             LineStations = new List<LineStation>();
             LineStations = new List<LineStation>();
             LineTrips = new List<LineTrip>();

@@ -19,6 +19,7 @@ namespace DO
         public int FuelStatus { get; set; }
         public BusStatusEnum Status { get; set; }
         public bool isActive { get; set; } = true;
-
+        public int  KmOnLastTreatment { get; set; }
+        public DateTime LastTreatmentDate { get; set; }
     }
 }

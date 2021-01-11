@@ -24,16 +24,30 @@ namespace PlGui.Views.Bus
 
         private void LicensNumberLabel_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (viewModel == null)
+            {
+            viewModel = (BusesViewViewModel) this.DataContext;
+
+            }
             viewModel.OnMouseDoubleClick.Execute(null);
         }
 
         private void FrameLB_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (viewModel == null)
+            {
+                viewModel = (BusesViewViewModel)this.DataContext;
+
+            }
             viewModel.OnMouseDoubleClick.Execute(null);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
+            if (viewModel == null)
+            {
+                viewModel = (BusesViewViewModel)this.DataContext;
+            }
             viewModel.OnMouseDoubleClick.Execute(null);
         }
     }

@@ -38,6 +38,7 @@ namespace PlGui.ViewModels.Lines
 
         public IBL Bl { get; set; }
         #endregion
+        
         #region Service Decleration
 
         private IRegionManager regionManager;
@@ -56,7 +57,8 @@ namespace PlGui.ViewModels.Lines
             #region Properties Decleration
 
             Bl = BLFactory.GetIBL();
-            LinesCollection = (ObservableCollection<Line>)Bl.GetAllLines();
+            LinesCollection = new ObservableCollection<Line>();
+            RefreshView();
 
             #endregion
 
@@ -77,6 +79,9 @@ namespace PlGui.ViewModels.Lines
 
         #region Command Implementation
 
+        /// <summary>
+        /// Navigate to Add line view 
+        /// </summary>
         private void AddLineButton()
         {
             var parm = new NavigationParameters();
@@ -85,6 +90,10 @@ namespace PlGui.ViewModels.Lines
             regionManager.RequestNavigate(StringNames.MainRegion, "AddLine");
         }
 
+        /// <summary>
+        /// Naviagte to line Details 
+        /// </summary>
+        /// <param name="commandParameter"></param>
         private void UpdateLineButton(string commandParameter)
         {
             var parm = new NavigationParameters();
@@ -93,6 +102,18 @@ namespace PlGui.ViewModels.Lines
             regionManager.RequestNavigate(StringNames.MainRegion, "LineDetails");
         }
 
+        #endregion
+
+        #region Private Methodes
+
+        private void RefreshView()
+        {
+            foreach (var VARIABLE in Bl.GetAllLines())
+            {
+                LinesCollection.Add(VARIABLE);
+            }
+        }
+        
         #endregion
     }
 }

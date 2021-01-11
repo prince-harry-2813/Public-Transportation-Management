@@ -70,6 +70,9 @@
     <Compile Include="ViewModels\Bus\AddBusViewModel.cs" />
     <Compile Include="ViewModels\Bus\BusesViewViewModel.cs" />
     <Compile Include="ViewModels\Lines\LinesViewViewModel.cs" />
+    <Compile Include="Views\Bus\BusDetails.xaml.cs">
+      <DependentUpon>BusDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lines\AddLine.xaml.cs">
       <DependentUpon>AddLine.xaml</DependentUpon>
     </Compile>
@@ -91,9 +94,6 @@
     <Compile Include="Views\Bus\AddBus.xaml.cs">
       <DependentUpon>AddBus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Bus\BusDetails.xaml.cs">
-      <DependentUpon>BusDetails.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Bus\BusesView.xaml.cs">
       <DependentUpon>BusesView.xaml</DependentUpon>
     </Compile>
@@ -103,6 +103,10 @@
     <Compile Include="Views\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Bus\BusDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Lines\AddLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,10 +132,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Bus\AddBus.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Bus\BusDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

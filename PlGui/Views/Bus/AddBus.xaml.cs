@@ -14,27 +14,14 @@ namespace PlGui.Views.Bus
     /// Interaction logic for AddBus.xaml
     /// </summary>
     public partial class AddBus : UserControl
-    { 
-        //private PO.Bus temp = new PO.Bus();
-        
+    {
         private bool isClosed;
 
-        private AddBusViewModel ViewModel;
+        private AddBusViewModel viewModel;
         public AddBus()
         {
             InitializeComponent();
-            ViewModelLocationProvider.Register(typeof(AddBus).ToString(), typeof(AddBusViewModel));
-            ViewModel = (AddBusViewModel) this.DataContext;
-        }
-
-        /// <summary>
-        /// Enter key
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LicenseNumBox_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            
+            viewModel = (AddBusViewModel) this.DataContext;
         }
 
         /// <summary>
@@ -44,7 +31,7 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-           var validNum = ViewModel.LicenseNumBoxLostFocus();
+           var validNum = viewModel.DisplayDateFocus();
            if (!validNum)
            {
                licenseNumBox.Focus();
@@ -58,28 +45,7 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = ViewModel.CheckLicenseInput(e.Text);
-        }
-
-        /// <summary>
-        /// When the text box lost focus check if the input length is more then 7 digits
-        /// when input length is 7 digits the date picker configure to show dates between 2000 - 2018
-        /// when input length is 8 digits the date picker configure to show dates between 2018 - now
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkLicense(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Validate input of text box to accept only numbers
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NumbersValidation(object sender, TextCompositionEventArgs e)
-        {
+            e.Handled = viewModel.CheckLicenseInput(e.Text);
         }
     }
 }

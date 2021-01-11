@@ -66,6 +66,8 @@ namespace PlGui.ViewModels.Lines
 
         #region Service Decleration
 
+        private IRegionManager regionManager;
+        
         public IBL Bl { get; set; }
 
         #endregion
@@ -76,8 +78,15 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public LineDetailsViewModel()
+        public LineDetailsViewModel(IRegionManager manager , IBL bl) 
         {
+            #region Service Initialization
+
+            regionManager = manager;
+            Bl = bl;
+
+            #endregion
+
             #region Command Implemetaion
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
@@ -99,15 +108,18 @@ namespace PlGui.ViewModels.Lines
             switch (commandParameter)
             {
                 case "Edit":
-                    //TODO: Implement Edit Implementation
+                    var param = new NavigationParameters();
+                    param.Add("Line", Line);
+                    regionManager.RequestNavigate(StringNames.MainRegion , StringNames.AddLine , param);
                     break;
                 case "Remove":
-                    //TODO: Add Remove Function 
+                    
                     break;
             }
         }
 
         #endregion
+        
         #region Interface Implementaion
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

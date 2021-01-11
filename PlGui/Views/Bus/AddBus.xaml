@@ -5,6 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:PlGui.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -15,6 +17,7 @@
 
     <UserControl.InputBindings>
         <KeyBinding Key="Enter"
+                    Modifiers="Control"
                     Command="{Binding EneterKeyCommand}"/>
     </UserControl.InputBindings>
 
@@ -25,7 +28,8 @@
                 Width="228"
                 Height="105"
                 Margin="30,59,246,10"
-                RenderTransformOrigin="0.498,-1.336">
+                RenderTransformOrigin="0.498,-1.336"
+                FocusManager.FocusedElement="{Binding ElementName=licenseNumBox}">
 
                 <Label
                     Width="105"
@@ -43,6 +47,7 @@
                     DisplayDateStart="{Binding DisplayDateStart}"
                     Height="23"
                     FontStyle="Italic"
+                    GotKeyboardFocus="LicenseNumBox_OnLostKeyboardFocus"
                     Foreground="#FFD64500"
                     IsTodayHighlighted="True">
                     <DatePicker.BorderBrush>
@@ -58,8 +63,7 @@
 
             <WrapPanel
                 Width="228"
-                Margin="30,28,246,115"
-                FocusManager.FocusedElement="{Binding ElementName=licenseNumBox}">
+                Margin="30,28,246,115">
 
                 <Label
                     Width="105"
@@ -77,12 +81,12 @@
                     x:Name="licenseNumBox"
                     Width="100"
                     Height="23"
+                    Text="{Binding LicenseNum , UpdateSourceTrigger=PropertyChanged}"
                     VerticalContentAlignment="Center"
-                    KeyDown="LicenseNumBox_OnKeyDown"
-                    LostKeyboardFocus="LicenseNumBox_OnLostKeyboardFocus"
                     MaxLength="8"
                     PreviewTextInput="LicenseNumBox_OnPreviewTextInput"
                     TextWrapping="Wrap">
+
                     <TextBox.SelectionBrush>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                             <GradientStop Offset="0" Color="#FFA3AEB9" />
@@ -114,7 +118,7 @@
             <Label
                 Margin="251,112,10,10"
                 Background="#0CFFFFFF"
-                Content="Press enter to proceed registering&#xD;&#xA;Esc to cancel "
+                Content="Press Ctrl + enter to proceed registering&#xD;&#xA;Esc to cancel "
                 FontFamily="Nirmala UI"
                 FontSize="14"
                 FontWeight="Bold"

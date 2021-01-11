@@ -11,7 +11,7 @@ using Prism.Regions;
 
 namespace PlGui.ViewModels.Bus
 {
-    public class AddBusViewModel : BindableBase
+    public class AddBusViewModel : BindableBase , INavigationAware
     {
         #region Service Initialization
 
@@ -31,7 +31,8 @@ namespace PlGui.ViewModels.Bus
                 SetProperty(ref displayDateEnd, value);
             }
         }
-        private DateTime registrationDate;
+        
+        private DateTime registrationDate = DateTime.Now ;
 
         public DateTime RegistrationDate
         {
@@ -52,7 +53,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
         
-        private string licenseNum;
+        private string licenseNum = "";
         public string LicenseNum
         {
             get => licenseNum;
@@ -72,11 +73,12 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        public AddBusViewModel(IRegionManager manager)
+        public AddBusViewModel(IRegionManager manager , IBL bl)
         {
             #region Service Initialization
 
             regionManager = manager;
+            Bl = bl;
 
             #endregion
             
@@ -97,7 +99,7 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool CheckLicenseInput(string text)
         {
-            return new Regex("[^0-9]+").IsMatch(text);
+            return (new Regex("[^0-9]+").IsMatch(text) /*&& !string.IsNullOrWhiteSpace(text)*/);
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace PlGui.ViewModels.Bus
         ///  when input length is 8 digits the date picker configure to show dates between 2018 - now
         /// </summary>
         /// <returns></returns>
-        public bool LicenseNumBoxLostFocus()
+        public bool DisplayDateFocus()
         {
             if (LicenseNum.Length < 7  /*//&& !licenseNumBox.Focusable*/)
             {
@@ -132,6 +134,9 @@ namespace PlGui.ViewModels.Bus
             return true;
         }
 
+        /// <summary>
+        /// When Enter key is pressed add bus to system
+        /// </summary>
         private void EnterKey()
         {
             try
@@ -160,46 +165,11 @@ namespace PlGui.ViewModels.Bus
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.BusesView, UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusesView);
             }
         }
 
         #endregion
-
-        ///// <summary>
-        ///// BONUS! when enter key is pressed proceed 
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void enterKey(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        if (licenseNumBox.Text.Length >= 7)
-        //        {
-        //            temp.SetFirstRegistration(RegistrationDate.DisplayDate);
-        //            if (temp.SetLicenseNumber(licenseNumBox.Text))
-        //            {
-        //                ObservableCollection<Bus> carsCollection = BusCarsCollection.Instance.BusesCollection;
-
-        //                foreach (Bus bus in carsCollection)
-        //                {
-        //                    if (bus.LicensNmuber == licenseNumBox.Text)
-        //                    {
-        //                        MessageBox.Show("This License number already exist in system");
-        //                        return;
-        //                    }
-        //                }
-        //                MessageBox.Show("Added successfully", "Bus Added", MessageBoxButton.OK, MessageBoxImage.Information);
-        //                carsCollection.Add(new Bus(temp.LicensNmuber, temp.FirstRegistration));
-        //                this.Close();
-
-        //            }
-        //        }
-        //    }
-        //    if (e.Key == Key.Escape)
-        //        this.Close();
-        //}
 
         #region Interface Implementaion
 
@@ -210,6 +180,8 @@ namespace PlGui.ViewModels.Bus
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            LicenseNum = "";
+            RegistrationDate = DateTime.Now;
         }
 
         /// <summary>
