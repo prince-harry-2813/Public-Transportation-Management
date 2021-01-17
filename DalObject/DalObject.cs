@@ -89,29 +89,35 @@ namespace DalObject
         public Bus GetBus(int id)
         {
             DO.Bus bus = DataSource.Buses.Find(b => b.LicenseNum == id);
-            if (bus != null)
+            if (bus != null && bus.isActive)
                 return bus;
             else
                 throw new BadIdExeption(id);
+
+
         }
 
         public IEnumerable<Bus> GetAllBuses()
         {
             return from bus in DS.DataSource.Buses
+                   where bus.isActive
                    select bus;
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-            return from bus in DataSource.Buses
+             return from bus in DataSource.Buses
                    where predicate(bus)
                    select bus;
+            
+
         }
 
         public void AddBus(Bus bus)
         {
-            if (DataSource.Buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum) != null)
+            if (DataSource.Buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum && b.isActive) != null)
                 throw new DuplicateObjExeption(bus.LicenseNum, "This bus already exist");
+
             DataSource.Buses.Add(bus);
         }
 
@@ -134,9 +140,9 @@ namespace DalObject
 
         public void DeleteBus(int id)
         {
-            Bus busDlt = DataSource.Buses.Find(bus => bus.LicenseNum == id);
+            Bus busDlt = DataSource.Buses.Find(bus => bus.LicenseNum == id && bus.isActive);
             if (busDlt != null)
-                DataSource.Buses.Remove(busDlt);
+                busDlt.isActive = false;
             else
                 throw new BadIdExeption(busDlt.LicenseNum, $"bus {busDlt.LicenseNum} not exist");
 
@@ -149,7 +155,7 @@ namespace DalObject
         public BusOnTrip GetBusOnTrip(int id)
         {
             DO.BusOnTrip bus = DataSource.BusesOnTrips.Find(b => b.Id == id);
-            if (bus != null)
+            if (bus != null&& bus.isActive)
                 return bus;
             else
                 throw new BadIdExeption(id);
@@ -158,6 +164,7 @@ namespace DalObject
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
         {
             return from bus in DS.DataSource.BusesOnTrips
+                   where bus.isActive
                    select bus;
         }
 
@@ -291,14 +298,14 @@ namespace DalObject
 
         public void AddLine(LineStation lineStation)
         {
-            if (DataSource.LineStations.FirstOrDefault(l => l.LineId == lineStation.LineId && l.StationId==lineStation.StationId) != null)
+            if (DataSource.LineStations.FirstOrDefault(l => l.LineId == lineStation.LineId && l.StationId == lineStation.StationId) != null)
                 throw new DuplicateObjExeption(lineStation.StationId, "This station already signed to line");
             DataSource.LineStations.Add(lineStation);
         }
 
         public void UpdateLineStation(LineStation lineStation)
         {
-            LineStation lineUp = DataSource.LineStations.Find(l => l.LineId == lineStation.LineId&&l.StationId == lineStation.StationId) ;
+            LineStation lineUp = DataSource.LineStations.Find(l => l.LineId == lineStation.LineId && l.StationId == lineStation.StationId);
             if (lineUp != null)
             {
                 DataSource.LineStations.Remove(lineUp);
@@ -317,7 +324,7 @@ namespace DalObject
         public void DeleteLineStation(int lineId, int stationCode)
         {
 
-            LineStation lineDlt = DataSource.LineStations.Find(line => line.LineId == lineId&& line.StationId == stationCode);
+            LineStation lineDlt = DataSource.LineStations.Find(line => line.LineId == lineId && line.StationId == stationCode);
             if (lineDlt != null)
                 DataSource.LineStations.Remove(lineDlt);
             else

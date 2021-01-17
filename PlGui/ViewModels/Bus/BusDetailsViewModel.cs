@@ -215,7 +215,7 @@ namespace PlGui.ViewModels.Bus
         #endregion
 
 
-        #region Private Methoed
+        #region Private Method
 
         private void InsertBusPropertiesToCollection(BL.BO.Bus bus)
         {

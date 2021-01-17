@@ -19,7 +19,7 @@ namespace BL.BO
         public DateTime RegisDate { get; set; }
         
         /// <summary>
-        /// Bus Spidometer Total KM (Can only increaced )
+        /// Bus Speedometer Total KM (Can only increase )
         /// </summary>
         public int TotalKM { get; set; }
         
@@ -29,7 +29,7 @@ namespace BL.BO
         public int FuelStatus { get; set; }
         
         /// <summary>
-        /// Bus avalibility status 
+        /// Bus availability status 
         /// </summary>
         public BusStatusEnum Status { get; set; }
         
@@ -39,12 +39,12 @@ namespace BL.BO
         public bool isActive { get; set; }
 
         /// <summary>
-        /// Bus Last Maintainance
+        /// Bus Last Maintenance
         /// </summary>
         public DateTime LastTreatment { get; set; }
 
         /// <summary>
-        ///  Km on last maintainance
+        ///  Km on last maintenance
         /// </summary>
         public uint LastTreatmentKm { get; set; }
     }

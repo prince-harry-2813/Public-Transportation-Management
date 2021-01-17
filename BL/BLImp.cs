@@ -15,11 +15,11 @@ namespace BL
     internal class BLImp : IBL
     {
         private IDAL iDal = DalApi.DalFactory.GetIDAL();
-        
+
         #region IBL Bus Implementation
 
         /// <summary>
-        /// Add New bus and sing unsighn properties apporpiatly 
+        /// Add New bus and sign unsigned properties appropriately 
         /// </summary>
         /// <param name="bus"></param>
         public void AddBus(Bus bus)
@@ -32,24 +32,25 @@ namespace BL
 
             bus.FuelStatus = (bus.FuelStatus != null) ? bus.FuelStatus : 1200;
             bus.isActive = true;
-            bus.LastTreatment = (bus.LastTreatment != null) ?  bus.LastTreatment :DateTime.Now;
+            bus.LastTreatment = (bus.LastTreatment != null) ? bus.LastTreatment : DateTime.Now;
             bus.TotalKM = (bus.TotalKM != null) ? bus.TotalKM : 0;
             bus.LastTreatmentKm = (bus.LastTreatmentKm != null) ? bus.LastTreatmentKm : 0;
             bus.Status = (bus.FuelStatus != 0 && DateTime.Now.Subtract(bus.LastTreatment).Days < 365 &&
-                          bus.TotalKM - (int) bus.LastTreatmentKm < 20000 && bus.isActive)
+                          bus.TotalKM - (int)bus.LastTreatmentKm < 20000 && bus.isActive)
                 ? BusStatusEnum.Ok
                 : BusStatusEnum.Not_Available;
 
-            var anotherBus = iDal.GetAllBusesBy(bus1 => bus1.LicenseNum == bus.LicenseNum && bus1.isActive);
+            var anotherBus = iDal.GetBus(bus.LicenseNum);
 
-            if (anotherBus != null) // checks if there is any bus return from DS by the license number 
+
+            if (anotherBus != null && !anotherBus.isActive) // checks if there is any bus return from DS by the license number 
             {
                 DO.Bus busToAdd = new DO.Bus();
                 bus.CopyPropertiesTo(busToAdd);
                 iDal.AddBus(busToAdd);
             }
             else
-                throw new BadBusIdException("Bus With the same license number is already exsist", null);
+                throw new BadBusIdException("Bus With the same license number is already exist", null);
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace BL
             {
                 throw new NullReferenceException("Bus to delete is Null");
             }
-           
+
             DO.Bus busToAdd = new DO.Bus();
             bus.CopyPropertiesTo(busToAdd);
             iDal.DeleteBus(busToAdd.LicenseNum);
@@ -75,7 +76,7 @@ namespace BL
             {
                 if (VARIABLE.isActive)// Ignore deleted bus  
                 {
-                    yield return (Bus) VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
+                    yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
                 }
             }
 
@@ -95,14 +96,14 @@ namespace BL
 
         public Bus GetBus(int licenseNum)
         {
-            if (licenseNum == null || licenseNum == 0 )
+            if (licenseNum == null || licenseNum == 0)
                 throw new NullReferenceException("license number is null or not initialized");
 
             if (licenseNum < 0)
-                throw new BadBusIdException("Bus license number can't be negative" ,
+                throw new BadBusIdException("Bus license number can't be negative",
                     new ArgumentException("Bus license number can't be negative"));
 
-            if (licenseNum <= 999999 || licenseNum >= 100000000 )
+            if (licenseNum <= 999999 || licenseNum >= 100000000)
                 throw new BadBusIdException("Bus license number is too large or too small",
                     new ArgumentException("Bus license number is too large or too small"));
 
@@ -119,7 +120,7 @@ namespace BL
         {
             if (bus == null)
                 throw new NullReferenceException("Bus is Null ");
-            
+
             var busToUpdate = new DO.Bus();
             bus.CopyPropertiesTo(busToUpdate);
             iDal.UpdateBus(busToUpdate);
@@ -141,7 +142,7 @@ namespace BL
 
             if (line.FirstStation == null || line.FirstStation == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
-            
+
             if (line.LastStation == null || line.LastStation == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
 
@@ -156,10 +157,10 @@ namespace BL
             var anotherLineCode = iDal.GetAllLinesBy(line1 => line1.Id == line.Id);
             if (anotherLineCode == null)
                 iDal.AddLine((DO.Line)line.CopyPropertiesToNew(typeof(DO.Line)));
-            
-            else 
+
+            else
                 throw new BadLineIdException("Line with the same id is already exsist", new ArgumentException());
-            
+
         }
 
         void IBL.UpdateLine(Line line)
@@ -178,7 +179,7 @@ namespace BL
             {
                 throw new NullReferenceException("Line to delete is Null");
             }
-            
+
             DO.Line lineToDelete = new DO.Line();
             line.CopyPropertiesTo(lineToDelete);
             iDal.DeleteLine(lineToDelete.Id);

@@ -113,7 +113,7 @@ namespace PlGui.ViewModels.Bus
         #region Command Implementation
 
         /// <summary>
-        /// Open Add Bus Window on Add cliced
+        /// Open Add Bus Window on Add clicked
         /// 
         /// </summary>
         private void MainBusButton(string commandParameter)

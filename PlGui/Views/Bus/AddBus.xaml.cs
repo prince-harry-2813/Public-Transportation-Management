@@ -22,6 +22,7 @@ namespace PlGui.Views.Bus
         {
             InitializeComponent();
             viewModel = (AddBusViewModel) this.DataContext;
+            licenseNumBox.Focus();
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace PlGui.Views.Bus
                licenseNumBox.Focus();
            }
         }
-
+        
         /// <summary>
         /// Numbers Validation
         /// </summary>
@@ -45,6 +46,7 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            
             e.Handled = viewModel.CheckLicenseInput(e.Text);
         }
     }

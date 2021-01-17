@@ -99,7 +99,7 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool CheckLicenseInput(string text)
         {
-            return (new Regex("[^0-9]+").IsMatch(text) /*&& !string.IsNullOrWhiteSpace(text)*/);
+            return ((new Regex("[^0-9]+").IsMatch(text) || text.First() ==' ') /*&& !string.IsNullOrWhiteSpace(text)*/);
         }
 
         /// <summary>
@@ -112,16 +112,18 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool DisplayDateFocus()
         {
-            if (LicenseNum.Length < 7  /*//&& !licenseNumBox.Focusable*/)
+            if (LicenseNum.Length < 7|| !new Regex("^[0-9]*$").IsMatch(licenseNum)  /*&& !licenseNumBox.Focusable*/)
             {
-                LicenseNum = "";
+                LicenseNum = String.Empty;
                 MessageBox.Show("Please enter valid number, must contain at least 7 digits");
+                
                 return false;
             }
             else if (LicenseNum.Length == 7)
             {
                 DisplayDateEnd = new DateTime(2017, 12, 31);
                 DisplayDateStart = new DateTime(2000, 1, 1);
+                registrationDate = new DateTime(2017, 12, 30);
                 return true;
             }
             else if (LicenseNum.Length == 8)
@@ -153,7 +155,7 @@ namespace PlGui.ViewModels.Bus
                 }
                 else
                 {
-                    MessageBox.Show("Please Insert License number and Registration Date", "Propertirs fault",
+                    MessageBox.Show("Please Insert License number and Registration Date", "Properties fault",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
@@ -171,7 +173,7 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        #region Interface Implementaion
+        #region Interface Implementation
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {

@@ -78,12 +78,14 @@
                     RenderTransformOrigin="0.5,0.5" />
 
                 <TextBox
+					Focusable="True"
                     x:Name="licenseNumBox"
                     Width="100"
                     Height="23"
                     Text="{Binding LicenseNum , UpdateSourceTrigger=PropertyChanged}"
                     VerticalContentAlignment="Center"
                     MaxLength="8"
+				
                     PreviewTextInput="LicenseNumBox_OnPreviewTextInput"
                     TextWrapping="Wrap">
 
