@@ -60,7 +60,7 @@ namespace DalXml
         {
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
             return from s in AdjacentStationsRootElement.Elements()
-               //    where bool.Parse(s.Element("isActive").Value)
+                       //    where bool.Parse(s.Element("isActive").Value)
                    let s1 = new AdjacentStations()
                    {
                        PairId = Int32.Parse(s.Element("PairId").Value),
@@ -88,8 +88,8 @@ namespace DalXml
                                               Time = TimeSpan.ParseExact(s.Element("Time").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture)
 
                                           }).FirstOrDefault();
-                                          
-            if (adjacents==null)
+
+            if (adjacents == null)
             {
                 throw new BadIdExeption(id, $"Those adjacent Stations doesn't exist {id}");
             }
@@ -106,10 +106,9 @@ namespace DalXml
             if (adjElem != null)
             {
                 if (!bool.Parse(adjElem.Element("isActive").Value))
-                {
                     adjElem.Element("isActive").Value = adjacentStations.isActive.ToString();
-                }
-                throw new DuplicateObjExeption(adjacentStations.PairId, $"Adjacent Stations already exist in system st'1:{adjacentStations.Station1} - st'2 {adjacentStations.Station2}");
+                else
+                    throw new DuplicateObjExeption(adjacentStations.PairId, $"Adjacent Stations already exist in system st'1:{adjacentStations.Station1} - st'2 {adjacentStations.Station2}");
             }
             else
             {
@@ -133,7 +132,7 @@ namespace DalXml
             XElement adjStat = (from s in AdjacentStationsRootElement.Elements()
                                 where int.Parse(s.Element("PairId").Value) == adjacentStations.PairId && bool.Parse(s.Element("isActicve").Value)
                                 select s).FirstOrDefault();
-            if (adjStat!=null)
+            if (adjStat != null)
             {
                 adjStat.Element("PairId").Value = adjacentStations.PairId.ToString();
                 adjStat.Element("Station1").Value = adjacentStations.Station1.ToString();
@@ -173,30 +172,65 @@ namespace DalXml
 
         public Bus GetBus(int id)
         {
-            throw new NotImplementedException();
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
 
+            Bus bus = buses.FirstOrDefault(b => b.LicenseNum == id);
+            if (bus != null && bus.isActive)
+                return bus;
+            else
+                throw new BadIdExeption(id, "Bad id, Bus doesn't exist or deleted");
         }
 
         public IEnumerable<Bus> GetAllBuses()
         {
-            throw new NotImplementedException();
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
+            return from b in buses
+                   where b.isActive
+                   select b;
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-            throw new NotImplementedException();
-
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
+            return from b in buses
+                   where predicate(b)
+                   select b;
 
         }
 
         public void AddBus(Bus bus)
         {
-            throw new NotImplementedException();
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
+
+            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum);
+
+            if (busCheck != null)
+            {
+                if (!busCheck.isActive)
+                    busCheck.isActive = true;
+                else
+                    throw new DuplicateObjExeption(bus.LicenseNum, "Bus already exist in system");
+            }
+            else
+            {
+                buses.Add(bus);
+            }
+            XMLTools.SaveListToXMLSerializer(buses, BusPath);
         }
 
         public void UpdateBus(Bus bus)
         {
-            throw new NotImplementedException();
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
+            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum);
+            if (busCheck != null)
+            {
+                buses.Remove(busCheck);
+                buses.Add(bus);
+            }
+            else
+                throw new BadIdExeption(bus.LicenseNum, "Bus doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer<Bus>(buses, BusPath);
+
         }
 
         public void UpdateBus(int id, Action<Bus> update)
@@ -206,8 +240,15 @@ namespace DalXml
 
         public void DeleteBus(int id)
         {
-            throw new NotImplementedException();
+            List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
+            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == id);
 
+            if (busCheck != null)
+            {
+                busCheck.isActive = false;
+            }
+            else
+                throw new BadIdExeption(id, "Bad id, Bus doesn't exist");
         }
 
         #endregion
@@ -216,7 +257,6 @@ namespace DalXml
 
         public BusOnTrip GetBusOnTrip(int id)
         {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
