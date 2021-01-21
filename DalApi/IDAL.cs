@@ -55,7 +55,7 @@ namespace DalApi
         /// </summary>
         /// <param name="station1"></param>
         /// <param name="station2"></param>
-        void DeleteAdjacentStations(int station1, int station2);
+        void DeleteAdjacentStations(int id);
         #endregion
 
         #region Bus

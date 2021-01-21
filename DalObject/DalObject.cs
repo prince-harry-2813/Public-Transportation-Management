@@ -74,13 +74,13 @@ namespace DalObject
             throw new NotImplementedException();
         }
 
-        public void DeleteAdjacentStations(int station1, int station2)
+        public void DeleteAdjacentStations(int id)
         {
-            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.Station1 == station1 && adj.Station2 == station2);
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.PairId == id );
             if (stations != null)
                 DataSource.AdjacentStations.Remove(stations);
             else
-                throw new BadIdExeption(int.Parse(station1.ToString() + station2.ToString()), "there is no direct tripping between those stations");
+                throw new BadIdExeption(id, "there is no direct tripping between those stations");
         }
         #endregion
 
