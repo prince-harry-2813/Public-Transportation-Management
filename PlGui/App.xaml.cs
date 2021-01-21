@@ -36,6 +36,7 @@ namespace PlGui
             containerRegistry.RegisterForNavigation<AddBusStop>(StringNames.AddBusStop);
             containerRegistry.RegisterForNavigation<BusStopDetails>(StringNames.BusStopDetails);
             containerRegistry.RegisterForNavigation<BusStopsView>(StringNames.BusStopsView);
+            containerRegistry.RegisterForNavigation<UserSimulation>(StringNames.UserSimulation);
 
             containerRegistry.RegisterSingleton<IBL>(BLFactory.GetIBL);
         }

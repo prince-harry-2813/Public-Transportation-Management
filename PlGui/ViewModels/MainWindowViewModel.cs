@@ -89,8 +89,8 @@ namespace PlGui.ViewModels
                 case "ManagerLogin":
                     viewType = typeof(ManagerLogin);
                     break;
-                case "ClientLogin":
-                    viewType = typeof(ManagerLogin/*TODO: Add class client login*/);
+                case "UserSimulation":
+                    viewType = typeof(UserSimulation);
                     break;
                 case "BusesView":
                     viewType = typeof(BusesView);
