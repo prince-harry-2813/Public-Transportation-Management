@@ -250,7 +250,7 @@ namespace PlGui.ViewModels.Bus
 
         #region Private Method
 
-        private void InsertBusPropertiesToCollection(BL.BO.Bus bus)
+        public void InsertBusPropertiesToCollection(object bus)
         {
             LbItemSource.Clear();
             foreach (PropertyInfo VARIABLE in bus.GetType().GetProperties())
@@ -261,11 +261,11 @@ namespace PlGui.ViewModels.Bus
                 {
                     PropertyType = VARIABLE.PropertyType,
                     PropertyName = VARIABLE.Name,
-                    BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
-                    || SelectedItem.PropertyName == "RegisDate"
-                    || SelectedItem.PropertyName == "TotalKM"
-                    || SelectedItem.PropertyName == "KmOnLastTreatment"
-                    || SelectedItem.PropertyName == "LastTreatmentDate" || InternalReadOnly),
+                    BusValueIsReadOnly = (SelectedItem?.PropertyName == "LicenseNum"
+                    || SelectedItem?.PropertyName == "RegisDate"
+                    || SelectedItem?.PropertyName == "TotalKM"
+                    || SelectedItem?.PropertyName == "KmOnLastTreatment"
+                    || SelectedItem?.PropertyName == "LastTreatmentDate" || InternalReadOnly),
                     PropertyValue = VARIABLE.GetValue(obj: bus , null ).ToString()
                 });
             }

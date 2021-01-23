@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PlGui.ViewModels.Bus;
@@ -119,6 +121,7 @@ namespace PlGui.ViewModels
                     };
                     regionManager.RequestNavigate("BusDetailsRegion", "BusDetails" , param);
                     var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
+                    //BusDetailsDataContext.InsertBusPropertiesToCollection(TTODO: ADD the dispaly properties object);
                 }
             };
 
@@ -148,18 +151,15 @@ namespace PlGui.ViewModels
 
             if (parameter.Equals("Start"))
             {
-                
                 clockWorker = new BackgroundWorker();
                 clockWorker.WorkerReportsProgress = true;
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                    while (clockWorker.CancellationPending == false)
-                    {
-                        //SimulationStartTime = Bl.StartSImulation(SimulationStartTime , SimulationHZ); 
-                        //clockWorker.ReportProgress(0, Bl.GetSimulationTime());
-                    }
+                         Bl.StartSimulator(SimulationStartTime, SimulationHZ , UpdateTime);
+                        
                 };
+
                 clockWorker.ProgressChanged += (sender, args) =>
                 {
                     SimulationStartTime = (TimeSpan)args.UserState;
@@ -169,6 +169,11 @@ namespace PlGui.ViewModels
                 clockWorker.RunWorkerAsync();
             }
 
+        }
+
+        private void UpdateTime(TimeSpan obj)
+        {
+            clockWorker.ReportProgress(0 , obj);
         }
 
         #endregion
