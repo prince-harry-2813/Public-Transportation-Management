@@ -5,18 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
+using PlGui.ViewModels.Bus;
+using PlGui.Views.Bus;
+using Prism.Regions;
 
 namespace PlGui.ViewModels
 {
     public class UserSimulationViewModel : BindableBase
     {
-
-       
-
         #region Service Decleration
 
         public IBL  Bl { get; set; }
+        private IRegionManager regionManager;
 
         #endregion
 
@@ -75,6 +77,8 @@ namespace PlGui.ViewModels
             }
         }
 
+        public BusDetailsViewModel BusDetailsDataContext { get; set; }
+
         #region Private Memebers
 
         private BackgroundWorker clockWorker;
@@ -89,17 +93,34 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        public UserSimulationViewModel(IBL bl)
+        public UserSimulationViewModel(IBL bl , IRegionManager manager)
         {
             #region Service Initialization
 
             Bl = bl;
+            regionManager = manager;
 
             #endregion
 
             #region Properties Decleration
 
             SimulationStartTime = DateTime.Now.TimeOfDay;
+
+            // Call Navigate to bus details when region BusDetailsRegion added to the collection 
+            regionManager.Regions.CollectionChanged += (sender, args) =>
+            {
+                if (regionManager.Regions.ContainsRegionWithName("BusDetailsRegion"))
+                {
+                    var param = new NavigationParameters()
+                    {
+                        {"InternalReadOnly", true},
+                        {"ButtonsVisibility" , false },
+                        {"MainLabelContent" , (object)"Last Arriving Bus" }
+                    };
+                    regionManager.RequestNavigate("BusDetailsRegion", "BusDetails" , param);
+                    var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
+                }
+            };
 
             #endregion
 

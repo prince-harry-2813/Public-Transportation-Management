@@ -6,6 +6,9 @@
     xmlns:fa5="http://schemas.fontawesome.com/icons/"
     xmlns:local="clr-namespace:PlGui.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    xmlns:bus="clr-namespace:PlGui.Views.Bus"
+    xmlns:prism="http://prismlibrary.com/"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -129,9 +132,7 @@
                             />
 
                         <Label
-                                FontSize="5pt"
-                                Background="Black"
-                                Foreground="Yellow">
+                                FontSize="5pt">
                             IL
                         </Label>
                     </DockPanel>
@@ -285,7 +286,20 @@
                 </Grid>
             </Border>
 
+
+            <!--#region Last bus in station -->
+            <ContentControl
+                x:Name="BusDetailsUC"
+                prism:RegionManager.RegionName="BusDetailsRegion">
+            </ContentControl>
+
+            <!--#endregion-->
+
         </DockPanel>
+
+       
+
         <!--#endregion-->
+
     </Grid>
 </UserControl>

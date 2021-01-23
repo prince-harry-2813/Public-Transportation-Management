@@ -257,6 +257,7 @@ namespace DalXml
 
         public BusOnTrip GetBusOnTrip(int id)
         {
+            return null;
         }
 
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
