@@ -159,7 +159,7 @@ namespace DalXml
                                 select s).FirstOrDefault();
             if (adjStat != null)
             {
-                adjStat.Element("isActive").Value = Boolean.FalseString;
+                adjStat.Element("isActive").Value = bool.FalseString;
 
                 XMLTools.SaveListToXMLElement(AdjacentStationsRootElement, AdjacentStationsPath);
             }
@@ -241,7 +241,7 @@ namespace DalXml
         public void DeleteBus(int id)
         {
             List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
-            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == id);
+            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == id && b.isActive);
 
             if (busCheck != null)
             {
@@ -257,27 +257,87 @@ namespace DalXml
 
         public BusOnTrip GetBusOnTrip(int id)
         {
+            List<BusOnTrip> buses = XMLTools.LoadListFromXMLSerializer<BusOnTrip>(BusOnTripPath);
+            BusOnTrip bus = buses.FirstOrDefault(b => b.Id == id);
+            if (bus != null && bus.isActive)
+                return bus;
+            throw new BadIdExeption(id, $"No such bus on trip:{id}");
         }
 
         public IEnumerable<BusOnTrip> GetAllBusOnTrips()
         {
-            throw new NotImplementedException();
+            List<BusOnTrip> buses = XMLTools.LoadListFromXMLSerializer<BusOnTrip>(BusOnTripPath);
+            return from bus in buses
+                   where bus.isActive
+                   select bus;
         }
 
         public IEnumerable<DO.BusOnTrip> GetAllBusesOnTripsBy(Predicate<DO.BusOnTrip> predicate)
         {
-            throw new NotImplementedException();
+            List<BusOnTrip> buses = XMLTools.LoadListFromXMLSerializer<BusOnTrip>(BusOnTripPath);
+            return from bus in buses
+                   where predicate(bus)
+                   select bus;
         }
 
 
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+            XElement BusesOnTripRootElement = XMLTools.LoadListFromXMLElement(BusOnTripPath);
+
+            XElement bus = (from s in BusesOnTripRootElement.Elements()
+                            where int.Parse(s.Element("Id").Value) == busOnTrip.Id
+                            select s).FirstOrDefault();
+            if (bus != null)
+            {
+                if (!bool.Parse(bus.Element("isActive").Value))
+                    bus.Element("isActive").Value = bool.TrueString;
+                else
+                    throw new DuplicateObjExeption(busOnTrip.Id, $"This bus is already on a trip  {busOnTrip.Id}");
+            }
+            else
+            {
+                XElement adjElem1 = new XElement("BusOnTrip",
+                    new XElement("Id", busOnTrip.Id.ToString()),
+                    new XElement("LicenseNum", busOnTrip.LicenseNum.ToString()),
+                    new XElement("LineId", busOnTrip.LineId.ToString()),
+                    new XElement("PlannedTakeOff", busOnTrip.PlannedTakeOff.ToString("g")),
+                    new XElement("ActualTakeOff", busOnTrip.ActualTakeOff.ToString()),
+                    new XElement("PrevStation", busOnTrip.PrevStation.ToString()),
+                    new XElement("PrevSatationAt", busOnTrip.PrevSatationAt.ToString()),
+                    new XElement("NextStationAt", busOnTrip.NextStationAt.ToString()),
+                    new XElement("isActive", busOnTrip.isActive.ToString()));
+                BusesOnTripRootElement.Add(adjElem1);
+            }
+            XMLTools.SaveListToXMLElement(BusesOnTripRootElement, BusOnTripPath);
+
         }
 
         public void UpdateBusOnTrip(BusOnTrip busOnTrip)
         {
-            throw new NotImplementedException();
+
+            XElement BusesOnTripRootElement = XMLTools.LoadListFromXMLElement(BusOnTripPath);
+
+            XElement bus = (from s in BusesOnTripRootElement.Elements()
+                            where int.Parse(s.Element("Id").Value) == busOnTrip.Id && bool.Parse(s.Element("isActicve").Value)
+                            select s).FirstOrDefault();
+            if (bus != null)
+            {
+                bus.Element("Id").Value = busOnTrip.Id.ToString();
+                bus.Element("LicenseNum").Value = busOnTrip.LicenseNum.ToString();
+                bus.Element("LineId").Value = busOnTrip.LineId.ToString();
+                bus.Element("PlannedTakeOff").Value = busOnTrip.PlannedTakeOff.ToString("g");
+                bus.Element("ActualTakeOff").Value = busOnTrip.ActualTakeOff.ToString();
+                bus.Element("PrevStation").Value = busOnTrip.PrevStation.ToString();
+                bus.Element("PrevSatationAt").Value = busOnTrip.PrevSatationAt.ToString();
+                bus.Element("NextStationAt").Value = busOnTrip.NextStationAt.ToString();
+
+
+                XMLTools.SaveListToXMLElement(BusesOnTripRootElement, BusOnTripPath);
+            }
+            else
+                throw new BadIdExeption(busOnTrip.Id, $"This Trip bus doesn't exist{busOnTrip.Id}");
+
         }
 
         public void UpdateBusOnTrip(int id, Action<BusOnTrip> update)
@@ -287,7 +347,19 @@ namespace DalXml
 
         public void DeleteBusOnTrip(int id)
         {
-            throw new NotImplementedException();
+            XElement BusesOnTripRootElement = XMLTools.LoadListFromXMLElement(BusOnTripPath);
+            XElement bus = (from s in BusesOnTripRootElement.Elements()
+                            where int.Parse(s.Element("Id").Value) == id && bool.Parse(s.Element("isActicve").Value)
+                            select s).FirstOrDefault();
+            if (bus != null)
+            {
+                bus.Element("isActive").Value = bool.FalseString;
+
+                XMLTools.SaveListToXMLElement(BusesOnTripRootElement, AdjacentStationsPath);
+            }
+            else
+                throw new BadIdExeption(id, $"This Bus Trip doesn't exist or Deleted ");
+
         }
 
         #endregion
@@ -295,7 +367,14 @@ namespace DalXml
         #region Line CRUD Implementation 
         public Line GetLine(int id)
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+
+            Line line = Lines.FirstOrDefault(b => b.Id == id);
+            if (line != null && line.isActive)
+                return line;
+            else
+                throw new BadIdExeption(id, $"Bad id, Line {id} doesn't exist or deleted");
+
         }
 
         public IEnumerable<Line> GetAllLines()
