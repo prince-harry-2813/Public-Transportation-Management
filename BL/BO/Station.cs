@@ -1,4 +1,6 @@
-﻿namespace BL.BO
+﻿using System.Collections.Generic;
+
+namespace BL.BO
 {
     /// <summary>
     /// Bus Station (can have several lines)
@@ -9,6 +11,10 @@
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        /// <summary>
+        /// Represent the lines that having a stop in this station, the required info from each line it his code and destination station  
+        /// </summary>
+        public List<Line> Lines { get; set; }
         public bool isActive { get; set; }
 
     }
