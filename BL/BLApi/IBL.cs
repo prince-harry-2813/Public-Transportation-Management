@@ -55,5 +55,12 @@ namespace BL.BLApi
 
 
         #endregion
+
+        #region User simulation
+
+        void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
+        void StopSimulator();
+    
+        #endregion
     }
 }

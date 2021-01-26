@@ -16,7 +16,7 @@ namespace PlGui.Views.Bus
         public BusDetails()
         {
             InitializeComponent();
-            ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
+           // ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
             viewModel = (BusDetailsViewModel)this.DataContext;
         }
 

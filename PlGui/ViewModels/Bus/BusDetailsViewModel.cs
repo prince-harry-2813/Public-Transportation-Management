@@ -29,6 +29,46 @@ namespace PlGui.ViewModels.Bus
                 SetProperty(ref isInEditMode, value);
             }
         }
+        
+        private bool internalReadOnly;
+        /// <summary>
+        /// Set all user control property to read only 
+        /// </summary>
+        public bool InternalReadOnly
+        {
+            get => internalReadOnly;
+            set
+            {
+                SetProperty(ref internalReadOnly , value);
+            }
+        }
+
+        private bool buttonsVisibility = true;
+        /// <summary>
+        /// Set editing buttons visibility for manager only 
+        /// </summary>
+        public bool ButtonsVisibility
+        {
+            get => buttonsVisibility;
+            set
+            {
+                SetProperty(ref buttonsVisibility , value);
+            }
+        }
+
+
+        private string mainLabelContent = "Bus Details";
+        /// <summary>
+        /// Set editing buttons visibility for manager only 
+        /// </summary>
+        public string MainLabelContent
+        {
+            get => mainLabelContent;
+            set
+            {
+                SetProperty(ref mainLabelContent, value);
+            }
+        }
 
         private BL.BO.Bus bus;
         /// <summary>
@@ -173,19 +213,13 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        public void ListBoxSelectionChanged()
+        public void  ListBoxSelectionChanged()
         {
-            if (SelectedItem.PropertyName == "LicenseNum" 
-                || SelectedItem.PropertyName == "RegisDate" 
-                || SelectedItem.PropertyName == "TotalKM"
-                || SelectedItem.PropertyName == "KmOnLastTreatment"
-                || SelectedItem.PropertyName == "LastTreatmentDate")
-            {
-                BusValueIsReadOnly = false;
-                return;
-            }
-
-            BusValueIsReadOnly = false;
+            BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
+                                  || SelectedItem.PropertyName == "RegisDate"
+                                  || SelectedItem.PropertyName == "TotalKM"
+                                  || SelectedItem.PropertyName == "KmOnLastTreatment"
+                                  || SelectedItem.PropertyName == "LastTreatmentDate" || InternalReadOnly);
         }
         
         private void RemoveBusButtomClicked()
@@ -214,10 +248,9 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-
         #region Private Method
 
-        private void InsertBusPropertiesToCollection(BL.BO.Bus bus)
+        public void InsertBusPropertiesToCollection(object bus)
         {
             LbItemSource.Clear();
             foreach (PropertyInfo VARIABLE in bus.GetType().GetProperties())
@@ -228,6 +261,11 @@ namespace PlGui.ViewModels.Bus
                 {
                     PropertyType = VARIABLE.PropertyType,
                     PropertyName = VARIABLE.Name,
+                    BusValueIsReadOnly = (SelectedItem?.PropertyName == "LicenseNum"
+                    || SelectedItem?.PropertyName == "RegisDate"
+                    || SelectedItem?.PropertyName == "TotalKM"
+                    || SelectedItem?.PropertyName == "KmOnLastTreatment"
+                    || SelectedItem?.PropertyName == "LastTreatmentDate" || InternalReadOnly),
                     PropertyValue = VARIABLE.GetValue(obj: bus , null ).ToString()
                 });
             }
@@ -282,6 +320,18 @@ namespace PlGui.ViewModels.Bus
             Bus = (BL.BO.Bus)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBus).FirstOrDefault().Value ?? Bus;
             if (Bus != null)
                 InsertBusPropertiesToCollection(Bus);
+            var a = navigationContext.Parameters.Where(pair => pair.Key == "InternalReadOnly")
+            .FirstOrDefault().Value ;
+            InternalReadOnly = (a != null) ? (bool) a : internalReadOnly;
+
+
+            var tmp = navigationContext.Parameters.Where(pair => pair.Key == "MainLabelContent")
+                .FirstOrDefault().Value;
+            MainLabelContent = (tmp != null) ? (string)tmp : MainLabelContent;
+
+            var tmp1 = navigationContext.Parameters.Where(pair => pair.Key == "ButtonsVisibility")
+                .FirstOrDefault().Value;
+            ButtonsVisibility= (tmp1 != null) ? (bool)tmp1 : ButtonsVisibility;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -291,7 +341,11 @@ namespace PlGui.ViewModels.Bus
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+            ButtonsVisibility = true;
+            MainLabelContent = "";
+            InternalReadOnly = false;
+            LbItemSource = null;
+            SelectedItem = null;
         }
 
         #endregion
@@ -311,6 +365,17 @@ namespace PlGui.ViewModels.Bus
             set
             {
                 SetProperty(ref propertyName, value);
+            }
+        }
+
+        private bool busValueIsReadOnly;
+
+        public bool BusValueIsReadOnly
+        {
+            get => busValueIsReadOnly;
+            set
+            {
+                SetProperty(ref busValueIsReadOnly, value);
             }
         }
 

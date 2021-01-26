@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Animation;
 using BL.BLApi;
 using BL.BO;
 using DalApi;
@@ -247,6 +251,48 @@ namespace BL
         }
 
         IEnumerable<Bus> IBL.GetBusBy(Predicate<Bus> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
+
+        #region User Simulation
+
+        event Action<TimeSpan> clockObserver = null;
+            
+        /// <summary>
+        /// Start simulator stop watch and update it according 
+        /// </summary>
+        /// <param name="startTime">TIME TO START  </param>
+        /// <param name="Rate"> Hz per minute</param>
+        /// <param name="updateTime">Action</param>
+        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
+        {
+            //Timer
+            //Nullable<TimeSpan> nullableTime = new TimeSpan(startTime.Hours, startTime.Minutes, startTime.Seconds);
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Restart();
+            //SimulatorClock simulatorClock = new SimulatorClock(startTime , rate);
+
+            //var lastMeaserTime = new TimeSpan(startTime.Ticks);
+            //while (true)
+            //{
+            //                   clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
+            //    updateTime = clockObserver;
+            //    Thread.Sleep(1000 / rate);
+            //}
+        }
+
+            //Stopwatch 
+            //Clock 
+            //simulatorClock = new Clock(simulatorStartTime + new TimeSpan(stopwatch.ElapsedTicks * simulatorRate));
+            //clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
+            //Thread.Sleep(your - sleep - time -in -msec);
+        
+
+        public void StopSimulator()
         {
             throw new NotImplementedException();
         }

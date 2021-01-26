@@ -5,6 +5,8 @@
     xmlns:convert="clr-namespace:PlGui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.com/icons/"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True"
     xmlns:local="clr-namespace:PlGui.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="Uc"
@@ -15,20 +17,29 @@
     <UserControl.Resources>
         <convert:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
         <convert:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
+        <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
+
     <StackPanel
         Width="580"
         Margin="10"
         HorizontalAlignment="Center"
         VerticalAlignment="Center">
-        <WrapPanel Margin="10" HorizontalAlignment="Center">
+
+        <!--Page title-->
+        <WrapPanel 
+            Visibility="{Binding LabelVisibility , Converter={StaticResource BooleanToVisibilityConverter}}"
+            Margin="10" HorizontalAlignment="Center">
             <fa:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
-            <Label FontSize="14pt" FontWeight="SemiBold">
-                Bus Details
+            <Label FontSize="14pt" FontWeight="SemiBold"
+                   Content="{Binding MainLabelContent}">
+               
             </Label>
         </WrapPanel>
 
-        <WrapPanel Margin="10">
+        <WrapPanel
+            Visibility="{Binding ButtonsVisibility , Converter={StaticResource BooleanToVisibilityConverter}}"
+            Margin="10">
             <!--  Edit Bus Button  -->
             <StackPanel HorizontalAlignment="Center" Visibility="Visible">
                 <Button
@@ -120,7 +131,7 @@
                             BorderBrush="Black"
                             BorderThickness="0.5"
                             FontSize="8pt"
-                            IsReadOnly="{Binding BusValueIsReadOnly, RelativeSource={RelativeSource Mode=PreviousData}}"
+                            IsReadOnly="{Binding BusValueIsReadOnly }"
                             Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                     </Grid>
                 </DataTemplate>

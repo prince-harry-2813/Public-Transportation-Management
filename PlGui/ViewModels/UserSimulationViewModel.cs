@@ -5,18 +5,22 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Controls;
 using System.Windows.Input;
+using PlGui.ViewModels.Bus;
+using PlGui.Views.Bus;
+using Prism.Regions;
 
 namespace PlGui.ViewModels
 {
     public class UserSimulationViewModel : BindableBase
     {
-
-       
-
         #region Service Decleration
 
         public IBL  Bl { get; set; }
+        private IRegionManager regionManager;
 
         #endregion
 
@@ -75,6 +79,8 @@ namespace PlGui.ViewModels
             }
         }
 
+        public BusDetailsViewModel BusDetailsDataContext { get; set; }
+
         #region Private Memebers
 
         private BackgroundWorker clockWorker;
@@ -89,17 +95,35 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        public UserSimulationViewModel(IBL bl)
+        public UserSimulationViewModel(IBL bl , IRegionManager manager)
         {
             #region Service Initialization
 
             Bl = bl;
+            regionManager = manager;
 
             #endregion
 
             #region Properties Decleration
 
             SimulationStartTime = DateTime.Now.TimeOfDay;
+
+            // Call Navigate to bus details when region BusDetailsRegion added to the collection 
+            regionManager.Regions.CollectionChanged += (sender, args) =>
+            {
+                if (regionManager.Regions.ContainsRegionWithName("BusDetailsRegion"))
+                {
+                    var param = new NavigationParameters()
+                    {
+                        {"InternalReadOnly", true},
+                        {"ButtonsVisibility" , false },
+                        {"MainLabelContent" , (object)"Last Arriving Bus" }
+                    };
+                    regionManager.RequestNavigate("BusDetailsRegion", "BusDetails" , param);
+                    var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
+                    //BusDetailsDataContext.InsertBusPropertiesToCollection(TTODO: ADD the dispaly properties object);
+                }
+            };
 
             #endregion
 
@@ -127,18 +151,15 @@ namespace PlGui.ViewModels
 
             if (parameter.Equals("Start"))
             {
-                
                 clockWorker = new BackgroundWorker();
                 clockWorker.WorkerReportsProgress = true;
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                    while (clockWorker.CancellationPending == false)
-                    {
-                        //SimulationStartTime = Bl.StartSImulation(SimulationStartTime , SimulationHZ); 
-                        //clockWorker.ReportProgress(0, Bl.GetSimulationTime());
-                    }
+                         Bl.StartSimulator(SimulationStartTime, SimulationHZ , UpdateTime);
+                        
                 };
+
                 clockWorker.ProgressChanged += (sender, args) =>
                 {
                     SimulationStartTime = (TimeSpan)args.UserState;
@@ -148,6 +169,11 @@ namespace PlGui.ViewModels
                 clockWorker.RunWorkerAsync();
             }
 
+        }
+
+        private void UpdateTime(TimeSpan obj)
+        {
+            clockWorker.ReportProgress(0 , obj);
         }
 
         #endregion
