@@ -12,9 +12,14 @@ namespace BL.BO
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Also name of the line, 
+        /// Line number - Also name of the line. 
         /// </summary>
         public int Code { get; set; }
+        /// <summary>
+        /// List of Stations in Line by order 
+        /// info should come from Line station entities
+        /// When initialize must have First and last Stations
+        /// </summary>
         public List<LineStation> Stations{get;set;}
         public Area Area { get; set; }
         public int FirstStation { get; set; }

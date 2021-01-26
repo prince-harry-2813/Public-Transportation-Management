@@ -538,6 +538,10 @@ namespace DalXml
         {
             throw new NotImplementedException();
         }
+        public IEnumerable<Trip> GetAllTripsBy(Predicate<Trip> predicate)
+        {
+            throw new NotImplementedException();
+        }
 
         public void AddTrip(Trip trip)
         {
@@ -549,7 +553,7 @@ namespace DalXml
             throw new NotImplementedException();
         }
 
-        public void UpdateTrip(int id, Action<Trip> update)
+        public void UpdateTrip(Trip trip, Action<Trip> update)
         {
             throw new NotImplementedException();
         }

@@ -271,9 +271,11 @@ namespace DalApi
         #region Trip
         DO.Trip trip(int id);
         IEnumerable<DO.Trip> GetAllTrips();
+        IEnumerable<DO.Trip> GetAllTripsBy(Predicate<DO.Trip> predicate);
+
         void AddTrip(DO.Trip trip);
         void UpdateTrip(DO.Trip user);
-        void UpdateTrip(int id, Action<DO.Trip> update);
+        void UpdateTrip(DO.Trip trip, Action<DO.Trip> update);
         void DeleteTrip(int id);
         #endregion
 
