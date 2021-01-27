@@ -13,7 +13,7 @@ namespace PlGui.ViewModels.Stops
 {
     public class AddBusStopViewModel : BindableBase
     {
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -48,9 +48,12 @@ namespace PlGui.ViewModels.Stops
 
         #endregion
 
-        public AddBusStopViewModel(IRegionManager manager, IUnityContainer container)
+        public AddBusStopViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
         {
-            #region Properties Initiaization
+            #region Properties Initiaization 
+
+            Bl = bl;
+
             #endregion
 
             AddBusStopButtonCommand = new DelegateCommand(AddBusStopButton);
@@ -65,7 +68,7 @@ namespace PlGui.ViewModels.Stops
 
         #region Command Implementation
 
-        private void AddBusStopButton()
+        public void AddBusStopButton()
         {
             try
             {

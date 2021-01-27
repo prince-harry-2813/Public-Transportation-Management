@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PlGui.Views.Stops"
+			 xmlns:prism="http://prismlibrary.com/"
+			 prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.InputBindings>
@@ -12,7 +14,6 @@
     </UserControl.InputBindings>
     <!--Main Grid-->
     <Grid
-        DataContext="{Binding BusStop}"
         Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -44,7 +45,7 @@
             Grid.Row="0"
             Grid.Column="1"
             VerticalAlignment="Center"
-                 Text="{Binding Name}"
+                 Text="{Binding BusStop.Name}"
                  Margin="10"
                  FontSize="12pt"
                  Padding="1">
@@ -66,7 +67,7 @@
             VerticalAlignment="Center"
             Grid.Row="1"
             Grid.Column="1"
-            Text="{Binding Code}"
+            Text="{Binding BusStop.Code}"
             Margin="10"
             FontSize="12pt"
             Padding="1">
@@ -88,7 +89,7 @@
             VerticalAlignment="Center"
             Grid.Row="2"
             Grid.Column="1"
-            Text="{Binding Longitude}"
+            Text="{Binding BusStop.Longitude}"
             Margin="10"
             FontSize="12pt"
             Padding="1">
@@ -107,18 +108,21 @@
         </Label>
 
         <TextBox
+		
             VerticalAlignment="Center"
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding Latitude}"
+            Text="{Binding BusStop.Latitude}"
             Margin="10"
             FontSize="12pt"
             Padding="1">
-        </TextBox>
+			
+		</TextBox>
         <!--#endregion-->
-    <Button Grid.Row="4"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
+    <Button 
+		Grid.Row="4"
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
         Margin="10"
         HorizontalAlignment="Stretch"
         HorizontalContentAlignment="Center"
@@ -126,6 +130,7 @@
         VerticalContentAlignment="Center"
         FontSize="14pt"
         Content="Add"
-        Command="{Binding AddBusStopButtonCommand}"></Button>
+        Command="{Binding AddBusStopButtonCommand}"
+		MouseUp="Button_MouseUp"></Button>
     </Grid>
 </UserControl>

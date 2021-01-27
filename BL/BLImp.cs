@@ -3,6 +3,8 @@ using BL.BO;
 using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 
 namespace BL
 {
@@ -61,9 +63,9 @@ namespace BL
                 throw new NullReferenceException("Bus to delete is Null");
             }
 
-            DO.Bus busToAdd = new DO.Bus();
-            bus.CopyPropertiesTo(busToAdd);
-            iDal.DeleteBus(busToAdd.LicenseNum);
+            DO.Bus busToDelete = new DO.Bus();
+            bus.CopyPropertiesTo(busToDelete);
+            iDal.DeleteBus(busToDelete.LicenseNum);
         }
 
         public IEnumerable<Bus> GetAllBuses()
@@ -71,10 +73,10 @@ namespace BL
             // TODO :  check if this solution is good enough
             foreach (var VARIABLE in iDal.GetAllBuses())
             {
-                if (VARIABLE.isActive)// Ignore deleted bus  
-                {
-                    yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
-                }
+                //if (VARIABLE.isActive)  //deleted because DAL does this check    // Ignore deleted bus  
+
+                yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
+
             }
 
             #region Seconed Solution
@@ -138,26 +140,28 @@ namespace BL
                 throw new NullReferenceException("Line to add is Null please try again");
 
             if (line.FirstStation == null || line.FirstStation == 0)
-                throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
+                throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
             if (line.LastStation == null || line.LastStation == 0)
-                throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
+                throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
             var station = iDal.GetAllStationsBy(station1 => station1.Code == line.FirstStation);
             if (station == null)
-                throw new BadBusStopIDException("First Bus stop not exsit in the system", null);
+                throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
             station = iDal.GetAllStationsBy(station1 => station1.Code == line.LastStation);
             if (station == null)
-                throw new BadBusStopIDException("Last Bus stop not exsit in the system", null);
+                throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
             var anotherLineCode = iDal.GetAllLinesBy(line1 => line1.Id == line.Id);
-            if (anotherLineCode == null)
+            try
+            {
                 iDal.AddLine((DO.Line)line.CopyPropertiesToNew(typeof(DO.Line)));
-
-            else
-                throw new BadLineIdException("Line with the same id is already exsist", new ArgumentException());
-
+            }
+            catch (Exception e)
+            {
+                throw new BadLineIdException("Line with the same id is already exist", new ArgumentException());
+            }
         }
 
         void IBL.UpdateLine(Line line)
@@ -204,9 +208,16 @@ namespace BL
             }
         }
 
-        IEnumerable<Line> IBL.GetLineBy(Predicate<Line> predicate)
+        IEnumerable<Line> IBL.GetLineBy(Predicate<BO.Line> predicate)
         {
-            throw new NotImplementedException();
+            foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
+            {
+
+                BO.Line line = (Line)item.CopyPropertiesToNew(typeof(Line));
+                if (predicate(line))
+                    yield return line;
+
+            }
         }
 
 
@@ -235,7 +246,10 @@ namespace BL
 
         IEnumerable<Station> IBL.GetAllBusStops()
         {
-            throw new NotImplementedException();
+            foreach (var item in iDal.GetAllStation())
+            {
+                yield return (Station)item.CopyPropertiesToNew(typeof(Station));
+            }
         }
 
         IEnumerable<Station> IBL.GetBusStopsBy(Predicate<Station> predicate)

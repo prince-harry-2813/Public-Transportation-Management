@@ -116,11 +116,6 @@
                 Content="Add"
                 Command="{Binding AddLineButtonCommand}"></Button>
 
-        <Button Grid.Row="4"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Stretch"
-                Margin="10"
-                Content="Add"
-                Command="{Binding UpdateLineButtonCommand}"></Button>
+        
     </Grid>
 </UserControl>

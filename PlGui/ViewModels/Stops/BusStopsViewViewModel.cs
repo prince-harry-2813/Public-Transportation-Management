@@ -5,6 +5,7 @@ using PlGui.Views.Stops;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Unity;
@@ -51,6 +52,7 @@ namespace PlGui.ViewModels.Stops
         public ICommand AddBusStopButtonCommand { get; set; }
         public ICommand UpdateBusStopButtonCommand { get; set; }
 
+        public ICommand DeleteStationButtonCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -60,14 +62,16 @@ namespace PlGui.ViewModels.Stops
         /// <param name="container"></param>
         public BusStopsViewViewModel(IRegionManager manager, IUnityContainer container)
         {
-            #region Properties Decleration
+            #region Properties Deceleration
 
             Bl = BLFactory.GetIBL();
-            BusStopsCollection = (ObservableCollection<Station>)Bl.GetAllBusStops();
-
+            foreach (var item in Bl.GetAllBusStops())
+            {
+                BusStopsCollection.Add(item);
+            }
             #endregion
 
-            #region Service Initalization
+            #region Service Initialization
 
             regionManager = manager;
             unityContainer = container;
@@ -78,9 +82,11 @@ namespace PlGui.ViewModels.Stops
 
             AddBusStopButtonCommand = new DelegateCommand(AddBusStopButton);
             UpdateBusStopButtonCommand = new DelegateCommand<string>(UpdateBusStopButton);
-
+            DeleteStationButtonCommand = new DelegateCommand<string>(DeleteStationButton);
             #endregion
         }
+
+      
 
         #region Command Implementation
 
@@ -95,11 +101,15 @@ namespace PlGui.ViewModels.Stops
         private void UpdateBusStopButton(string commandParameter)
         {
             var parm = new NavigationParameters();
-            parm.Add(StringNames.SelectedBusStop, ""/*TODO: Insert Selected Bus Stop from collectiom*/);
+            parm.Add(StringNames.SelectedBusStop, ""/*TODO: Insert Selected Bus Stop from collection*/);
             unityContainer.RegisterType(typeof(object), typeof(BusStopDetails), "BusStopDetails");
             regionManager.RequestNavigate(StringNames.MainRegion, "BusStopDetails");
         }
-
+        private void DeleteStationButton(string commandParameter)
+        {
+            /*TODO: Insert Selected Bus Stop from collection and delete it*/
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

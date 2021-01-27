@@ -33,10 +33,10 @@
             <fa5:FontAwesome
                 VerticalAlignment="Center"
                 FontSize="18pt"
-                Icon="Brands_Line" />
+                Icon="Brands_Artstation" />
             <Label
                 VerticalAlignment="Center"
-                Content="Lines Management"
+                Content="Stations Management"
                 FontSize="18pt" />
         </WrapPanel>
 
@@ -47,7 +47,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center">
 
-            <!--  Add bus Button  -->
+            <!--  Add Stop Button  -->
             <StackPanel Height="73" HorizontalAlignment="Center">
                 <Button
                     x:Name="AddButton"
@@ -57,7 +57,7 @@
                     Padding="0,-4,0,0"
                     Background="{x:Null}"
                     BorderBrush="#FFFAFAFA"
-                    Command="{Binding AddLineButtonCommand}"
+                    Command="{Binding AddBusStopButtonCommand}"
                     CommandParameter="Add"
                     Foreground="White">
                     <Button.Content>
@@ -139,7 +139,7 @@
                     Padding="0,-4,0,0"
                     Background="{x:Null}"
                     BorderBrush="#FFFAFAFA"
-                    Command="{Binding UpdateButtonCommand}"
+                    Command="{Binding UpdateBusStopButtonCommand}"
                     CommandParameter="Update"
                     Foreground="White">
                     <Button.Content>

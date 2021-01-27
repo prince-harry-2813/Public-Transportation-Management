@@ -55,19 +55,26 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public AddLineViewModel(IRegionManager manager, IUnityContainer container)
+        public AddLineViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
         {
-            #region Properties Initiaization
+            #region Service Init
+
+            Bl = bl;
+
+            #endregion
+
+            #region Properties Initialization
 
             Line = new Line()
             {
                 Area = Area.Center,
                 Code = 0,
-                // TODO : Initialize First Station FirstStation;
-                // TODO : Initialize Last Station
+                Id = Bl.GetLineBy(l => l.IsActive || !l.IsActive).Count()
+                 //TODO : Initialize First Station FirstStation;
+                 //   TODO: Initialize Last Station
             };
             #endregion
-
+            
             #region Command Initialization
 
             EneterKeyCommand = new DelegateCommand(EnterKey);
