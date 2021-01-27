@@ -1,21 +1,18 @@
-﻿using System.Diagnostics;
-using PlGui.Views;
-using Prism.Ioc;
-using Prism.Modularity;
-using System.Windows;
-using BL.BLApi;
+﻿using BL.BLApi;
 using PlGui.StaticClasses;
+using PlGui.Views;
 using PlGui.Views.Bus;
 using PlGui.Views.Lines;
 using PlGui.Views.Stops;
-using Prism.Unity;
+using Prism.Ioc;
+using System.Windows;
 
 namespace PlGui
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App 
+    public partial class App
     {
         protected override Window CreateShell()
         {

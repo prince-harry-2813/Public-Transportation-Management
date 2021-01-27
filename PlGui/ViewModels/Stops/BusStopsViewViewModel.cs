@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using System.Windows.Input;
-using BL.BLApi;
+﻿using BL.BLApi;
 using BL.BO;
 using PlGui.StaticClasses;
 using PlGui.Views.Stops;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Unity;
 
 namespace PlGui.ViewModels.Stops
@@ -54,7 +52,7 @@ namespace PlGui.ViewModels.Stops
         public ICommand UpdateBusStopButtonCommand { get; set; }
 
         #endregion
-        
+
         /// <summary>
         /// Ctor 
         /// </summary>

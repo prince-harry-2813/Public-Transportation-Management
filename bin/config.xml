@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<dl>data</dl>
+	<dl>xml</dl>
 	<dl-packages>
 		<data namespace="DalObject">DalObject</data>
-		<xml namespace="DalXml" class="DalXMLImp">DalXMLImp</xml>
+		<xml namespace="DalXml"  >DalXml</xml>
 	</dl-packages>
 </config>

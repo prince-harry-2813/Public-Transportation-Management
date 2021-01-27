@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace PlGui.Converters
 {
@@ -13,7 +9,7 @@ namespace PlGui.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string param = (string) value;
+            string param = (string)value;
             StringBuilder title = new StringBuilder();
 
             int i = 0;

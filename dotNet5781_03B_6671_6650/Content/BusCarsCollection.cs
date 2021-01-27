@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
@@ -8,9 +7,9 @@ namespace dotNet5781_03B_6671_6650.Content
     /// <summary>
     /// singleton class to hold the bus info for the project
     /// </summary>
-    public sealed class BusCarsCollection : DependencyObject , INotifyPropertyChanged
+    public sealed class BusCarsCollection : DependencyObject, INotifyPropertyChanged
     {
-        
+
         BusCarsCollection()
         {
             BusesCollection = new ObservableCollection<Bus>();
@@ -29,7 +28,7 @@ namespace dotNet5781_03B_6671_6650.Content
 
 
         private static readonly object obj = new object();
-        
+
         private static BusCarsCollection instance = null;
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -20,7 +20,7 @@ namespace BL.BO
         /// info should come from Line station entities
         /// When initialize must have First and last Stations
         /// </summary>
-        public List<LineStation> Stations{get;set;}
+        public List<LineStation> Stations { get; set; }
         public Area Area { get; set; }
         public int FirstStation { get; set; }
         public int LastStation { get; set; }

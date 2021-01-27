@@ -1,28 +1,25 @@
 ﻿using DalApi;
 using DO;
 using System;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace DalXml
 {
-    public class DalXMLImp : IDAL
+    public class DalXml : IDAL
     {
+
         #region singleton
-        static readonly DalXMLImp instance = new DalXMLImp();
-        static DalXMLImp() { }
-        DalXMLImp() { }
-        public static DalXMLImp Instance { get => instance; }
+        static readonly DalXml instance = new DalXml();
+        static DalXml() { }
+        DalXml() { }
+        public static DalXml Instance { get => instance; }
         #endregion
 
         #region XML Files path
-        static XElement configXml;
+        // static XElement configXml;
 
         static readonly string
             AdjacentStationsPath = "AdjacentStationsXml.xml",
@@ -30,9 +27,9 @@ namespace DalXml
             BusOnTripPath = "BusOnTripXMl.xml",
             LinePath = "LineXml.xml",
             LineStationPath = "LineStationXml.xml",
-            LineTrip = "lineTripXml.xml",
+            LineTripPath = "lineTripXml.xml",
             StationPath = "StatinXml.xml",
-            Trip = "TripXml.xml",
+            TripPath = "TripXml.xml",
             UserPath = "UserXml.xml";
         #endregion
 
@@ -47,10 +44,10 @@ namespace DalXml
                     where bool.Parse(s.Element("isActive").Value)
                     select new AdjacentStations()
                     {
-                        PairId = Int32.Parse(s.Element("PairId").Value),
-                        Station1 = Int32.Parse(s.Element("Station1").Value),
-                        Station2 = Int32.Parse(s.Element("Station2").Value),
-                        Distance = Double.Parse(s.Element("Distance").Value),
+                        PairId = int.Parse(s.Element("PairId").Value),
+                        Station1 = int.Parse(s.Element("Station1").Value),
+                        Station2 = int.Parse(s.Element("Station2").Value),
+                        Distance = double.Parse(s.Element("Distance").Value),
                         Time = TimeSpan.ParseExact(s.Element("Time").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture)
                     }
                     );
@@ -60,7 +57,6 @@ namespace DalXml
         {
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
             return from s in AdjacentStationsRootElement.Elements()
-                       //    where bool.Parse(s.Element("isActive").Value)
                    let s1 = new AdjacentStations()
                    {
                        PairId = Int32.Parse(s.Element("PairId").Value),
@@ -81,10 +77,10 @@ namespace DalXml
                                           where int.Parse(s.Element("PairId").Value) == id && bool.Parse(s.Element("isActive").Value)
                                           select new AdjacentStations()
                                           {
-                                              PairId = Int32.Parse(s.Element("PairId").Value),
-                                              Station1 = Int32.Parse(s.Element("Station1").Value),
-                                              Station2 = Int32.Parse(s.Element("Station2").Value),
-                                              Distance = Double.Parse(s.Element("Distance").Value),
+                                              PairId = int.Parse(s.Element("PairId").Value),
+                                              Station1 = int.Parse(s.Element("Station1").Value),
+                                              Station2 = int.Parse(s.Element("Station2").Value),
+                                              Distance = double.Parse(s.Element("Distance").Value),
                                               Time = TimeSpan.ParseExact(s.Element("Time").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture)
 
                                           }).FirstOrDefault();
@@ -179,6 +175,9 @@ namespace DalXml
                 return bus;
             else
                 throw new BadIdExeption(id, "Bad id, Bus doesn't exist or deleted");
+
+
+
         }
 
         public IEnumerable<Bus> GetAllBuses()
@@ -221,7 +220,7 @@ namespace DalXml
         public void UpdateBus(Bus bus)
         {
             List<Bus> buses = XMLTools.LoadListFromXMLSerializer<Bus>(BusPath);
-            var busCheck = buses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum);
+            var busCheck = buses.FirstOrDefault(b => b.isActive && b.LicenseNum == bus.LicenseNum);
             if (busCheck != null)
             {
                 buses.Remove(busCheck);
@@ -249,6 +248,7 @@ namespace DalXml
             }
             else
                 throw new BadIdExeption(id, "Bad id, Bus doesn't exist");
+            XMLTools.SaveListToXMLSerializer(buses, BusPath);
         }
 
         #endregion
@@ -355,7 +355,7 @@ namespace DalXml
             {
                 bus.Element("isActive").Value = bool.FalseString;
 
-                XMLTools.SaveListToXMLElement(BusesOnTripRootElement, AdjacentStationsPath);
+                XMLTools.SaveListToXMLElement(BusesOnTripRootElement, BusOnTripPath);
             }
             else
                 throw new BadIdExeption(id, $"This Bus Trip doesn't exist or Deleted ");
@@ -379,22 +379,53 @@ namespace DalXml
 
         public IEnumerable<Line> GetAllLines()
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+            return from l in Lines
+                   where l.isActive
+                   select l;
         }
 
         public IEnumerable<Line> GetAllLinesBy(Predicate<Line> predicate)
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+            return from l in Lines
+                   where predicate(l)
+                   select l;
         }
 
         public void AddLine(Line line)
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == line.Id);
+
+            if (lineCheck != null)
+            {
+                if (!lineCheck.isActive)
+                    lineCheck.isActive = true;
+                else
+                    throw new DuplicateObjExeption(line.Id, "Line already exist in system");
+            }
+            else
+            {
+                Lines.Add(line);
+            }
+            XMLTools.SaveListToXMLSerializer(Lines, LinePath);
         }
 
         public void UpdateLine(Line line)
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+            var lineCheck = Lines.FirstOrDefault(b => b.isActive && b.Id == line.Id);
+            if (lineCheck != null)
+            {
+                Lines.Remove(lineCheck);
+                Lines.Add(line);
+            }
+            else
+                throw new BadIdExeption(line.Id, "Line doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer<Line>(Lines, LinePath);
+
         }
 
         public void UpdateLine(int id, Action<Line> update)
@@ -404,7 +435,15 @@ namespace DalXml
 
         public void DeleteLine(int id)
         {
-            throw new NotImplementedException();
+            List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == id && b.isActive);
+            if (lineCheck != null)
+            {
+                lineCheck.isActive = false;
+            }
+            else
+                throw new BadIdExeption(id, "Line doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer<Line>(Lines, LinePath);
 
         }
 
@@ -413,28 +452,69 @@ namespace DalXml
         #region Line Station CRUD Implementation
         public LineStation GetLineStation(int lineId, int stationCode)
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+
+            LineStation line = Lines.FirstOrDefault(b => b.LineId == lineId && b.StationId == stationCode);
+            if (line != null && line.isActive)
+                return line;
+            else
+                throw new BadIdExeption(int.Parse(lineId.ToString() + stationCode.ToString()), $"Bad id, Line {lineId} doesn't have a stop {stationCode} or deleted");
+
         }
+
 
         public IEnumerable<LineStation> GetAllLinesStation()
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+            return from l in Lines
+                   where l.isActive
+                   select l;
         }
 
         public IEnumerable<LineStation> GetAllLinesStationBy(Predicate<LineStation> predicate)
         {
-            throw new NotImplementedException();
-
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+            return from l in Lines
+                   where predicate(l)
+                   select l;
         }
 
         public void AddLine(LineStation lineStation)
         {
-            throw new NotImplementedException();
+
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+
+            var lineCheck = Lines.FirstOrDefault(b => b.LineId == lineStation.LineId && b.StationId == lineStation.StationId);
+            if (lineCheck != null)
+            {
+                if (!lineCheck.isActive)
+                    lineCheck.isActive = true;
+
+                else
+                    throw new DuplicateObjExeption(lineStation.StationId, "Line Station already exist in system");
+            }
+            else
+            {
+                Lines.Add(lineStation);
+            }
+            XMLTools.SaveListToXMLSerializer(Lines, LineStationPath);
+
         }
 
         public void UpdateLineStation(LineStation lineStation)
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+
+            var lineCheck = Lines.FirstOrDefault(b => b.LineId == lineStation.LineId && b.StationId == lineStation.StationId);
+            if (lineCheck != null)
+            {
+                Lines.Remove(lineCheck);
+                Lines.Add(lineStation);
+            }
+            else
+                throw new BadIdExeption(lineStation.StationId, "Line Station doesn't exist or deleted");
+            XMLTools.SaveListToXMLSerializer(Lines, LineStationPath);
+
         }
 
         public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
@@ -444,7 +524,15 @@ namespace DalXml
 
         public void DeleteLineStation(int lineId, int stationCode)
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+            var lineCheck = Lines.FirstOrDefault(b => b.LineId == lineId && b.StationId == stationCode && b.isActive);
+            if (lineCheck != null)
+            {
+                lineCheck.isActive = false;
+            }
+            else
+                throw new BadIdExeption(stationCode, "Line Station doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer<LineStation>(Lines, LineStationPath);
         }
 
         #endregion
@@ -453,28 +541,69 @@ namespace DalXml
 
         public LineTrip GetLineTrip(int id)
         {
-            throw new NotImplementedException();
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+
+            LineTrip line = Lines.FirstOrDefault(b => b.Id == id);
+            if (line != null && line.isActive)
+                return line;
+            else
+                throw new BadIdExeption(id, $"Bad id, Line trip {id} doesn't exist or deleted");
+
         }
 
         public IEnumerable<LineTrip> GetAllLinesTrip()
         {
-            throw new NotImplementedException();
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            return from lt in Lines
+                   where lt.isActive
+                   select lt;
         }
 
         public IEnumerable<LineTrip> GetAllLinesTripBy(Predicate<LineTrip> predicate)
         {
-            throw new NotImplementedException();
+
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            return from lt in Lines
+                   where predicate(lt)
+                   select lt;
         }
 
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-            throw new NotImplementedException();
+
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == lineTrip.Id);
+            if (lineCheck != null)
+            {
+                if (!lineCheck.isActive)
+                    lineCheck.isActive = true;
+
+                else
+                    throw new DuplicateObjExeption(lineTrip.Id, "Line Trip already exist in system");
+            }
+            else
+            {
+                Lines.Add(lineTrip);
+            }
+            XMLTools.SaveListToXMLSerializer(Lines, LineTripPath);
+
         }
 
         public void UpdateLineTrip(LineTrip lineTrip)
         {
-            throw new NotImplementedException();
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            var lineCheck = Lines.FirstOrDefault(b => b.isActive && b.Id == lineTrip.Id);
+            if (lineCheck != null)
+            {
+                Lines.Remove(lineCheck);
+                Lines.Add(lineTrip);
+            }
+            else
+                throw new BadIdExeption(lineTrip.Id, "Line doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer<LineTrip>(Lines, LineTripPath);
+
         }
 
         public void UpdateLineTrip(int id, Action<LineTrip> update)
@@ -484,7 +613,15 @@ namespace DalXml
 
         public void DeleteLineTrip(int id)
         {
-            throw new NotImplementedException();
+            List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == id && b.isActive);
+            if (lineCheck != null)
+            {
+                lineCheck.isActive = false;
+            }
+            else
+                throw new BadIdExeption(id, "Line doesn't exist in system");
+            XMLTools.SaveListToXMLSerializer(Lines, LineTripPath);
 
         }
 
@@ -492,29 +629,69 @@ namespace DalXml
 
         #region Station CRUD Implementation
 
-        public Station station(int id)
+        public Station GetStation(int id)
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+
+            Station station = Stations.FirstOrDefault(b => b.Code == id);
+            if (station != null && station.isActive)
+                return station;
+            else
+                throw new BadIdExeption(id, $"Bad id, Station {id} doesn't exist or deleted");
         }
 
         public IEnumerable<Station> GetAllStation()
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+            return from s in Stations
+                   where s.isActive
+                   select s;
         }
 
         public IEnumerable<Station> GetAllStationsBy(Predicate<Station> predicate)
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+            return from s in Stations
+                   where predicate(s)
+                   select s;
         }
 
         public void AddStation(Station station)
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+            Station staCheck = Stations.FirstOrDefault(s => s.Code == station.Code);
+            if (staCheck != null)
+            {
+                if (!staCheck.isActive)
+                {
+                    staCheck.isActive = true;
+                }
+                else
+                {
+                    throw new DuplicateObjExeption(station.Code, "Station already exist");
+                }
+            }
+            else
+            {
+                Stations.Add(station);
+            }
+            XMLTools.SaveListToXMLSerializer(Stations, StationPath);
         }
 
         public void UpdateStation(Station station)
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+            Station staCheck = Stations.FirstOrDefault(s => s.Code == station.Code && s.isActive);
+            if (staCheck != null)
+            {
+                Stations.Remove(staCheck);
+                Stations.Add(station);
+            }
+            else
+                throw new BadIdExeption(station.Code, $"Bad id, Station {station.Code} doesn't exist or deleted");
+
+            XMLTools.SaveListToXMLSerializer(Stations, StationPath);
+
         }
 
         public void UpdateStation(int id, Action<Station> update)
@@ -524,14 +701,29 @@ namespace DalXml
 
         public void DeleteStation(int id)
         {
-            throw new NotImplementedException();
+            List<Station> Stations = XMLTools.LoadListFromXMLSerializer<Station>(StationPath);
+            Station staCheck = Stations.FirstOrDefault(s => s.Code == id && s.isActive);
+            if (staCheck != null)
+            {
+                staCheck.isActive = false;
+            }
+            else
+                throw new BadIdExeption(id, $"Bad id, Station {id} doesn't exist or deleted");
+
+            XMLTools.SaveListToXMLSerializer(Stations, StationPath);
         }
         #endregion
 
         #region Trip CRUD Implementation 
-        public Trip trip(int id)
+        public Trip GetTrip(int id)
         {
-            throw new NotImplementedException();
+            List<Trip> Trips = XMLTools.LoadListFromXMLSerializer<Trip>(TripPath);
+            Trip trip = Trips.FirstOrDefault(t => t.Id == id && t.isActive);
+            if (trip != null)
+            {
+                return trip;
+            }
+            throw new BadIdExeption(id, $"Trip {id} Doesn't exist or deleted");
         }
 
         public IEnumerable<Trip> GetAllTrips()
@@ -553,7 +745,7 @@ namespace DalXml
             throw new NotImplementedException();
         }
 
-        public void UpdateTrip(Trip trip, Action<Trip> update)
+        public void UpdateTrip(int id, Action<Trip> update)
         {
             throw new NotImplementedException();
         }
@@ -566,7 +758,7 @@ namespace DalXml
 
         #region User CRUD Implementation
 
-        public User user(int id)
+        public User GetUser(int id)
         {
             throw new NotImplementedException();
         }
@@ -601,9 +793,10 @@ namespace DalXml
             throw new NotImplementedException();
         }
         #endregion
-
-
-
-
     }
+
+
+
+
 }
+

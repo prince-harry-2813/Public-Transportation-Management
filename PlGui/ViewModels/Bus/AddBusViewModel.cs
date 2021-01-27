@@ -1,17 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Input;
-using BL.BLApi;
+﻿using BL.BLApi;
 using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PlGui.ViewModels.Bus
 {
-    public class AddBusViewModel : BindableBase , INavigationAware
+    public class AddBusViewModel : BindableBase, INavigationAware
     {
         #region Service Initialization
 
@@ -31,8 +31,8 @@ namespace PlGui.ViewModels.Bus
                 SetProperty(ref displayDateEnd, value);
             }
         }
-        
-        private DateTime registrationDate = DateTime.Now ;
+
+        private DateTime registrationDate = DateTime.Now;
 
         public DateTime RegistrationDate
         {
@@ -52,7 +52,7 @@ namespace PlGui.ViewModels.Bus
                 SetProperty(ref displayDateStart, value);
             }
         }
-        
+
         private string licenseNum = "";
         public string LicenseNum
         {
@@ -73,7 +73,7 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        public AddBusViewModel(IRegionManager manager , IBL bl)
+        public AddBusViewModel(IRegionManager manager, IBL bl)
         {
             #region Service Initialization
 
@@ -81,7 +81,7 @@ namespace PlGui.ViewModels.Bus
             Bl = bl;
 
             #endregion
-            
+
             #region Command Initialization
 
             EneterKeyCommand = new DelegateCommand(EnterKey);
@@ -99,7 +99,7 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool CheckLicenseInput(string text)
         {
-            return ((new Regex("[^0-9]+").IsMatch(text) || text.First() ==' ') /*&& !string.IsNullOrWhiteSpace(text)*/);
+            return ((new Regex("[^0-9]+").IsMatch(text) || text.First() == ' ') /*&& !string.IsNullOrWhiteSpace(text)*/);
         }
 
         /// <summary>
@@ -112,18 +112,17 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool DisplayDateFocus()
         {
-            if (LicenseNum.Length < 7|| !new Regex("^[0-9]*$").IsMatch(licenseNum)  /*&& !licenseNumBox.Focusable*/)
+            if (LicenseNum.Length < 7 || !new Regex("^[0-9]*$").IsMatch(licenseNum)  /*&& !licenseNumBox.Focusable*/)
             {
                 LicenseNum = String.Empty;
                 MessageBox.Show("Please enter valid number, must contain at least 7 digits");
-                
+
                 return false;
             }
             else if (LicenseNum.Length == 7)
             {
                 DisplayDateEnd = new DateTime(2017, 12, 31);
                 DisplayDateStart = new DateTime(2000, 1, 1);
-                registrationDate = new DateTime(2017, 12, 30);
                 return true;
             }
             else if (LicenseNum.Length == 8)
@@ -132,7 +131,7 @@ namespace PlGui.ViewModels.Bus
                 DisplayDateEnd = DateTime.Now;
                 return true;
             }
-            
+
             return true;
         }
 
@@ -159,7 +158,7 @@ namespace PlGui.ViewModels.Bus
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (Exception ex)
+            catch (BL.BO.BadBusIdException ex)
             {
                 MessageBox.Show("Failed to add new Bus \n " +
                                 "Please check license number and registration date");

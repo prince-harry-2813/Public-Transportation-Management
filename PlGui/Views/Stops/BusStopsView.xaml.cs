@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-using PlGui.ViewModels.Lines;
-using PlGui.ViewModels.Stops;
-using PlGui.Views.Lines;
+﻿using PlGui.ViewModels.Stops;
 using Prism.Mvvm;
+using System.Windows.Controls;
 
 namespace PlGui.Views.Stops
 {

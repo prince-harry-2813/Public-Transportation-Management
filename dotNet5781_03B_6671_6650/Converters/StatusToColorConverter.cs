@@ -8,7 +8,7 @@ namespace dotNet5781_03B_6671_6650.Converters
     /// <summary>
     /// current Status of the bus
     /// </summary>
-    public  enum StatusEnum
+    public enum StatusEnum
     {
         Ok = 1,
         In_Ride,
@@ -21,7 +21,7 @@ namespace dotNet5781_03B_6671_6650.Converters
     /// </summary>
     public class StatusToColorConverter : IValueConverter
     {
-        public object  Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is StatusEnum && value != null)
             {
@@ -55,7 +55,7 @@ namespace dotNet5781_03B_6671_6650.Converters
             return Binding.DoNothing;
         }
 
-        public  object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

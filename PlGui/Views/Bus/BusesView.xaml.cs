@@ -1,10 +1,8 @@
-﻿using System;
+﻿using PlGui.ViewModels.Bus;
+using Prism.Mvvm;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using PlGui.ViewModels;
-using PlGui.ViewModels.Bus;
-using Prism.Mvvm;
 
 namespace PlGui.Views.Bus
 {
@@ -18,7 +16,7 @@ namespace PlGui.Views.Bus
         {
             InitializeComponent();
             ViewModelLocationProvider.Register(typeof(BusesView).ToString(), typeof(BusesViewViewModel));
-            viewModel = (BusesViewViewModel) this.DataContext;
+            viewModel = (BusesViewViewModel)this.DataContext;
         }
 
 
@@ -26,7 +24,7 @@ namespace PlGui.Views.Bus
         {
             if (viewModel == null)
             {
-            viewModel = (BusesViewViewModel) this.DataContext;
+                viewModel = (BusesViewViewModel)this.DataContext;
 
             }
             viewModel.OnMouseDoubleClick.Execute(null);

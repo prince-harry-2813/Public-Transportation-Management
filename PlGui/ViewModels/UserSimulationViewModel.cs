@@ -1,17 +1,13 @@
 ﻿using BL.BLApi;
+using PlGui.ViewModels.Bus;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows.Controls;
 using System.Windows.Input;
-using PlGui.ViewModels.Bus;
-using PlGui.Views.Bus;
-using Prism.Regions;
 
 namespace PlGui.ViewModels
 {
@@ -19,7 +15,7 @@ namespace PlGui.ViewModels
     {
         #region Service Decleration
 
-        public IBL  Bl { get; set; }
+        public IBL Bl { get; set; }
         private IRegionManager regionManager;
 
         #endregion
@@ -27,7 +23,7 @@ namespace PlGui.ViewModels
         #region Properties Decleration
 
         private int simulationHZ;
-        
+
         /// <summary>
         /// Simulation Dispatchering timer sec = Simulation time / Real sec 
         /// </summary>
@@ -49,7 +45,7 @@ namespace PlGui.ViewModels
             set
             {
                 IsSimulationNotRuning = !value;
-                SetProperty(ref isSimulationRuning , value);
+                SetProperty(ref isSimulationRuning, value);
             }
         }
 
@@ -75,7 +71,7 @@ namespace PlGui.ViewModels
             get => simulationStartTime;
             set
             {
-                SetProperty(ref simulationStartTime , value);
+                SetProperty(ref simulationStartTime, value);
             }
         }
 
@@ -95,7 +91,7 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        public UserSimulationViewModel(IBL bl , IRegionManager manager)
+        public UserSimulationViewModel(IBL bl, IRegionManager manager)
         {
             #region Service Initialization
 
@@ -119,7 +115,7 @@ namespace PlGui.ViewModels
                         {"ButtonsVisibility" , false },
                         {"MainLabelContent" , (object)"Last Arriving Bus" }
                     };
-                    regionManager.RequestNavigate("BusDetailsRegion", "BusDetails" , param);
+                    regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
                     var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
                     //BusDetailsDataContext.InsertBusPropertiesToCollection(TTODO: ADD the dispaly properties object);
                 }
@@ -143,7 +139,7 @@ namespace PlGui.ViewModels
         private void StartStopToggel(string parameter)
         {
 
-            if (parameter.Equals("Stop")&& clockWorker != null)
+            if (parameter.Equals("Stop") && clockWorker != null)
             {
                 clockWorker.CancelAsync();
                 IsSimulationRuning = false;
@@ -156,8 +152,8 @@ namespace PlGui.ViewModels
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                         Bl.StartSimulator(SimulationStartTime, SimulationHZ , UpdateTime);
-                        
+                    Bl.StartSimulator(SimulationStartTime, SimulationHZ, UpdateTime);
+
                 };
 
                 clockWorker.ProgressChanged += (sender, args) =>
@@ -173,7 +169,7 @@ namespace PlGui.ViewModels
 
         private void UpdateTime(TimeSpan obj)
         {
-            clockWorker.ReportProgress(0 , obj);
+            clockWorker.ReportProgress(0, obj);
         }
 
         #endregion

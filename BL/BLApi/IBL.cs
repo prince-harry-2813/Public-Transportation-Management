@@ -14,7 +14,7 @@ namespace BL.BLApi
         void DeleteBus(BO.Bus bus);
 
         BO.Bus GetBus(int licenseNum);
-        
+
         IEnumerable<BO.Bus> GetAllBuses();
 
         IEnumerable<BO.Bus> GetBusBy(Predicate<BO.Bus> predicate);
@@ -26,7 +26,7 @@ namespace BL.BLApi
 
         void AddLine(BO.Line line);
 
-        void UpdateLine(BO.Line line );
+        void UpdateLine(BO.Line line);
 
         void DeleteLine(BO.Line line);
 
@@ -60,7 +60,7 @@ namespace BL.BLApi
 
         void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
         void StopSimulator();
-    
+
         #endregion
     }
 }

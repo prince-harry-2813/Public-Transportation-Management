@@ -1,13 +1,12 @@
-﻿using Prism.Commands;
+﻿using BL.BLApi;
+using PlGui.StaticClasses;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using BL.BLApi;
-using PlGui.StaticClasses;
-using Prism.Regions;
 using Unity;
 
 namespace PlGui.ViewModels.Stops

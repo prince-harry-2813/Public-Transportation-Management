@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BL.BLApi;
+using PlGui.StaticClasses;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using BL.BLApi;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
 using Unity;
-using BL;
-using PlGui.StaticClasses;
-using AddBus = PlGui.Views.Bus.AddBus;
 using BusDetails = PlGui.Views.Bus.BusDetails;
 
 namespace PlGui.ViewModels.Bus
 {
-    public class BusesViewViewModel : BindableBase , INavigationAware
+    public class BusesViewViewModel : BindableBase, INavigationAware
     {
         #region Service Decleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
         public IBL Bl { get; set; }
-        
+
         #endregion
 
         #region Command Decleration
@@ -72,7 +68,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-       
+
 
         #region private Member
 
@@ -81,7 +77,7 @@ namespace PlGui.ViewModels.Bus
         #endregion
         #endregion
 
-        public BusesViewViewModel(IRegionManager manager , IUnityContainer container , IBL bl)
+        public BusesViewViewModel(IRegionManager manager, IUnityContainer container, IBL bl)
         {
             #region Service Initialization
 
@@ -95,9 +91,9 @@ namespace PlGui.ViewModels.Bus
 
             LbItemSource = new ObservableCollection<BL.BO.Bus>();
             RefreshView();
-            
+
             SelectedItem = lbItemSource.FirstOrDefault();
-            
+
             #endregion
 
             #region Command Initialization
@@ -121,16 +117,16 @@ namespace PlGui.ViewModels.Bus
             NavigationParameters param = new NavigationParameters(commandParameter);
             param.Add(StringNames.BL, Bl);
             param.Add(StringNames.SelectedBus, SelectedItem);
-            
-            if (commandParameter ==  "Add")
+
+            if (commandParameter == "Add")
             {
-                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus" , param);
+                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus", param);
                 return;
             }
 
             var flag = unityContainer.IsRegistered(typeof(BusDetails), StringNames.BusDetails);
             Debug.Print(flag.ToString());
-            regionManager.RequestNavigate(StringNames.MainRegion , StringNames.BusDetails, param);
+            regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusDetails, param);
         }
 
         /// <summary>
@@ -159,7 +155,7 @@ namespace PlGui.ViewModels.Bus
             {
                 refuleBusWorker.CancelAsync();
             }
-            
+
             SelectedItem.FuelStatus = 1200;
             refuleBusWorker = new BackgroundWorker();
             refuleBusWorker.WorkerSupportsCancellation = true;
@@ -211,7 +207,7 @@ namespace PlGui.ViewModels.Bus
             Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
             RefreshView();
         }
-        
+
         #endregion
     }
 }

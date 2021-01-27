@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media.Animation;
-using BL.BLApi;
+﻿using BL.BLApi;
 using BL.BO;
 using DalApi;
+using System;
+using System.Collections.Generic;
 
 namespace BL
 {
@@ -36,7 +26,7 @@ namespace BL
 
             bus.FuelStatus = (bus.FuelStatus != null) ? bus.FuelStatus : 1200;
             bus.isActive = true;
-            bus.LastTreatment = (bus.LastTreatment != null) ? bus.LastTreatment : DateTime.Now;
+            bus.LastTreatment = (bus.LastTreatment != DateTime.MinValue) ? bus.LastTreatment : DateTime.Now;
             bus.TotalKM = (bus.TotalKM != null) ? bus.TotalKM : 0;
             bus.LastTreatmentKm = (bus.LastTreatmentKm != null) ? bus.LastTreatmentKm : 0;
             bus.Status = (bus.FuelStatus != 0 && DateTime.Now.Subtract(bus.LastTreatment).Days < 365 &&
@@ -44,17 +34,20 @@ namespace BL
                 ? BusStatusEnum.Ok
                 : BusStatusEnum.Not_Available;
 
-            var anotherBus = iDal.GetBus(bus.LicenseNum);
 
 
-            if (anotherBus != null && !anotherBus.isActive) // checks if there is any bus return from DS by the license number 
+            try // checks if there is any bus return from DS by the license number 
             {
+
                 DO.Bus busToAdd = new DO.Bus();
                 bus.CopyPropertiesTo(busToAdd);
                 iDal.AddBus(busToAdd);
             }
-            else
+            catch (Exception)
+            {
                 throw new BadBusIdException("Bus With the same license number is already exist", null);
+            }
+
         }
 
         /// <summary>
@@ -261,7 +254,7 @@ namespace BL
         #region User Simulation
 
         event Action<TimeSpan> clockObserver = null;
-            
+
         /// <summary>
         /// Start simulator stop watch and update it according 
         /// </summary>
@@ -285,12 +278,12 @@ namespace BL
             //}
         }
 
-            //Stopwatch 
-            //Clock 
-            //simulatorClock = new Clock(simulatorStartTime + new TimeSpan(stopwatch.ElapsedTicks * simulatorRate));
-            //clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
-            //Thread.Sleep(your - sleep - time -in -msec);
-        
+        //Stopwatch 
+        //Clock 
+        //simulatorClock = new Clock(simulatorStartTime + new TimeSpan(stopwatch.ElapsedTicks * simulatorRate));
+        //clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
+        //Thread.Sleep(your - sleep - time -in -msec);
+
 
         public void StopSimulator()
         {

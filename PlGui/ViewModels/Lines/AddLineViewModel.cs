@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using BL.BLApi;
+﻿using BL.BLApi;
 using BL.BO;
 using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using Unity;
 
 namespace PlGui.ViewModels.Lines
@@ -26,7 +23,7 @@ namespace PlGui.ViewModels.Lines
         #endregion
 
         #region Properties Declaration
-        
+
         private BL.BO.Line line;
         /// <summary>
         /// Hold Bus data 
@@ -45,7 +42,7 @@ namespace PlGui.ViewModels.Lines
 
         private BackgroundWorker updaeteWorker;
         private BackgroundWorker addWorker;
-        
+
         public IBL Bl { get; set; }
 
         #endregion
@@ -58,7 +55,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public AddLineViewModel(IRegionManager manager , IUnityContainer container)
+        public AddLineViewModel(IRegionManager manager, IUnityContainer container)
         {
             #region Properties Initiaization
 
@@ -108,7 +105,7 @@ namespace PlGui.ViewModels.Lines
         {
             try
             {
-                if (addWorker != null) 
+                if (addWorker != null)
                 {
                     addWorker.CancelAsync();
                 }
@@ -119,7 +116,7 @@ namespace PlGui.ViewModels.Lines
                     Bl.AddLine(Line);
                 };
                 addWorker.RunWorkerAsync();
-            
+
             }
             catch (Exception exception)
             {
@@ -128,7 +125,7 @@ namespace PlGui.ViewModels.Lines
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion , new Uri(StringNames.LinesView , UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.LinesView, UriKind.Absolute));
             }
         }
 
@@ -136,7 +133,7 @@ namespace PlGui.ViewModels.Lines
         {
             AddLineButton();
         }
-        
+
         #endregion
 
         #region Interface Implementaion
@@ -148,7 +145,7 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
 
         /// <summary>

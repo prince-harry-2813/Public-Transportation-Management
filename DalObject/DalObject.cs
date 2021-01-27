@@ -398,7 +398,7 @@ namespace DalObject
 
         #region Station CRUD Implementation
 
-        public Station station(int id)
+        public Station GetStation(int id)
         {
             DO.Station station = DataSource.Stations.Find(b => b.Code == id);
             if (station != null)
@@ -456,7 +456,7 @@ namespace DalObject
         #endregion
 
         #region Trip CRUD Implementation 
-        public Trip trip(int id)
+        public Trip GetTrip(int id)
         {
             DO.Trip trip = DataSource.Trips.FirstOrDefault(t => t.Id == id && t.isActive);
             if (trip != null)
@@ -476,13 +476,13 @@ namespace DalObject
             return from trip in DataSource.Trips
                    where predicate(trip)
                    select trip;
-         }
+        }
 
 
         public void AddTrip(Trip trip)
         {
             var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == trip.Id);
-            if (tripChek!=null)
+            if (tripChek != null)
             {
                 if (!tripChek.isActive)
                 {
@@ -509,21 +509,21 @@ namespace DalObject
                 throw new BadIdExeption(trip.Id, "trip doesn't exist to update");
         }
 
-        public void UpdateTrip(Trip trip, Action<Trip> update)
+        public void UpdateTrip(int id, Action<Trip> update)
         {
-            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == trip.Id);
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == id);
             if (tripChek != null)
             {
                 update(tripChek);
             }
             else
-                throw new BadIdExeption(trip.Id, "trip doesn't exist to update");
+                throw new BadIdExeption(id, "trip doesn't exist to update");
 
         }
 
         public void DeleteTrip(int id)
         {
-            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == id&&t.isActive);
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == id && t.isActive);
             if (tripChek != null)
                 tripChek.isActive = false;
             else
@@ -533,7 +533,7 @@ namespace DalObject
 
         #region User CRUD Implementation
 
-        public User user(int id)
+        public User GetUser(int id)
         {
             throw new NotImplementedException();
         }

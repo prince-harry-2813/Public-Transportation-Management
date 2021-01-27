@@ -248,7 +248,7 @@ namespace DalApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        DO.Station station(int id);
+        DO.Station GetStation(int id);
 
         /// <summary>
         /// 
@@ -269,18 +269,17 @@ namespace DalApi
         #endregion
 
         #region Trip
-        DO.Trip trip(int id);
+        DO.Trip GetTrip(int id);
         IEnumerable<DO.Trip> GetAllTrips();
         IEnumerable<DO.Trip> GetAllTripsBy(Predicate<DO.Trip> predicate);
-
         void AddTrip(DO.Trip trip);
         void UpdateTrip(DO.Trip user);
-        void UpdateTrip(DO.Trip trip, Action<DO.Trip> update);
+        void UpdateTrip(int id, Action<DO.Trip> update);
         void DeleteTrip(int id);
         #endregion
 
         #region User
-        DO.User user(int id);
+        DO.User GetUser(int id);
         IEnumerable<DO.User> GetAllUsers();
         IEnumerable<DO.User> GetAllUsersBy(Predicate<DO.User> predicate);
         void AddUser(DO.User user);

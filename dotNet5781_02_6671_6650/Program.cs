@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Linq.Expressions;
 
 namespace dotNet5781_02_6671_6650
 {
     /// <summary>
     /// main class, with main methods 
     /// </summary>
-    class Program   
+    class Program
     {
         #region properties
         /// <summary>
@@ -66,13 +60,13 @@ namespace dotNet5781_02_6671_6650
             systemCollection.Add(newBus);
         }
 
-        private static bool isNewExist(int line, int stopCode,int? pos= null)
+        private static bool isNewExist(int line, int stopCode, int? pos = null)
         {
             foreach (BusLine item in systemCollection)
             {
                 if (item.IsExist(stopCode))
                 {
-                    systemCollection[line].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)),pos);
+                    systemCollection[line].AddStop(item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)), pos);
                     return true;
                 }
             }
@@ -159,7 +153,7 @@ namespace dotNet5781_02_6671_6650
             driveOption.SorterLines();
             foreach (BusLine item in driveOption)
             {
-                
+
                 Console.WriteLine($"Line number: {item.LineKey}, time of ride on this line: {item.CalculateRideTime(item.LineStations.Find(b => b.StationCode == stop[0]), item.LineStations.Find(b => b.StationCode == stop[1]))}");
             }
         }
@@ -171,7 +165,7 @@ namespace dotNet5781_02_6671_6650
             String output = "\n";
             foreach (BusLine item in systemCollection)
             {
-                output += "Line number: " +item.LineKey.ToString()+"\n";
+                output += "Line number: " + item.LineKey.ToString() + "\n";
             }
             Console.WriteLine(output);
         }
@@ -185,7 +179,7 @@ namespace dotNet5781_02_6671_6650
             String output = "These are all active stations in the system: \n";
             foreach (BusLine item in systemCollection)
             {
-                foreach(BusStop s in item.LineStations)
+                foreach (BusStop s in item.LineStations)
                 {
                     if (!stations.Contains(s.StationCode))
                         stations.Add(s.StationCode);
@@ -210,13 +204,13 @@ namespace dotNet5781_02_6671_6650
         {
             for (int i = 0; i < 20; i++)
             {
-                systemCollection.Add(new BusLine(Random.Next(1,999), Random.Next(1,100), Random.Next(100,200)));
+                systemCollection.Add(new BusLine(Random.Next(1, 999), Random.Next(1, 100), Random.Next(100, 200)));
             }
             foreach (BusLine item in systemCollection)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    BusStop stop = new BusStop(i + 300,Random.NextDouble() * 2.3 + 31,Random.NextDouble() * 1.2 + 34.3);
+                    BusStop stop = new BusStop(i + 300, Random.NextDouble() * 2.3 + 31, Random.NextDouble() * 1.2 + 34.3);
                     if (isNewExist(item.LineKey, stop.StationCode, item.LineStations.Count - 2))
                         continue;
                     item.AddStop(stop, item.LineStations.Count - 2);
