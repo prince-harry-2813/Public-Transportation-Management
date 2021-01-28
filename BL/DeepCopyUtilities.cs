@@ -25,6 +25,7 @@ namespace BL
                 var value = propFrom.GetValue(from, null);
                 if (value is ValueType || value is string)
                     propTo.SetValue(to, value);
+               
             }
         }
 

@@ -24,8 +24,8 @@ namespace BL
 {
     internal class BLImp : IBL
     {
-        
-        private IDAL iDal = DalApi.DalFactory.GetIDAL();
+
+        private static IDAL iDal = DalApi.DalFactory.GetIDAL();
 
         #region IBL Bus Implementation
 
@@ -125,7 +125,7 @@ namespace BL
             return (Bus)busToCopy.CopyPropertiesToNew(typeof(Bus));
         }
 
-        public IEnumerable<Bus> GetBusBy(Predicate<object> predicate)
+        public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
         {
             return null;
         }
@@ -164,7 +164,7 @@ namespace BL
             if (station == null)
                 throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
-           var station2 = iDal.GetStation(line.LastStation.Station.Code);
+            var station2 = iDal.GetStation(line.LastStation.Station.Code);
             if (station2 == null)
                 throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
@@ -223,7 +223,7 @@ namespace BL
                     Code = VARIABLE.Code,
                     Area = (Area)VARIABLE.Area,
                     IsActive = VARIABLE.isActive,
-                     
+
 
                 };
                 yield return line;
@@ -250,21 +250,21 @@ namespace BL
         {
             station.isActive = true;
 
-            if (station.Name.Length == 0) 
+            if (station.Name.Length == 0)
             {
-                station.Name = "Exemple "+station.Code.ToString();
+                station.Name = "Exemple " + station.Code.ToString();
             }
-            if (station.Code==0)
+            if (station.Code == 0)
             {
                 throw new BadBusStopIDException("bus stop number can't be 0", new ArgumentException());
             }
-            if (station.Longitude<34.3||station.Longitude>35.5)
+            if (station.Longitude < 34.3 || station.Longitude > 35.5)
             {
-                station.Longitude= double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 1.2 + 34.3).ToString().Substring(0, 8));
+                station.Longitude = double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 1.2 + 34.3).ToString().Substring(0, 8));
             }
             if (station.Latitude <= 31 || station.Latitude >= 33.3)
             {
-                station.Latitude = double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 2.3 + 31).ToString().Substring(0,8));
+                station.Latitude = double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 2.3 + 31).ToString().Substring(0, 8));
             }
             try
             {
@@ -273,7 +273,7 @@ namespace BL
             catch (Exception e)
             {
 
-                throw new ArgumentException("check details",e);
+                throw new ArgumentException("check details", e);
             }
             Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         }
@@ -312,10 +312,6 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
-        {
-            throw new NotImplementedException();
-        }
 
 
         #endregion
@@ -324,7 +320,7 @@ namespace BL
 
         event Action<TimeSpan> clockObserver = null;
         private DispatcherTimer simulationTimer = new DispatcherTimer();
-        internal volatile bool Cancel ;
+        internal volatile bool Cancel;
 
         /// <summary>
         /// Start simulator stop watch and update it according 
@@ -336,39 +332,33 @@ namespace BL
         {
             Cancel = false;
             clockObserver = updateTime;
-            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days , 
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours ,
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes 
+            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes
                 , TimeSpan.FromSeconds(startTime.TotalSeconds).Seconds
                 , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
+
+            simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6))));
+            rideOperation.interval = simulationTimer.Interval.Milliseconds;
+            simulationTimer.Tick += (sender, args) =>
             {
-                simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6)) ) );
-                simulationTimer.Tick += (sender, args) =>
+                if (Cancel)
                 {
-                    if (Cancel)
-                    {
-                        clockObserver = null;
-                        simulationTimer.Stop();
-                        return;
-                    }
+                    clockObserver = null;
+                    simulationTimer.Stop();
+                    return;
+                }
 
-                    simulatorTime += TimeSpan.FromSeconds(1);
-                    updateTime.Invoke(simulatorTime);
-                    Debug.Print(simulatorTime.ToString());
-                };
-                simulationTimer.Start();
+                simulatorTime += TimeSpan.FromSeconds(1);
+                updateTime.Invoke(simulatorTime);
+                rideOperation.UpdateSimualtionTime(simulatorTime);
+                Debug.Print(simulatorTime.ToString());
             };
-        }
-
-        public void StopSimulator()
-        {
-            Cancel = true;
-        }
-
-        public void SetStationPanel(int station, Action<LineTiming> updateBus)
-        {
+            simulationTimer.Start();
 
         }
+
+
 
 
 
@@ -419,11 +409,105 @@ namespace BL
             var a = (DO.LineStation)iDal.GetAllLinesStationBy(station => station.LineId == lineId && station.StationId == stationCode).FirstOrDefault();
             if (!(a is null))
             {
-                LineStation boLineStation = (LineStation) a.CopyPropertiesToNew(typeof(LineStation));
+                LineStation boLineStation = (LineStation)a.CopyPropertiesToNew(typeof(LineStation));
                 update(boLineStation);
                 boLineStation.CopyPropertiesTo(a);
                 iDal.UpdateLineStation(a);
             }
+        }
+
+        #endregion
+
+        #region Ride Operation
+
+        public void StopSimulator()
+        {
+            Cancel = true;
+        }
+
+        private RideOperation rideOperation = new RideOperation((IDAL)iDal);
+
+        public void SetStationPanel(int station, Action<LineTiming> updateBus)
+        {
+            if (station == -1)
+            {
+                //TODO: Shut down
+            }
+
+            rideOperation.StartSimulation();
+        }
+        class RideOperation
+        {
+            public int interval;
+            private event EventHandler<LineTiming> updatebusPrivate;
+            private int staionID;
+            List<LineTrip> linesTrips = new List<LineTrip>();
+            private IDAL idal;
+            private IBL bl;
+            private BackgroundWorker getLineStaionworker = new BackgroundWorker();
+            private TimeSpan simulationTime;
+
+            public RideOperation(IDAL dal)
+            {
+                idal = dal;
+                this.bl = bl;
+
+                if (getLineStaionworker.IsBusy)
+                {
+                    getLineStaionworker.CancelAsync();
+                }
+                getLineStaionworker.WorkerReportsProgress = true;
+                getLineStaionworker.WorkerReportsProgress = true;
+                getLineStaionworker.DoWork += (sender, args) =>
+                {
+                    int i = 0;
+                    foreach (var item in idal.GetAllLinesTripBy(trip => trip.isActive))
+                    {
+                        if (getLineStaionworker.CancellationPending)
+                            break;
+
+                        getLineStaionworker.ReportProgress(i, item.CopyPropertiesToNew(typeof(LineTrip)));
+                        i++;
+                        if (i == 99)
+                            i = 90;
+                    }
+                };
+                getLineStaionworker.ProgressChanged += (sender, args) =>
+                {
+                    linesTrips.Add((LineTrip)args.UserState);
+                };
+
+                getLineStaionworker.RunWorkerCompleted += (sender, args) =>
+                {
+                    linesTrips.Sort((trip, lineTrip) => trip.StartAt.CompareTo(lineTrip.StartAt));
+                };
+
+                getLineStaionworker.RunWorkerAsync();
+            }
+
+            public void StartSimulation()
+            {
+                foreach (var item in linesTrips)
+                {
+                 //   for
+                    Task.Factory.StartNew(() =>
+                    {
+                        LineTiming lineTiming = new LineTiming()
+                        {
+                            LastStation = (Station) idal.GetStation(idal.GetLine(item.LineId).LastStation)
+                                .CopyPropertiesToNew(typeof(Station))
+                            //,ArrivingTime = 
+                        };
+                    });
+                }
+
+            }
+
+            public void UpdateSimualtionTime(TimeSpan time)
+            {
+                simulationTime = time;
+            }
+
         }
 
         #endregion
