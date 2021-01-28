@@ -145,15 +145,14 @@ namespace BL
             if (line.LastStation == null || line.LastStation == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            var station = iDal.GetAllStationsBy(station1 => station1.Code == line.FirstStation);
+            var station = iDal.GetStation(line.FirstStation);
             if (station == null)
                 throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
-            station = iDal.GetAllStationsBy(station1 => station1.Code == line.LastStation);
-            if (station == null)
+           var station2 = iDal.GetStation(line.LastStation);
+            if (station2 == null)
                 throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
-            var anotherLineCode = iDal.GetAllLinesBy(line1 => line1.Id == line.Id);
             try
             {
                 iDal.AddLine((DO.Line)line.CopyPropertiesToNew(typeof(DO.Line)));
@@ -203,7 +202,6 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
-                if (VARIABLE.isActive)
                     yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
             }
         }
@@ -226,7 +224,34 @@ namespace BL
         #region Bus Stop Implementation
         void IBL.AddBusStop(Station station)
         {
-            throw new NotImplementedException();
+            station.isActive = true;
+
+            if (station.Name.Length == 0) 
+            {
+                station.Name = "Exemple "+station.Code.ToString();
+            }
+            if (station.Code==0)
+            {
+                throw new BadBusStopIDException("bus stop number can't be 0", new ArgumentException());
+            }
+            if (station.Longitude<34.3||station.Longitude>35.5)
+            {
+                station.Longitude= double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 1.2 + 34.3).ToString().Substring(0, 8));
+            }
+            if (station.Latitude <= 31 || station.Latitude >= 33.3)
+            {
+                station.Latitude = double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 2.3 + 31).ToString().Substring(0,8));
+            }
+            try
+            {
+                iDal.AddStation((DO.Station)station.CopyPropertiesToNew(typeof(DO.Station)));
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException("check details",e);
+            }
+            Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         }
 
         void IBL.UpdateBusStop(Station station)

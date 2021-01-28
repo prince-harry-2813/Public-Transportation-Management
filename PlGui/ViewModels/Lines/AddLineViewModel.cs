@@ -15,7 +15,7 @@ namespace PlGui.ViewModels.Lines
 {
     public class AddLineViewModel : BindableBase
     {
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -24,7 +24,7 @@ namespace PlGui.ViewModels.Lines
 
         #region Properties Declaration
 
-        private BL.BO.Line line;
+        private BL.BO.Line line = new BL.BO.Line();
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -43,11 +43,11 @@ namespace PlGui.ViewModels.Lines
         private BackgroundWorker updaeteWorker;
         private BackgroundWorker addWorker;
 
-        public IBL Bl { get; set; }
+        public BL.BLApi.IBL Bl { get; set; }
 
         #endregion
 
-        #region Command Decleration
+        #region Command Deceleration
 
         public ICommand EneterKeyCommand { get; set; }
         public ICommand AddLineButtonCommand { get; set; }
@@ -65,16 +65,15 @@ namespace PlGui.ViewModels.Lines
 
             #region Properties Initialization
 
-            Line = new Line()
-            {
-                Area = Area.Center,
-                Code = 0,
-                Id = Bl.GetLineBy(l => l.IsActive || !l.IsActive).Count()
-                 //TODO : Initialize First Station FirstStation;
-                 //   TODO: Initialize Last Station
-            };
+            //Line = new Line()
+            //{
+            //    Area = Area.Center,
+            //    Code = 0,
+            //    Id = Bl.GetLineBy(l => l.IsActive || !l.IsActive).Count()
+
+            //};
             #endregion
-            
+
             #region Command Initialization
 
             EneterKeyCommand = new DelegateCommand(EnterKey);
@@ -82,7 +81,7 @@ namespace PlGui.ViewModels.Lines
             UpdateLineButtonCommand = new DelegateCommand(UpdateLineButton);
 
             #endregion
-            #region Service Initalization
+            #region Service Initialization
 
             regionManager = manager;
             unityContainer = container;
@@ -132,7 +131,7 @@ namespace PlGui.ViewModels.Lines
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.LinesView, UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion,StringNames.LinesView);
             }
         }
 

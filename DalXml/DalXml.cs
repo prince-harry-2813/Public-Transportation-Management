@@ -27,8 +27,8 @@ namespace DalXml
             BusOnTripPath = "BusOnTripXMl.xml",
             LinePath = "LineXml.xml",
             LineStationPath = "LineStationXml.xml",
-            LineTripPath = "lineTripXml.xml",
-            StationPath = "StatinXml.xml",
+            LineTripPath = "LineTripXml.xml",
+            StationPath = "StatoinXml.xml",
             TripPath = "TripXml.xml",
             UserPath = "UserXml.xml";
         #endregion

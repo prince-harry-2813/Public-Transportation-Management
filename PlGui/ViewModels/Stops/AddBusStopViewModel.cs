@@ -22,7 +22,7 @@ namespace PlGui.ViewModels.Stops
 
         #region Properties Declaration
 
-        private BL.BO.Station busStop;
+        private BL.BO.Station busStop = new BL.BO.Station();
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -34,7 +34,9 @@ namespace PlGui.ViewModels.Stops
             }
             set
             {
+                stamfunc();
                 SetProperty(ref busStop, value);
+
             }
         }
 
@@ -45,7 +47,10 @@ namespace PlGui.ViewModels.Stops
         #region Command Decleration
 
         public ICommand AddBusStopButtonCommand { get; set; }
-
+        public void stamfunc()
+        {
+            Console.WriteLine("staaasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam");
+        }
         #endregion
 
         public AddBusStopViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
@@ -81,7 +86,7 @@ namespace PlGui.ViewModels.Stops
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.BusStopsView, UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusStopsView);
             }
         }
         #endregion
