@@ -1,15 +1,15 @@
-﻿using BL.BLApi;
-using PlGui.StaticClasses;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Regions;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
+using BL.BLApi;
+using PlGui.StaticClasses;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
 
-namespace PlGui.ViewModels.Stops
+namespace PlGui.ViewModels.Stations
 {
     public class BusStopDetailsViewModel : BindableBase
     {
@@ -55,6 +55,7 @@ namespace PlGui.ViewModels.Stops
         }
 
         public int Id { get; set; }
+
         #region Private Members
 
         private int BusStopId;
@@ -82,6 +83,7 @@ namespace PlGui.ViewModels.Stops
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
 
             #endregion
+
             #region Properties Implementation
 
             InsertBusPropertiesToCollection(BusStop);
@@ -89,6 +91,7 @@ namespace PlGui.ViewModels.Stops
 
             #endregion
         }
+
         #region Command Implementation
 
         private void LineDetailsButton(string commandParameter)
@@ -96,15 +99,16 @@ namespace PlGui.ViewModels.Stops
             switch (commandParameter)
             {
                 case "Edit":
-                    Bl.UpdateBusStop(BusStop);
+                    Bl.UpdateStation(BusStop);
                     break;
                 case "Remove":
-                    Bl.DeleteBusStop(BusStop);
+                    Bl.DeleteStation(BusStop);
                     break;
             }
         }
 
         #endregion
+
         #region Interface Implementaion
 
         /// <summary>

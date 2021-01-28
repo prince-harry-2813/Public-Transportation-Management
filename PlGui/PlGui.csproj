@@ -64,9 +64,9 @@
     <Compile Include="ViewModels\Bus\BusDetailsViewModel.cs" />
     <Compile Include="ViewModels\Lines\AddLineViewModel.cs" />
     <Compile Include="ViewModels\Lines\LineDetailsViewModel.cs" />
-    <Compile Include="ViewModels\Stops\AddBusStopViewModel.cs" />
-    <Compile Include="ViewModels\Stops\BusStopDetailsViewModel.cs" />
-    <Compile Include="ViewModels\Stops\BusStopsViewViewModel.cs" />
+    <Compile Include="ViewModels\Stations\AddBusStopViewModel.cs" />
+    <Compile Include="ViewModels\Stations\BusStopDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Stations\BusStopsViewViewModel.cs" />
     <Compile Include="ViewModels\Bus\AddBusViewModel.cs" />
     <Compile Include="ViewModels\Bus\BusesViewViewModel.cs" />
     <Compile Include="ViewModels\Lines\LinesViewViewModel.cs" />
@@ -83,13 +83,13 @@
     <Compile Include="Views\Lines\LinesView.xaml.cs">
       <DependentUpon>LinesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Stops\AddBusStop.xaml.cs">
+    <Compile Include="Views\Stations\AddBusStop.xaml.cs">
       <DependentUpon>AddBusStop.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Stops\BusStopDetails.xaml.cs">
+    <Compile Include="Views\Stations\BusStopDetails.xaml.cs">
       <DependentUpon>BusStopDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Stops\BusStopsView.xaml.cs">
+    <Compile Include="Views\Stations\BusStopsView.xaml.cs">
       <DependentUpon>BusStopsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Bus\AddBus.xaml.cs">
@@ -123,15 +123,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Stops\AddBusStop.xaml">
+    <Page Include="Views\Stations\AddBusStop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Stops\BusStopDetails.xaml">
+    <Page Include="Views\Stations\BusStopDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Stops\BusStopsView.xaml">
+    <Page Include="Views\Stations\BusStopsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

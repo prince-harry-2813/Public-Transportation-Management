@@ -14,7 +14,7 @@
         public static string AddLine = "AddLine";
         public static string LinesView = "LinesView";
         public static string LineDetails = "LineDetails";
-        public static string AddBusStop = "AddBusStop";
+        public static string AddBusStop = "AddStation";
         public static string BusStopDetails = "BusStopDetails";
         public static string BusStopsView = "BusStopsView";
         public static string SelectedBusStop = "SelectedBusStop";

@@ -1,16 +1,16 @@
-﻿using BL.BLApi;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using BL.BLApi;
 using BL.BO;
 using PlGui.StaticClasses;
-using PlGui.Views.Stops;
+using PlGui.Views.Stations;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Unity;
 
-namespace PlGui.ViewModels.Stops
+namespace PlGui.ViewModels.Stations
 {
     public class BusStopsViewViewModel : BindableBase
     {
@@ -66,7 +66,7 @@ namespace PlGui.ViewModels.Stops
             #region Properties Deceleration
 
             Bl = BLFactory.GetIBL();
-            foreach (var item in Bl.GetAllBusStops())
+            foreach (var item in Bl.GetAllStations())
             {
                 BusStops.Add(item);
             }
@@ -93,8 +93,8 @@ namespace PlGui.ViewModels.Stops
         {
             var parm = new NavigationParameters();
             parm.Add(StringNames.SelectedBusStop, BusStop);
-            unityContainer.RegisterType(typeof(object), typeof(AddBusStop), "AddBusStop");
-            regionManager.RequestNavigate(StringNames.MainRegion, "AddBusStop");
+            unityContainer.RegisterType(typeof(object), typeof(AddBusStop), "AddStation");
+            regionManager.RequestNavigate(StringNames.MainRegion, "AddStation");
         }
 
         private void UpdateBusStopButton(string commandParameter)

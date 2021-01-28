@@ -134,7 +134,7 @@ namespace PlGui.ViewModels
             getStationsWorker = new BackgroundWorker();
             getStationsWorker.DoWork += (sender, args) =>
             {
-                foreach (var item in Bl.GetAllBusStops())
+                foreach (var item in Bl.GetAllStations())
                 {
                     getStationsWorker.ReportProgress(0 , item);
                 }

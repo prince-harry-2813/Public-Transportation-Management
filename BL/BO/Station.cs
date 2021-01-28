@@ -15,7 +15,7 @@ namespace BL.BO
         /// Represent the lines that having a stop in this station, the required info from each line it his code and destination station.
         /// info should come from Line station entities
         /// </summary>
-        public List<Line> Lines { get; set; }
+        public IEnumerable<Line> Lines { get; set; }
         public bool isActive { get; set; }
 
     }

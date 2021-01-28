@@ -2,13 +2,13 @@
 using PlGui.StaticClasses;
 using PlGui.Views;
 using PlGui.Views.Lines;
-using PlGui.Views.Stops;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using PlGui.Views.Stations;
 using Unity;
 using BusesView = PlGui.Views.Bus.BusesView;
 

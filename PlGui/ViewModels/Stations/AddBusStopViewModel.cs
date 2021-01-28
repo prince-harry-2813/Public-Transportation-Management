@@ -1,15 +1,15 @@
-﻿using BL.BLApi;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using BL.BLApi;
 using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using Unity;
 
-namespace PlGui.ViewModels.Stops
+namespace PlGui.ViewModels.Stations
 {
     public class AddBusStopViewModel : BindableBase
     {
@@ -77,7 +77,7 @@ namespace PlGui.ViewModels.Stops
         {
             try
             {
-                Bl.AddBusStop(BusStop);
+                Bl.AddStation(BusStop);
             }
             catch (Exception exception)
             {

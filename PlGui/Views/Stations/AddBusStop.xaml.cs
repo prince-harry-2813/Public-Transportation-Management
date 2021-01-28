@@ -1,13 +1,11 @@
-﻿using PlGui.ViewModels.Bus;
-using PlGui.ViewModels.Stops;
-using Prism.Mvvm;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows.Controls;
+using PlGui.ViewModels.Stations;
 
-namespace PlGui.Views.Stops
+namespace PlGui.Views.Stations
 {
     /// <summary>
-    /// Interaction logic for AddBusStop.xaml
+    /// Interaction logic for AddStation.xaml
     /// </summary>
     public partial class AddBusStop : UserControl
     {

@@ -1,8 +1,8 @@
-﻿using PlGui.ViewModels.Stops;
+﻿using System.Windows.Controls;
+using PlGui.ViewModels.Stations;
 using Prism.Mvvm;
-using System.Windows.Controls;
 
-namespace PlGui.Views.Stops
+namespace PlGui.Views.Stations
 {
     /// <summary>
     /// Interaction logic for BusStopsView.xaml

@@ -3,9 +3,9 @@ using PlGui.StaticClasses;
 using PlGui.Views;
 using PlGui.Views.Bus;
 using PlGui.Views.Lines;
-using PlGui.Views.Stops;
 using Prism.Ioc;
 using System.Windows;
+using PlGui.Views.Stations;
 
 namespace PlGui
 {
