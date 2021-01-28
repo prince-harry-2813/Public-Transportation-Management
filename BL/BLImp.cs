@@ -216,7 +216,6 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
-                VARIABLE.Id
                     yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
             }
         }
@@ -271,17 +270,23 @@ namespace BL
 
         void IBL.UpdateBusStop(Station station)
         {
-            throw new NotImplementedException();
+            DO.Station DOstation = new DO.Station();
+            station.CopyPropertiesTo(DOstation);
+            iDal.UpdateStation(DOstation);
         }
 
         void IBL.DeleteBusStop(Station station)
         {
-            throw new NotImplementedException();
+            DO.Station DOstation = new DO.Station();
+            station.CopyPropertiesTo(DOstation);
+            iDal.DeleteStation(DOstation.Code);
         }
 
         Station IBL.GetBusStop(int lineId)
         {
-            throw new NotImplementedException();
+            Station station = new Station();
+            iDal.GetStation(lineId).CopyPropertiesTo(station);
+            return station;
         }
 
         IEnumerable<Station> IBL.GetAllBusStops()
@@ -355,6 +360,61 @@ namespace BL
 
         }
 
+
+
+        #endregion
+
+        #region Line Station
+
+        public LineStation GetLineStation(int lineId, int stationCode)
+        {
+            LineStation station = new LineStation();
+            iDal.GetLineStation(lineId, stationCode).CopyPropertiesTo(station);
+            return (LineStation)station;
+        }
+
+        public IEnumerable<LineStation> GetAllLinesStation()
+        {
+            foreach (var item in iDal.GetAllLinesStation())
+            {
+                yield return (LineStation)item.CopyPropertiesToNew(typeof(BO.LineStation));
+            }
+        }
+
+        public IEnumerable<LineStation> GetAllLinesStationBy(Predicate<BO.LineStation> predicate)
+        {
+            foreach (var item in GetAllLinesStation())
+            {
+                LineStation lineStation = new LineStation();
+                item.CopyPropertiesTo(lineStation);
+                if (predicate(lineStation))
+                {
+                    yield return (LineStation)lineStation;
+                }
+            }
+        }
+
+        public void AddLine(LineStation lineStation)
+        {
+            iDal.AddLine((DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation)));
+        }
+
+        public void UpdateLineStation(LineStation lineStation)
+        {
+            iDal.UpdateLineStation((DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation)));
+        }
+
+        public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
+        {
+            var a = (DO.LineStation)iDal.GetAllLinesStationBy(station => station.LineId == lineId && station.StationId == stationCode).FirstOrDefault();
+            if (!(a is null))
+            {
+                LineStation boLineStation = (LineStation) a.CopyPropertiesToNew(typeof(LineStation));
+                update(boLineStation);
+                boLineStation.CopyPropertiesTo(a);
+                iDal.UpdateLineStation(a);
+            }
+        }
         #endregion
     }
 }

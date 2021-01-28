@@ -5,9 +5,11 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
+using BL.BO;
 
 namespace PlGui.ViewModels.Lines
 {
@@ -54,10 +56,22 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
+        private ObservableCollection<PropertyDetails> busStopsCollection;
+
+        public ObservableCollection<PropertyDetails> BusStopsCollection
+        {
+            get => busStopsCollection;
+            set
+            {
+                SetProperty(ref busStopsCollection, value);
+            }
+        }
+        
         public int LicenseNumber { get; set; }
         #region Private Members
 
         private int lineId;
+        //private BackgroundWorker insertingSecondListWorker;
 
         #endregion
 
@@ -146,6 +160,18 @@ namespace PlGui.ViewModels.Lines
         #endregion
 
         #region Private Methoed
+
+        private void InsertBusStopCollection(Line line)
+        {
+        //    insertingSecondListWorker = new BackgroundWorker();
+        //    insertingSecondListWorker.WorkerSupportsCancellation = true;
+        //    insertingSecondListWorker.WorkerReportsProgress = true;
+        //    insertingSecondListWorker.DoWork += (sender, args) =>
+                foreach (var item in line.Stations)
+                {
+                    
+                }
+        }
 
         private void InsertBusPropertiesToCollection(BL.BO.Line line)
         {

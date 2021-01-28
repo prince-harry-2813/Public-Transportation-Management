@@ -132,7 +132,7 @@
                               Margin="10"
                               HorizontalContentAlignment="Stretch"
                               Background="White"
-                              ItemsSource="{Binding BusStops}"
+                              ItemsSource="{Binding Line.Stations}"
                               ><ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock

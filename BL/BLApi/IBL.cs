@@ -65,5 +65,31 @@ namespace BL.BLApi
         void SetStationPanel(int station, Action<LineTiming> updateBus);
 
         #endregion
+
+        #region Line Station
+
+        BO.LineStation GetLineStation(int lineId, int stationCode);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<BO.LineStation> GetAllLinesStation();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        IEnumerable<BO.LineStation> GetAllLinesStationBy(Predicate<DO.LineStation> predicate);
+
+        void AddLine(BO.LineStation lineStation);
+
+        void UpdateLineStation(BO.LineStation lineStation);
+
+        void UpdateLineStation(int lineId, int stationCode, Action<BO.LineStation> update);
+
+
+        #endregion
     }
 }
