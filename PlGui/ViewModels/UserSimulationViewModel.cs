@@ -3,12 +3,15 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
+using BL.BO;
 using PlGui.ViewModels.Bus;
 using PlGui.Views.Bus;
 using Prism.Regions;
@@ -26,7 +29,7 @@ namespace PlGui.ViewModels
 
         #region Properties Decleration
 
-        private int simulationHZ;
+        private int simulationHZ = 20;
         
         /// <summary>
         /// Simulation Dispatchering timer sec = Simulation time / Real sec 
@@ -79,11 +82,32 @@ namespace PlGui.ViewModels
             }
         }
 
+        private ObservableCollection<Station> stationCollection;
+        public ObservableCollection<Station> StationCollection { get=> stationCollection;
+            set
+            {
+                SetProperty(ref stationCollection, value);
+            }
+        }
+
+        private Station station;
+
+        public Station Station
+        {
+            get => station;
+            set
+            {
+                SetProperty(ref station, value);
+            }
+        }
+
         public BusDetailsViewModel BusDetailsDataContext { get; set; }
 
         #region Private Memebers
 
         private BackgroundWorker clockWorker;
+        private BackgroundWorker getStationsWorker;
+
 
         #endregion
 
@@ -105,6 +129,24 @@ namespace PlGui.ViewModels
             #endregion
 
             #region Properties Decleration
+
+            StationCollection = new ObservableCollection<Station>();
+            getStationsWorker = new BackgroundWorker();
+            getStationsWorker.DoWork += (sender, args) =>
+            {
+                foreach (var item in Bl.GetAllBusStops())
+                {
+                    getStationsWorker.ReportProgress(0 , item);
+                }
+            };
+            getStationsWorker.WorkerReportsProgress = true;
+            getStationsWorker.ProgressChanged += (sender, args) =>
+            {
+                StationCollection.Add((Station)args.UserState);
+            };
+            getStationsWorker.RunWorkerAsync();
+
+            Station = StationCollection?.FirstOrDefault();
 
             SimulationStartTime = DateTime.Now.TimeOfDay;
 
@@ -145,7 +187,9 @@ namespace PlGui.ViewModels
 
             if (parameter.Equals("Stop")&& clockWorker != null)
             {
+                Bl.StopSimulator();
                 clockWorker.CancelAsync();
+                clockWorker.Dispose();
                 IsSimulationRuning = false;
             }
 
@@ -156,24 +200,28 @@ namespace PlGui.ViewModels
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                         Bl.StartSimulator(SimulationStartTime, SimulationHZ , UpdateTime);
-                        
-                };
-
-                clockWorker.ProgressChanged += (sender, args) =>
-                {
-                    SimulationStartTime = (TimeSpan)args.UserState;
+                         Bl.StartSimulator(SimulationStartTime , SimulationHZ , span => SimulationStartTime = span);
                 };
 
                 IsSimulationRuning = true;
                 clockWorker.RunWorkerAsync();
             }
-
         }
+        #endregion
 
-        private void UpdateTime(TimeSpan obj)
-        {
-            clockWorker.ReportProgress(0 , obj);
+        #region Public Methoed
+
+        public void ComboBoxSelectionChanged()
+        { 
+            //Bl.SetStationPanel(Station.Code , );
+            var param = new NavigationParameters()
+            {
+                {"InternalReadOnly", true},
+                {"ButtonsVisibility" , false },
+                {"MainLabelContent" , (object)"Last Arriving Bus" },
+                {"BusStop" , null  } //TODO: Insert Last bus in station 
+            };
+            regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
         }
 
         #endregion

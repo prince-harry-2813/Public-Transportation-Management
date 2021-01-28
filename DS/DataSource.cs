@@ -69,6 +69,17 @@ namespace DS
             Trips = new List<Trip>();
             Users = new List<User>();
             AdjacentStations = new List<AdjacentStations>();
+            Stations = new List<Station>()
+            {
+                new Station()
+                {
+                    Code = 1234,
+                    Latitude = 333.333,
+                    Longitude = 67544.22,
+                    Name = "שטמפפר",
+                    isActive = true,
+                },
+            };
         }
     }
     
