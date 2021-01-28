@@ -230,7 +230,7 @@ namespace BL
             }
         }
 
-        public IEnumerable<Line> GetLineBy(Predicate<BO.Line> predicate)
+        public IEnumerable<Line> GetLinesBy(Predicate<BO.Line> predicate)
         {
             foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
             {
@@ -285,7 +285,7 @@ namespace BL
             iDal.UpdateStation(DOstation);
         }
 
-       public void eleteBusStop(Station station)
+       public void DeleteBusStop(Station station)
         {
             DO.Station DOstation = new DO.Station();
             station.CopyPropertiesTo(DOstation);
@@ -393,13 +393,13 @@ namespace BL
 
         public IEnumerable<LineStation> GetAllLinesStationBy(Predicate<BO.LineStation> predicate)
         {
-            foreach (var item in GetAllLinesStation())
+            foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive || !l.isActive))
             {
                 LineStation lineStation = new LineStation();
                 item.CopyPropertiesTo(lineStation);
                 if (predicate(lineStation))
                 {
-                    yield return (LineStation)lineStation;
+                    yield return lineStation;
                 }
             }
         }
@@ -425,6 +425,7 @@ namespace BL
                 iDal.UpdateLineStation(a);
             }
         }
+
         #endregion
     }
 }
