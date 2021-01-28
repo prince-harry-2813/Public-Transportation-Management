@@ -297,7 +297,7 @@ namespace DalObject
 
         }
 
-        public void AddLine(LineStation lineStation)
+        public void AddLineStation(LineStation lineStation)
         {
             if (DataSource.LineStations.FirstOrDefault(l => l.LineId == lineStation.LineId && l.StationId == lineStation.StationId) != null)
                 throw new DuplicateObjExeption(lineStation.StationId, "This station already signed to line");

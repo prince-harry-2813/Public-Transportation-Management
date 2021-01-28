@@ -45,7 +45,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Line.FirstStation, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Line.FirstStation.Station.Code, UpdateSourceTrigger=PropertyChanged}" />
         <!--#endregion-->
 
         <!--#region Last Station Details-->
@@ -65,7 +65,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Line.LastStation, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Line.LastStation.Station.Code, UpdateSourceTrigger=PropertyChanged}" />
         <!--#endregion-->
 
         <!--#region ID Details-->

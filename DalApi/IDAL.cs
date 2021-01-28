@@ -201,7 +201,7 @@ namespace DalApi
         /// <returns></returns>
         IEnumerable<DO.LineStation> GetAllLinesStationBy(Predicate<DO.LineStation> predicate);
 
-        void AddLine(DO.LineStation lineStation);
+        void AddLineStation(DO.LineStation lineStation);
         void UpdateLineStation(DO.LineStation lineStation);
         void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update);
 

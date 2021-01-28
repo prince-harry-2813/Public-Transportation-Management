@@ -479,7 +479,7 @@ namespace DalXml
                    select l;
         }
 
-        public void AddLine(LineStation lineStation)
+        public void AddLineStation(LineStation lineStation)
         {
 
             List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);

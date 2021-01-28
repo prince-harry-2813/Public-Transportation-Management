@@ -83,7 +83,7 @@ namespace BL.BLApi
         /// <returns></returns>
         IEnumerable<BO.LineStation> GetAllLinesStationBy(Predicate<BO.LineStation> predicate);
 
-        void AddLine(BO.LineStation lineStation);
+        void AddLineStation(BO.LineStation lineStation);
 
         void UpdateLineStation(BO.LineStation lineStation);
 
