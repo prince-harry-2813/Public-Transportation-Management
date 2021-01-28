@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL.BO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -61,6 +62,7 @@ namespace BL.BLApi
 
         void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
         void StopSimulator();
+        void SetStationPanel(int station, Action<LineTiming> updateBus);
 
         #endregion
     }

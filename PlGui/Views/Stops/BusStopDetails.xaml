@@ -18,7 +18,7 @@
         <WrapPanel Margin="10" HorizontalAlignment="Center">
             <fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
             <Label FontSize="14pt" FontWeight="SemiBold">
-                Bus Details
+                Bus Stop Details
             </Label>
         </WrapPanel>
 
@@ -83,6 +83,12 @@
             </StackPanel>
         </WrapPanel>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
         <ListBox
             x:Name="lbLineDetails"
             Margin="10"
@@ -115,6 +121,36 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <!--  Stops of line Details  -->
+        <ScrollViewer Grid.Column="1">
+            <ItemsControl  
+                Margin="10"
+                HorizontalContentAlignment="Stretch"
+                Background="White"
+                ItemsSource="{Binding Lines}"
+            >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            FontSize="8pt"
+                            HorizontalAlignment="Stretch"
+                        >
+                            <Run
+                                Text="{Binding Name}">
+                            </Run>
+                            <Run
+                                Text="{Binding Code}">
+                            </Run>
+                            <Run
+                                Text="{Binding }">
+                            </Run>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
     </StackPanel>
 
 </UserControl>

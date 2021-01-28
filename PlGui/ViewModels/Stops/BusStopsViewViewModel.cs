@@ -28,88 +28,87 @@ namespace PlGui.ViewModels.Stops
             }
         }
 
-        private ObservableCollection<Station> busStopsCollection = new ObservableCollection<Station>();
-        public ObservableCollection<Station> BusStopsCollection
+        private ObservableCollection<Station> busStops = new ObservableCollection<Station>();
+        public ObservableCollection<Station> BusStops
         {
-            get => busStopsCollection;
+            get => busStops;
             set
             {
-                SetProperty(ref busStopsCollection, value);
-    }
-}
+                SetProperty(ref busStops, value);
+            }
+        }
 
-public IBL Bl { get; set; }
-#endregion
-#region Service Decleration
+        public IBL Bl { get; set; }
+        #endregion
 
-private IRegionManager regionManager;
-private IUnityContainer unityContainer;
+        #region Service Decleration
 
-#endregion
+        private IRegionManager regionManager;
+        private IUnityContainer unityContainer;
 
-#region Command Declaration
+        #endregion
 
-public ICommand AddBusStopButtonCommand { get; set; }
-public ICommand UpdateBusStopButtonCommand { get; set; }
+        #region Command Declaration
 
-public ICommand DeleteStationButtonCommand { get; set; }
-#endregion
+        public ICommand AddBusStopButtonCommand { get; set; }
+        public ICommand UpdateBusStopButtonCommand { get; set; }
 
-/// <summary>
-/// Ctor 
-/// </summary>
-/// <param name="manager"></param>
-/// <param name="container"></param>
-public BusStopsViewViewModel(IRegionManager manager, IUnityContainer container)
-{
-    #region Properties Deceleration
+        public ICommand DeleteStationButtonCommand { get; set; }
+        #endregion
 
-    Bl = BLFactory.GetIBL();
-    foreach (var item in Bl.GetAllBusStops())
-    {
-        BusStopsCollection.Add(item);
-    }
-    #endregion
+        /// <summary>
+        /// Ctor 
+        /// </summary>
+        /// <param name="manager"></param>
+        /// <param name="container"></param>
+        public BusStopsViewViewModel(IRegionManager manager, IUnityContainer container)
+        {
+            #region Properties Deceleration
 
-    #region Service Initialization
+            Bl = BLFactory.GetIBL();
+            foreach (var item in Bl.GetAllBusStops())
+            {
+                BusStops.Add(item);
+            }
+            #endregion
 
-    regionManager = manager;
-    unityContainer = container;
+            #region Service Initialization
 
-    #endregion
+            regionManager = manager;
+            unityContainer = container;
 
-    #region Command Initialization
+            #endregion
 
-    AddBusStopButtonCommand = new DelegateCommand(AddBusStopButton);
-    UpdateBusStopButtonCommand = new DelegateCommand<string>(UpdateBusStopButton);
-    DeleteStationButtonCommand = new DelegateCommand<string>(DeleteStationButton);
-    #endregion
-}
+            #region Command Initialization
 
+            AddBusStopButtonCommand = new DelegateCommand(AddBusStopButton);
+            UpdateBusStopButtonCommand = new DelegateCommand<string>(UpdateBusStopButton);
+            DeleteStationButtonCommand = new DelegateCommand<string>(DeleteStationButton);
+            #endregion
+        }
+        
+        #region Command Implementation
 
+        private void AddBusStopButton()
+        {
+            var parm = new NavigationParameters();
+            parm.Add(StringNames.SelectedBusStop, BusStop);
+            unityContainer.RegisterType(typeof(object), typeof(AddBusStop), "AddBusStop");
+            regionManager.RequestNavigate(StringNames.MainRegion, "AddBusStop");
+        }
 
-#region Command Implementation
-
-private void AddBusStopButton()
-{
-    var parm = new NavigationParameters();
-    parm.Add(StringNames.SelectedBusStop, BusStop);
-    unityContainer.RegisterType(typeof(object), typeof(AddBusStop), "AddBusStop");
-    regionManager.RequestNavigate(StringNames.MainRegion, "AddBusStop");
-}
-
-private void UpdateBusStopButton(string commandParameter)
-{
-    var parm = new NavigationParameters();
-    parm.Add(StringNames.SelectedBusStop, ""/*TODO: Insert Selected Bus Stop from collection*/);
-    unityContainer.RegisterType(typeof(object), typeof(BusStopDetails), "BusStopDetails");
-    regionManager.RequestNavigate(StringNames.MainRegion, "BusStopDetails");
-}
-private void DeleteStationButton(string commandParameter)
-{
-    /*TODO: Insert Selected Bus Stop from collection and delete it*/
-    throw new NotImplementedException();
-}
+        private void UpdateBusStopButton(string commandParameter)
+        {
+            var parm = new NavigationParameters();
+            parm.Add(StringNames.SelectedBusStop, ""/*TODO: Insert Selected Bus Stop from collection*/);
+            unityContainer.RegisterType(typeof(object), typeof(BusStopDetails), "BusStopDetails");
+            regionManager.RequestNavigate(StringNames.MainRegion, "BusStopDetails");
+        }
+        private void DeleteStationButton(string commandParameter)
+        {
+            /*TODO: Insert Selected Bus Stop from collection and delete it*/
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

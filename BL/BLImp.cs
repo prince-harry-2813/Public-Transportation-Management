@@ -1,4 +1,18 @@
-﻿using BL.BLApi;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+using BL.BLApi;
 using BL.BO;
 using DalApi;
 using System;
@@ -272,9 +286,9 @@ namespace BL
 
         IEnumerable<Station> IBL.GetAllBusStops()
         {
-            foreach (var item in iDal.GetAllStation())
+            foreach (var VARIABLE in iDal.GetAllStation())
             {
-                yield return (Station)item.CopyPropertiesToNew(typeof(Station));
+                yield return (Station)VARIABLE.CopyPropertiesToNew(typeof(Station));
             }
         }
 
@@ -294,6 +308,8 @@ namespace BL
         #region User Simulation
 
         event Action<TimeSpan> clockObserver = null;
+        private DispatcherTimer simulationTimer = new DispatcherTimer();
+        internal volatile bool Cancel ;
 
         /// <summary>
         /// Start simulator stop watch and update it according 
@@ -303,32 +319,43 @@ namespace BL
         /// <param name="updateTime">Action</param>
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
         {
-            //Timer
-            //Nullable<TimeSpan> nullableTime = new TimeSpan(startTime.Hours, startTime.Minutes, startTime.Seconds);
-            //Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Restart();
-            //SimulatorClock simulatorClock = new SimulatorClock(startTime , rate);
+            Cancel = false;
+            clockObserver = updateTime;
+            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days , 
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours ,
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes 
+                , TimeSpan.FromSeconds(startTime.TotalSeconds).Seconds
+                , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
+            {
+                simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6)) ) );
+                simulationTimer.Tick += (sender, args) =>
+                {
+                    if (Cancel)
+                    {
+                        clockObserver = null;
+                        simulationTimer.Stop();
+                        return;
+                    }
 
-            //var lastMeaserTime = new TimeSpan(startTime.Ticks);
-            //while (true)
-            //{
-            //                   clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
-            //    updateTime = clockObserver;
-            //    Thread.Sleep(1000 / rate);
-            //}
+                    simulatorTime += TimeSpan.FromSeconds(1);
+                    updateTime.Invoke(simulatorTime);
+                    Debug.Print(simulatorTime.ToString());
+                };
+                simulationTimer.Start();
+            };
         }
-
-        //Stopwatch 
-        //Clock 
-        //simulatorClock = new Clock(simulatorStartTime + new TimeSpan(stopwatch.ElapsedTicks * simulatorRate));
-        //clockObserver(new TimeSpan(simulatorClock.Time.Hours, simulatorClock.Time.Minutes, simulatorClock.Time.Seconds));
-        //Thread.Sleep(your - sleep - time -in -msec);
-
 
         public void StopSimulator()
         {
-            throw new NotImplementedException();
+            Cancel = true;
         }
+
+        public void SetStationPanel(int station, Action<LineTiming> updateBus)
+        {
+
+        }
+
         #endregion
     }
 }
+
