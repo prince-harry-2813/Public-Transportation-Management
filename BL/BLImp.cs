@@ -24,6 +24,7 @@ namespace BL
 {
     internal class BLImp : IBL
     {
+        
         private IDAL iDal = DalApi.DalFactory.GetIDAL();
 
         #region IBL Bus Implementation
@@ -148,22 +149,22 @@ namespace BL
         /// </summary>
         /// <param name="line">
         /// </param>
-        void IBL.AddLine(Line line)
+       public void AddLine(Line line)
         {
             if (line == null)
                 throw new NullReferenceException("Line to add is Null please try again");
 
-            if (line.FirstStation == null || line.FirstStation == 0)
+            if (line.FirstStation.Station.Code == null || line.FirstStation.Station.Code == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            if (line.LastStation == null || line.LastStation == 0)
+            if (line.LastStation == null || line.LastStation.Station.Code == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            var station = iDal.GetStation(line.FirstStation);
+            var station = iDal.GetStation(line.FirstStation.Station.Code);
             if (station == null)
                 throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
-           var station2 = iDal.GetStation(line.LastStation);
+           var station2 = iDal.GetStation(line.LastStation.Station.Code);
             if (station2 == null)
                 throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
@@ -177,7 +178,7 @@ namespace BL
             }
         }
 
-        void IBL.UpdateLine(Line line)
+        public void UpdateLine(Line line)
         {
             if (line == null)
                 throw new NullReferenceException("Line is Null ");
@@ -199,7 +200,7 @@ namespace BL
             iDal.DeleteLine(lineToDelete.Id);
         }
 
-        Line IBL.GetLine(int lineId)
+        public Line GetLine(int lineId)
         {
             if (lineId == null || lineId == 0)
                 throw new NullReferenceException("Line id is null or not initialized");
@@ -212,16 +213,24 @@ namespace BL
             return (Line)lineToCopy.CopyPropertiesToNew(typeof(Line));
         }
 
-        IEnumerable<Line> IBL.GetAllLines()
+        public IEnumerable<Line> GetAllLines()
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
-                VARIABLE.Id
-                    yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
+                var line = new Line()
+                {
+                    Id = VARIABLE.Id,
+                    Code = VARIABLE.Code,
+                    Area = (Area)VARIABLE.Area,
+                    IsActive = VARIABLE.isActive,
+                     
+
+                };
+                yield return line;
             }
         }
 
-        IEnumerable<Line> IBL.GetLineBy(Predicate<BO.Line> predicate)
+        public IEnumerable<Line> GetLineBy(Predicate<BO.Line> predicate)
         {
             foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
             {
@@ -237,7 +246,7 @@ namespace BL
         #endregion
 
         #region Bus Stop Implementation
-        void IBL.AddBusStop(Station station)
+         void AddBusStop(Station station)
         {
             station.isActive = true;
 
@@ -269,22 +278,22 @@ namespace BL
             Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         }
 
-        void IBL.UpdateBusStop(Station station)
+       public void UpdateBusStop(Station station)
         {
             throw new NotImplementedException();
         }
 
-        void IBL.DeleteBusStop(Station station)
+       public void eleteBusStop(Station station)
         {
             throw new NotImplementedException();
         }
 
-        Station IBL.GetBusStop(int lineId)
+        public Station GetBusStop(int lineId)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        IEnumerable<Station> IBL.GetAllBusStops()
+        public IEnumerable<Station> GetAllBusStops()
         {
             foreach (var VARIABLE in iDal.GetAllStation())
             {
@@ -292,12 +301,12 @@ namespace BL
             }
         }
 
-        IEnumerable<Station> IBL.GetBusStopsBy(Predicate<Station> predicate)
+       public IEnumerable<Station> GetBusStopsBy(Predicate<Station> predicate)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<Bus> IBL.GetBusBy(Predicate<Bus> predicate)
+       public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }

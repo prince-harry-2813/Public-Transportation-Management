@@ -76,7 +76,7 @@ namespace PlGui.ViewModels
             #endregion
         }
 
-        #region Command Implementaion
+        #region Command Implementation
 
         public void Navigate(string commandParameter)
         {
