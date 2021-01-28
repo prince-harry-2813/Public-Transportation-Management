@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using System.Windows;
+﻿using PlGui.ViewModels.Bus;
 using System.Windows.Controls;
 using System.Windows.Input;
-using PlGui.ViewModels;
-using PlGui.ViewModels.Bus;
-using Prism.Mvvm;
 
 namespace PlGui.Views.Bus
 {
@@ -21,7 +15,7 @@ namespace PlGui.Views.Bus
         public AddBus()
         {
             InitializeComponent();
-            viewModel = (AddBusViewModel) this.DataContext;
+            viewModel = (AddBusViewModel)this.DataContext;
             licenseNumBox.Focus();
         }
 
@@ -32,13 +26,13 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-           var validNum = viewModel.DisplayDateFocus();
-           if (!validNum)
-           {
-               licenseNumBox.Focus();
-           }
+            var validNum = viewModel.DisplayDateFocus();
+            if (!validNum)
+            {
+                licenseNumBox.Focus();
+            }
         }
-        
+
         /// <summary>
         /// Numbers Validation
         /// </summary>
@@ -46,7 +40,7 @@ namespace PlGui.Views.Bus
         /// <param name="e"></param>
         private void LicenseNumBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            
+
             e.Handled = viewModel.CheckLicenseInput(e.Text);
         }
     }

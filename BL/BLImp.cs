@@ -15,6 +15,10 @@ using System.Windows.Threading;
 using BL.BLApi;
 using BL.BO;
 using DalApi;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 
 namespace BL
 {
@@ -38,7 +42,7 @@ namespace BL
 
             bus.FuelStatus = (bus.FuelStatus != null) ? bus.FuelStatus : 1200;
             bus.isActive = true;
-            bus.LastTreatment = (bus.LastTreatment != null) ? bus.LastTreatment : DateTime.Now;
+            bus.LastTreatment = (bus.LastTreatment != DateTime.MinValue) ? bus.LastTreatment : DateTime.Now;
             bus.TotalKM = (bus.TotalKM != null) ? bus.TotalKM : 0;
             bus.LastTreatmentKm = (bus.LastTreatmentKm != null) ? bus.LastTreatmentKm : 0;
             bus.Status = (bus.FuelStatus != 0 && DateTime.Now.Subtract(bus.LastTreatment).Days < 365 &&
@@ -46,17 +50,20 @@ namespace BL
                 ? BusStatusEnum.Ok
                 : BusStatusEnum.Not_Available;
 
-            var anotherBus = iDal.GetBus(bus.LicenseNum);
 
 
-            if (anotherBus != null && !anotherBus.isActive) // checks if there is any bus return from DS by the license number 
+            try // checks if there is any bus return from DS by the license number 
             {
+
                 DO.Bus busToAdd = new DO.Bus();
                 bus.CopyPropertiesTo(busToAdd);
                 iDal.AddBus(busToAdd);
             }
-            else
+            catch (Exception)
+            {
                 throw new BadBusIdException("Bus With the same license number is already exist", null);
+            }
+
         }
 
         /// <summary>
@@ -70,9 +77,9 @@ namespace BL
                 throw new NullReferenceException("Bus to delete is Null");
             }
 
-            DO.Bus busToAdd = new DO.Bus();
-            bus.CopyPropertiesTo(busToAdd);
-            iDal.DeleteBus(busToAdd.LicenseNum);
+            DO.Bus busToDelete = new DO.Bus();
+            bus.CopyPropertiesTo(busToDelete);
+            iDal.DeleteBus(busToDelete.LicenseNum);
         }
 
         public IEnumerable<Bus> GetAllBuses()
@@ -80,10 +87,10 @@ namespace BL
             // TODO :  check if this solution is good enough
             foreach (var VARIABLE in iDal.GetAllBuses())
             {
-                if (VARIABLE.isActive)// Ignore deleted bus  
-                {
-                    yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
-                }
+                //if (VARIABLE.isActive)  //deleted because DAL does this check    // Ignore deleted bus  
+
+                yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
+
             }
 
             #region Seconed Solution
@@ -147,26 +154,27 @@ namespace BL
                 throw new NullReferenceException("Line to add is Null please try again");
 
             if (line.FirstStation == null || line.FirstStation == 0)
-                throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
+                throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
             if (line.LastStation == null || line.LastStation == 0)
-                throw new BadBusStopIDException("First Station Id not added or not exsit ", new ArgumentException());
+                throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            var station = iDal.GetAllStationsBy(station1 => station1.Code == line.FirstStation);
+            var station = iDal.GetStation(line.FirstStation);
             if (station == null)
-                throw new BadBusStopIDException("First Bus stop not exsit in the system", null);
+                throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
-            station = iDal.GetAllStationsBy(station1 => station1.Code == line.LastStation);
-            if (station == null)
-                throw new BadBusStopIDException("Last Bus stop not exsit in the system", null);
+           var station2 = iDal.GetStation(line.LastStation);
+            if (station2 == null)
+                throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
-            var anotherLineCode = iDal.GetAllLinesBy(line1 => line1.Id == line.Id);
-            if (anotherLineCode == null)
+            try
+            {
                 iDal.AddLine((DO.Line)line.CopyPropertiesToNew(typeof(DO.Line)));
-
-            else
-                throw new BadLineIdException("Line with the same id is already exsist", new ArgumentException());
-
+            }
+            catch (Exception e)
+            {
+                throw new BadLineIdException("Line with the same id is already exist", new ArgumentException());
+            }
         }
 
         void IBL.UpdateLine(Line line)
@@ -208,14 +216,20 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
-                if (VARIABLE.isActive)
                     yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
             }
         }
 
-        IEnumerable<Line> IBL.GetLineBy(Predicate<Line> predicate)
+        IEnumerable<Line> IBL.GetLineBy(Predicate<BO.Line> predicate)
         {
-            throw new NotImplementedException();
+            foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
+            {
+
+                BO.Line line = (Line)item.CopyPropertiesToNew(typeof(Line));
+                if (predicate(line))
+                    yield return line;
+
+            }
         }
 
 
@@ -224,7 +238,34 @@ namespace BL
         #region Bus Stop Implementation
         void IBL.AddBusStop(Station station)
         {
-            throw new NotImplementedException();
+            station.isActive = true;
+
+            if (station.Name.Length == 0) 
+            {
+                station.Name = "Exemple "+station.Code.ToString();
+            }
+            if (station.Code==0)
+            {
+                throw new BadBusStopIDException("bus stop number can't be 0", new ArgumentException());
+            }
+            if (station.Longitude<34.3||station.Longitude>35.5)
+            {
+                station.Longitude= double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 1.2 + 34.3).ToString().Substring(0, 8));
+            }
+            if (station.Latitude <= 31 || station.Latitude >= 33.3)
+            {
+                station.Latitude = double.Parse((new Random(DateTime.Now.Millisecond).NextDouble() * 2.3 + 31).ToString().Substring(0,8));
+            }
+            try
+            {
+                iDal.AddStation((DO.Station)station.CopyPropertiesToNew(typeof(DO.Station)));
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException("check details",e);
+            }
+            Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
         }
 
         void IBL.UpdateBusStop(Station station)

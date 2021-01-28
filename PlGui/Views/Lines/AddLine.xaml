@@ -45,7 +45,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding FirstStation}" />
+            Text="{Binding Line.FirstStation, UpdateSourceTrigger=PropertyChanged}" />
         <!--#endregion-->
 
         <!--#region Last Station Details-->
@@ -65,7 +65,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding LastStation}" />
+            Text="{Binding Line.LastStation, UpdateSourceTrigger=PropertyChanged}" />
         <!--#endregion-->
 
         <!--#region ID Details-->
@@ -85,7 +85,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Id}" />
+            Text="{Binding Line.Id, UpdateSourceTrigger=PropertyChanged}" />
         <!--#endregion-->
 
         <!--#region Code Details-->
@@ -105,7 +105,7 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Code}" />
+            Text="{Binding Line.Code, UpdateSourceTrigger=PropertyChanged}" />
 
         <!--#endregion-->
 
@@ -116,11 +116,6 @@
                 Content="Add"
                 Command="{Binding AddLineButtonCommand}"></Button>
 
-        <Button Grid.Row="4"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Stretch"
-                Margin="10"
-                Content="Add"
-                Command="{Binding UpdateLineButtonCommand}"></Button>
+        
     </Grid>
 </UserControl>

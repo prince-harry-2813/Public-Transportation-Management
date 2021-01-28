@@ -93,7 +93,7 @@ namespace dotNet5781_03B_6671_6650.Views
             busDetailsDispatcherTimer.Start();
             BackgroundWorker backgroundWorker = new BackgroundWorker();
 
-            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(seconds *1000); }
+            backgroundWorker.DoWork += ((s, e1) => { Thread.Sleep(seconds * 1000); }
                 );
 
             backgroundWorker.RunWorkerAsync();
@@ -128,7 +128,7 @@ namespace dotNet5781_03B_6671_6650.Views
                 MessageBox.Show("This bus is busy right now", "Can't perform operation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
+
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             SelectedBus.MaintaineBus();
 
@@ -215,7 +215,7 @@ namespace dotNet5781_03B_6671_6650.Views
                     PropertyValue = SelectedBus.CountDown.ToString(),
                 });
             }
-            
+
             lbBusDetails.ItemsSource = busPropertyInfos;
         }
 

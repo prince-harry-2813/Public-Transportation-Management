@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using dotNet5781_02_6671_6650;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using dotNet5781_02_6671_6650;
 
 namespace dotNet5781_03A_6671_6650
 {
@@ -62,7 +52,7 @@ namespace dotNet5781_03A_6671_6650
             {
                 if (item.IsExist(stopCode))
                 {
-                    lines[line].AddStop(new BusStop( stopCode,item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Latitude, item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Longitude), pos);
+                    lines[line].AddStop(new BusStop(stopCode, item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Latitude, item.LineStations.FirstOrDefault(stop => stop.StationCode == (stopCode)).Longitude), pos);
                     return true;
                 }
             }
@@ -84,7 +74,7 @@ namespace dotNet5781_03A_6671_6650
                             continue;
                         lines.Last().AddStop(stop, lines.Last().LineStations.Count);
                     }
-                }   
+                }
             }
             catch (Exception e)
             {

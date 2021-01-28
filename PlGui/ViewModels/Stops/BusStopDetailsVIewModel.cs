@@ -1,14 +1,13 @@
 ﻿using BL.BLApi;
+using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-using PlGui.StaticClasses;
-using Prism.Regions;
 
 namespace PlGui.ViewModels.Stops
 {
@@ -100,7 +99,7 @@ namespace PlGui.ViewModels.Stops
                     Bl.UpdateBusStop(BusStop);
                     break;
                 case "Remove":
-                   Bl.DeleteBusStop(BusStop);
+                    Bl.DeleteBusStop(BusStop);
                     break;
             }
         }

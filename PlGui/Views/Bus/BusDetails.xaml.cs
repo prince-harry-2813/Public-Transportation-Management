@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using PlGui.ViewModels.Bus;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using PlGui.ViewModels.Bus;
-using Prism.Mvvm;
 
 namespace PlGui.Views.Bus
 {
@@ -16,7 +14,7 @@ namespace PlGui.Views.Bus
         public BusDetails()
         {
             InitializeComponent();
-           // ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
+            // ViewModelLocationProvider.Register(typeof(BusDetails).ToString(), typeof(BusDetailsViewModel));
             viewModel = (BusDetailsViewModel)this.DataContext;
         }
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.BO
 {
@@ -11,7 +7,8 @@ namespace BL.BO
     {
         public int ID;
         public BadBusIdException(string message, Exception innerException) :
-            base(message, innerException){} /*=> ID = ((DO.BadPersonIdException)innerException).ID;*/
+            base(message, innerException)
+        { } /*=> ID = ((DO.BadPersonIdException)innerException).ID;*/
         public override string ToString() => base.ToString() + $", bad student id: {ID}";
     }
 
@@ -20,7 +17,8 @@ namespace BL.BO
     {
         public int ID;
         public BadLineIdException(string message, Exception innerException) :
-            base(message, innerException){}/* => ID = ((DO.BadPersonIdException)innerException).ID;*/
+            base(message, innerException)
+        { }/* => ID = ((DO.BadPersonIdException)innerException).ID;*/
         public override string ToString() => base.ToString() + $", bad student id: {ID}";
     }
 

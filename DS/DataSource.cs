@@ -1,17 +1,13 @@
 ﻿using DO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DalApi;
 
 namespace DS
 {
     /// <summary>
     /// this CLass hold data for all entities in program 
     /// </summary>
-    public static class DataSource 
+    public static class DataSource
     {
 
         #region Data Source Lists
@@ -33,11 +29,11 @@ namespace DS
         {
             InitialDS();
         }
-        
+
         /// <summary>
         /// this method initial program with an initial information
         /// </summary>
-         static void InitialDS()
+        static void InitialDS()
         {
             Buses = new List<Bus> {
             new Bus
@@ -55,8 +51,8 @@ namespace DS
             {
                 new Line()
                 {
-                    LastStation = 12345, 
-                    FirstStation = 3523, 
+                    LastStation = 12345,
+                    FirstStation = 3523,
                     isActive = true,
                     Area = Area.Center,
                     Code = 321,
@@ -82,5 +78,5 @@ namespace DS
             };
         }
     }
-    
+
 }

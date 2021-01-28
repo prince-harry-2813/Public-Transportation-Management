@@ -1,20 +1,19 @@
-﻿using Prism.Commands;
+﻿using BL.BLApi;
+using PlGui.StaticClasses;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using BL.BLApi;
-using PlGui.StaticClasses;
-using Prism.Regions;
 using Unity;
 
 namespace PlGui.ViewModels.Stops
 {
     public class AddBusStopViewModel : BindableBase
     {
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -23,7 +22,7 @@ namespace PlGui.ViewModels.Stops
 
         #region Properties Declaration
 
-        private BL.BO.Station busStop;
+        private BL.BO.Station busStop = new BL.BO.Station();
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -35,7 +34,9 @@ namespace PlGui.ViewModels.Stops
             }
             set
             {
+                stamfunc();
                 SetProperty(ref busStop, value);
+
             }
         }
 
@@ -46,12 +47,18 @@ namespace PlGui.ViewModels.Stops
         #region Command Decleration
 
         public ICommand AddBusStopButtonCommand { get; set; }
-
+        public void stamfunc()
+        {
+            Console.WriteLine("staaasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam");
+        }
         #endregion
 
-        public AddBusStopViewModel(IRegionManager manager, IUnityContainer container)
+        public AddBusStopViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
         {
-            #region Properties Initiaization
+            #region Properties Initiaization 
+
+            Bl = bl;
+
             #endregion
 
             AddBusStopButtonCommand = new DelegateCommand(AddBusStopButton);
@@ -66,7 +73,7 @@ namespace PlGui.ViewModels.Stops
 
         #region Command Implementation
 
-        private void AddBusStopButton()
+        public void AddBusStopButton()
         {
             try
             {
@@ -79,7 +86,7 @@ namespace PlGui.ViewModels.Stops
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion, new Uri(StringNames.BusStopsView, UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusStopsView);
             }
         }
         #endregion

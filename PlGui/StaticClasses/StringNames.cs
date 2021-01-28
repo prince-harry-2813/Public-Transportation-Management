@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlGui.StaticClasses
+﻿namespace PlGui.StaticClasses
 {
     public static class StringNames
     {
@@ -23,7 +17,7 @@ namespace PlGui.StaticClasses
         public static string AddBusStop = "AddBusStop";
         public static string BusStopDetails = "BusStopDetails";
         public static string BusStopsView = "BusStopsView";
-        public static string SelectedBusStop = "SelectedBusStop"; 
+        public static string SelectedBusStop = "SelectedBusStop";
         public static string UserSimulation = "UserSimulation";
     }
 }

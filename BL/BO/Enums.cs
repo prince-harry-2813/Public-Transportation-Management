@@ -1,7 +1,7 @@
 ﻿namespace BL.BO
 {
 
-    
+
     /// <summary>
     /// Current status of bus vehicle
     /// </summary>

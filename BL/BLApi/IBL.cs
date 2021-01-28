@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BL.BLApi
 {
@@ -14,7 +15,7 @@ namespace BL.BLApi
         void DeleteBus(BO.Bus bus);
 
         BO.Bus GetBus(int licenseNum);
-        
+
         IEnumerable<BO.Bus> GetAllBuses();
 
         IEnumerable<BO.Bus> GetBusBy(Predicate<BO.Bus> predicate);
@@ -26,7 +27,7 @@ namespace BL.BLApi
 
         void AddLine(BO.Line line);
 
-        void UpdateLine(BO.Line line );
+        void UpdateLine(BO.Line line);
 
         void DeleteLine(BO.Line line);
 

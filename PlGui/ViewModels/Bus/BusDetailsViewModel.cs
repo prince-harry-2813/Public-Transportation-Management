@@ -1,18 +1,15 @@
-﻿using Prism.Commands;
+﻿using BL.BLApi;
+using BL.BO;
+using PlGui.StaticClasses;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using BL.BLApi;
-using BL.BO;
-using PlGui.StaticClasses;
-using Prism.Regions;
-using QuickConverter.Tokens;
 
 namespace PlGui.ViewModels.Bus
 {
@@ -29,7 +26,7 @@ namespace PlGui.ViewModels.Bus
                 SetProperty(ref isInEditMode, value);
             }
         }
-        
+
         private bool internalReadOnly;
         /// <summary>
         /// Set all user control property to read only 
@@ -39,7 +36,7 @@ namespace PlGui.ViewModels.Bus
             get => internalReadOnly;
             set
             {
-                SetProperty(ref internalReadOnly , value);
+                SetProperty(ref internalReadOnly, value);
             }
         }
 
@@ -52,7 +49,7 @@ namespace PlGui.ViewModels.Bus
             get => buttonsVisibility;
             set
             {
-                SetProperty(ref buttonsVisibility , value);
+                SetProperty(ref buttonsVisibility, value);
             }
         }
 
@@ -166,9 +163,9 @@ namespace PlGui.ViewModels.Bus
             {
                 InsertBusPropertiesToCollection(Bus);
             }
-            
+
             SelectedItem = LbItemSource.FirstOrDefault();
-          
+
 
             #endregion
         }
@@ -215,7 +212,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        public void  ListBoxSelectionChanged()
+        public void ListBoxSelectionChanged()
         {
             BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
                                   || SelectedItem.PropertyName == "RegisDate"
@@ -223,7 +220,7 @@ namespace PlGui.ViewModels.Bus
                                   || SelectedItem.PropertyName == "KmOnLastTreatment"
                                   || SelectedItem.PropertyName == "LastTreatmentDate" || InternalReadOnly);
         }
-        
+
         private void RemoveBusButtomClicked()
         {
             bool sucssesFlag = true;
@@ -268,7 +265,7 @@ namespace PlGui.ViewModels.Bus
                     || SelectedItem?.PropertyName == "TotalKM"
                     || SelectedItem?.PropertyName == "KmOnLastTreatment"
                     || SelectedItem?.PropertyName == "LastTreatmentDate" || InternalReadOnly),
-                    PropertyValue = VARIABLE.GetValue(obj: bus , null ).ToString()
+                    PropertyValue = VARIABLE.GetValue(obj: bus, null).ToString()
                 });
             }
         }
@@ -279,40 +276,40 @@ namespace PlGui.ViewModels.Bus
             {
                 if (VARIABLE.Name == "isActive")
                     continue;
-                
+
                 var property = (PropertyDetails)LbItemSource.Where(details => details.PropertyName == VARIABLE.Name).FirstOrDefault();
 
                 dynamic result = property.PropertyValue;
                 if (property.PropertyType == typeof(int))
                 {
-                    int.TryParse(property.PropertyValue ,out int value);
+                    int.TryParse(property.PropertyValue, out int value);
                     result = value;
                 }
 
                 if (property.PropertyType == typeof(DateTime))
                 {
-                    DateTime.TryParse(property.PropertyValue , out DateTime value);
+                    DateTime.TryParse(property.PropertyValue, out DateTime value);
                     result = value;
                 }
 
                 if (property.PropertyType == typeof(BusStatusEnum))
                 {
-                     BusStatusEnum.TryParse(property.PropertyValue , out BusStatusEnum  value);
-                     result = value;
+                    BusStatusEnum.TryParse(property.PropertyValue, out BusStatusEnum value);
+                    result = value;
                 }
 
                 if (property.PropertyType == typeof(uint))
                 {
-                    uint.TryParse(property.PropertyValue , out uint value);
+                    uint.TryParse(property.PropertyValue, out uint value);
                     result = value;
                 }
 
-                VARIABLE.SetValue(Bus,result);
+                VARIABLE.SetValue(Bus, result);
             }
         }
 
         #region INavigation Aware Implementation
-        
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // Initialize Interface 
@@ -323,8 +320,8 @@ namespace PlGui.ViewModels.Bus
             if (Bus != null)
                 InsertBusPropertiesToCollection(Bus);
             var a = navigationContext.Parameters.Where(pair => pair.Key == "InternalReadOnly")
-            .FirstOrDefault().Value ;
-            InternalReadOnly = (a != null) ? (bool) a : internalReadOnly;
+            .FirstOrDefault().Value;
+            InternalReadOnly = (a != null) ? (bool)a : internalReadOnly;
 
 
             var tmp = navigationContext.Parameters.Where(pair => pair.Key == "MainLabelContent")

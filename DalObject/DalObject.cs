@@ -76,7 +76,7 @@ namespace DalObject
 
         public void DeleteAdjacentStations(int id)
         {
-            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.PairId == id );
+            DO.AdjacentStations stations = DataSource.AdjacentStations.Find(adj => adj.PairId == id);
             if (stations != null)
                 DataSource.AdjacentStations.Remove(stations);
             else
@@ -106,10 +106,10 @@ namespace DalObject
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-             return from bus in DataSource.Buses
+            return from bus in DataSource.Buses
                    where predicate(bus)
                    select bus;
-            
+
 
         }
 
@@ -155,7 +155,7 @@ namespace DalObject
         public BusOnTrip GetBusOnTrip(int id)
         {
             DO.BusOnTrip bus = DataSource.BusesOnTrips.Find(b => b.Id == id);
-            if (bus != null&& bus.isActive)
+            if (bus != null && bus.isActive)
                 return bus;
             else
                 throw new BadIdExeption(id);
@@ -285,6 +285,7 @@ namespace DalObject
         public IEnumerable<LineStation> GetAllLinesStation()
         {
             return from lineSt in DataSource.LineStations
+                   where lineSt.isActive
                    select lineSt;
         }
 
@@ -347,6 +348,7 @@ namespace DalObject
         public IEnumerable<LineTrip> GetAllLinesTrip()
         {
             return from lineTrip in DataSource.LineTrips
+                   where lineTrip.isActive
                    select lineTrip;
         }
 
@@ -396,7 +398,7 @@ namespace DalObject
 
         #region Station CRUD Implementation
 
-        public Station station(int id)
+        public Station GetStation(int id)
         {
             DO.Station station = DataSource.Stations.Find(b => b.Code == id);
             if (station != null)
@@ -408,6 +410,7 @@ namespace DalObject
         public IEnumerable<Station> GetAllStation()
         {
             return from station in DataSource.Stations
+                   where station.isActive
                    select station;
         }
 
@@ -445,48 +448,92 @@ namespace DalObject
         public void DeleteStation(int id)
         {
             Station station = DataSource.Stations.Find(s => s.Code == id);
-            if (station != null)
-                DataSource.Stations.Remove(station);
+            if (station != null && station.isActive)
+                station.isActive = true;
             else
                 throw new BadIdExeption(id, $" station {id} not exist");
         }
         #endregion
 
         #region Trip CRUD Implementation 
-        public Trip trip(int id)
+        public Trip GetTrip(int id)
         {
-            throw new NotImplementedException();
+            DO.Trip trip = DataSource.Trips.FirstOrDefault(t => t.Id == id && t.isActive);
+            if (trip != null)
+                return trip;
+            else throw new BadIdExeption(id, "trip doesn't exist");
         }
 
         public IEnumerable<Trip> GetAllTrips()
         {
-            throw new NotImplementedException();
+            return from trip in DataSource.Trips
+                   where trip.isActive
+                   select trip;
         }
+
+        public IEnumerable<DO.Trip> GetAllTripsBy(Predicate<DO.Trip> predicate)
+        {
+            return from trip in DataSource.Trips
+                   where predicate(trip)
+                   select trip;
+        }
+
 
         public void AddTrip(Trip trip)
         {
-            throw new NotImplementedException();
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == trip.Id);
+            if (tripChek != null)
+            {
+                if (!tripChek.isActive)
+                {
+                    tripChek.isActive = true;
+                }
+                else
+                    throw new DuplicateObjExeption(trip.Id, "Trip already in system");
+            }
+            else
+            {
+                DataSource.Trips.Add(trip);
+            }
         }
 
-        public void UpdateTrip(Trip user)
+        public void UpdateTrip(Trip trip)
         {
-            throw new NotImplementedException();
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == trip.Id);
+            if (tripChek != null)
+            {
+                DataSource.Trips.Remove(tripChek);
+                DataSource.Trips.Add(trip);
+            }
+            else
+                throw new BadIdExeption(trip.Id, "trip doesn't exist to update");
         }
 
         public void UpdateTrip(int id, Action<Trip> update)
         {
-            throw new NotImplementedException();
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == id);
+            if (tripChek != null)
+            {
+                update(tripChek);
+            }
+            else
+                throw new BadIdExeption(id, "trip doesn't exist to update");
+
         }
 
         public void DeleteTrip(int id)
         {
-            throw new NotImplementedException();
+            var tripChek = DataSource.Trips.FirstOrDefault(t => t.Id == id && t.isActive);
+            if (tripChek != null)
+                tripChek.isActive = false;
+            else
+                throw new BadIdExeption(id, $"trip doesn't exist or deleted");
         }
         #endregion
 
         #region User CRUD Implementation
 
-        public User user(int id)
+        public User GetUser(int id)
         {
             throw new NotImplementedException();
         }

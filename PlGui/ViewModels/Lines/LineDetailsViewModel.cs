@@ -1,14 +1,13 @@
-﻿using Prism.Commands;
+﻿using BL.BLApi;
+using PlGui.StaticClasses;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
-using BL.BLApi;
-using PlGui.StaticClasses;
-using Prism.Regions;
 
 namespace PlGui.ViewModels.Lines
 {
@@ -67,7 +66,7 @@ namespace PlGui.ViewModels.Lines
         #region Service Decleration
 
         private IRegionManager regionManager;
-        
+
         public IBL Bl { get; set; }
 
         #endregion
@@ -78,7 +77,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public LineDetailsViewModel(IRegionManager manager , IBL bl) 
+        public LineDetailsViewModel(IRegionManager manager, IBL bl)
         {
             #region Service Initialization
 
@@ -92,7 +91,7 @@ namespace PlGui.ViewModels.Lines
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
 
             #endregion
-            
+
             #region Properties Implementation
 
             InsertBusPropertiesToCollection(Line);
@@ -100,7 +99,7 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
         }
-        
+
         #region Command Implementation
 
         private void LineDetailsButton(string commandParameter)
@@ -110,16 +109,16 @@ namespace PlGui.ViewModels.Lines
                 case "Edit":
                     var param = new NavigationParameters();
                     param.Add("Line", Line);
-                    regionManager.RequestNavigate(StringNames.MainRegion , StringNames.AddLine , param);
+                    regionManager.RequestNavigate(StringNames.MainRegion, StringNames.AddLine, param);
                     break;
                 case "Remove":
-                    
+
                     break;
             }
         }
 
         #endregion
-        
+
         #region Interface Implementaion
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

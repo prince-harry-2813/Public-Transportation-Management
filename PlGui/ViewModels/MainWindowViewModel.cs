@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Input;
-using BL.BLApi;
+﻿using BL.BLApi;
 using PlGui.StaticClasses;
 using PlGui.Views;
 using PlGui.Views.Lines;
@@ -11,6 +6,9 @@ using PlGui.Views.Stops;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
+using System.Diagnostics;
+using System.Windows.Input;
 using Unity;
 using BusesView = PlGui.Views.Bus.BusesView;
 
@@ -24,7 +22,7 @@ namespace PlGui.ViewModels
         private IUnityContainer unityContainer;
 
         #endregion
-        
+
         #region Properties Decleration
 
         private string _title = "Login Window";
@@ -35,7 +33,7 @@ namespace PlGui.ViewModels
         }
 
         private IBL Bl;
-       
+
         #endregion
 
         #region Command Decleration
@@ -45,7 +43,7 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(IRegionManager manager , IUnityContainer container)
+        public MainWindowViewModel(IRegionManager manager, IUnityContainer container)
         {
             #region Service Initialization
 
@@ -72,9 +70,9 @@ namespace PlGui.ViewModels
 
             regionManager.Regions.CollectionChanged += (sender, args) =>
             {
-              
+
             };
-                
+
             #endregion
         }
 
@@ -104,12 +102,12 @@ namespace PlGui.ViewModels
             }
 
             var parm = new NavigationParameters();
-            parm.Add("BL" , Bl);
+            parm.Add("BL", Bl);
 
 
             unityContainer.Resolve(viewType, commandParameter);
-            regionManager.RequestNavigate(StringNames.MainRegion , commandParameter , parm);
-            
+            regionManager.RequestNavigate(StringNames.MainRegion, commandParameter, parm);
+
             foreach (var view in regionManager.Regions[StringNames.MainRegion].Views)
             {
                 Debug.Print(view.ToString());
@@ -131,7 +129,7 @@ namespace PlGui.ViewModels
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoForward();
                     break;
                 case "Home":
-                    regionManager.RequestNavigate(StringNames.MainRegion , StringNames.ManagerLogin);
+                    regionManager.RequestNavigate(StringNames.MainRegion, StringNames.ManagerLogin);
                     break;
                 case "Clone":
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoBack();
@@ -142,5 +140,5 @@ namespace PlGui.ViewModels
         #endregion
     }
 
-   
+
 }

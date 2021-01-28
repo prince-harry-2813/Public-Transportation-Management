@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using BL.BLApi;
+﻿using BL.BLApi;
 using BL.BO;
 using PlGui.StaticClasses;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using Unity;
 
 namespace PlGui.ViewModels.Lines
 {
     public class AddLineViewModel : BindableBase
     {
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -26,8 +23,8 @@ namespace PlGui.ViewModels.Lines
         #endregion
 
         #region Properties Declaration
-        
-        private BL.BO.Line line;
+
+        private BL.BO.Line line = new BL.BO.Line();
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -45,12 +42,12 @@ namespace PlGui.ViewModels.Lines
 
         private BackgroundWorker updaeteWorker;
         private BackgroundWorker addWorker;
-        
-        public IBL Bl { get; set; }
+
+        public BL.BLApi.IBL Bl { get; set; }
 
         #endregion
 
-        #region Command Decleration
+        #region Command Deceleration
 
         public ICommand EneterKeyCommand { get; set; }
         public ICommand AddLineButtonCommand { get; set; }
@@ -58,17 +55,23 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public AddLineViewModel(IRegionManager manager , IUnityContainer container)
+        public AddLineViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
         {
-            #region Properties Initiaization
+            #region Service Init
 
-            Line = new Line()
-            {
-                Area = Area.Center,
-                Code = 0,
-                // TODO : Initialize First Station FirstStation;
-                // TODO : Initialize Last Station
-            };
+            Bl = bl;
+
+            #endregion
+
+            #region Properties Initialization
+
+            //Line = new Line()
+            //{
+            //    Area = Area.Center,
+            //    Code = 0,
+            //    Id = Bl.GetLineBy(l => l.IsActive || !l.IsActive).Count()
+
+            //};
             #endregion
 
             #region Command Initialization
@@ -78,7 +81,7 @@ namespace PlGui.ViewModels.Lines
             UpdateLineButtonCommand = new DelegateCommand(UpdateLineButton);
 
             #endregion
-            #region Service Initalization
+            #region Service Initialization
 
             regionManager = manager;
             unityContainer = container;
@@ -108,7 +111,7 @@ namespace PlGui.ViewModels.Lines
         {
             try
             {
-                if (addWorker != null) 
+                if (addWorker != null)
                 {
                     addWorker.CancelAsync();
                 }
@@ -119,7 +122,7 @@ namespace PlGui.ViewModels.Lines
                     Bl.AddLine(Line);
                 };
                 addWorker.RunWorkerAsync();
-            
+
             }
             catch (Exception exception)
             {
@@ -128,7 +131,7 @@ namespace PlGui.ViewModels.Lines
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion , new Uri(StringNames.LinesView , UriKind.Absolute));
+                regionManager.RequestNavigate(StringNames.MainRegion,StringNames.LinesView);
             }
         }
 
@@ -136,7 +139,7 @@ namespace PlGui.ViewModels.Lines
         {
             AddLineButton();
         }
-        
+
         #endregion
 
         #region Interface Implementaion
@@ -148,7 +151,7 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            
+
         }
 
         /// <summary>
