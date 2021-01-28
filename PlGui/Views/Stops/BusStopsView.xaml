@@ -193,7 +193,7 @@
                         <fa5:FontAwesome
                             VerticalAlignment="Center"
                             Foreground="{Binding Code, Converter={StaticResource StatusToColorConverter}}"
-                            Icon="Solid_Bus" />
+                            Icon="Brands_Artstation" />
 
                         <Label
                             x:Name="LineNumberLabel"
@@ -201,33 +201,35 @@
                             Content="{Binding Name}"
                             MouseDoubleClick="OnContentChanged" />
 
-                        <Label
+                        <TextBlock
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding Longitude}"
+                            Padding="10,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
                             Foreground="Black"
-                            MouseDoubleClick="OnContentChanged" />
+                            MouseUp="OnContentChanged">
+                            <Run>
+                                Long' =
+                            </Run>
+                            <Run Text="{Binding Longitude}" />
+                        </TextBlock>
 
-                        <Label
+                        <TextBlock
                             x:Name="av"
-                            Grid.Column="2"
-                            Width="Auto"
-                            Content="{Binding Latitude}"
-                            Foreground="Black"
-                            MouseDoubleClick="OnContentChanged" />
-
-                        <!--<Button
-                            x:Name="RefuleBus"
                             Grid.Column="3"
-                            Height="18pt"
-                            Margin="2"
-                            Padding="3"
-                            Command="{Binding RefuleBusButtonCommand}">
-                            <Button.Content>
-                                <fa:ImageAwesome Icon="Solid_GasPump" />
-                            </Button.Content>
-                        </Button>-->
+                            Width="Auto"
+                            Padding="10,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Foreground="Black"
+                            MouseUp="OnContentChanged">
+                            <Run>
+                                Lat' =
+                            </Run>
+                            <Run Text="{Binding Latitude}" />
+                        </TextBlock>
 
                         <Button
                             Grid.Column="4"

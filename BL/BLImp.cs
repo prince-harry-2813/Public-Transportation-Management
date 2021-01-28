@@ -349,7 +349,10 @@ namespace BL
             Cancel = true;
         }
 
-        public void SetStationPanel(int station, Action<LineTiming> updateBus);
+        public void SetStationPanel(int station, Action<LineTiming> updateBus)
+        {
+
+        }
 
         #endregion
     }
