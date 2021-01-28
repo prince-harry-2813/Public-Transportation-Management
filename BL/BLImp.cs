@@ -24,6 +24,7 @@ namespace BL
 {
     internal class BLImp : IBL
     {
+        
         private IDAL iDal = DalApi.DalFactory.GetIDAL();
 
         #region IBL Bus Implementation
@@ -153,17 +154,17 @@ namespace BL
             if (line == null)
                 throw new NullReferenceException("Line to add is Null please try again");
 
-            if (line.FirstStation == null || line.FirstStation == 0)
+            if (line.FirstStation.Station.Code == null || line.FirstStation.Station.Code == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            if (line.LastStation == null || line.LastStation == 0)
+            if (line.LastStation == null || line.LastStation.Station.Code == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
-            var station = iDal.GetStation(line.FirstStation);
+            var station = iDal.GetStation(line.FirstStation.Station.Code);
             if (station == null)
                 throw new BadBusStopIDException("First Bus stop not exist in the system", null);
 
-           var station2 = iDal.GetStation(line.LastStation);
+           var station2 = iDal.GetStation(line.LastStation.Station.Code);
             if (station2 == null)
                 throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
@@ -216,11 +217,20 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
-                    yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
+                var line = new Line()
+                {
+                    Id = VARIABLE.Id,
+                    Code = VARIABLE.Code,
+                    Area = (Area)VARIABLE.Area,
+                    IsActive = VARIABLE.isActive,
+                     
+
+                };
+                yield return line;
             }
         }
 
-        public IEnumerable<Line> GetLineBy(Predicate<BO.Line> predicate)
+        public IEnumerable<Line> GetLinesBy(Predicate<BO.Line> predicate)
         {
             foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
             {
@@ -383,13 +393,13 @@ namespace BL
 
         public IEnumerable<LineStation> GetAllLinesStationBy(Predicate<BO.LineStation> predicate)
         {
-            foreach (var item in GetAllLinesStation())
+            foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive || !l.isActive))
             {
                 LineStation lineStation = new LineStation();
                 item.CopyPropertiesTo(lineStation);
                 if (predicate(lineStation))
                 {
-                    yield return (LineStation)lineStation;
+                    yield return lineStation;
                 }
             }
         }
@@ -415,6 +425,7 @@ namespace BL
                 iDal.UpdateLineStation(a);
             }
         }
+
         #endregion
     }
 }

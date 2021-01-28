@@ -36,7 +36,7 @@ namespace BL.BLApi
 
         IEnumerable<BO.Line> GetAllLines();
 
-        IEnumerable<BO.Line> GetLineBy(Predicate<BO.Line> predicate);
+        IEnumerable<BO.Line> GetLinesBy(Predicate<BO.Line> predicate);
 
 
         #endregion
@@ -81,7 +81,7 @@ namespace BL.BLApi
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        IEnumerable<BO.LineStation> GetAllLinesStationBy(Predicate<DO.LineStation> predicate);
+        IEnumerable<BO.LineStation> GetAllLinesStationBy(Predicate<BO.LineStation> predicate);
 
         void AddLine(BO.LineStation lineStation);
 
