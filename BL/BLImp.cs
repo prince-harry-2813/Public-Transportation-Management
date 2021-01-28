@@ -125,7 +125,7 @@ namespace BL
             return (Bus)busToCopy.CopyPropertiesToNew(typeof(Bus));
         }
 
-        public IEnumerable<Bus> GetBusBy(Predicate<object> predicate)
+        public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
         {
             return null;
         }
@@ -312,11 +312,7 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
+       
 
         #endregion
 
