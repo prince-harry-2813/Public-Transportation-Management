@@ -18,7 +18,7 @@ namespace BL.BO
         /// Time span from planned until trip was begun (if in time => value = 0)  
         /// </summary>
         public TimeSpan ActualTakeOff { get; set; }
-        public int PrevStation { get; set; }
+        public Station PrevStation { get; set; }
         /// <summary>
         /// Time span from previous station
         /// </summary>

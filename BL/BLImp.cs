@@ -202,6 +202,7 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllLines())
             {
+                VARIABLE.Id
                     yield return (Line)VARIABLE.CopyPropertiesToNew(typeof(Line));
             }
         }

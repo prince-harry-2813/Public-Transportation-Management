@@ -13,7 +13,7 @@ namespace PlGui.ViewModels.Lines
 {
     public class LinesViewViewModel : BindableBase
     {
-        #region Properties Decleration
+        #region Properties Deceleration
 
         private BL.BO.Line line;
 
@@ -39,7 +39,7 @@ namespace PlGui.ViewModels.Lines
         public IBL Bl { get; set; }
         #endregion
 
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -54,7 +54,7 @@ namespace PlGui.ViewModels.Lines
         #endregion
         public LinesViewViewModel(IRegionManager manager, IUnityContainer container)
         {
-            #region Properties Decleration
+            #region Properties Deceleration
 
             Bl = BLFactory.GetIBL();
             LinesCollection = new ObservableCollection<Line>();
@@ -62,7 +62,7 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
 
-            #region Service Initalization
+            #region Service Initialization
 
             regionManager = manager;
             unityContainer = container;
@@ -91,7 +91,7 @@ namespace PlGui.ViewModels.Lines
         }
 
         /// <summary>
-        /// Naviagte to line Details 
+        /// Navigate to line Details 
         /// </summary>
         /// <param name="commandParameter"></param>
         private void UpdateLineButton(string commandParameter)
@@ -104,7 +104,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Private Methodes
+        #region Private Methods
 
         private void RefreshView()
         {

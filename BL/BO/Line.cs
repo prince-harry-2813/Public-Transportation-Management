@@ -22,8 +22,8 @@ namespace BL.BO
         /// </summary>
         public List<LineStation> Stations { get; set; }
         public Area Area { get; set; }
-        public int FirstStation { get; set; }
-        public int LastStation { get; set; }
+        public LineStation FirstStation { get; set; }
+        public LineStation LastStation { get; set; }
         public bool IsActive { get; set; }
     }
 }
