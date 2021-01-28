@@ -5,7 +5,7 @@
     /// </summary>
     public class LineStation
     {
-        public Line LineId { get; set; }
+        public int LineId { get; set; }
         public Station Station { get; set; }
         public int LineStationIndex { get; set; }
         public int PrevStation { get; set; }

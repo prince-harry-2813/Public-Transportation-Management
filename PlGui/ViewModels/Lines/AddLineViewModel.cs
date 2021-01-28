@@ -119,6 +119,8 @@ namespace PlGui.ViewModels.Lines
                 addWorker = new BackgroundWorker();
                 addWorker.DoWork += (sender, args) =>
                 {
+                    Line.FirstStation.LineStationIndex = 0;
+                    Line.LastStation.LineStationIndex = Line.Stations.Count();
                     Bl.AddLine(Line);
                 };
                 addWorker.RunWorkerAsync();

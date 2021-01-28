@@ -178,7 +178,7 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            ItemsSource="{Binding BusLines}">
+            ItemsSource="{Binding LinesCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="2">

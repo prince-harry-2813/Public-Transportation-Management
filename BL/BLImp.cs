@@ -154,7 +154,7 @@ namespace BL
             if (line == null)
                 throw new NullReferenceException("Line to add is Null please try again");
 
-            if (line.FirstStation.Station.Code == null || line.FirstStation.Station.Code == 0)
+            if (line.FirstStation == null || line.FirstStation.Station.Code == 0)
                 throw new BadBusStopIDException("First Station Id not added or not exist ", new ArgumentException());
 
             if (line.LastStation == null || line.LastStation.Station.Code == 0)
@@ -170,11 +170,36 @@ namespace BL
 
             try
             {
-                iDal.AddLine((DO.Line)line.CopyPropertiesToNew(typeof(DO.Line)));
+                iDal.AddLineStation( new DO.LineStation()
+                {
+                    LineId = line.Id,
+                    LineStationIndex = 0,
+                    isActive = true,
+                    StationId = line.FirstStation.Station.Code,
+                    NextStation = line.LastStation.Station.Code
+                });
+                iDal.AddLineStation(  new DO.LineStation()
+                {
+                    LineId = line.Id,
+                    LineStationIndex = 1,
+                    isActive = true,
+                    StationId = line.LastStation.Station.Code,
+                    PrevStation = line.FirstStation.Station.Code
+                });
+                iDal.AddLine(new DO.Line()
+                {
+                    LastStation = line.LastStation.Station.Code,
+                    Area = (DO.Area)line.Area,
+                    Code=line.Code,
+                    FirstStation=line.FirstStation.Station.Code,
+                    Id=line.Id,
+                    isActive= true
+
+                }) ;
             }
             catch (Exception e)
             {
-                throw new BadLineIdException("Line with the same id is already exist", new ArgumentException());
+                throw new ArgumentException("Check inner exception", e);
             }
         }
 
@@ -223,7 +248,12 @@ namespace BL
                     Code = VARIABLE.Code,
                     Area = (Area)VARIABLE.Area,
                     IsActive = VARIABLE.isActive,
+                    LastStation = GetLineStation(VARIABLE.Id, VARIABLE.LastStation),
+                    FirstStation = GetLineStation(VARIABLE.Id, VARIABLE.FirstStation),
 
+                    Stations = from LS in GetAllLinesStationBy(l => l.isActive && l.LineId == VARIABLE.Id)
+                               orderby LS.LineStationIndex
+                               select LS,
 
                 };
                 yield return line;
@@ -252,7 +282,7 @@ namespace BL
 
             if (station.Name.Length == 0)
             {
-                station.Name = "Exemple " + station.Code.ToString();
+                station.Name = "Example " + station.Code.ToString();
             }
             if (station.Code == 0)
             {
@@ -370,7 +400,8 @@ namespace BL
         {
             LineStation station = new LineStation();
             iDal.GetLineStation(lineId, stationCode).CopyPropertiesTo(station);
-            return (LineStation)station;
+            station.Station=(BO.Station) iDal.GetStation(stationCode).CopyPropertiesToNew(typeof(BO.Station));
+            return station;
         }
 
         public IEnumerable<LineStation> GetAllLinesStation()
@@ -394,9 +425,9 @@ namespace BL
             }
         }
 
-        public void AddLine(LineStation lineStation)
+        public void AddLineStation(LineStation lineStation)
         {
-            iDal.AddLine((DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation)));
+            iDal.AddLineStation((DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation)));
         }
 
         public void UpdateLineStation(LineStation lineStation)
