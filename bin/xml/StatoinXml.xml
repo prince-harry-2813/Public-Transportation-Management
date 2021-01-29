@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Station>
+    <Code>898767</Code>
+    <Name>kjhdh</Name>
+    <Longitude>35.058920941482725</Longitude>
+    <Latitude>33</Latitude>
+    <isActive>true</isActive>
+  </Station>
+  <Station>
+    <Code>123</Code>
+    <Name>אברבאנל </Name>
+    <Longitude>35.49441</Longitude>
+    <Latitude>33.28929</Latitude>
+    <isActive>true</isActive>
+  </Station>
+  <Station>
+    <Code>321</Code>
+    <Name>אח"י דקר</Name>
+    <Longitude>34.78778</Longitude>
+    <Latitude>33</Latitude>
+    <isActive>true</isActive>
+  </Station>
+</ArrayOfStation>
