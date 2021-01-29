@@ -13,13 +13,14 @@ namespace BL.BO
         /// </summary>
         public int LineID { get; set; }
 
-        public int LineNumber { get; set; }
+        public int LineCode { get; set; }
+
         /// <summary>
-        /// Time on first station 
+        /// Time on first station Acctual Take of 
         /// </summary>
         public TimeSpan StartedTime { get; set; }
 
-        public Station LastStation { get; set; }
+        public LineStation LastStation { get; set; }
 
         /// <summary>
         /// Arriving to station time

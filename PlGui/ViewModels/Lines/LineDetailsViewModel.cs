@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,12 +14,12 @@ using BL.BO;
 
 namespace PlGui.ViewModels.Lines
 {
-    public class LineDetailsViewModel : BindableBase
+    public class LineDetailsViewModel : BindableBase , INavigationAware
     {
 
         #region Properties Declaraion
 
-        private BL.BO.Line line;
+        private BL.BO.Line line = new Line();
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -31,39 +32,6 @@ namespace PlGui.ViewModels.Lines
             set
             {
                 SetProperty(ref line, value);
-            }
-        }
-        //return Bl.GetBus(1234456 /*TODO: Implement here bus licence Number from the user control sender */)
-
-        private PropertyDetails selectedItem;
-        public PropertyDetails SelectedItem
-        {
-            get => selectedItem;
-            set
-            {
-                SetProperty(ref selectedItem, value);
-            }
-        }
-
-        private ObservableCollection<PropertyDetails> lbItemSource;
-
-        public ObservableCollection<PropertyDetails> LbItemSource
-        {
-            get => lbItemSource;
-            set
-            {
-                SetProperty(ref lbItemSource, value);
-            }
-        }
-
-        private ObservableCollection<PropertyDetails> busStopsCollection;
-
-        public ObservableCollection<PropertyDetails> BusStopsCollection
-        {
-            get => busStopsCollection;
-            set
-            {
-                SetProperty(ref busStopsCollection, value);
             }
         }
         
@@ -107,9 +75,6 @@ namespace PlGui.ViewModels.Lines
             #endregion
 
             #region Properties Implementation
-
-            InsertBusPropertiesToCollection(Line);
-            SelectedItem = LbItemSource.FirstOrDefault();
 
             #endregion
         }
@@ -155,47 +120,55 @@ namespace PlGui.ViewModels.Lines
 
             // Initialize View object 
             Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value;
+                  //  InsertBusPropertiesToCollection(Line);
         }
 
         #endregion
 
         #region Private Method
 
-        private void InsertBusStopCollection(Line line)
-        {
-        //    insertingSecondListWorker = new BackgroundWorker();
-        //    insertingSecondListWorker.WorkerSupportsCancellation = true;
-        //    insertingSecondListWorker.WorkerReportsProgress = true;
-        //    insertingSecondListWorker.DoWork += (sender, args) =>
-                foreach (var item in line.Stations)
-                {
+        //private void InsertBusStopCollection(Line line)
+        //{
+        ////    insertingSecondListWorker = new BackgroundWorker();
+        ////    insertingSecondListWorker.WorkerSupportsCancellation = true;
+        ////    insertingSecondListWorker.WorkerReportsProgress = true;
+        ////    insertingSecondListWorker.DoWork += (sender, args) =>
+        //        foreach (var item in line.Stations)
+        //        {
                     
-                }
-        }
+        //        }
+        //}
 
-        private void InsertBusPropertiesToCollection(BL.BO.Line line)
-        {
-            LbItemSource.Clear();
-            foreach (PropertyInfo VARIABLE in line.GetType().GetProperties())
-            {
-                LbItemSource.Add(new PropertyDetails()
-                {
-                    PropertyType = VARIABLE.PropertyType,
-                    PropertyName = VARIABLE.Name,
-                    Propertyvalue = VARIABLE.GetConstantValue().ToString()
-                });
-            }
-        }
+        //private void InsertBusPropertiesToCollection(BL.BO.Line line)
+        //{
+        //    if (line == null ) return;
+            
+        //    LbItemSource = new ObservableCollection<PropertyDetails>();
+        //    foreach (PropertyInfo VARIABLE in line.GetType().GetProperties())
+        //    {
+        //        if (VARIABLE.PropertyType is IEnumerable<Station>)
+        //        {
+        //            continue;
+        //        }
 
-        private void InsertCollectionToBus()
-        {
-            foreach (var VARIABLE in Line.GetType().GetProperties())
-            {
-                var property = LbItemSource.Where(details => details.PropertyName == VARIABLE.Name);
+        //        LbItemSource.Add(new PropertyDetails()
+        //        {
+        //            PropertyType = VARIABLE.PropertyType,
+        //            PropertyName = VARIABLE.Name,
+        //            PropertyValue = VARIABLE.GetValue(obj: line, null).ToString()
+        //        });
+        //    }
+        //}
 
-                VARIABLE.SetValue(Line, property.GetEnumerator().Current.Propertyvalue);
-            }
-        }
+        //private void InsertCollectionToBus()
+        //{
+        //    foreach (var VARIABLE in Line.GetType().GetProperties())
+        //    {
+        //        var property = LbItemSource.Where(details => details.PropertyName == VARIABLE.Name);
+
+        //        VARIABLE.SetValue(Line, property.GetEnumerator().Current.PropertyValue);
+        //    }
+        //}
 
         #endregion
     }
@@ -220,7 +193,7 @@ namespace PlGui.ViewModels.Lines
 
         private string propertyValue;
 
-        public string Propertyvalue
+        public string PropertyValue
         {
             get => propertyValue;
             set

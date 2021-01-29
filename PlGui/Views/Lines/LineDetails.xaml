@@ -91,7 +91,7 @@
 
 
             <!--  Bus properties Detais  -->
-            <ListBox
+            <!--<ListBox
                 x:Name="lbLineDetails"
                 Grid.Column="0"
                 Margin="10"
@@ -108,7 +108,7 @@
                             <Label
                                 MinWidth="150"
                                 HorizontalAlignment="Left"
-                                Content="{Binding PropertyKey, Mode=OneWay}"
+                                Content="{Binding PropertyName, Mode=TwoWay}"
                                 FontSize="8pt"
                                 FontWeight="Heavy" />
 
@@ -120,39 +120,124 @@
                                 BorderThickness="0.5"
                                 FontSize="8pt"
                                 IsReadOnly="True"
-                                Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding PropertyValue , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </ListBox>-->
+
+            <StackPanel
+                Margin="10"
+                Background="White"
+                DataContext="{Binding Line , Mode=TwoWay}"
+                IsEnabled="{Binding IsInEditMode}">
+                <!--  ID  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        FontSize="8pt">
+                        ID : 
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Id , Mode=TwoWay}" />
+                </DockPanel>
+                <!--  Code  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        Code :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Code ,Mode=TwoWay}" />
+                </DockPanel>
+                <!--  Area  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        Area : 
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Area ,Mode=TwoWay}" />
+                </DockPanel>
+                <!--  FirstStation  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        First Station :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding FirstStation.Station.Name , Mode=TwoWay}" />
+                </DockPanel>
+                <!--  LastStation  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        LastStation :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding LastStation.Station.Name , Mode=TwoWay}" />
+                </DockPanel>
+            </StackPanel>
 
             <!--  Stops of line Details  -->
             <ScrollViewer Grid.Column="1">
-                <ItemsControl  
-                              Margin="10"
-                              HorizontalContentAlignment="Stretch"
-                              Background="White"
-                              ItemsSource="{Binding Line.Stations}"
-                              ><ItemsControl.ItemTemplate>
+                <ItemsControl
+                    Margin="10"
+                    HorizontalContentAlignment="Stretch"
+                    Background="White"
+                    ItemsSource="{Binding Line.Stations , Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock
-                                FontSize="8pt"
-                                HorizontalAlignment="Stretch"
-                                >
+                            <TextBlock HorizontalAlignment="Stretch" FontSize="8pt"
+                                       Margin="10">
                                 <Run
-                                    Text="{Binding Name}">
-                                </Run>
-                                <Run
-                                    Text="{Binding Code}">
-                                </Run>
-                                <Run
-                                    Text="{Binding }">
-                                </Run>
+                                    Text="{Binding Station.Name , Mode=TwoWay}" />
+                                <Run Text="{Binding Station.Code , Mode=TwoWay}" />
                             </TextBlock>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
+
         </Grid>
     </StackPanel>
 

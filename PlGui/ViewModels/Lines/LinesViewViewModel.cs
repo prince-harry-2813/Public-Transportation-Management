@@ -87,7 +87,7 @@ namespace PlGui.ViewModels.Lines
             var parm = new NavigationParameters();
             parm.Add("Line", Line);
             unityContainer.RegisterType(typeof(object), typeof(AddLine), "AddLine");
-            regionManager.RequestNavigate(StringNames.MainRegion, "AddLine");
+            regionManager.RequestNavigate(StringNames.MainRegion, "AddLine" , parm);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace PlGui.ViewModels.Lines
             var parm = new NavigationParameters(commandParameter);
             parm.Add("Line", Line);
             unityContainer.RegisterType(typeof(object), typeof(LineDetails), "LineDetails");
-            regionManager.RequestNavigate(StringNames.MainRegion, "LineDetails");
+            regionManager.RequestNavigate(StringNames.MainRegion, "LineDetails" , parm);
         }
 
         #endregion

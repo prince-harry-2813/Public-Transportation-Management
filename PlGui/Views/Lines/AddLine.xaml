@@ -38,14 +38,32 @@
             Content="First Station"
             FontSize="14pt" />
 
-        <TextBox
+        <ComboBox
             Grid.Row="0"
             Grid.Column="1"
             Margin="10"
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Line.FirstStation.Station.Code, UpdateSourceTrigger=PropertyChanged}" />
+            FontFamily="Consulas"
+            ItemsSource="{Binding StationsList}"
+            SelectedItem="{Binding FirstStation}"
+            Text="{Binding FirstStation.Station.Name, UpdateSourceTrigger=PropertyChanged}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                            FontWeight="SemiBold"
+                            FontSize="12pt"
+                            Text="{Binding Name }">
+                            <Run
+                                Text=" ">
+                            </Run>
+                            <Run
+                            Text="{Binding Code}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <!--#endregion-->
 
         <!--#region Last Station Details-->
@@ -58,23 +76,42 @@
             Content="Last Station"
             FontSize="14pt" />
 
-        <TextBox
+        <ComboBox
             Grid.Row="1"
             Grid.Column="1"
             Margin="10"
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Line.LastStation.Station.Code, UpdateSourceTrigger=PropertyChanged}" />
+            FontFamily="Consulas"
+            ItemsSource="{Binding StationsList}"
+            SelectedItem="{Binding LastStation}"
+            Text="{Binding LastStation.Station.Name, UpdateSourceTrigger=PropertyChanged}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        FontSize="12pt"
+                        Text="{Binding Name}">
+                        <Run
+                            Text=" ">
+                                
+                        </Run>
+                        <Run
+                            Text="{Binding Code}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <!--#endregion-->
 
         <!--#region ID Details-->
         <Label
             Grid.Row="2"
             Grid.Column="0"
-            Margin="10"
+            Margin="10,10.333,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             Content="ID"
             FontSize="14pt" />
 
@@ -116,6 +153,6 @@
                 Content="Add"
                 Command="{Binding AddLineButtonCommand}"></Button>
 
-        
+
     </Grid>
 </UserControl>

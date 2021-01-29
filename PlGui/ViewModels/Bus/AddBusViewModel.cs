@@ -4,10 +4,13 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using BL.BO;
 
 namespace PlGui.ViewModels.Bus
 {
@@ -63,6 +66,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
+      
         public IBL Bl { get; set; }
 
         #endregion
@@ -84,6 +88,7 @@ namespace PlGui.ViewModels.Bus
 
             #region Command Initialization
 
+           
             EneterKeyCommand = new DelegateCommand(EnterKey);
 
             #endregion

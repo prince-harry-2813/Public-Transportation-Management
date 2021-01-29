@@ -21,4 +21,11 @@
     <Latitude>33</Latitude>
     <isActive>true</isActive>
   </Station>
+  <Station>
+    <Code>432</Code>
+    <Name>aynu</Name>
+    <Longitude>34.80672</Longitude>
+    <Latitude>33</Latitude>
+    <isActive>true</isActive>
+  </Station>
 </ArrayOfStation>

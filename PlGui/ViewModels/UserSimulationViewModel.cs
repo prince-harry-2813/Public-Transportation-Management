@@ -42,6 +42,21 @@ namespace PlGui.ViewModels
             }
         }
 
+        private ObservableCollection<LineTiming> lineTimings;
+
+        /// <summary>
+        /// Simulation Dispatchering timer sec = Simulation time / Real sec 
+        /// </summary>
+        public ObservableCollection<LineTiming> LineTimings
+        {
+            get => lineTimings ; set
+            {
+                value.OrderBy(timing => timing.ArrivingTime);
+                SetProperty(ref lineTimings, value);
+            }
+        }
+
+
         private bool isSimulationRuning;
         /// <summary>
         /// Determinds wether simulation started runing

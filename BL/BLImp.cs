@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -415,7 +416,7 @@ namespace BL
                 , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
 
             simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6))));
-            rideOperation.interval = simulationTimer.Interval.Milliseconds;
+            //rideOperation.interval = simulationTimer.Interval.Milliseconds;
             simulationTimer.Tick += (sender, args) =>
             {
                 if (Cancel)
@@ -427,7 +428,7 @@ namespace BL
 
                 simulatorTime += TimeSpan.FromSeconds(1);
                 updateTime.Invoke(simulatorTime);
-                rideOperation.UpdateSimualtionTime(simulatorTime);
+                //rideOperation.UpdateSimualtionTime(simulatorTime);
                 Debug.Print(simulatorTime.ToString());
             };
             simulationTimer.Start();
@@ -464,6 +465,10 @@ namespace BL
             {
                 LineStation lineStation = new LineStation();
                 item.CopyPropertiesTo(lineStation);
+                
+                lineStation.Station = new Station();
+                lineStation.Station = GetStation(item.StationId);
+                lineStation.Station.Lines = new List<Line>();
                 if (predicate(lineStation))
                 {
                     yield return lineStation;
@@ -502,7 +507,7 @@ namespace BL
             Cancel = true;
         }
 
-        private RideOperation rideOperation = new RideOperation((IDAL)iDal);
+        private RideOperation rideOperation = RideOperation.Instance;
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
@@ -513,81 +518,126 @@ namespace BL
 
             rideOperation.StartSimulation();
         }
-        class RideOperation
+
+
+        #endregion
+    }
+    public class RideOperation
+    {
+
+        private static RideOperation instance;
+
+        public static RideOperation Instance
         {
-            public int interval;
-            private event EventHandler<LineTiming> updatebusPrivate;
-            private int staionID;
-            List<LineTrip> linesTrips = new List<LineTrip>();
-            private IDAL idal;
-            private IBL bl;
-            private BackgroundWorker getLineStaionworker = new BackgroundWorker();
-            private TimeSpan simulationTime;
-
-            public RideOperation(IDAL dal)
+            get => instance;
+            set
             {
-                idal = dal;
-                this.bl = bl;
-
-                if (getLineStaionworker.IsBusy)
+                if (Instance == null)
                 {
-                    getLineStaionworker.CancelAsync();
+                    value = new RideOperation();
                 }
-                getLineStaionworker.WorkerReportsProgress = true;
-                getLineStaionworker.WorkerReportsProgress = true;
-                getLineStaionworker.DoWork += (sender, args) =>
-                {
-                    int i = 0;
-                    foreach (var item in idal.GetAllLinesTripBy(trip => trip.isActive))
-                    {
-                        if (getLineStaionworker.CancellationPending)
-                            break;
+                instance = value;
+            }
+        }
+        public int interval;
+        private event EventHandler<LineTiming> updatebusPrivate;
+        private int staionID;
+        List<LineTrip> linesTrips = new List<LineTrip>();
+        private IDAL idal;
+        private IBL bl;
+        private BackgroundWorker getLineStaionworker = new BackgroundWorker();
+        private TimeSpan simulationTime;
+        List<BusOnTrip> busesOnTrips = new List<BusOnTrip>();
 
-                        getLineStaionworker.ReportProgress(i, item.CopyPropertiesToNew(typeof(LineTrip)));
-                        i++;
-                        if (i == 99)
-                            i = 90;
-                    }
-                };
-                getLineStaionworker.ProgressChanged += (sender, args) =>
-                {
-                    linesTrips.Add((LineTrip)args.UserState);
-                };
+        public RideOperation()
+        {
+            idal = DalFactory.GetIDAL();
+            this.bl = bl;
 
-                getLineStaionworker.RunWorkerCompleted += (sender, args) =>
-                {
-                    linesTrips.Sort((trip, lineTrip) => trip.StartAt.CompareTo(lineTrip.StartAt));
-                };
-
-                getLineStaionworker.RunWorkerAsync();
+            if (getLineStaionworker.IsBusy)
+            {
+                getLineStaionworker.CancelAsync();
             }
 
-            public void StartSimulation()
+            #region Rides Operation Worker Initialization 
+            getLineStaionworker.WorkerReportsProgress = true;
+            getLineStaionworker.WorkerReportsProgress = true;
+            getLineStaionworker.DoWork += (sender, args) =>
             {
-                foreach (var item in linesTrips)
+                int i = 0;
+                foreach (var item in idal.GetAllLinesTripBy(trip => trip.isActive))
                 {
-                    //   for
-                    Task.Factory.StartNew(() =>
+                    if (getLineStaionworker.CancellationPending)
+                        break;
+
+                    getLineStaionworker.ReportProgress(i, item.CopyPropertiesToNew(typeof(LineTrip)));
+                    i++;
+                    if (i == 99)
+                        i = 90;
+                }
+            };
+            getLineStaionworker.ProgressChanged += (sender, args) =>
+            {
+                linesTrips.Add((LineTrip)args.UserState);
+            }; 
+            #endregion
+
+            getLineStaionworker.RunWorkerCompleted += (sender, args) =>
+            {
+                linesTrips.Sort((trip, lineTrip) => trip.StartAt.CompareTo(lineTrip.StartAt));
+
+                int i = 0;
+                foreach (var VARIABLE in linesTrips)
+                {
+                            //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
+                            busesOnTrips.Add(new BusOnTrip()
+                            {
+                                ActualTakeOff = simulationTime,
+                                Id = i,
+                                LineId = VARIABLE.LineId,
+                                isActive = true,
+                                LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum ,
+                                //NextStationAt = idal.GetAdjacentStations()
+                            });
+                        
+                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0 )
                     {
-                        LineTiming lineTiming = new LineTiming()
+                        busesOnTrips.Add(new BusOnTrip()
                         {
-                            LastStation = (Station)idal.GetStation(idal.GetLine(item.LineId).LastStation)
-                                .CopyPropertiesToNew(typeof(Station))
-                            //,ArrivingTime = 
-                        };
-                    });
+                            
+                        });
+                    }
+
+                    i++;
                 }
+            };
 
-            }
+            getLineStaionworker.RunWorkerAsync();
+        }
 
-            public void UpdateSimualtionTime(TimeSpan time)
+        public void StartSimulation()
+        {
+            foreach (var item in linesTrips)
             {
-                simulationTime = time;
+                //   for
+                Task.Factory.StartNew(() =>
+                {
+                    LineTiming lineTiming = new LineTiming()
+                    {
+                       // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
+                         //   .CopyPropertiesToNew(typeof(Station))
+                        //,ArrivingTime = 
+                    };
+                });
             }
 
         }
 
-        #endregion
+        public void UpdateSimualtionTime(TimeSpan time)
+        {
+            simulationTime = time;
+        }
+
     }
 }
 

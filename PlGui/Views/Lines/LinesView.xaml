@@ -178,10 +178,14 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
+            SelectedItem="{Binding Line}"
             ItemsSource="{Binding LinesCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40*" />
                             <ColumnDefinition Width="40*" />
@@ -191,27 +195,25 @@
                         </Grid.ColumnDefinitions>
 
                         <fa:FontAwesome
-							Grid.Column="0"
+                            Grid.Column="0"
                             VerticalAlignment="Center"
-                           
                             Icon="Solid_Bus" />
 
-						<Label
+                        <Label
                             x:Name="LineNumberLabel"
                             Grid.Column="1"
                             Content="{Binding Area}"
-							ContentStringFormat=" {0} : איזור "
+                            ContentStringFormat=" {0} : איזור "
                             MouseDoubleClick="OnContentChanged" />
 
-							<Label
+                        <Label
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
                             Content="{Binding Path=Code}"
-								ContentStringFormat=" {0} : קו"
+                            ContentStringFormat=" {0} : קו"
                             Foreground="Black"
-                            MouseDoubleClick="OnContentChanged"
-                            />
+                            MouseDoubleClick="OnContentChanged" />
 
                         <!--<Button
                             x:Name="RefuleBus"
@@ -231,8 +233,10 @@
                             Margin="2"
                             Padding="3"
                             Command="{Binding ChooseLineButtonCommand}"
-                            Content="תחנות הקו" FontWeight="Bold" FontSize="13" FontFamily="Broadway"
-							/>
+                            Content="תחנות הקו"
+                            FontFamily="Broadway"
+                            FontSize="13"
+                            FontWeight="Bold" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

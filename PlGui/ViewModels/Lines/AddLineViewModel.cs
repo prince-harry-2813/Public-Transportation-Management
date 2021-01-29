@@ -5,10 +5,12 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using PlGui.Views.Lines;
 using Unity;
 
 namespace PlGui.ViewModels.Lines
@@ -24,7 +26,18 @@ namespace PlGui.ViewModels.Lines
 
         #region Properties Declaration
 
-        private BL.BO.Line line = new BL.BO.Line();
+        private BL.BO.Line line = new BL.BO.Line()
+        {
+            LastStation = new LineStation()
+            {
+                Station = new Station()
+            },
+            FirstStation = new LineStation()
+            {
+                Station =  new Station()
+            }
+            ,Stations =  new List<LineStation>()
+        };
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -40,8 +53,51 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
+        private List<Station> stationsList = new List<Station>();
+        /// <summary>
+        /// Combo box Choose sattion 
+        /// </summary>
+        public List<Station> StationsList
+        {
+            get => stationsList;
+            set
+            {
+                SetProperty(ref stationsList, value);
+            }
+        }
+
+        private Station firstStation = new Station();
+        /// <summary>
+        /// Combo box ChooseFirst station Selected Item
+        /// </summary>
+        public Station FirstStation
+        {
+            get => firstStation;
+            set
+            {
+                Line.FirstStation.Station = FirstStation;
+                SetProperty(ref firstStation, value);
+            }
+        }
+
+
+        private Station lastStation = new Station();
+        /// <summary>
+        ///  Combo box ChooseFirst station Selected Item
+        /// </summary>
+        public Station LastStation
+        {
+            get => lastStation;
+            set
+            {
+                Line.LastStation.Station = value;
+                SetProperty(ref lastStation, value);
+            }
+        }
+
         private BackgroundWorker updaeteWorker;
         private BackgroundWorker addWorker;
+        BackgroundWorker getStationsList ;
 
         public BL.BLApi.IBL Bl { get; set; }
 
@@ -74,6 +130,43 @@ namespace PlGui.ViewModels.Lines
             //};
             #endregion
 
+            #region WorkerInitialization
+
+            getStationsList = new BackgroundWorker();
+            getStationsList.WorkerSupportsCancellation = true;
+            getStationsList.WorkerReportsProgress = true;
+            getStationsList.DoWork += (sender, args) =>
+            {
+                foreach (var VARIABLE in Bl.GetAllStations())
+                {
+                    if (VARIABLE.isActive)
+                    {
+                        getStationsList.ReportProgress(0, VARIABLE);
+                    }
+                }
+                int a = Bl.GetAllLinesStationBy(station => station.isActive || !station.isActive).Count() + 1; 
+                getStationsList.ReportProgress(0 , a);
+            };
+            getStationsList.ProgressChanged += (sender, args) =>
+            {
+                if (args.UserState is int)
+                {
+                    Line.Id = (int)args.UserState + 1;
+                }
+                else
+                {
+                    StationsList.Add(args.UserState as Station);
+                }
+            };
+
+            getStationsList.RunWorkerCompleted += (sender, args) =>
+            {
+                StationsList.Sort((station, station1) => station.Code.CompareTo(station1.Code));
+            };
+            getStationsList.RunWorkerAsync();
+
+            #endregion
+
             #region Command Initialization
 
             EneterKeyCommand = new DelegateCommand(EnterKey);
@@ -81,6 +174,7 @@ namespace PlGui.ViewModels.Lines
             UpdateLineButtonCommand = new DelegateCommand(UpdateLineButton);
 
             #endregion
+
             #region Service Initialization
 
             regionManager = manager;
@@ -119,6 +213,8 @@ namespace PlGui.ViewModels.Lines
                 addWorker = new BackgroundWorker();
                 addWorker.DoWork += (sender, args) =>
                 {
+                    Line.FirstStation.Station = FirstStation;
+                    Line.LastStation.Station = LastStation;
                     Line.FirstStation.LineStationIndex = 0;
                     Line.LastStation.LineStationIndex = Line.Stations.Count();
                     Bl.AddLine(Line);
@@ -153,7 +249,9 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
+           regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+           addWorker.CancelAsync();
+           updaeteWorker.CancelAsync();
         }
 
         /// <summary>

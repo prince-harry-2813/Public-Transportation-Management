@@ -11,6 +11,5 @@
         public int PrevStation { get; set; }
         public int NextStation { get; set; }
         public bool isActive { get; set; }
-
     }
 }
