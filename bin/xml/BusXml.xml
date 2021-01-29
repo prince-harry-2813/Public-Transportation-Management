@@ -5,9 +5,9 @@
     <RegisDate>2021-01-28T00:08:12.2266533+02:00</RegisDate>
     <TotalKM>0</TotalKM>
     <FuelStatus>0</FuelStatus>
-    <Status>Not_Available</Status>
+    <Status>Ok</Status>
     <isActive>true</isActive>
     <KmOnLastTreatment>0</KmOnLastTreatment>
-    <LastTreatmentDate>0001-01-01T00:00:00</LastTreatmentDate>
+    <LastTreatmentDate>2021-01-29T00:10:12.2266533+02:00</LastTreatmentDate>
   </Bus>
 </ArrayOfBus>

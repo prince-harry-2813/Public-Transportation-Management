@@ -15,7 +15,7 @@ namespace PlGui.ViewModels.Bus
 {
     public class BusDetailsViewModel : BindableBase, INavigationAware
     {
-        #region Properties Declaraion
+        #region Properties Declaration
 
         private bool isInEditMode;
         public bool IsInEditMode
@@ -214,11 +214,22 @@ namespace PlGui.ViewModels.Bus
 
         public void ListBoxSelectionChanged()
         {
-            BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
-                                  || SelectedItem.PropertyName == "RegisDate"
-                                  || SelectedItem.PropertyName == "TotalKM"
-                                  || SelectedItem.PropertyName == "KmOnLastTreatment"
-                                  || SelectedItem.PropertyName == "LastTreatmentDate" || InternalReadOnly);
+
+
+
+
+            if (SelectedItem != null)
+            {
+
+
+                BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
+                                    //|| SelectedItem.PropertyName == "RegisDate"
+                                    || SelectedItem.PropertyName == "TotalKM"
+                                    || SelectedItem.PropertyName == "KmOnLastTreatment"
+                                    || SelectedItem.PropertyName == "LastTreatmentDate" 
+                                    || InternalReadOnly
+                                    );
+            }
         }
 
         private void RemoveBusButtomClicked()
@@ -330,14 +341,14 @@ namespace PlGui.ViewModels.Bus
 
             var tmp1 = navigationContext.Parameters.Where(pair => pair.Key == "ButtonsVisibility")
                 .FirstOrDefault().Value;
-            ButtonsVisibility= (tmp1 != null) ? (bool)tmp1 : ButtonsVisibility;
+            ButtonsVisibility = (tmp1 != null) ? (bool)tmp1 : ButtonsVisibility;
 
             var busStop = navigationContext.Parameters.Where(pair => pair.Key == "BusStop")
                 .FirstOrDefault().Value;
             if (busStop != null)
             {
                 InsertBusPropertiesToCollection(busStop);
-            } 
+            }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

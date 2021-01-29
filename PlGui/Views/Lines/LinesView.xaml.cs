@@ -14,5 +14,7 @@ namespace PlGui.Views.Lines
             InitializeComponent();
             ViewModelLocationProvider.Register(typeof(LinesView).ToString(), typeof(LinesViewViewModel));
         }
+
+     
     }
 }

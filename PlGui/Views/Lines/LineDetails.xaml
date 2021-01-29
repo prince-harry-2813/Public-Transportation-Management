@@ -18,7 +18,7 @@
         <WrapPanel Margin="10" HorizontalAlignment="Center">
             <fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
             <Label FontSize="14pt" FontWeight="SemiBold">
-                Bus Details
+                פרטי הקו
             </Label>
         </WrapPanel>
 

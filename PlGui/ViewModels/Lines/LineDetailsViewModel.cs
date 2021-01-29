@@ -77,7 +77,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
 
@@ -85,7 +85,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Command decleration
+        #region Command deceleration
 
         public ICommand BusDetailsButtonCommand { get; set; }
 
@@ -100,7 +100,7 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
 
-            #region Command Implemetaion
+            #region Command Implementation
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
 
@@ -133,7 +133,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Interface Implementaion
+        #region Interface Implementation
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -159,7 +159,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Private Methoed
+        #region Private Method
 
         private void InsertBusStopCollection(Line line)
         {

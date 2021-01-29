@@ -130,7 +130,7 @@ namespace PlGui.ViewModels.Bus
         }
 
         /// <summary>
-        /// On label button click that excute
+        /// On label button click that execute
         ///  Open Bus Details window 
         /// </summary>
         private void LicensNumberLabelClicked()

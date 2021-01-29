@@ -96,7 +96,7 @@ namespace PlGui.ViewModels.Lines
         /// <param name="commandParameter"></param>
         private void UpdateLineButton(string commandParameter)
         {
-            var parm = new NavigationParameters();
+            var parm = new NavigationParameters(commandParameter);
             parm.Add("Line", Line);
             unityContainer.RegisterType(typeof(object), typeof(LineDetails), "LineDetails");
             regionManager.RequestNavigate(StringNames.MainRegion, "LineDetails");

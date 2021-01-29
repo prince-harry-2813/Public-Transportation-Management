@@ -41,11 +41,11 @@ namespace BL.BO
         /// <summary>
         /// Bus Last Maintenance
         /// </summary>
-        public DateTime LastTreatment { get; set; }
+        public DateTime LastTreatmentDate { get; set; }
 
         /// <summary>
         ///  Km on last maintenance
         /// </summary>
-        public uint LastTreatmentKm { get; set; }
+        public uint KmOnLastTreatment { get; set; }
     }
 }

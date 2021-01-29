@@ -128,7 +128,7 @@ namespace PlGui.ViewModels.Lines
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Couldn't Add line please check the new information");
+                MessageBox.Show($"Couldn't Add line please check the new information \n {exception.Message}" );
             }
             finally
             {

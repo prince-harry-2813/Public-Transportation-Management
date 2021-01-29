@@ -192,7 +192,6 @@
 
                         <fa5:FontAwesome
                             VerticalAlignment="Center"
-                            Foreground="{Binding Code, Converter={StaticResource StatusToColorConverter}}"
                             Icon="Brands_Artstation" />
 
                         <Label
@@ -211,12 +210,17 @@
                             Foreground="Black"
                             MouseUp="OnContentChanged">
                             <Run>
-                                Long' =
+                                  קוד תחנה:
                             </Run>
-                            <Run Text="{Binding Longitude}" />
+                            <Run Text="{Binding Code}" />
                         </TextBlock>
-
-                        <TextBlock
+						<ComboBox
+							Grid.Column="1"
+							<ComboBoxItem Content="{Binding Lines}">
+							</ComboBoxItem>
+							></ComboBox>
+                        <!--<TextBlock
+						
                             x:Name="av"
                             Grid.Column="3"
                             Width="Auto"
@@ -229,7 +233,7 @@
                                 Lat' =
                             </Run>
                             <Run Text="{Binding Latitude}" />
-                        </TextBlock>
+                        </TextBlock>-->
 
                         <Button
                             Grid.Column="4"

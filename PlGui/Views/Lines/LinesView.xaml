@@ -98,7 +98,7 @@
                     Padding="0,-4,0,0"
                     Background="{x:Null}"
                     BorderBrush="#FFFAFAFA"
-                    Command="{Binding UpdateLineButtonCommand}"
+                    Command="{Binding DeleteLineButtonCommand}"
                     CommandParameter="Remove"
                     Foreground="White">
                     <Button.Content>
@@ -139,7 +139,7 @@
                     Padding="0,-4,0,0"
                     Background="{x:Null}"
                     BorderBrush="#FFFAFAFA"
-                    Command="{Binding UpdateButtonCommand}"
+                    Command="{Binding UpdateLineButtonCommand}"
                     CommandParameter="Update"
                     Foreground="White">
                     <Button.Content>
@@ -181,34 +181,37 @@
             ItemsSource="{Binding LinesCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="2">
+                    <Grid Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="16*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="40*" />
                         </Grid.ColumnDefinitions>
 
                         <fa:FontAwesome
+							Grid.Column="0"
                             VerticalAlignment="Center"
-                            Foreground="{Binding LineStaus, Converter={StaticResource StatusToColorConverter}}"
+                           
                             Icon="Solid_Bus" />
 
-                        <Label
+						<Label
                             x:Name="LineNumberLabel"
                             Grid.Column="1"
-                            Content="{Binding LineNumber}"
+                            Content="{Binding Area}"
+							ContentStringFormat=" {0} : איזור "
                             MouseDoubleClick="OnContentChanged" />
 
-                        <Label
+							<Label
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding CountDown}"
+                            Content="{Binding Path=Code}"
+								ContentStringFormat=" {0} : קו"
                             Foreground="Black"
                             MouseDoubleClick="OnContentChanged"
-                            Visibility="{Binding CountDown, Converter={StaticResource NumberToVisibiltyConverter}}" />
+                            />
 
                         <!--<Button
                             x:Name="RefuleBus"
@@ -228,7 +231,8 @@
                             Margin="2"
                             Padding="3"
                             Command="{Binding ChooseLineButtonCommand}"
-                            Content="Choose BusStop" />
+                            Content="תחנות הקו" FontWeight="Bold" FontSize="13" FontFamily="Broadway"
+							/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

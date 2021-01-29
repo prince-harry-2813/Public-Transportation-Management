@@ -1,141 +1,141 @@
 ﻿<UserControl
-    x:Class="PlGui.Views.Bus.BusDetails"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:convert="clr-namespace:PlGui.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:fa="http://schemas.fontawesome.com/icons/"
-    xmlns:prism="http://prismlibrary.com/"
-    prism:ViewModelLocator.AutoWireViewModel="True"
-    xmlns:local="clr-namespace:PlGui.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="Uc"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    mc:Ignorable="d">
+	x:Class="PlGui.Views.Bus.BusDetails"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:convert="clr-namespace:PlGui.Converters"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:fa="http://schemas.fontawesome.com/icons/"
+	xmlns:local="clr-namespace:PlGui.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:prism="http://prismlibrary.com/"
+	x:Name="Uc"
+	d:DesignHeight="450"
+	d:DesignWidth="800"
+	prism:ViewModelLocator.AutoWireViewModel="True"
+	mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <convert:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
-        <convert:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
-        <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </UserControl.Resources>
+	<UserControl.Resources>
+		<convert:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+		<convert:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
+		<convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	</UserControl.Resources>
 
-    <StackPanel
-        Width="580"
-        Margin="10"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
+	<StackPanel
+		Width="580"
+		Height="440"
+		Margin="110,0,110,9.6"
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center">
 
-        <!--Page title-->
-        <WrapPanel 
-            Visibility="{Binding LabelVisibility , Converter={StaticResource BooleanToVisibilityConverter}}"
-            Margin="10" HorizontalAlignment="Center">
-            <fa:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
-            <Label FontSize="14pt" FontWeight="SemiBold"
-                   Content="{Binding MainLabelContent}">
-               
-            </Label>
-        </WrapPanel>
+		<!--  Page title  -->
+		<WrapPanel
+			Margin="10"
+			HorizontalAlignment="Center"
+			Visibility="{Binding LabelVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+			<fa:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
+			<Label
+				Width="110"
+				Content="{Binding MainLabelContent}"
+				FontSize="14pt"
+				FontWeight="SemiBold" />
+		</WrapPanel>
+		<WrapPanel
+			Height="70"
+			Margin="5"
+			Visibility="{Binding ButtonsVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+			<!--  Edit Bus Button  -->
+			<StackPanel HorizontalAlignment="Center" Visibility="Visible">
+				<Button
+					x:Name="TreatmentButton"
+					Height="30pt"
+					Margin="20,5"
+					Background="#00DDDDDD"
+					BorderBrush="#00707070"
+					Command="{Binding BusDetailsButtonCommand}"
+					CommandParameter="Edit"
+					ToolTip="Edit Bus Properties">
+					<fa:ImageAwesome
+						Margin="2"
+						Foreground="Blue"
+						Icon="{Binding IsInEditMode, Converter={StaticResource EditSubmitIconConverter}}" />
+				</Button>
 
-        <WrapPanel
-            Visibility="{Binding ButtonsVisibility , Converter={StaticResource BooleanToVisibilityConverter}}"
-            Margin="10">
-            <!--  Edit Bus Button  -->
-            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
-                <Button
-                    Name="TreatmentButton"
-                    Height="30pt"
-                    Margin="20,5"
-                    Background="#00DDDDDD"
-                    BorderBrush="#00707070"
-                    Command="{Binding BusDetailsButtonCommand}"
-                    CommandParameter="Edit"
-                    ToolTip="Edit Bus Properties">
-                    <Button.Content>
-                        <fa:ImageAwesome
-                            Margin="2"
-                            Foreground="Blue"
-                            Icon="{Binding IsInEditMode, Converter={StaticResource EditSubmitIconConverter}}" />
-                    </Button.Content>
-                </Button>
+				<Label
+					Padding="2"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top"
+					VerticalContentAlignment="Top"
+					Content="Edit"
+					FontSize="10pt"
+					Foreground="Blue" />
+			</StackPanel>
 
-                <Label
-                    Padding="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    VerticalContentAlignment="Top"
-                    FontSize="10pt"
-                    Foreground="Blue">
-                    Edit
-                </Label>
-            </StackPanel>
+			<!--  Delete Bus Button  -->
+			<StackPanel HorizontalAlignment="Center" Visibility="Visible">
+				<Button
+					x:Name="RefuleButton"
+					Height="30pt"
+					Margin="5"
+					Background="#00DDDDDD"
+					BorderBrush="#00707070"
+					Command="{Binding BusDetailsButtonCommand}"
+					ToolTip="Delete Bus">
+					<Button.Content>
+					<fa:ImageAwesome
+						Margin="2"
+						Foreground="Blue"
+						Icon="Solid_Trash" />
+					</Button.Content>
+				</Button>
 
-            <!--  Delete Bus Button  -->
-            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
-                <Button
-                    x:Name="RefuleButton"
-                    Height="30pt"
-                    Margin="5"
-                    Background="#00DDDDDD"
-                    BorderBrush="#00707070"
-                    Command="{Binding BusDetailsButtonCommand}"
-                    ToolTip="Delete Bus">
-                    <Button.Content>
-                        <fa:ImageAwesome
-                            Margin="2"
-                            Foreground="Blue"
-                            Icon="Solid_Trash" />
-                    </Button.Content>
-                </Button>
+				<Label
+					Padding="2"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top"
+					VerticalContentAlignment="Top"
+					Content="Delete"
+					FontSize="10pt"
+					Foreground="Blue" />
+			</StackPanel>
+		</WrapPanel>
 
-                <Label
-                    Padding="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    VerticalContentAlignment="Top"
-                    FontSize="10pt"
-                    Foreground="Blue">
-                    Delete
-                </Label>
-            </StackPanel>
-        </WrapPanel>
+		<ListBox
+			x:Name="lbBusDetails"
+			Height="267"
+			Margin="5"
+			HorizontalContentAlignment="Stretch"
+			ItemsSource="{Binding LbItemSource}"
+			SelectedItem="{Binding SelectedItem}"
+			SelectionChanged="LbBusDetails_OnSelectionChanged">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="20,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*" />
+							<ColumnDefinition Width="1*" />
+						</Grid.ColumnDefinitions>
 
-        <ListBox
-            x:Name="lbBusDetails"
-            Margin="10"
-            HorizontalContentAlignment="Stretch"
-            ItemsSource="{Binding LbItemSource}"
-            SelectedItem="{Binding SelectedItem}"
-            SelectionChanged="LbBusDetails_OnSelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="20,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
+						<Label
+							MinWidth="150"
+							HorizontalAlignment="Left"
+							VerticalContentAlignment="Center"
+							Content="{Binding PropertyName, Mode=OneWay, Converter={StaticResource ParameterToTitleConverter}}"
+							FontSize="8pt"
+							FontWeight="Heavy" />
 
-                        <Label
-                            MinWidth="150"
-                            HorizontalAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Content="{Binding PropertyName, Mode=OneWay, Converter={StaticResource ParameterToTitleConverter}}"
-                            FontSize="8pt"
-                            FontWeight="Heavy" />
-
-                        <TextBox
-                            Grid.Column="1"
-                            MinWidth="150"
-                            HorizontalAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            BorderBrush="Black"
-                            BorderThickness="0.5"
-                            FontSize="8pt"
-                            IsReadOnly="{Binding BusValueIsReadOnly }"
-                            Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </StackPanel>
+						<TextBox
+							Grid.Column="1"
+							MinWidth="150"
+							HorizontalAlignment="Left"
+							VerticalContentAlignment="Center"
+							BorderBrush="Black"
+							BorderThickness="0.5"
+							FontSize="8pt"
+							IsEnabled="{Binding BusValueIsReadOnly}"
+							Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</StackPanel>
 </UserControl>

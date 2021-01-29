@@ -67,7 +67,7 @@ namespace PlGui.ViewModels.Bus
 
         #endregion
 
-        #region Command Decleration
+        #region Command Deceleration
 
         public ICommand EneterKeyCommand { get; set; }
 
@@ -99,7 +99,9 @@ namespace PlGui.ViewModels.Bus
         /// <returns></returns>
         public bool CheckLicenseInput(string text)
         {
-            return ((new Regex("[^0-9]+").IsMatch(text) || text.First() == ' ') /*&& !string.IsNullOrWhiteSpace(text)*/);
+           
+            LicenseNum = String.Concat(LicenseNum.Where(c => !Char.IsWhiteSpace(c)));
+            return ((new Regex("[^0-9]+").IsMatch(text) ) /*&& !string.IsNullOrWhiteSpace(text)*/);
         }
 
         /// <summary>
@@ -148,9 +150,13 @@ namespace PlGui.ViewModels.Bus
                     {
                         LicenseNum = int.Parse(LicenseNum)
                         ,
+
                         RegisDate = RegistrationDate,
                         TotalKM = 0
-                    });
+                        ,LastTreatmentDate= registrationDate, FuelStatus=1200,
+                        isActive= true,
+                        Status=BL.BO.BusStatusEnum.Ok,
+                    }) ;
                 }
                 else
                 {
