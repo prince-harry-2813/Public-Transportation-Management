@@ -211,6 +211,7 @@ namespace PlGui.ViewModels.Lines
                 }
 
                 addWorker = new BackgroundWorker();
+                addWorker.WorkerSupportsCancellation = true;
                 addWorker.DoWork += (sender, args) =>
                 {
                     Line.FirstStation.Station = FirstStation;

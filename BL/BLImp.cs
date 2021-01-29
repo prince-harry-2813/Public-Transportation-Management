@@ -136,7 +136,7 @@ namespace BL
         #region Line Implementation
 
         /// <summary>
-        /// Add new line and add basic information
+        /// Add new line to system, also creating new lines stations and connect them, and add basic information for all dependencies
         /// </summary>
         /// <param name="line">
         /// </param>
@@ -159,6 +159,10 @@ namespace BL
             if (station2 == null)
                 throw new BadBusStopIDException("Last Bus stop not exist in the system", null);
 
+            var FirstStID = line.FirstStation.Station.Code; //1st station code to insert
+            var LastStID = line.LastStation.Station.Code;//2nd station code to insert
+
+            //adding new line-stations to system  
             try
             {
                 iDal.AddLineStation(new DO.LineStation()
@@ -166,42 +170,71 @@ namespace BL
                     LineId = line.Id,
                     LineStationIndex = 0,
                     isActive = true,
-                    StationId = line.FirstStation.Station.Code,
-                    NextStation = line.LastStation.Station.Code
+                    StationId = FirstStID,
+                    NextStation = LastStID
                 });
                 iDal.AddLineStation(new DO.LineStation()
                 {
                     LineId = line.Id,
                     LineStationIndex = 1,
                     isActive = true,
-                    StationId = line.LastStation.Station.Code,
-                    PrevStation = line.FirstStation.Station.Code
+                    StationId = LastStID,
+                    PrevStation = FirstStID
                 });
+                //check if there is already an adjacent stations
+                var adjSta = iDal.GetAllAdjacentStationsBy(a => a.Station1 == FirstStID && a.Station2 == FirstStID);
+                if (adjSta.Count() == 0)
+                {
+                    iDal.AddAdjacentStations(new DO.AdjacentStations()
+                    {
+                        isActive = true,
+                        Station1 = FirstStID,
+                        Station2 = LastStID,
+                        Distance = CalculateDistance(line.FirstStation.Station, line.LastStation.Station),
+                        PairId = iDal.GetAllAdjacentStationsBy(l => l.isActive || !l.isActive).Count() + 1,
+                        Time = CalculateTime(CalculateDistance(line.FirstStation.Station, line.LastStation.Station))
+                    });
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Couldn't add First and last Stations, Check inner exception", e);
+            }
+
+            try
+            {
                 iDal.AddLine(new DO.Line()
                 {
-                    LastStation = line.LastStation.Station.Code,
+                    LastStation = LastStID,
                     Area = (DO.Area)line.Area,
                     Code = line.Code,
-                    FirstStation = line.FirstStation.Station.Code,
+                    FirstStation = FirstStID,
                     Id = line.Id,
                     isActive = true
-                    
                 });
             }
             catch (Exception e)
             {
-                throw new ArgumentException("Check inner exception", e);
+                throw new BadLineIdException("Couldn't add Line to System, check inner exception", e);
             }
         }
 
+        /// <summary>
+        /// update exist system line, adding or removing some line-stations, calculating the line trip duration 
+        /// </summary>
+        /// <param name="line"></param>
         public void UpdateLine(Line line)
         {
             if (line == null)
-                throw new NullReferenceException("Line is Null ");
 
-            var DOCollLinesStations = (from l in iDal.GetAllLinesStation()//to update from Updated Line Stations
-                                       where l.LineId == line.Id
-                                       select l);
+                throw new NullReferenceException("Line is Null ");
+            //clean the system to update line-stations
+            foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive && l.LineId == line.Id))
+            {
+                iDal.DeleteLineStation(line.Id, item.StationId);
+            }
+            //update the line- stations
             foreach (var item in line.Stations)
             {
                 var DOLineStation = new DO.LineStation()
@@ -210,37 +243,18 @@ namespace BL
                     LineStationIndex = item.LineStationIndex,
                     isActive = true,
                     StationId = item.Station.Code,
-                    NextStation = (item.LineStationIndex < line.Stations.Count() - 1) ?
-                        line.Stations.ElementAt(item.LineStationIndex + 1).Station.Code : 0,
-                    PrevStation = (item.LineStationIndex > 0) ?
-                        line.Stations.ElementAt(item.LineStationIndex - 1).Station.Code : 0,
+                    NextStation = item.LineStationIndex == line.Stations.Count() - 1 ? 0 : line.Stations.ElementAt(item.LineStationIndex + 1).Station.Code,
+                    PrevStation = item.LineStationIndex > 0 ? line.Stations.ElementAt(item.LineStationIndex - 1).Station.Code : 0,
                 };
                 try
                 {
-                    if (DOCollLinesStations.Any(l => l.StationId == item.Station.Code))//if Line station in Database ? update : add 
-                        iDal.UpdateLineStation(DOLineStation);
-                    else
-                        iDal.AddLineStation(DOLineStation);
+                    iDal.AddLineStation(DOLineStation);
                 }
                 catch (Exception e)
                 {
-                    throw new BadBusStopIDException("Couldn't update or add, check details", e);
+                    throw new BadBusStopIDException("Couldn't update or add, check inner Exceptions details", e);
                 }
             }
-            DOCollLinesStations = iDal.GetAllLinesStationBy(l =>
-                l.LineId == line.Id && !line.Stations.Any(s => s.Station.Code == l.StationId)); //to remove Unnecessary Line Station from data base
-            foreach (var item in DOCollLinesStations) // line Stations that is in database but no in the updated ine 
-            {
-                try
-                {
-                    iDal.DeleteLineStation(line.Id, item.StationId);
-                }
-                catch (Exception e)
-                {
-                    throw new BadBusStopIDException("Couldn't delete line station check details", e);
-                }
-            }
-
             var lineToUpdate = new DO.Line()
             {
                 LastStation = line.LastStation.Station.Code,
@@ -266,10 +280,28 @@ namespace BL
             {
                 throw new NullReferenceException("Line to delete is Null");
             }
-
-            DO.Line lineToDelete = new DO.Line();
-            line.CopyPropertiesTo(lineToDelete);
-            iDal.DeleteLine(lineToDelete.Id);
+            DO.Line lineToDelete = new DO.Line()
+            {
+                LastStation = line.LastStation.Station.Code,
+                FirstStation = line.FirstStation.Station.Code,
+                isActive = line.IsActive,
+                Id = line.Id,
+                Code = line.Code,
+                Area = (DO.Area)line.Area
+            };
+            try
+            {
+                iDal.DeleteLine(lineToDelete.Id);
+                //clean the system list of line stations 
+                foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive && l.LineId == line.Id))
+                {
+                    iDal.DeleteLineStation(line.Id, item.StationId);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new KeyNotFoundException("Couldn't complete operation, check inner exception", e);
+            }
         }
 
         public Line GetLine(int lineId)
@@ -281,8 +313,38 @@ namespace BL
                 throw new BadBusIdException("Line id can't be negative",
                     new ArgumentException("Line id can't be negative"));
 
-            var lineToCopy = iDal.GetLine(lineId);
-            return (Line)lineToCopy.CopyPropertiesToNew(typeof(Line));
+            var DalLine = iDal.GetLine(lineId);
+            Line line = new Line()
+            {
+                FirstStation = new LineStation(),
+                LastStation = new LineStation(),
+                Stations = new List<LineStation>(),
+                Area = (BO.Area)DalLine.Area,
+                Code = DalLine.Code,
+                Id = DalLine.Id,
+                IsActive = true
+            };
+            var DOLineStations = iDal.GetAllLinesStationBy(l => l.isActive && l.LineId == lineId).OrderBy(l => l.LineStationIndex);
+            foreach (var item in DOLineStations)
+            {
+                var BOLS = new LineStation()
+                {
+                    LineId = line.Id,
+                    LineStationIndex = item.LineStationIndex,
+                    Station = GetStation(item.StationId),
+                    PrevStation = item.LineStationIndex - 1 < 0 ? 0 : DOLineStations.ElementAt(item.LineStationIndex - 1).StationId,
+                    NextStation = item.LineStationIndex + 1 == DOLineStations.Count() ? 0 : DOLineStations.ElementAt(item.LineStationIndex + 1).StationId,
+                    isActive = true
+                };
+                if (BOLS.LineStationIndex == 0)
+                    BOLS.CopyPropertiesTo(line.FirstStation);
+                if (BOLS.LineStationIndex==DOLineStations.Count()-1)
+                    BOLS.CopyPropertiesTo(line.LastStation);
+                line.Stations.Append(BOLS);
+
+            }
+
+            return line;
         }
 
         public IEnumerable<Line> GetAllLines()
@@ -633,11 +695,47 @@ namespace BL
 
         }
 
-        public void UpdateSimualtionTime(TimeSpan time)
-        {
-            simulationTime = time;
+     
+
         }
 
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// calculate the distance between previous station to current
+        /// This uses the Haversine formula to calculate the short distance between tow coordinates on sphere surface  
+        /// </summary>
+        /// <param name="other"> previous or other station </param>
+        /// <returns>Short distance in meters </returns>
+        public double CalculateDistance(Station st1, Station st2)
+        {
+            double earthRadius = 6371e3;
+            double l1 = st1.Latitude * (Math.PI / 180);
+            double l2 = st2.Latitude * (Math.PI / 180);
+            double l1_2 = (st2.Latitude - st1.Latitude) * (Math.PI / 180);
+            double lo_1 = (st2.Longitude - st1.Longitude) * (Math.PI / 180);
+            double a = (Math.Sin(l1_2 / 2) * Math.Sin(l1_2 / 2)) +
+                Math.Cos(l1) * Math.Cos(l2) *
+               (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var Distance = (earthRadius * c);
+            return Distance;
+        }
+
+
+
+        private TimeSpan CalculateTime(Double Distance)
+        {
+            TimeSpan time = TimeSpan.Zero;
+            double rideDistance = 0.0 + Distance / 1000;
+            time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
+            time += TimeSpan.FromMinutes(2);
+            return time;
+        }
+
+        #endregion
     }
 }
 
