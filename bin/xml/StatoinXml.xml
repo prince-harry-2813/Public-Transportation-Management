@@ -1,24 +1,59 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Station>
-    <Code>898767</Code>
-    <Name>kjhdh</Name>
-    <Longitude>35.058920941482725</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>123</Code>
-    <Name>אברבאנל </Name>
-    <Longitude>35.49441</Longitude>
-    <Latitude>33.28929</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>321</Code>
-    <Name>אח"י דקר</Name>
-    <Longitude>34.78778</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
+	<Station>
+		<Code>898767</Code>
+		<Name>kjhdh</Name>
+		<Longitude>35.058920941482725</Longitude>
+		<Latitude>33</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>123</Code>
+		<Name>אברבאנל </Name>
+		<Longitude>35.49441</Longitude>
+		<Latitude>33.28929</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>321</Code>
+		<Name>אח"י דקר</Name>
+		<Longitude>34.78778</Longitude>
+		<Latitude>33</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>123456</Code>
+		<Name>טרומפלדור</Name>
+		<Longitude>31.78378</Longitude>
+		<Latitude>32.7</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>21</Code>
+		<Name>דני זרובבל</Name>
+		<Longitude>34.78378</Longitude>
+		<Latitude>33.7</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>177756</Code>
+		<Name>המאבק עמישב</Name>
+		<Longitude>34.78378</Longitude>
+		<Latitude>31.70983</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>765654</Code>
+		<Name>דבורה הנביאה</Name>
+		<Longitude>33.78338</Longitude>
+		<Latitude>33.67894</Latitude>
+		<isActive>true</isActive>
+	</Station>
+	<Station>
+		<Code>533334</Code>
+		<Name>האשכול</Name>
+		<Longitude>32.436278</Longitude>
+		<Latitude>34.64357</Latitude>
+		<isActive>true</isActive>
+	</Station>
 </ArrayOfStation>

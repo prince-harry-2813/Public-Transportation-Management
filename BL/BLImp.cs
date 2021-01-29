@@ -176,6 +176,22 @@ namespace BL
                     StationId = line.LastStation.Station.Code,
                     PrevStation = line.FirstStation.Station.Code
                 });
+                var adjSta = iDal.GetAllAdjacentStationsBy(a => a.Station1 == line.FirstStation.Station.Code && a.Station2 == line.FirstStation.Station.Code);
+                if (adjSta.Count() == 0)
+                {
+                    iDal.AddAdjacentStations(new DO.AdjacentStations()
+                    {
+                        isActive = true,
+                        Station1 = line.FirstStation.Station.Code,
+                        Station2 = line.LastStation.Station.Code,
+                        Distance = CalculateDistance(line.FirstStation.Station, line.LastStation.Station),
+                        PairId = iDal.GetAllAdjacentStationsBy(l => l.isActive||!l.isActive).Count()+1,
+                        Time = CalculateTime(CalculateDistance(line.FirstStation.Station, line.LastStation.Station))
+
+                    });
+
+                }
+
                 iDal.AddLine(new DO.Line()
                 {
                     LastStation = line.LastStation.Station.Code,
@@ -184,7 +200,7 @@ namespace BL
                     FirstStation = line.FirstStation.Station.Code,
                     Id = line.Id,
                     isActive = true
-                    
+
                 });
             }
             catch (Exception e)
@@ -228,7 +244,7 @@ namespace BL
             }
             DOCollLinesStations = iDal.GetAllLinesStationBy(l =>
                 l.LineId == line.Id && !line.Stations.Any(s => s.Station.Code == l.StationId)); //to remove Unnecessary Line Station from data base
-            foreach (var item in DOCollLinesStations) // line Stations that is in database but no in the updated ine 
+            foreach (var item in DOCollLinesStations) // line Stations that is in database but no in the updated line 
             {
                 try
                 {
@@ -586,6 +602,42 @@ namespace BL
             }
 
         }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// calculate the distance between previous station to current
+        /// This uses the Haversine formula to calculate the short distance between tow coordinates on sphere surface  
+        /// </summary>
+        /// <param name="other"> previous or other station </param>
+        /// <returns>Short distance in meters </returns>
+        public double CalculateDistance(Station st1, Station st2)
+        {
+            double earthRadius = 6371e3;
+            double l1 = st1.Latitude * (Math.PI / 180);
+            double l2 = st2.Latitude * (Math.PI / 180);
+            double l1_2 = (st2.Latitude - st1.Latitude) * (Math.PI / 180);
+            double lo_1 = (st2.Longitude - st1.Longitude) * (Math.PI / 180);
+            double a = (Math.Sin(l1_2 / 2) * Math.Sin(l1_2 / 2)) +
+                Math.Cos(l1) * Math.Cos(l2) *
+               (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var Distance = (earthRadius * c);
+            return Distance;
+        }
+
+
+
+        private TimeSpan CalculateTime(Double Distance)
+        {
+            TimeSpan time = TimeSpan.Zero;
+            double rideDistance = 0.0 + Distance / 1000;
+            time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
+            time += TimeSpan.FromMinutes(2);
+            return time;
+         }
 
         #endregion
     }

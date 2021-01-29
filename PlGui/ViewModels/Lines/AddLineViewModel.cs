@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -24,7 +25,18 @@ namespace PlGui.ViewModels.Lines
 
         #region Properties Declaration
 
-        private BL.BO.Line line = new BL.BO.Line();
+        private BL.BO.Line line = new BL.BO.Line() { 
+                FirstStation = new LineStation()
+                {
+                    Station = new Station()
+                }         ,
+            LastStation = new LineStation()
+            {
+                Station = new Station()
+            },Stations= new List<LineStation>()
+
+
+        };
         /// <summary>
         /// Hold Bus data 
         /// </summary>
@@ -117,6 +129,7 @@ namespace PlGui.ViewModels.Lines
                 }
 
                 addWorker = new BackgroundWorker();
+                addWorker.WorkerSupportsCancellation = true;
                 addWorker.DoWork += (sender, args) =>
                 {
                     Line.FirstStation.LineStationIndex = 0;
