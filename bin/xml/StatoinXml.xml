@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Station>
+    <Code>432</Code>
+    <Name>aynu</Name>
+    <Longitude>34.80672</Longitude>
+    <Latitude>33</Latitude>
+    <isActive>true</isActive>
+  </Station>
+  <Station>
     <Code>898767</Code>
     <Name>kjhdh</Name>
     <Longitude>35.058920941482725</Longitude>
@@ -16,15 +23,8 @@
   </Station>
   <Station>
     <Code>321</Code>
-    <Name>אח"י דקר</Name>
+    <Name>g4travdcx </Name>
     <Longitude>34.78778</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>432</Code>
-    <Name>aynu</Name>
-    <Longitude>34.80672</Longitude>
     <Latitude>33</Latitude>
     <isActive>true</isActive>
   </Station>

@@ -11,7 +11,7 @@ using Unity;
 
 namespace PlGui.ViewModels.Lines
 {
-    public class LinesViewViewModel : BindableBase
+    public class LinesViewViewModel : BindableBase , INavigationAware
     {
         #region Properties Deceleration
 
@@ -50,6 +50,8 @@ namespace PlGui.ViewModels.Lines
 
         public ICommand AddLineButtonCommand { get; set; }
         public ICommand UpdateLineButtonCommand { get; set; }
+        public ICommand ChooseLineButtonCommand { get; set; }
+        public ICommand DeleteLineButtonCommand { get; set; }
 
         #endregion
         public LinesViewViewModel(IRegionManager manager, IUnityContainer container)
@@ -73,11 +75,21 @@ namespace PlGui.ViewModels.Lines
 
             AddLineButtonCommand = new DelegateCommand(AddLineButton);
             UpdateLineButtonCommand = new DelegateCommand<string>(UpdateLineButton);
+            ChooseLineButtonCommand = new DelegateCommand(ChooseLine);
+            DeleteLineButtonCommand = new DelegateCommand<string>(DeleteLineCommand);
 
             #endregion
         }
 
+
         #region Command Implementation
+
+
+        private void ChooseLine()
+        {
+            UpdateLineButton(" ");
+        }
+
 
         /// <summary>
         /// Navigate to Add line view 
@@ -102,17 +114,49 @@ namespace PlGui.ViewModels.Lines
             regionManager.RequestNavigate(StringNames.MainRegion, "LineDetails" , parm);
         }
 
+        private void DeleteLineCommand(string parameter)
+        {
+            if (line == null)
+            {
+                return;
+            }
+
+            Bl.DeleteLine(Line);
+
+            RefreshView();
+        }
+
         #endregion
 
         #region Private Methods
 
         private void RefreshView()
         {
+            LinesCollection = new ObservableCollection<Line>();
+            LinesCollection.Clear();
             foreach (var VARIABLE in Bl.GetAllLines())
             {
                 LinesCollection.Add(VARIABLE);
             }
         }
+
+        #region INavigation Aware Implementation 
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            RefreshView();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return  true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+           //throw new System.NotImplementedException();
+        } 
+        #endregion
 
         #endregion
     }

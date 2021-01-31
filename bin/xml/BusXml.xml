@@ -2,12 +2,42 @@
 <ArrayOfBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Bus>
     <LicenseNum>21312231</LicenseNum>
-    <RegisDate>2021-01-28T00:08:12.2266533+02:00</RegisDate>
+    <RegisDate>2021-01-28T00:08:12</RegisDate>
     <TotalKM>0</TotalKM>
     <FuelStatus>0</FuelStatus>
     <Status>Ok</Status>
+    <isActive>false</isActive>
+    <KmOnLastTreatment>0</KmOnLastTreatment>
+    <LastTreatmentDate>2021-01-29T00:10:12</LastTreatmentDate>
+  </Bus>
+  <Bus>
+    <LicenseNum>12345677</LicenseNum>
+    <RegisDate>2021-01-31T20:34:20.4827809+02:00</RegisDate>
+    <TotalKM>23</TotalKM>
+    <FuelStatus>1200</FuelStatus>
+    <Status>Ok</Status>
+    <isActive>false</isActive>
+    <KmOnLastTreatment>0</KmOnLastTreatment>
+    <LastTreatmentDate>2021-01-31T20:34:20.4827809+02:00</LastTreatmentDate>
+  </Bus>
+  <Bus>
+    <LicenseNum>86574554</LicenseNum>
+    <RegisDate>2021-01-31T20:43:11.3098112+02:00</RegisDate>
+    <TotalKM>0</TotalKM>
+    <FuelStatus>1200</FuelStatus>
+    <Status>Ok</Status>
+    <isActive>false</isActive>
+    <KmOnLastTreatment>0</KmOnLastTreatment>
+    <LastTreatmentDate>2021-01-31T20:43:11.3098112+02:00</LastTreatmentDate>
+  </Bus>
+  <Bus>
+    <LicenseNum>46234254</LicenseNum>
+    <RegisDate>2021-01-31T21:24:43.9640902+02:00</RegisDate>
+    <TotalKM>0</TotalKM>
+    <FuelStatus>1200</FuelStatus>
+    <Status>Ok</Status>
     <isActive>true</isActive>
     <KmOnLastTreatment>0</KmOnLastTreatment>
-    <LastTreatmentDate>2021-01-29T00:10:12.2266533+02:00</LastTreatmentDate>
+    <LastTreatmentDate>2021-01-31T21:24:43.9640902+02:00</LastTreatmentDate>
   </Bus>
 </ArrayOfBus>

@@ -178,6 +178,7 @@
 			Margin="10"
 			HorizontalContentAlignment="Stretch"
 			Background="WhiteSmoke"
+			SelectedItem="{Binding BusStop}"
 			ItemsSource="{Binding BusStops}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
@@ -194,6 +195,7 @@
 
 						<Label
 							x:Name="LineNumberLabel"
+							VerticalAlignment="Center"
 							Grid.Column="1"
 							Content="{Binding Name}"
 							MouseDoubleClick="OnContentChanged" />
@@ -212,10 +214,25 @@
                             </Run>
                             <Run Text="{Binding Code}" />
                         </TextBlock>
+
                         <ComboBox
-							Grid.Column="1">
-                            <ComboBoxItem Content="{Binding Lines}">
-							</ComboBoxItem>
+							Margin="10"
+							Grid.Column="3"
+                            ItemsSource="{Binding Lines}">
+                            <ComboBox.ItemTemplate>
+								<DataTemplate>
+                                                <TextBlock
+                                                    FontSize="6pt"
+                                                    FontFamily="Consulas"
+                                                    FontWeight="DemiBold"
+                                                    Background="White"
+                                                    Text="{Binding Code}">
+													<Run
+                                                        Text="{Binding LastStation}"></Run>
+                                                </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
 							</ComboBox>
                         <!--<TextBlock
 						
@@ -238,6 +255,7 @@
 							Height="18pt"
 							Margin="2"
 							Padding="3"
+							MouseDoubleClick="Control_OnMouseDoubleClick"
 							Command="{Binding ChooseLineButtonCommand}"
 							Content="Choose BusStop" />
 					</Grid>

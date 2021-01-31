@@ -117,16 +117,28 @@ namespace PlGui.ViewModels.Bus
             NavigationParameters param = new NavigationParameters(commandParameter);
             param.Add(StringNames.BL, Bl);
             param.Add(StringNames.SelectedBus, SelectedItem);
-
-            if (commandParameter == "Add")
+            if (commandParameter == "Remove")
             {
-                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus", param);
+                Bl.DeleteBus(SelectedItem);
                 return;
             }
 
-            var flag = unityContainer.IsRegistered(typeof(BusDetails), StringNames.BusDetails);
-            Debug.Print(flag.ToString());
-            regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusDetails, param);
+
+
+           
+            if (commandParameter == "Add")
+            {
+                regionManager.RequestNavigate(StringNames.MainRegion, "AddBus");
+                return;
+            }
+
+            if (commandParameter == "Update")
+            {
+                var flag = unityContainer.IsRegistered(typeof(BusDetails), StringNames.BusDetails);
+                Debug.Print(flag.ToString());
+                regionManager.RequestNavigate(StringNames.MainRegion, StringNames.BusDetails, param);
+            }
+           
         }
 
         /// <summary>

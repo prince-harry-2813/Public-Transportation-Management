@@ -129,7 +129,7 @@ namespace PlGui.ViewModels
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoForward();
                     break;
                 case "Home":
-                    regionManager.RequestNavigate(StringNames.MainRegion, StringNames.ManagerLogin);
+                    regionManager.RequestNavigate(StringNames.MainRegion, StringNames.StartPage);
                     break;
                 case "Clone":
                     regionManager.Regions[StringNames.MainRegion].NavigationService.Journal.GoBack();

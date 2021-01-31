@@ -179,6 +179,7 @@
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
             SelectedItem="{Binding Line}"
+            MouseDoubleClick="LbBuses_OnMouseUp"
             ItemsSource="{Binding LinesCollection}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -227,16 +228,16 @@
                             </Button.Content>
                         </Button>-->
 
-                        <Button
+                        <!--<Button
                             Grid.Column="4"
                             Height="18pt"
                             Margin="2"
                             Padding="3"
-                            Command="{Binding ChooseLineButtonCommand}"
+                            MouseUp="UIElement_OnMouseUp"
                             Content="תחנות הקו"
                             FontFamily="Broadway"
                             FontSize="13"
-                            FontWeight="Bold" />
+                            FontWeight="Bold" />-->
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

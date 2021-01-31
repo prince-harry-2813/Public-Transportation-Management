@@ -78,6 +78,7 @@
                     Margin="5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
+                    CommandParameter="Remove"
                     Command="{Binding BusDetailsButtonCommand}"
                     ToolTip="Delete Bus">
                     <Button.Content>
@@ -99,43 +100,193 @@
             </StackPanel>
         </WrapPanel>
 
-        <ListBox
-            x:Name="lbBusDetails"
-            Height="267"
-            Margin="5"
-            HorizontalContentAlignment="Stretch"
-            ItemsSource="{Binding LbItemSource}"
-            SelectedItem="{Binding SelectedItem}"
-            SelectionChanged="LbBusDetails_OnSelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="20,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
+ 
+        <!--Line timing details--> 
+        <StackPanel
+                Margin="10"
+                Background="White"
+                IsEnabled="false"
+                Visibility="{Binding BusStopVisibilty, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                        <Label
-                            MinWidth="150"
-                            HorizontalAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Content="{Binding PropertyName, Mode=OneWay, Converter={StaticResource ParameterToTitleConverter}}"
-                            FontSize="8pt"
-                            FontWeight="Heavy" />
+            <!--  Line Code  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        FontSize="8pt">
+                    Line Code :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding BusStop.LineCode , Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Started Time  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Started Time :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding BusStop.StartedTime, Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Last Station  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Last Station :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding BusStop.LastStation ,Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Arriving Time  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Arriving Time :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding BusStop.ArrivingTime, Mode=TwoWay}" />
+            </DockPanel>
+        </StackPanel>
 
-                        <TextBox
-                            Grid.Column="1"
-                            MinWidth="150"
-                            HorizontalAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            BorderBrush="Black"
-                            BorderThickness="0.5"
-                            FontSize="8pt"
-                            IsEnabled="{Binding BusValueIsReadOnly}"
-                            Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <!--Bus Detais--> 
+        <StackPanel
+            Visibility="{Binding BusDetaisVisibilty , Converter={StaticResource BooleanToVisibilityConverter}}"
+                Margin="10"
+                Background="White"
+                IsEnabled="{Binding IsInEditMode}">
+            <!--  License Num  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        FontSize="8pt">
+                    License Num :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Bus.LicenseNum , Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Register Date  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Register Date  :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Bus.RegisDate ,Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Total KM  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Total KM :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Bus.TotalKM ,Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Fuel Status  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Fuel Status  :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Bus.FuelStatus , Mode=TwoWay}" />
+            </DockPanel>
+            <!--  Last Treatment Date  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                    Last Treatment Date :
+                </Label>
+                <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Bus.LastTreatmentDate , Mode=TwoWay}" />
+            </DockPanel>
+            <!-- Km On Last Treatment  -->
+            <DockPanel HorizontalAlignment="Stretch">
+                <Label
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    FontSize="8pt">
+                    Km On Last Treatment :
+                </Label>
+                <TextBox
+                    Margin="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Text="{Binding Bus.KmOnLastTreatment, Mode=TwoWay}" />
+            </DockPanel>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

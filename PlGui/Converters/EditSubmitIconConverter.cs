@@ -14,11 +14,12 @@ namespace PlGui.Converters
                 bool edit = (bool)value;
                 if (edit)
                 {
-                    return EFontAwesomeIcon.Solid_PencilAlt;
+                    return EFontAwesomeIcon.Solid_Check;
                 }
                 else
                 {
-                    return EFontAwesomeIcon.Solid_Check;
+                    return EFontAwesomeIcon.Solid_PencilAlt;
+                 
                 }
             }
 

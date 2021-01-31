@@ -10,7 +10,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d"
-	PreviewKeyDown="{Binding Key Enter}">
+	>
 
     <UserControl.Background>
         <ImageBrush ImageSource="../../Recources/AddBusBG.jpg" TileMode="Tile" />
@@ -86,7 +86,6 @@
                     Text="{Binding LicenseNum , UpdateSourceTrigger=PropertyChanged ,Mode=TwoWay}"
                     VerticalContentAlignment="Center"
                     MaxLength="8"
-				
                     PreviewTextInput="LicenseNumBox_OnPreviewTextInput"
                     TextWrapping="Wrap">
 
@@ -99,14 +98,6 @@
                         </LinearGradientBrush>
                     </TextBox.SelectionBrush>
 
-                    <!--<TextBox.SelectionTextBrush>
-                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                            <GradientStop Offset="0" Color="#FFA3AEB9" />
-                            <GradientStop Offset="0.375" Color="#FF8399A9" />
-                            <GradientStop Offset="0.375" Color="#FF718597" />
-                            <GradientStop Offset="1" Color="#FF2272AB" />
-                        </LinearGradientBrush>
-                    </TextBox.SelectionTextBrush>-->
                     <TextBox.BorderBrush>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                             <GradientStop Offset="0" Color="#FFA3AEB9" />

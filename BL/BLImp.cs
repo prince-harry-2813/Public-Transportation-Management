@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -338,7 +337,7 @@ namespace BL
                 };
                 if (BOLS.LineStationIndex == 0)
                     BOLS.CopyPropertiesTo(line.FirstStation);
-                if (BOLS.LineStationIndex==DOLineStations.Count()-1)
+                if (BOLS.LineStationIndex == DOLineStations.Count() - 1)
                     BOLS.CopyPropertiesTo(line.LastStation);
                 line.Stations.Append(BOLS);
 
@@ -527,7 +526,7 @@ namespace BL
             {
                 LineStation lineStation = new LineStation();
                 item.CopyPropertiesTo(lineStation);
-                
+
                 lineStation.Station = new Station();
                 lineStation.Station = GetStation(item.StationId);
                 lineStation.Station.Lines = new List<Line>();
@@ -583,7 +582,43 @@ namespace BL
 
 
         #endregion
+        #region Utilities
+
+        /// <summary>
+        /// calculate the distance between previous station to current
+        /// This uses the Haversine formula to calculate the short distance between tow coordinates on sphere surface  
+        /// </summary>
+        /// <param name="other"> previous or other station </param>
+        /// <returns>Short distance in meters </returns>
+        public double CalculateDistance(Station st1, Station st2)
+        {
+            double earthRadius = 6371e3;
+            double l1 = st1.Latitude * (Math.PI / 180);
+            double l2 = st2.Latitude * (Math.PI / 180);
+            double l1_2 = (st2.Latitude - st1.Latitude) * (Math.PI / 180);
+            double lo_1 = (st2.Longitude - st1.Longitude) * (Math.PI / 180);
+            double a = (Math.Sin(l1_2 / 2) * Math.Sin(l1_2 / 2)) +
+                       Math.Cos(l1) * Math.Cos(l2) *
+                       (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var Distance = (earthRadius * c);
+            return Distance;
+        }
+
+
+
+        private TimeSpan CalculateTime(Double Distance)
+        {
+            TimeSpan time = TimeSpan.Zero;
+            double rideDistance = 0.0 + Distance / 1000;
+            time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
+            time += TimeSpan.FromMinutes(2);
+            return time;
+        }
+
+        #endregion
     }
+
     public class RideOperation
     {
 
@@ -598,9 +633,11 @@ namespace BL
                 {
                     value = new RideOperation();
                 }
+
                 instance = value;
             }
         }
+
         public int interval;
         private event EventHandler<LineTiming> updatebusPrivate;
         private int staionID;
@@ -621,7 +658,8 @@ namespace BL
                 getLineStaionworker.CancelAsync();
             }
 
-            #region Rides Operation Worker Initialization 
+            #region Rides Operation Worker Initialization
+
             getLineStaionworker.WorkerReportsProgress = true;
             getLineStaionworker.WorkerReportsProgress = true;
             getLineStaionworker.DoWork += (sender, args) =>
@@ -638,10 +676,8 @@ namespace BL
                         i = 90;
                 }
             };
-            getLineStaionworker.ProgressChanged += (sender, args) =>
-            {
-                linesTrips.Add((LineTrip)args.UserState);
-            }; 
+            getLineStaionworker.ProgressChanged += (sender, args) => { linesTrips.Add((LineTrip)args.UserState); };
+
             #endregion
 
             getLineStaionworker.RunWorkerCompleted += (sender, args) =>
@@ -651,22 +687,23 @@ namespace BL
                 int i = 0;
                 foreach (var VARIABLE in linesTrips)
                 {
-                            //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
-                            busesOnTrips.Add(new BusOnTrip()
-                            {
-                                ActualTakeOff = simulationTime,
-                                Id = i,
-                                LineId = VARIABLE.LineId,
-                                isActive = true,
-                                LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum ,
-                                //NextStationAt = idal.GetAdjacentStations()
-                            });
-                        
-                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0 )
+                    //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
+                    busesOnTrips.Add(new BusOnTrip()
+                    {
+                        ActualTakeOff = simulationTime,
+                        Id = i,
+                        LineId = VARIABLE.LineId,
+                        isActive = true,
+                        LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault()
+                            .LicenseNum,
+                        //NextStationAt = idal.GetAdjacentStations()
+                    });
+
+                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0)
                     {
                         busesOnTrips.Add(new BusOnTrip()
                         {
-                            
+
                         });
                     }
 
@@ -686,56 +723,17 @@ namespace BL
                 {
                     LineTiming lineTiming = new LineTiming()
                     {
-                       // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
-                         //   .CopyPropertiesToNew(typeof(Station))
+                        // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
+                        //   .CopyPropertiesToNew(typeof(Station))
                         //,ArrivingTime = 
                     };
                 });
             }
 
-        }
+
 
      
-
         }
-
-        #endregion
-
-        #region Utilities
-
-        /// <summary>
-        /// calculate the distance between previous station to current
-        /// This uses the Haversine formula to calculate the short distance between tow coordinates on sphere surface  
-        /// </summary>
-        /// <param name="other"> previous or other station </param>
-        /// <returns>Short distance in meters </returns>
-        public double CalculateDistance(Station st1, Station st2)
-        {
-            double earthRadius = 6371e3;
-            double l1 = st1.Latitude * (Math.PI / 180);
-            double l2 = st2.Latitude * (Math.PI / 180);
-            double l1_2 = (st2.Latitude - st1.Latitude) * (Math.PI / 180);
-            double lo_1 = (st2.Longitude - st1.Longitude) * (Math.PI / 180);
-            double a = (Math.Sin(l1_2 / 2) * Math.Sin(l1_2 / 2)) +
-                Math.Cos(l1) * Math.Cos(l2) *
-               (Math.Sin(lo_1 / 2) * Math.Sin(lo_1 / 2));
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            var Distance = (earthRadius * c);
-            return Distance;
-        }
-
-
-
-        private TimeSpan CalculateTime(Double Distance)
-        {
-            TimeSpan time = TimeSpan.Zero;
-            double rideDistance = 0.0 + Distance / 1000;
-            time = TimeSpan.FromMinutes((rideDistance / 28.0d) * 60);
-            time += TimeSpan.FromMinutes(2);
-            return time;
-        }
-
-        #endregion
     }
 }
 

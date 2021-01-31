@@ -202,7 +202,7 @@ namespace PlGui.ViewModels.Bus
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
         }
         #endregion
     }

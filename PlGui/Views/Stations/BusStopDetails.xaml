@@ -5,9 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa5="http://schemas.fontawesome.com/icons/"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:PlGui.Converters"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+        <converters:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <StackPanel
         Width="Auto"
         MinWidth="700"
@@ -37,7 +44,7 @@
                         <fa5:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
-                            Icon="Regular_Edit" />
+                            Icon="{Binding IsInEditMode , Converter={StaticResource EditSubmitIconConverter}}" />
                     </Button.Content>
                 </Button>
 
@@ -88,38 +95,81 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <ListBox
-                x:Name="lbLineDetails"
+            <StackPanel
                 Margin="10"
-                HorizontalContentAlignment="Stretch"
-                ItemsSource="{Binding LbItemSource}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="20,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
+                Background="White"
+                DataContext="{Binding BusStop, Mode=TwoWay}"
+                IsEnabled="{Binding IsInEditMode}">
+                <!--  Code  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch"
+                        FontSize="8pt">
+                        Code :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Code, Mode=TwoWay}" />
+                </DockPanel>
+                <!--  Name  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        Name :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Name, Mode=TwoWay}" />
+                </DockPanel>
+                <!--  Longitude  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        Longitude :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Longitude, Mode=TwoWay}" />
+                </DockPanel>
+                <!--  Latitude  -->
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Label
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="8pt">
+                        Latitude :
+                    </Label>
+                    <TextBox
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Text="{Binding Latitude, Mode=TwoWay}" />
+                </DockPanel>
 
-                            <Label
-                                MinWidth="150"
-                                HorizontalAlignment="Left"
-                                Content="{Binding PropertyKey, Mode=OneWay}"
-                                FontSize="8pt"
-                                FontWeight="Heavy" />
-
-                            <TextBox
-                                Grid.Column="1"
-                                MinWidth="150"
-                                HorizontalAlignment="Left"
-                                BorderBrush="Black"
-                                BorderThickness="0.5"
-                                FontSize="8pt"
-                                Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            </StackPanel>
 
             <!--  Stops of line Details  -->
             <ScrollViewer Grid.Column="1">
@@ -130,11 +180,20 @@
                     ItemsSource="{Binding Station.Lines}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Stretch" FontSize="8pt">
-                                <Run Text="{Binding Name}" />
-                                <Run Text="{Binding Code}" />
-                                <Run Text="{Binding}" />
-                            </TextBlock>
+                            <Border
+                                Margin="5"
+                                BorderBrush="Black"
+                                BorderThickness="1">
+                                <TextBlock
+                                    HorizontalAlignment="Stretch"
+                                    FontFamily="Consulas"
+                                    FontSize="8pt"
+                                    FontWeight="SemiBold">
+                                    <Run Text="{Binding Name}" />
+                                    <Run Text="{Binding Code}" />
+                                    <Run Text="{Binding}" />
+                                </TextBlock>
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

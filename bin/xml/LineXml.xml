@@ -6,7 +6,7 @@
     <Area>General</Area>
     <FirstStation>123</FirstStation>
     <LastStation>321</LastStation>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
   </Line>
   <Line>
     <Id>54321</Id>
@@ -14,6 +14,14 @@
     <Area>General</Area>
     <FirstStation>321</FirstStation>
     <LastStation>123</LastStation>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
+  </Line>
+  <Line>
+    <Id>1212</Id>
+    <Code>1123</Code>
+    <Area>General</Area>
+    <FirstStation>898767</FirstStation>
+    <LastStation>432</LastStation>
+    <isActive>false</isActive>
   </Line>
 </ArrayOfLine>

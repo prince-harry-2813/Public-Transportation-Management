@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using BL.BLApi;
 using BL.BO;
@@ -99,15 +100,22 @@ namespace PlGui.ViewModels.Stations
 
         private void UpdateBusStopButton(string commandParameter)
         {
+            if (BusStop == null)
+            {
+                return;
+            }
             var parm = new NavigationParameters();
-            parm.Add(StringNames.SelectedBusStop, ""/*TODO: Insert Selected Bus Stop from collection*/);
+            parm.Add(StringNames.SelectedBusStop ,BusStop);
             unityContainer.RegisterType(typeof(object), typeof(BusStopDetails), "BusStopDetails");
-            regionManager.RequestNavigate(StringNames.MainRegion, "BusStopDetails");
+            regionManager.RequestNavigate(StringNames.MainRegion, "BusStopDetails" , parm);
         }
         private void DeleteStationButton(string commandParameter)
         {
-            /*TODO: Insert Selected Bus Stop from collection and delete it*/
-            throw new NotImplementedException();
+            if (BusStop == null )
+            {
+                    return;
+            }
+            Bl.DeleteStation(BusStop);
         }
         #endregion
     }

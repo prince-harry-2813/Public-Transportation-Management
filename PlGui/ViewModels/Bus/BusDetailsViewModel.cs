@@ -67,6 +67,22 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
+        private BL.BO.LineTiming busStop;
+        /// <summary>
+        /// Hold Bus data 
+        /// </summary>
+        public BL.BO.LineTiming BusStop
+        {
+            get
+            {
+                return busStop;
+            }
+            set
+            {
+                SetProperty(ref busStop, value);
+            }
+        }
+
         private BL.BO.Bus bus;
         /// <summary>
         /// Hold Bus data 
@@ -84,26 +100,7 @@ namespace PlGui.ViewModels.Bus
         }
         //return Bl.GetBus(1234456 /*TODO: Implement here bus licence Number from the user control sender */)
 
-        private PropertyDetails selectedItem;
-        public PropertyDetails SelectedItem
-        {
-            get => selectedItem;
-            set
-            {
-                SetProperty(ref selectedItem, value);
-            }
-        }
-
-        private ObservableCollection<PropertyDetails> lbItemSource;
-
-        public ObservableCollection<PropertyDetails> LbItemSource
-        {
-            get => lbItemSource;
-            set
-            {
-                SetProperty(ref lbItemSource, value);
-            }
-        }
+    
 
         private bool _busValueIsReadOnly = true;
         public bool BusValueIsReadOnly
@@ -115,8 +112,27 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
+        private bool busDetaisVisibilty = false;
+        public bool BusDetaisVisibilty
+        {
+            get => busDetaisVisibilty;
+            set
+            {
+                SetProperty(ref busDetaisVisibilty, value);
+            }
+        }
+        
 
 
+        private bool busStopVisibilty = false;
+        public bool BusStopVisibilty
+        {
+            get => busStopVisibilty;
+            set
+            {
+                SetProperty(ref busStopVisibilty, value);
+            }
+        }
         public int LicenseNumber { get; set; }
 
         #region Private Members
@@ -158,14 +174,17 @@ namespace PlGui.ViewModels.Bus
 
             #region Properties Implementation
 
-            LbItemSource = new ObservableCollection<PropertyDetails>();
             if (Bus != null)
             {
-                InsertBusPropertiesToCollection(Bus);
+                BusDetaisVisibilty = true;
+                BusStopVisibilty = false;
             }
 
-            SelectedItem = LbItemSource.FirstOrDefault();
-
+            if (BusStop != null)
+            {
+                BusDetaisVisibilty = false;
+                BusStopVisibilty = true;
+            }
 
             #endregion
         }
@@ -187,14 +206,13 @@ namespace PlGui.ViewModels.Bus
 
         private void EditButtonClicked()
         {
-            if (IsInEditMode)
+            if (!IsInEditMode)
             {
                 IsInEditMode = true;
             }
             else
             {
                 IsInEditMode = false;
-                InsertCollectionToBus();
                 try
                 {
                     if (Bus != null)
@@ -215,21 +233,6 @@ namespace PlGui.ViewModels.Bus
         public void ListBoxSelectionChanged()
         {
 
-
-
-
-            if (SelectedItem != null)
-            {
-
-
-                BusValueIsReadOnly = (SelectedItem.PropertyName == "LicenseNum"
-                                    //|| SelectedItem.PropertyName == "RegisDate"
-                                    || SelectedItem.PropertyName == "TotalKM"
-                                    || SelectedItem.PropertyName == "KmOnLastTreatment"
-                                    || SelectedItem.PropertyName == "LastTreatmentDate" 
-                                    || InternalReadOnly
-                                    );
-            }
         }
 
         private void RemoveBusButtomClicked()
@@ -247,7 +250,6 @@ namespace PlGui.ViewModels.Bus
                 MessageBox.Show("Failed to delete bus " +
                                 "Please try again", e.Source, MessageBoxButton.OK, MessageBoxImage.Error);
                 Console.WriteLine(e);
-                throw;
             }
 
             if (sucssesFlag)
@@ -260,65 +262,6 @@ namespace PlGui.ViewModels.Bus
 
         #region Private Method
 
-        public void InsertBusPropertiesToCollection(object bus)
-        {
-            LbItemSource = new ObservableCollection<PropertyDetails>();
-            foreach (PropertyInfo VARIABLE in bus.GetType().GetProperties())
-            {
-                if (VARIABLE.Name.Equals("isActive"))
-                    continue;
-                LbItemSource.Add(new PropertyDetails()
-                {
-                    PropertyType = VARIABLE.PropertyType,
-                    PropertyName = VARIABLE.Name,
-                    BusValueIsReadOnly = (SelectedItem?.PropertyName == "LicenseNum"
-                    || SelectedItem?.PropertyName == "RegisDate"
-                    || SelectedItem?.PropertyName == "TotalKM"
-                    || SelectedItem?.PropertyName == "KmOnLastTreatment"
-                    || SelectedItem?.PropertyName == "LastTreatmentDate" || InternalReadOnly),
-                    PropertyValue = VARIABLE.GetValue(obj: bus, null).ToString()
-                });
-            }
-        }
-
-        private void InsertCollectionToBus()
-        {
-            foreach (var VARIABLE in Bus.GetType().GetProperties())
-            {
-                if (VARIABLE.Name == "isActive")
-                    continue;
-
-                var property = (PropertyDetails)LbItemSource.Where(details => details.PropertyName == VARIABLE.Name).FirstOrDefault();
-
-                dynamic result = property.PropertyValue;
-                if (property.PropertyType == typeof(int))
-                {
-                    int.TryParse(property.PropertyValue, out int value);
-                    result = value;
-                }
-
-                if (property.PropertyType == typeof(DateTime))
-                {
-                    DateTime.TryParse(property.PropertyValue, out DateTime value);
-                    result = value;
-                }
-
-                if (property.PropertyType == typeof(BusStatusEnum))
-                {
-                    BusStatusEnum.TryParse(property.PropertyValue, out BusStatusEnum value);
-                    result = value;
-                }
-
-                if (property.PropertyType == typeof(uint))
-                {
-                    uint.TryParse(property.PropertyValue, out uint value);
-                    result = value;
-                }
-
-                VARIABLE.SetValue(Bus, result);
-            }
-        }
-
         #region INavigation Aware Implementation
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -329,11 +272,12 @@ namespace PlGui.ViewModels.Bus
             // Initialize View object 
             Bus = (BL.BO.Bus)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBus).FirstOrDefault().Value ?? Bus;
             if (Bus != null)
-                InsertBusPropertiesToCollection(Bus);
+            {
+                BusDetaisVisibilty = true;
+            }
             var a = navigationContext.Parameters.Where(pair => pair.Key == "InternalReadOnly")
             .FirstOrDefault().Value;
             InternalReadOnly = (a != null) ? (bool)a : internalReadOnly;
-
 
             var tmp = navigationContext.Parameters.Where(pair => pair.Key == "MainLabelContent")
                 .FirstOrDefault().Value;
@@ -347,7 +291,8 @@ namespace PlGui.ViewModels.Bus
                 .FirstOrDefault().Value;
             if (busStop != null)
             {
-                InsertBusPropertiesToCollection(busStop);
+                BusStop = (LineTiming)busStop;
+                BusStopVisibilty = true;
             }
         }
 
@@ -361,50 +306,10 @@ namespace PlGui.ViewModels.Bus
             ButtonsVisibility = true;
             MainLabelContent = "";
             InternalReadOnly = false;
-            LbItemSource = null;
-            SelectedItem = null;
         }
 
         #endregion
 
         #endregion
-    }
-
-    public class PropertyDetails : BindableBase
-    {
-        public Type PropertyType { get; set; }
-
-        private string propertyName;
-
-        public string PropertyName
-        {
-            get => propertyName;
-            set
-            {
-                SetProperty(ref propertyName, value);
-            }
-        }
-
-        private bool busValueIsReadOnly;
-
-        public bool BusValueIsReadOnly
-        {
-            get => busValueIsReadOnly;
-            set
-            {
-                SetProperty(ref busValueIsReadOnly, value);
-            }
-        }
-
-        private string propertyValue;
-
-        public string PropertyValue
-        {
-            get => propertyValue;
-            set
-            {
-                SetProperty(ref propertyValue, value);
-            }
-        }
     }
 }

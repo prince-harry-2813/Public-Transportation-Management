@@ -5,13 +5,14 @@ using System.Reflection;
 using System.Windows.Input;
 using BL.BLApi;
 using PlGui.StaticClasses;
+using PlGui.ViewModels.Lines;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
 namespace PlGui.ViewModels.Stations
 {
-    public class BusStopDetailsViewModel : BindableBase
+    public class BusStopDetailsViewModel : BindableBase , INavigationAware
     {
 
         #region Properties Declaraion
@@ -31,28 +32,23 @@ namespace PlGui.ViewModels.Stations
                 SetProperty(ref busStop, value);
             }
         }
-        //return Bl.GetBus(1234456 /*TODO: Implement here bus licence Number from the user control sender */)
 
-        private PropertyDetails selectedItem;
-        public PropertyDetails SelectedItem
+        private bool isInEditMode;
+        /// <summary>
+        /// Hold Bus data 
+        /// </summary>
+        public bool IsInEditMode
         {
-            get => selectedItem;
+            get
+            {
+                return isInEditMode;
+            }
             set
             {
-                SetProperty(ref selectedItem, value);
+                SetProperty(ref isInEditMode, value);
             }
         }
 
-        private ObservableCollection<PropertyDetails> lbItemSource;
-
-        public ObservableCollection<PropertyDetails> LbItemSource
-        {
-            get => lbItemSource;
-            set
-            {
-                SetProperty(ref lbItemSource, value);
-            }
-        }
 
         public int Id { get; set; }
 
@@ -72,22 +68,22 @@ namespace PlGui.ViewModels.Stations
 
         #region Command decleration
 
-        public ICommand BusDetailsButtonCommand { get; set; }
+        public ICommand BusStopDetailsButtonCommand { get; set; }
 
         #endregion
 
-        public BusStopDetailsViewModel()
+        public BusStopDetailsViewModel(IBL bl)
         {
+
+            Bl = bl;
+
             #region Command Implemetaion
 
-            BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
+            BusStopDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
 
             #endregion
 
             #region Properties Implementation
-
-            InsertBusPropertiesToCollection(BusStop);
-            SelectedItem = LbItemSource.FirstOrDefault();
 
             #endregion
         }
@@ -99,11 +95,28 @@ namespace PlGui.ViewModels.Stations
             switch (commandParameter)
             {
                 case "Edit":
-                    Bl.UpdateStation(BusStop);
+                   EditBusStop();
                     break;
                 case "Remove":
                     Bl.DeleteStation(BusStop);
                     break;
+            }
+        }
+
+        private void EditBusStop()
+        {
+            if (!IsInEditMode)
+            {
+                IsInEditMode = true;
+            }
+            else
+            {
+                if (BusStop == null)
+                {
+                    return;
+                }
+                Bl.UpdateStation(BusStop);
+                IsInEditMode = false;
             }
         }
 
@@ -132,70 +145,16 @@ namespace PlGui.ViewModels.Stations
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // Initialize Interface 
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
 
             // Initialize View object 
-            BusStop = (BL.BO.Station)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBusStop).FirstOrDefault().Value;
+            BusStop = (BL.BO.Station)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBusStop).FirstOrDefault().Value ?? BusStop;
         }
 
         #endregion
 
         #region Private Methoed
 
-        private void InsertBusPropertiesToCollection(BL.BO.Station busStop)
-        {
-            LbItemSource.Clear();
-            foreach (PropertyInfo VARIABLE in busStop.GetType().GetProperties())
-            {
-                LbItemSource.Add(new PropertyDetails()
-                {
-                    PropertyType = VARIABLE.PropertyType,
-                    PropertyName = VARIABLE.Name,
-                    Propertyvalue = VARIABLE.GetConstantValue().ToString()
-                });
-            }
-        }
-
-        private void InsertCollectionToBus()
-        {
-            foreach (var VARIABLE in busStop.GetType().GetProperties())
-            {
-                var property = LbItemSource.Where(details => details.PropertyName == VARIABLE.Name);
-
-                VARIABLE.SetValue(busStop, property.GetEnumerator().Current.Propertyvalue);
-            }
-        }
-
         #endregion
-    }
-
-    /// <summary>
-    ///  Nested Class helper 
-    /// </summary>
-    public class PropertyDetails : BindableBase
-    {
-        public Type PropertyType { get; set; }
-
-        private string propertyName;
-
-        public string PropertyName
-        {
-            get => propertyName;
-            set
-            {
-                SetProperty(ref propertyName, value);
-            }
-        }
-
-        private string propertyValue;
-
-        public string Propertyvalue
-        {
-            get => propertyValue;
-            set
-            {
-                SetProperty(ref propertyValue, value);
-            }
-        }
     }
 }

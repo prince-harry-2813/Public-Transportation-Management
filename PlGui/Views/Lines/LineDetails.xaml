@@ -6,10 +6,15 @@
     xmlns:fa5="http://schemas.fontawesome.com/icons/"
     xmlns:local="clr-namespace:PlGui.Views.Lines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:PlGui.Converters"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+        <converters:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <StackPanel
         Width="580"
         Margin="10"
@@ -38,7 +43,7 @@
                         <fa5:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
-                            Icon="Regular_Edit" />
+                            Icon="{Binding IsInEditMode , Converter={StaticResource  EditSubmitIconConverter}}" />
                     </Button.Content>
                 </Button>
 
