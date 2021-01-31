@@ -217,7 +217,7 @@
                 HorizontalAlignment="Left"
                 BorderBrush="Black"
                 BorderThickness="1">
-                <Grid>
+                <Grid Margin="0,0.2,0,-0.4" Width="176">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.1*" />
                         <RowDefinition Height="*" />
@@ -252,7 +252,7 @@
                             VerticalAlignment="Center"
                             HorizontalContentAlignment="Right"
                             FontSize="6pt">
-                            Bus Nu'
+                            Bus Num
                         </Label>
                     </Grid>
 

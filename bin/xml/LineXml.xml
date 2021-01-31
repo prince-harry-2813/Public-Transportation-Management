@@ -2,26 +2,10 @@
 <ArrayOfLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Line>
     <Id>1</Id>
-    <Code>333</Code>
+    <Code>8</Code>
     <Area>General</Area>
-    <FirstStation>123</FirstStation>
-    <LastStation>321</LastStation>
-    <isActive>false</isActive>
-  </Line>
-  <Line>
-    <Id>54321</Id>
-    <Code>12345</Code>
-    <Area>General</Area>
-    <FirstStation>321</FirstStation>
-    <LastStation>123</LastStation>
-    <isActive>false</isActive>
-  </Line>
-  <Line>
-    <Id>1212</Id>
-    <Code>1123</Code>
-    <Area>General</Area>
-    <FirstStation>898767</FirstStation>
-    <LastStation>432</LastStation>
-    <isActive>false</isActive>
+    <FirstStation>1366</FirstStation>
+    <LastStation>1367</LastStation>
+    <isActive>true</isActive>
   </Line>
 </ArrayOfLine>

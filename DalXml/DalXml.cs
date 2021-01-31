@@ -476,6 +476,8 @@ namespace DalXml
             List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
             return from l in Lines
                    where predicate(l)
+                   orderby l.LineId 
+                   orderby l.LineStationIndex
                    select l;
         }
 

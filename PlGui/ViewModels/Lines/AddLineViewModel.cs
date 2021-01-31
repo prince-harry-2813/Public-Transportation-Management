@@ -25,6 +25,7 @@ namespace PlGui.ViewModels.Lines
         #endregion
 
         #region Properties Declaration
+        
 
         private BL.BO.Line line = new BL.BO.Line()
         {
@@ -116,7 +117,7 @@ namespace PlGui.ViewModels.Lines
             #region Service Init
 
             Bl = bl;
-
+            Line.Id = bl.GetLinesBy(l => l.IsActive || !l.IsActive).Count()+1;
             #endregion
 
             #region Properties Initialization
@@ -144,14 +145,13 @@ namespace PlGui.ViewModels.Lines
                         getStationsList.ReportProgress(0, VARIABLE);
                     }
                 }
-                int a = Bl.GetAllLinesStationBy(station => station.isActive || !station.isActive).Count() + 1; 
+                int a = Bl.GetAllLinesStationBy(station => station.IsActive || !station.IsActive).Count() + 1; 
                 getStationsList.ReportProgress(0 , a);
             };
             getStationsList.ProgressChanged += (sender, args) =>
             {
                 if (args.UserState is int)
                 {
-                    Line.Id = (int)args.UserState + 1;
                 }
                 else
                 {

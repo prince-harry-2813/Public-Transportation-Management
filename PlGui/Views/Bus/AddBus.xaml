@@ -12,91 +12,88 @@
     mc:Ignorable="d"
 	>
 
-    <UserControl.Background>
-        <ImageBrush ImageSource="../../Recources/AddBusBG.jpg" TileMode="Tile" />
-    </UserControl.Background>
+	<UserControl.Background>
+		<ImageBrush ImageSource="../../Recources/AddBusBG.jpg" TileMode="Tile" />
+	</UserControl.Background>
 
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter"
-                    Command="{Binding EneterKeyCommand}"/>
-    </UserControl.InputBindings>
+	<UserControl.InputBindings>
+		<KeyBinding Key="Enter" Command="{Binding EneterKeyCommand}" />
+	</UserControl.InputBindings>
 
-    <Grid Margin="10,10,10,10">
+	<Grid Margin="10,10,10,10">
 
-        <Grid Margin="10,90,10,9.6" Background="#4CFFFFFF">
-            <WrapPanel
-                Width="228"
-                Height="105"
-                Margin="30,59,246,10"
-                RenderTransformOrigin="0.498,-1.336"
-                FocusManager.FocusedElement="{Binding ElementName=licenseNumBox}">
+		<Grid Margin="10,90,10,9.6" Background="#4CFFFFFF">
+			<WrapPanel
+				Width="228"
+				Height="105"
+				Margin="30,59,246,10"
+				FocusManager.FocusedElement="{Binding ElementName=licenseNumBox}"
+				RenderTransformOrigin="0.498,-1.336">
 
-                <Label
-                    Width="105"
-                    Height="26"
-                    Background="#0CFFFFFF"
-                    Content="Date of register:"
-                    FontFamily="Nirmala UI"
-                    FontWeight="Bold"
-                    Foreground="#FFD64500" />
+				<Label
+					Width="105"
+					Height="26"
+					Background="#0CFFFFFF"
+					Content="Date of register:"
+					FontFamily="Nirmala UI"
+					FontWeight="Bold"
+					Foreground="#FFD64500" />
 
-                <DatePicker
-                    Name="RegistrationDate"
-                    Width="100"
-                    DisplayDateEnd="{Binding DisplayDateEnd}"
-                    DisplayDateStart="{Binding DisplayDateStart}"
-                    Height="23"
-                    FontStyle="Italic"
-                    GotKeyboardFocus="LicenseNumBox_OnLostKeyboardFocus"
-                    Foreground="#FFD64500"
-                    IsTodayHighlighted="True">
-                    <DatePicker.BorderBrush>
-                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                            <GradientStop Offset="0" Color="#FFA3AEB9" />
-                            <GradientStop Offset="0.375" Color="#FF8399A9" />
-                            <GradientStop Offset="0.375" Color="#FF718597" />
-                            <GradientStop Offset="1" Color="#FF2272AB" />
-                        </LinearGradientBrush>
-                    </DatePicker.BorderBrush>
-                </DatePicker>
-            </WrapPanel>
+				<DatePicker
+					Name="RegistrationDate"
+					Width="100"
+					Height="23"
+					DisplayDateEnd="{Binding DisplayDateEnd}"
+					DisplayDateStart="{Binding DisplayDateStart}"
+					FontStyle="Italic"
+					Foreground="#FFD64500"
+					GotKeyboardFocus="LicenseNumBox_OnLostKeyboardFocus"
+				FocusManager.FocusedElement="{Binding ElementName=licenseNumBox}"
+					IsTodayHighlighted="True">
+					<DatePicker.BorderBrush>
+						<LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+							<GradientStop Offset="0" Color="#FFA3AEB9" />
+							<GradientStop Offset="0.375" Color="#FF8399A9" />
+							<GradientStop Offset="0.375" Color="#FF718597" />
+							<GradientStop Offset="1" Color="#FF2272AB" />
+						</LinearGradientBrush>
+					</DatePicker.BorderBrush>
+				</DatePicker>
+			</WrapPanel>
 
-            <WrapPanel
-                Width="228"
-                Margin="158,84,374,115">
+			<WrapPanel Width="228" Margin="158,84,374,115">
 
-                <Label
-                    Width="105"
-                    Height="30"
-                    HorizontalContentAlignment="Right"
-                    VerticalContentAlignment="Stretch"
-                    Background="#0CFFFFFF"
-                    Content="License number:"
-                    FontFamily="Nirmala UI"
-                    FontWeight="Bold"
-                    Foreground="#FFD64500"
-                    RenderTransformOrigin="0.5,0.5" />
+				<Label
+					Width="105"
+					Height="30"
+					HorizontalContentAlignment="Right"
+					VerticalContentAlignment="Stretch"
+					Background="#0CFFFFFF"
+					Content="License number:"
+					FontFamily="Nirmala UI"
+					FontWeight="Bold"
+					Foreground="#FFD64500"
+					RenderTransformOrigin="0.5,0.5" />
 
-                <TextBox
+				<TextBox
+					x:Name="licenseNumBox"
+					Width="100"
+					Height="23"
+					VerticalContentAlignment="Center"
 					Focusable="True"
-			
-                    x:Name="licenseNumBox"
-                    Width="100"
-                    Height="23"
-                    Text="{Binding LicenseNum , UpdateSourceTrigger=PropertyChanged ,Mode=TwoWay}"
-                    VerticalContentAlignment="Center"
-                    MaxLength="8"
-                    PreviewTextInput="LicenseNumBox_OnPreviewTextInput"
-                    TextWrapping="Wrap">
+					MaxLength="8"
+					PreviewTextInput="LicenseNumBox_OnPreviewTextInput"
+					Text="{Binding LicenseNum, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, StringFormat={}{0:#######0}}"
+					TextWrapping="Wrap">
 
-                    <TextBox.SelectionBrush>
-                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
-                            <GradientStop Offset="0" Color="#FFA3AEB9" />
-                            <GradientStop Offset="0.375" Color="#FF8399A9" />
-                            <GradientStop Offset="0.375" Color="#FF718597" />
-                            <GradientStop Offset="1" Color="#FF2272AB" />
-                        </LinearGradientBrush>
-                    </TextBox.SelectionBrush>
+					<TextBox.SelectionBrush>
+						<LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+							<GradientStop Offset="0" Color="#FFA3AEB9" />
+							<GradientStop Offset="0.375" Color="#FF8399A9" />
+							<GradientStop Offset="0.375" Color="#FF718597" />
+							<GradientStop Offset="1" Color="#FF2272AB" />
+						</LinearGradientBrush>
+					</TextBox.SelectionBrush>
 
                     <TextBox.BorderBrush>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
@@ -109,26 +106,26 @@
                 </TextBox>
             </WrapPanel>
 
-            <Label
-                Margin="464,222,10,10"
-                Background="#0CFFFFFF"
-                Content="Press Ctrl + enter to proceed registering&#xD;&#xA;Esc to cancel "
-                FontFamily="Nirmala UI"
-                FontSize="14"
-                FontWeight="Bold"
-                Foreground="#FFD64500" />
-        </Grid>
+			<Label
+				Margin="464,222,10,10"
+				Background="#0CFFFFFF"
+				Content="Press Enter↵ to proceed registering&#xA;Esc to cancel "
+				FontFamily="Nirmala UI"
+				FontSize="14"
+				FontWeight="Bold"
+				Foreground="#FFD64500" />
+		</Grid>
 
-        <WrapPanel Margin="10,10,9.6,192.2" Orientation="Vertical">
-            <Label
-                Width="356"
-                Height="50"
-                Margin="5"
-                Content="Add new bus car to system"
-                FontFamily="Nirmala UI"
-                FontSize="18"
-                FontWeight="Bold"
-                Foreground="#FFD64500" />
-        </WrapPanel>
-    </Grid>
+		<WrapPanel Margin="10,10,9.6,192.2" Orientation="Vertical">
+			<Label
+				Width="356"
+				Height="50"
+				Margin="5"
+				Content="Add new bus car to system"
+				FontFamily="Nirmala UI"
+				FontSize="18"
+				FontWeight="Bold"
+				Foreground="#FFD64500" />
+		</WrapPanel>
+	</Grid>
 </UserControl>

@@ -23,5 +23,10 @@ namespace PlGui.Views.Stations
             viewModel = (BusStopsViewViewModel)this.DataContext;
             viewModel.UpdateBusStopButtonCommand.Execute(null);
         }
+
+        private void LbBuses_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
     }
 }

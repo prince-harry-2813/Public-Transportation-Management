@@ -2,65 +2,17 @@
 <ArrayOfLineStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LineStation>
     <LineId>1</LineId>
-    <StationId>123</StationId>
+    <StationId>1366</StationId>
     <LineStationIndex>0</LineStationIndex>
     <PrevStation>0</PrevStation>
-    <NextStation>321</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>1</LineId>
-    <StationId>321</StationId>
-    <LineStationIndex>1</LineStationIndex>
-    <PrevStation>123</PrevStation>
-    <NextStation>0</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>54321</LineId>
-    <StationId>321</StationId>
-    <LineStationIndex>0</LineStationIndex>
-    <PrevStation>0</PrevStation>
-    <NextStation>123</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>54321</LineId>
-    <StationId>123</StationId>
-    <LineStationIndex>1</LineStationIndex>
-    <PrevStation>321</PrevStation>
-    <NextStation>0</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>1212</LineId>
-    <StationId>898767</StationId>
-    <LineStationIndex>0</LineStationIndex>
-    <PrevStation>0</PrevStation>
-    <NextStation>432</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>1212</LineId>
-    <StationId>432</StationId>
-    <LineStationIndex>1</LineStationIndex>
-    <PrevStation>898767</PrevStation>
-    <NextStation>0</NextStation>
-    <isActive>false</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>123344567</LineId>
-    <StationId>321</StationId>
-    <LineStationIndex>0</LineStationIndex>
-    <PrevStation>0</PrevStation>
-    <NextStation>898767</NextStation>
+    <NextStation>1367</NextStation>
     <isActive>true</isActive>
   </LineStation>
   <LineStation>
-    <LineId>123344567</LineId>
-    <StationId>898767</StationId>
+    <LineId>1</LineId>
+    <StationId>1367</StationId>
     <LineStationIndex>1</LineStationIndex>
-    <PrevStation>321</PrevStation>
+    <PrevStation>1366</PrevStation>
     <NextStation>0</NextStation>
     <isActive>true</isActive>
   </LineStation>
