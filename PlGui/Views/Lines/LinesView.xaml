@@ -228,8 +228,8 @@
                             </Button.Content>
                         </Button>-->
 
-                        <!--<Button
-						<ComboBox
+                      
+						<!--<ComboBox
                             Grid.Column="4"
                             Height="18pt"
                             Margin="2"
@@ -239,11 +239,10 @@
                             
                             FontFamily="Broadway"
                             FontSize="13"
-                            FontWeight="Bold" />-->
-                    </Grid>
-                            FontWeight="Bold" >
+                            FontWeight="Bold" />
+
 							<ComboBoxItem Content="{Binding Stations.Station.Code ,UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
-						</ComboBox>
+						</ComboBox>-->
 					</Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

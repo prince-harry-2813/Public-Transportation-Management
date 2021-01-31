@@ -16,9 +16,8 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <StackPanel
-        Width="580"
         Margin="10"
-        HorizontalAlignment="Center"
+        HorizontalAlignment="Stretch"
         VerticalAlignment="Center">
         <WrapPanel Margin="10" HorizontalAlignment="Center">
             <fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
@@ -42,6 +41,7 @@
                     <Button.Content>
                         <fa5:ImageAwesome
                             Margin="2"
+                            Height="20pt"
                             Foreground="Blue"
                             Icon="{Binding IsInEditMode , Converter={StaticResource  EditSubmitIconConverter}}" />
                     </Button.Content>
@@ -66,6 +66,7 @@
                     Margin="5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
+                    CommandParameter="Delete"
                     Command="{Binding LineDetailsButtonCommand}"
                     ToolTip="Delete BusStop">
                     <Button.Content>
@@ -94,48 +95,12 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-
-            <!--  Bus properties Detais  -->
-            <!--<ListBox
-                x:Name="lbLineDetails"
-                Grid.Column="0"
-                Margin="10"
-                HorizontalContentAlignment="Stretch"
-                ItemsSource="{Binding LbItemSource}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="20,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label
-                                MinWidth="150"
-                                HorizontalAlignment="Left"
-                                Content="{Binding PropertyName, Mode=TwoWay}"
-                                FontSize="8pt"
-                                FontWeight="Heavy" />
-
-                            <TextBox
-                                Grid.Column="1"
-                                MinWidth="150"
-                                HorizontalAlignment="Left"
-                                BorderBrush="Black"
-                                BorderThickness="0.5"
-                                FontSize="8pt"
-                                IsReadOnly="True"
-                                Text="{Binding PropertyValue , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-
             <StackPanel
                 Margin="10"
                 Background="White"
-                DataContext="{Binding Line ,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                IsEnabled="{Binding IsInEditMode}">
+                IsEnabled="{Binding IsInEditMode}"
+                DataContext="{Binding Line }"
+             >
                 <!--  ID  -->
                 <DockPanel HorizontalAlignment="Stretch">
                     <Label
@@ -233,12 +198,23 @@
                     ItemsSource="{Binding Line.Stations , Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock HorizontalAlignment="Stretch" FontSize="8pt"
-                                       Margin="10">
+                            <Border
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="2">
+                                <TextBlock HorizontalAlignment="Stretch" FontSize="8pt"
+                                           Margin="10">
                                 <Run
                                     Text="{Binding Station.Name , Mode=TwoWay}" />
+                                <Run>
+                                    תחנה מס :
+                                </Run>
                                 <Run Text="{Binding Station.Code , Mode=TwoWay}" />
-                            </TextBlock>
+                               
+                                </TextBlock>
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

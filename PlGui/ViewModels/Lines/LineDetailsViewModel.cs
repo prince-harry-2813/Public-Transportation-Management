@@ -34,7 +34,23 @@ namespace PlGui.ViewModels.Lines
                 SetProperty(ref line, value);
             }
         }
-        
+
+        private bool isInEditMode;
+        /// <summary>
+        /// Hold Bus data 
+        /// </summary>
+        public bool IsInEditMode { 
+            get
+            {
+                return isInEditMode;
+            }
+            set
+            {
+                SetProperty(ref isInEditMode, value);
+            }
+        }
+
+
         public int LicenseNumber { get; set; }
         #region Private Members
 
@@ -83,15 +99,19 @@ namespace PlGui.ViewModels.Lines
 
         private void LineDetailsButton(string commandParameter)
         {
+           
             switch (commandParameter)
             {
                 case "Edit":
-                    var param = new NavigationParameters();
-                    param.Add("Line", Line);
-                    regionManager.RequestNavigate(StringNames.MainRegion, StringNames.AddLine, param);
+                    if (!IsInEditMode)
+                    {
+                        IsInEditMode = true;
+                        break;
+                    }
+                   Bl.UpdateLine(Line);
                     break;
-                case "Remove":
-
+                case "Delete":
+                    Bl.DeleteLine(Line);
                     break;
             }
         }

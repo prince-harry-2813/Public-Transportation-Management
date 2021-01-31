@@ -177,23 +177,21 @@
 			Grid.Row="2"
 			Margin="10"
 			HorizontalContentAlignment="Stretch"
+			SelectedItem="{Binding BusStop}"
 			Background="WhiteSmoke"
-			ItemsSource="{Binding BusStops, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            ItemsSource="{Binding BusStops, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 			ScrollViewer.CanContentScroll="True"
 			ScrollViewer.VerticalScrollBarVisibility="Visible"
 			Width="760" Height="333">
 			<ListBox.ItemTemplate
 				>
-				<DataTemplate
-					>
-			SelectedItem="{Binding BusStop}"
-			ItemsSource="{Binding BusStops}">
-			<ListBox.ItemTemplate>
+			
 				<DataTemplate>
-					<Grid Margin="2">
+					<Grid Margin="2"
+                          HorizontalAlignment="Stretch">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="16*" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="Auto" />
@@ -204,6 +202,7 @@
 						<Label
 							x:Name="LineNumberLabel"
 							Grid.Column="3"
+							VerticalAlignment="Center"
 							Content="{Binding Name}"
 							MouseDoubleClick="OnContentChanged" />
 
@@ -224,7 +223,7 @@
 
                         <ComboBox
 							Margin="10"
-							Grid.Column="3"
+							Grid.Column="1"
                             ItemsSource="{Binding Lines}">
                             <ComboBox.ItemTemplate>
 								<DataTemplate>

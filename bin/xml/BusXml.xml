@@ -31,26 +31,6 @@
     <LastTreatmentDate>2021-01-31T20:43:11.3098112+02:00</LastTreatmentDate>
   </Bus>
   <Bus>
-    <LicenseNum>46234254</LicenseNum>
-    <RegisDate>2021-01-31T21:24:43.9640902+02:00</RegisDate>
-    <TotalKM>0</TotalKM>
-    <FuelStatus>1200</FuelStatus>
-    <Status>Ok</Status>
-    <isActive>true</isActive>
-    <KmOnLastTreatment>0</KmOnLastTreatment>
-    <LastTreatmentDate>2021-01-31T21:24:43.9640902+02:00</LastTreatmentDate>
-  </Bus>
-  <Bus>
-    <LicenseNum>12348664</LicenseNum>
-    <RegisDate>2021-01-31T02:57:39.389809+02:00</RegisDate>
-    <TotalKM>0</TotalKM>
-    <FuelStatus>1200</FuelStatus>
-    <Status>Ok</Status>
-    <isActive>true</isActive>
-    <KmOnLastTreatment>0</KmOnLastTreatment>
-    <LastTreatmentDate>2021-01-31T02:57:39.389809+02:00</LastTreatmentDate>
-  </Bus>
-  <Bus>
     <LicenseNum>43242342</LicenseNum>
     <RegisDate>2021-01-31T03:00:18.0208145+02:00</RegisDate>
     <TotalKM>0</TotalKM>
@@ -79,5 +59,25 @@
     <isActive>true</isActive>
     <KmOnLastTreatment>0</KmOnLastTreatment>
     <LastTreatmentDate>2021-01-31T19:51:41.9565283+02:00</LastTreatmentDate>
+  </Bus>
+  <Bus>
+    <LicenseNum>46234254</LicenseNum>
+    <RegisDate>2021-01-31T21:24:43.9640902+02:00</RegisDate>
+    <TotalKM>0</TotalKM>
+    <FuelStatus>1200</FuelStatus>
+    <Status>Ok</Status>
+    <isActive>true</isActive>
+    <KmOnLastTreatment>0</KmOnLastTreatment>
+    <LastTreatmentDate>2021-01-31T21:24:43.9640902+02:00</LastTreatmentDate>
+  </Bus>
+  <Bus>
+    <LicenseNum>12348664</LicenseNum>
+    <RegisDate>2021-01-31T02:57:39.389809+02:00</RegisDate>
+    <TotalKM>0</TotalKM>
+    <FuelStatus>1200</FuelStatus>
+    <Status>Ok</Status>
+    <isActive>true</isActive>
+    <KmOnLastTreatment>0</KmOnLastTreatment>
+    <LastTreatmentDate>2021-01-31T02:57:39.389809+02:00</LastTreatmentDate>
   </Bus>
 </ArrayOfBus>

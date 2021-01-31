@@ -100,12 +100,13 @@
                     Bus Stop :
                 </Label>
                 <ComboBox
-                    SelectionChanged="Selector_OnSelectionChanged"
+                    x:Name="StationsComboBox"
                     MinWidth="5"
                     Margin="5"
                     VerticalAlignment="Center"
                     ItemsSource="{Binding StationCollection}"
-                    SelectedItem="{Binding Station}">
+                    SelectedItem="{Binding Station}"
+                    SelectionChanged="Selector_OnSelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Name}" FontSize="12pt" />
@@ -184,8 +185,10 @@
                     Grid.Row="1"
                     Margin="5"
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding}">
-                    <ItemsPanelTemplate>
+                    ItemsSource="{Binding Station}">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
                         <!--  Bus Last station and Number grid  -->
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -195,15 +198,16 @@
 
                             <Label
                                 Grid.Column="0"
-                                Content="{Binding BusNumber}"
+                                Content="{Binding Lines.Code}"
                                 FontSize="10pt" />
 
                             <Label
                                 Grid.Column="1"
-                                Content="{Binding LastStation}"
+                                Content="{Binding Lines.LastStation}"
                                 FontSize="10pt" />
                         </Grid>
-                    </ItemsPanelTemplate>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Grid>
         </WrapPanel>
@@ -217,14 +221,19 @@
                 HorizontalAlignment="Left"
                 BorderBrush="Black"
                 BorderThickness="1">
-                <Grid Margin="0,0.2,0,-0.4" Width="176">
+                <Grid Width="176" Margin="0,0.2,0,-0.4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="14*" />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.1*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <!--  First Row Grid  -->
-                    <Grid Margin="5">
+                    <Grid Grid.ColumnSpan="3" Margin="5,5,5,4.667">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*" />
                             <ColumnDefinition />
@@ -259,7 +268,8 @@
                     <!--  5 Up coming Buses Panel  -->
                     <ItemsControl
                         Grid.Row="1"
-                        Margin="5"
+                        Grid.ColumnSpan="3"
+                        Margin="5,5.333,5,5"
                         ItemsSource="{Binding}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

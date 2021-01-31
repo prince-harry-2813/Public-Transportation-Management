@@ -183,9 +183,12 @@
                             <Border
                                 Margin="5"
                                 BorderBrush="Black"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 BorderThickness="1">
                                 <TextBlock
-                                    HorizontalAlignment="Stretch"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     FontFamily="Consulas"
                                     FontSize="8pt"
                                     FontWeight="SemiBold">
