@@ -468,58 +468,9 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-
-
-
         #endregion
 
-        #region User Simulation
-
-        event Action<TimeSpan> clockObserver = null;
-        private DispatcherTimer simulationTimer = new DispatcherTimer();
-        internal volatile bool Cancel;
-
-        /// <summary>
-        /// Start simulator stop watch and update it according 
-        /// </summary>
-        /// <param name="startTime">TIME TO START  </param>
-        /// <param name="Rate"> Hz per minute</param>
-        /// <param name="updateTime">Action</param>
-        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
-        {
-            Cancel = false;
-            clockObserver = updateTime;
-            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes
-                , TimeSpan.FromSeconds(startTime.TotalSeconds).Seconds
-                , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
-
-            simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6))));
-            //rideOperation.interval = simulationTimer.Interval.Milliseconds;
-            simulationTimer.Tick += (sender, args) =>
-            {
-                if (Cancel)
-                {
-                    clockObserver = null;
-                    simulationTimer.Stop();
-                    return;
-                }
-
-                simulatorTime += TimeSpan.FromSeconds(1);
-                updateTime.Invoke(simulatorTime);
-                //rideOperation.UpdateSimualtionTime(simulatorTime);
-                Debug.Print(simulatorTime.ToString());
-            };
-            simulationTimer.Start();
-
-        }
-
-
-
-
-
-        #endregion
+        
 
         #region Line Station
 
@@ -620,9 +571,51 @@ namespace BL
 
             rideOperation.StartSimulation();
         }
-
-
         #endregion
+
+        #region User Simulation
+
+        event Action<TimeSpan> clockObserver = null;
+        private DispatcherTimer simulationTimer = new DispatcherTimer();
+        internal volatile bool Cancel;
+
+        /// <summary>
+        /// Start simulator stop watch and update it according 
+        /// </summary>
+        /// <param name="startTime">TIME TO START  </param>
+        /// <param name="Rate"> Hz per minute</param>
+        /// <param name="updateTime">Action</param>
+        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
+        {
+            Cancel = false;
+            clockObserver = updateTime;
+            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
+                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes
+                , TimeSpan.FromSeconds(startTime.TotalSeconds).Seconds
+                , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
+
+            simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6))));
+            //rideOperation.interval = simulationTimer.Interval.Milliseconds;
+            simulationTimer.Tick += (sender, args) =>
+            {
+                if (Cancel)
+                {
+                    clockObserver = null;
+                    simulationTimer.Stop();
+                    return;
+                }
+
+                simulatorTime += TimeSpan.FromSeconds(1);
+                updateTime.Invoke(simulatorTime);
+                //rideOperation.UpdateSimualtionTime(simulatorTime);
+                Debug.Print(simulatorTime.ToString());
+            };
+            simulationTimer.Start();
+
+        }
+        #endregion
+
     }
     public class RideOperation
     {
@@ -738,6 +731,7 @@ namespace BL
 
 
     }
+    
     internal static class Utilities
     {
         #region Utilities

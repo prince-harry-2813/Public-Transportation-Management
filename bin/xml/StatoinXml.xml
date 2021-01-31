@@ -1,45 +1,448 @@
-<?xml version="1.0"?>
+<?xml version="1.0" standalone="yes"?>
 <ArrayOfStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Station>
-    <Code>898767</Code>
-    <Name>kjhdh</Name>
-    <Longitude>35.058920941482725</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>123</Code>
-    <Name>אברבאנל </Name>
-    <Longitude>35.49441</Longitude>
-    <Latitude>33.28929</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>321</Code>
-    <Name>אח"י דקר</Name>
-    <Longitude>34.78778</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>432</Code>
-    <Name>aynu</Name>
-    <Longitude>34.80672</Longitude>
-    <Latitude>33</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>3340</Code>
-    <Name>בן נון</Name>
-    <Longitude>34.68314</Longitude>
-    <Latitude>32.653322</Latitude>
-    <isActive>true</isActive>
-  </Station>
-  <Station>
-    <Code>2813</Code>
-    <Name>פסח</Name>
-    <Longitude>34.80875</Longitude>
-    <Latitude>31.97511</Latitude>
-    <isActive>true</isActive>
-  </Station>
+<Station><Code>38831</Code><Name>בי''ס בר לב/בן יהודה</Name><Latitude>32.183921</Latitude><Longitude>34.917806</Longitude><isActive>true</isActive></Station>
+<Station><Code>38832</Code><Name>הרצל/צומת בילו</Name><Latitude>31.870034</Latitude><Longitude>34.819541</Longitude><isActive>true</isActive></Station>
+<Station><Code>38833</Code><Name>הנחשול/הדייגים</Name><Latitude>31.984553</Latitude><Longitude>34.782828</Longitude><isActive>true</isActive></Station>
+<Station><Code>38834</Code><Name>פריד/ששת הימים</Name><Latitude>31.88855</Latitude><Longitude>34.790904</Longitude><isActive>true</isActive></Station>
+<Station><Code>42344</Code><Name>המגינים/נתיב הטרשים</Name><Latitude>32.763746</Latitude><Longitude>35.050403</Longitude><isActive>true</isActive></Station>
+<Station><Code>42345</Code><Name>יפה נוף/נתיב הטרשים</Name><Latitude>32.764192</Latitude><Longitude>35.049366</Longitude><isActive>true</isActive></Station>
+<Station><Code>42346</Code><Name>יפה נוף/ההשכלה</Name><Latitude>32.761792</Latitude><Longitude>35.045548</Longitude><isActive>true</isActive></Station>
+<Station><Code>42347</Code><Name>המגינים/דרך משה</Name><Latitude>32.766508</Latitude><Longitude>35.048979</Longitude><isActive>true</isActive></Station>
+<Station><Code>42348</Code><Name>הנוריות/הורדים</Name><Latitude>32.768937</Latitude><Longitude>35.039611</Longitude><isActive>true</isActive></Station>
+<Station><Code>42349</Code><Name>הזית/הנוריות</Name><Latitude>32.769119</Latitude><Longitude>35.041118</Longitude><isActive>true</isActive></Station>
+<Station><Code>42350</Code><Name>צומת נחל חדרה</Name><Latitude>32.465493</Latitude><Longitude>34.912316</Longitude><isActive>true</isActive></Station>
+<Station><Code>42351</Code><Name>האלון/הדקל</Name><Latitude>32.769582</Latitude><Longitude>35.032679</Longitude><isActive>true</isActive></Station>
+<Station><Code>42352</Code><Name>מתנס/האלון</Name><Latitude>32.768881</Latitude><Longitude>35.034011</Longitude><isActive>true</isActive></Station>
+<Station><Code>42353</Code><Name>האלון/החרוב</Name><Latitude>32.767403</Latitude><Longitude>35.036407</Longitude><isActive>true</isActive></Station>
+<Station><Code>42354</Code><Name>האלון/השיקמה</Name><Latitude>32.767141</Latitude><Longitude>35.036704</Longitude><isActive>true</isActive></Station>
+<Station><Code>42355</Code><Name>האלון</Name><Latitude>32.769058</Latitude><Longitude>35.033944</Longitude><isActive>true</isActive></Station>
+<Station><Code>42356</Code><Name>כצנלסון/הנביאים</Name><Latitude>32.800762</Latitude><Longitude>35.106289</Longitude><isActive>true</isActive></Station>
+<Station><Code>42357</Code><Name>כצנלסון/הנביאים</Name><Latitude>32.800892</Latitude><Longitude>35.105673</Longitude><isActive>true</isActive></Station>
+<Station><Code>42358</Code><Name>ורדיה/נורית</Name><Latitude>32.794269</Latitude><Longitude>34.993713</Longitude><isActive>true</isActive></Station>
+<Station><Code>42359</Code><Name>ורדיה/שמשון</Name><Latitude>32.794395</Latitude><Longitude>34.993645</Longitude><isActive>true</isActive></Station>
+<Station><Code>42360</Code><Name>נורית</Name><Latitude>32.793161</Latitude><Longitude>34.998066</Longitude><isActive>true</isActive></Station>
+<Station><Code>42361</Code><Name>מרכז מסחרי/ורדיה</Name><Latitude>32.794844</Latitude><Longitude>34.995715</Longitude><isActive>true</isActive></Station>
+<Station><Code>42362</Code><Name>מת''מ/ההגנה</Name><Latitude>32.789609</Latitude><Longitude>34.962117</Longitude><isActive>true</isActive></Station>
+<Station><Code>42363</Code><Name>דרך עכו/כביש 79</Name><Latitude>32.847626</Latitude><Longitude>35.092314</Longitude><isActive>true</isActive></Station>
+<Station><Code>42365</Code><Name>יוסף מייזר/מאיר אסטוריה</Name><Latitude>32.454375</Latitude><Longitude>34.908931</Longitude><isActive>true</isActive></Station>
+<Station><Code>42366</Code><Name>נורית/ורדיה</Name><Latitude>32.794294</Latitude><Longitude>34.998662</Longitude><isActive>true</isActive></Station>
+<Station><Code>42367</Code><Name>פרויד/ויתקין</Name><Latitude>32.782407</Latitude><Longitude>34.987604</Longitude><isActive>true</isActive></Station>
+<Station><Code>42368</Code><Name>הנשיא/דרך הים</Name><Latitude>32.804389</Latitude><Longitude>34.98744</Longitude><isActive>true</isActive></Station>
+<Station><Code>42369</Code><Name>הרופא/סמולנסקין</Name><Latitude>32.785875</Latitude><Longitude>34.983546</Longitude><isActive>true</isActive></Station>
+<Station><Code>42370</Code><Name>הרופא ג</Name><Latitude>32.784886</Latitude><Longitude>34.979504</Longitude><isActive>true</isActive></Station>
+<Station><Code>42371</Code><Name>הרופא/לינקולן</Name><Latitude>32.785575</Latitude><Longitude>34.97771</Longitude><isActive>true</isActive></Station>
+<Station><Code>42372</Code><Name>הרופא ה</Name><Latitude>32.784805</Latitude><Longitude>34.979675</Longitude><isActive>true</isActive></Station>
+<Station><Code>42380</Code><Name>ווטסון/סורוקה</Name><Latitude>32.776792</Latitude><Longitude>34.993981</Longitude><isActive>true</isActive></Station>
+<Station><Code>42383</Code><Name>בר מוחא</Name><Latitude>32.770279</Latitude><Longitude>35.045652</Longitude><isActive>true</isActive></Station>
+<Station><Code>42386</Code><Name>איינשטיין ב</Name><Latitude>32.778998</Latitude><Longitude>34.997954</Longitude><isActive>true</isActive></Station>
+<Station><Code>42387</Code><Name>הגיבורים/גוש עציון</Name><Latitude>32.802797</Latitude><Longitude>35.00744</Longitude><isActive>true</isActive></Station>
+<Station><Code>42388</Code><Name>פלימן/ולנברג</Name><Latitude>32.77869</Latitude><Longitude>34.980137</Longitude><isActive>true</isActive></Station>
+<Station><Code>42390</Code><Name>תחנת דלק/672</Name><Latitude>32.691874</Latitude><Longitude>35.04988</Longitude><isActive>true</isActive></Station>
+<Station><Code>42392</Code><Name>בית ספר חטיבת ביניים</Name><Latitude>32.689328</Latitude><Longitude>35.055017</Longitude><isActive>true</isActive></Station>
+<Station><Code>42393</Code><Name>מגרש כדורגל</Name><Latitude>32.687472</Latitude><Longitude>35.058639</Longitude><isActive>true</isActive></Station>
+<Station><Code>42394</Code><Name>מגרש כדורגל</Name><Latitude>32.687934</Latitude><Longitude>35.057839</Longitude><isActive>true</isActive></Station>
+<Station><Code>42396</Code><Name>בית עלמין</Name><Latitude>32.690093</Latitude><Longitude>35.053765</Longitude><isActive>true</isActive></Station>
+<Station><Code>42397</Code><Name>מרכז הדרכה</Name><Latitude>32.690976</Latitude><Longitude>35.051547</Longitude><isActive>true</isActive></Station>
+<Station><Code>42398</Code><Name>מועצה מקומית</Name><Latitude>32.692325</Latitude><Longitude>35.04927</Longitude><isActive>true</isActive></Station>
+<Station><Code>42399</Code><Name>צומת כפר חסידים/כביש 762</Name><Latitude>32.761556</Latitude><Longitude>35.089118</Longitude><isActive>true</isActive></Station>
+<Station><Code>42400</Code><Name>מסעף כפר חסידים</Name><Latitude>32.760335</Latitude><Longitude>35.090916</Longitude><isActive>true</isActive></Station>
+<Station><Code>42402</Code><Name>מסעף כפר חסידים/כניסה</Name><Latitude>32.759206</Latitude><Longitude>35.092125</Longitude><isActive>true</isActive></Station>
+<Station><Code>42404</Code><Name>תל רגב/המייסדים</Name><Latitude>32.756706</Latitude><Longitude>35.090753</Longitude><isActive>true</isActive></Station>
+<Station><Code>42405</Code><Name>גיבורי התהילה/בית קמה</Name><Latitude>32.750521</Latitude><Longitude>35.09207</Longitude><isActive>true</isActive></Station>
+<Station><Code>42406</Code><Name>גיבורי התהילה/בית קמה</Name><Latitude>32.750386</Latitude><Longitude>35.092037</Longitude><isActive>true</isActive></Station>
+<Station><Code>42408</Code><Name>קיבוץ גלויות/הקטר</Name><Latitude>32.810474</Latitude><Longitude>35.004282</Longitude><isActive>true</isActive></Station>
+<Station><Code>42409</Code><Name>צומת כפר חסידים</Name><Latitude>32.761957</Latitude><Longitude>35.088049</Longitude><isActive>true</isActive></Station>
+<Station><Code>42410</Code><Name>צומת כפר חסידים</Name><Latitude>32.762526</Latitude><Longitude>35.089342</Longitude><isActive>true</isActive></Station>
+<Station><Code>42411</Code><Name>אלכסנדר זייד</Name><Latitude>32.818778</Latitude><Longitude>35.061559</Longitude><isActive>true</isActive></Station>
+<Station><Code>42414</Code><Name>הציונות/המייסדים</Name><Latitude>32.806136</Latitude><Longitude>35.106136</Longitude><isActive>true</isActive></Station>
+<Station><Code>42415</Code><Name>בן צבי/חטיבת דגן</Name><Latitude>32.820694</Latitude><Longitude>35.06249</Longitude><isActive>true</isActive></Station>
+<Station><Code>42422</Code><Name>תיכון קרית חיים/הגדוד העברי</Name><Latitude>32.824128</Latitude><Longitude>35.068557</Longitude><isActive>true</isActive></Station>
+<Station><Code>42424</Code><Name>חורב/פרויד</Name><Latitude>32.783123</Latitude><Longitude>34.987556</Longitude><isActive>true</isActive></Station>
+<Station><Code>42425</Code><Name>הזית/השזיף</Name><Latitude>32.769141</Latitude><Longitude>35.041277</Longitude><isActive>true</isActive></Station>
+<Station><Code>42426</Code><Name>פאר/תחכמוני</Name><Latitude>32.463422</Latitude><Longitude>34.974236</Longitude><isActive>true</isActive></Station>
+<Station><Code>42427</Code><Name>דרך הנדיב/חבצלת</Name><Latitude>32.46757</Latitude><Longitude>34.981331</Longitude><isActive>true</isActive></Station>
+<Station><Code>42428</Code><Name>נורית/כליל החורש</Name><Latitude>32.792967</Latitude><Longitude>34.995989</Longitude><isActive>true</isActive></Station>
+<Station><Code>42429</Code><Name>מסעף כפר חסידים</Name><Latitude>32.759169</Latitude><Longitude>35.092851</Longitude><isActive>true</isActive></Station>
+<Station><Code>42430</Code><Name>קיבוץ גלויות/חיפה</Name><Latitude>32.419458</Latitude><Longitude>34.955413</Longitude><isActive>true</isActive></Station>
+<Station><Code>42431</Code><Name>מנחם בגין/טולוז</Name><Latitude>32.808119</Latitude><Longitude>35.132207</Longitude><isActive>true</isActive></Station>
+<Station><Code>42432</Code><Name>הרר/הארז</Name><Latitude>32.803022</Latitude><Longitude>35.132761</Longitude><isActive>true</isActive></Station>
+<Station><Code>42433</Code><Name>הרר/הרותם</Name><Latitude>32.801163</Latitude><Longitude>35.13337</Longitude><isActive>true</isActive></Station>
+<Station><Code>42434</Code><Name>הרר/האשל</Name><Latitude>32.799465</Latitude><Longitude>35.134183</Longitude><isActive>true</isActive></Station>
+<Station><Code>42435</Code><Name>הרר/האורן</Name><Latitude>32.798087</Latitude><Longitude>35.135656</Longitude><isActive>true</isActive></Station>
+<Station><Code>42436</Code><Name>הרר/האורן</Name><Latitude>32.798225</Latitude><Longitude>35.136404</Longitude><isActive>true</isActive></Station>
+<Station><Code>42437</Code><Name>הרר/ההדס</Name><Latitude>32.799524</Latitude><Longitude>35.13427</Longitude><isActive>true</isActive></Station>
+<Station><Code>42438</Code><Name>הרר/הרותם</Name><Latitude>32.801012</Latitude><Longitude>35.133558</Longitude><isActive>true</isActive></Station>
+<Station><Code>42439</Code><Name>הרר/היסמין</Name><Latitude>32.803038</Latitude><Longitude>35.132867</Longitude><isActive>true</isActive></Station>
+<Station><Code>42440</Code><Name>מנחם בגין/זקומטי</Name><Latitude>32.805721</Latitude><Longitude>35.133429</Longitude><isActive>true</isActive></Station>
+<Station><Code>42441</Code><Name>דרך הים/הנרקיסים</Name><Latitude>32.80757</Latitude><Longitude>34.979003</Longitude><isActive>true</isActive></Station>
+<Station><Code>42442</Code><Name>אבא חושי/מצפור זייד</Name><Latitude>32.772655</Latitude><Longitude>35.005877</Longitude><isActive>true</isActive></Station>
+<Station><Code>42443</Code><Name>רותם/דבורה הנביאה</Name><Latitude>32.699893</Latitude><Longitude>35.106427</Longitude><isActive>true</isActive></Station>
+<Station><Code>42444</Code><Name>רותם/דבורה הנביאה</Name><Latitude>32.699849</Latitude><Longitude>35.107742</Longitude><isActive>true</isActive></Station>
+<Station><Code>42445</Code><Name>בית אבות ספרדי/גדליהו</Name><Latitude>32.782676</Latitude><Longitude>35.025222</Longitude><isActive>true</isActive></Station>
+<Station><Code>42446</Code><Name>בית אבות ספרדי/גדליהו</Name><Latitude>32.782786</Latitude><Longitude>35.025544</Longitude><isActive>true</isActive></Station>
+<Station><Code>42447</Code><Name>זלמן שניאור/בורלא</Name><Latitude>32.775627</Latitude><Longitude>35.007825</Longitude><isActive>true</isActive></Station>
+<Station><Code>42451</Code><Name>האורן א</Name><Latitude>32.796921</Latitude><Longitude>35.137473</Longitude><isActive>true</isActive></Station>
+<Station><Code>42452</Code><Name>האורן ב</Name><Latitude>32.796137</Latitude><Longitude>35.139037</Longitude><isActive>true</isActive></Station>
+<Station><Code>42453</Code><Name>האורן ג</Name><Latitude>32.796731</Latitude><Longitude>35.139911</Longitude><isActive>true</isActive></Station>
+<Station><Code>42454</Code><Name>האורן ד</Name><Latitude>32.797691</Latitude><Longitude>35.137958</Longitude><isActive>true</isActive></Station>
+<Station><Code>42455</Code><Name>בית חולים פלימן</Name><Latitude>32.780851</Latitude><Longitude>35.002047</Longitude><isActive>true</isActive></Station>
+<Station><Code>42456</Code><Name>החשמל/הגיבורים</Name><Latitude>32.799185</Latitude><Longitude>35.014569</Longitude><isActive>true</isActive></Station>
+<Station><Code>42457</Code><Name>הזית/הסלע</Name><Latitude>32.688086</Latitude><Longitude>34.942824</Longitude><isActive>true</isActive></Station>
+<Station><Code>42458</Code><Name>ירושלים/גלעד</Name><Latitude>32.856273</Latitude><Longitude>35.079549</Longitude><isActive>true</isActive></Station>
+<Station><Code>42459</Code><Name>יצחק רבין/קק''ל</Name><Latitude>32.711334</Latitude><Longitude>35.115642</Longitude><isActive>true</isActive></Station>
+<Station><Code>42460</Code><Name>כיכר קומפיין</Name><Latitude>32.711037</Latitude><Longitude>35.114818</Longitude><isActive>true</isActive></Station>
+<Station><Code>42461</Code><Name>הגפן/בן גוריון</Name><Latitude>32.817951</Latitude><Longitude>34.987617</Longitude><isActive>true</isActive></Station>
+<Station><Code>42462</Code><Name>הגפן/סטלה מאריס</Name><Latitude>32.818354</Latitude><Longitude>34.986126</Longitude><isActive>true</isActive></Station>
+<Station><Code>42463</Code><Name>הרצל/לח''י</Name><Latitude>32.766796</Latitude><Longitude>34.968972</Longitude><isActive>true</isActive></Station>
+<Station><Code>42465</Code><Name>צומת חרושת</Name><Latitude>32.455869</Latitude><Longitude>34.907102</Longitude><isActive>true</isActive></Station>
+<Station><Code>42466</Code><Name>אינטרנציונל/יחזקאל</Name><Latitude>32.78092</Latitude><Longitude>35.009308</Longitude><isActive>true</isActive></Station>
+<Station><Code>42467</Code><Name>אינטרנציונל/דורות</Name><Latitude>32.779976</Latitude><Longitude>35.00971</Longitude><isActive>true</isActive></Station>
+<Station><Code>42468</Code><Name>הצוללת דקר/פיקא</Name><Latitude>32.786585</Latitude><Longitude>34.996891</Longitude><isActive>true</isActive></Station>
+<Station><Code>42469</Code><Name>הרצל/כרמלים</Name><Latitude>32.770856</Latitude><Longitude>34.965243</Longitude><isActive>true</isActive></Station>
+<Station><Code>42470</Code><Name>הרצל/כרמלים</Name><Latitude>32.769867</Latitude><Longitude>34.965698</Longitude><isActive>true</isActive></Station>
+<Station><Code>42471</Code><Name>רמבם/מוצקין</Name><Latitude>32.767815</Latitude><Longitude>34.97385</Longitude><isActive>true</isActive></Station>
+<Station><Code>42472</Code><Name>רמבם/הרב קוק</Name><Latitude>32.765808</Latitude><Longitude>34.974083</Longitude><isActive>true</isActive></Station>
+<Station><Code>42473</Code><Name>השחרור/הרב קוק</Name><Latitude>32.763468</Latitude><Longitude>34.972959</Longitude><isActive>true</isActive></Station>
+<Station><Code>42474</Code><Name>משטרה/הפלמח</Name><Latitude>32.759561</Latitude><Longitude>34.974573</Longitude><isActive>true</isActive></Station>
+<Station><Code>42475</Code><Name>הדקל/הזית</Name><Latitude>32.759794</Latitude><Longitude>34.976293</Longitude><isActive>true</isActive></Station>
+<Station><Code>42476</Code><Name>הזית/לניאדו</Name><Latitude>32.759437</Latitude><Longitude>34.97842</Longitude><isActive>true</isActive></Station>
+<Station><Code>42477</Code><Name>לניאדו/הרימון</Name><Latitude>32.758683</Latitude><Longitude>34.976022</Longitude><isActive>true</isActive></Station>
+<Station><Code>42478</Code><Name>האלה/בית ספר מסורת אבות</Name><Latitude>32.756716</Latitude><Longitude>34.974889</Longitude><isActive>true</isActive></Station>
+<Station><Code>42479</Code><Name>האלה/האלון</Name><Latitude>32.754729</Latitude><Longitude>34.974518</Longitude><isActive>true</isActive></Station>
+<Station><Code>42480</Code><Name>ויצמן/נתן אלבז</Name><Latitude>32.756401</Latitude><Longitude>34.972103</Longitude><isActive>true</isActive></Station>
+<Station><Code>42481</Code><Name>גיורא/ויצמן</Name><Latitude>32.755712</Latitude><Longitude>34.969673</Longitude><isActive>true</isActive></Station>
+<Station><Code>42482</Code><Name>גיורא/רזיאל</Name><Latitude>32.751509</Latitude><Longitude>34.969758</Longitude><isActive>true</isActive></Station>
+<Station><Code>42484</Code><Name>ז'בוטינסקי/הרב וינריב</Name><Latitude>32.76022</Latitude><Longitude>34.971881</Longitude><isActive>true</isActive></Station>
+<Station><Code>42485</Code><Name>מרכז קהילתי/זבוטינסקי</Name><Latitude>32.760304</Latitude><Longitude>34.969952</Longitude><isActive>true</isActive></Station>
+<Station><Code>42486</Code><Name>רזיאל/יצחק בן צבי</Name><Latitude>32.751279</Latitude><Longitude>34.971972</Longitude><isActive>true</isActive></Station>
+<Station><Code>42487</Code><Name>טשרניחובסקי/זאב</Name><Latitude>32.81849</Latitude><Longitude>34.976437</Longitude><isActive>true</isActive></Station>
+<Station><Code>42488</Code><Name>נתן אלבז/גורדון</Name><Latitude>32.752782</Latitude><Longitude>34.972281</Longitude><isActive>true</isActive></Station>
+<Station><Code>42490</Code><Name>מסגד/עוספיא</Name><Latitude>32.80034</Latitude><Longitude>35.007092</Longitude><isActive>true</isActive></Station>
+<Station><Code>42491</Code><Name>וינר/פאר</Name><Latitude>32.799388</Latitude><Longitude>35.009272</Longitude><isActive>true</isActive></Station>
+<Station><Code>42492</Code><Name>'בית לחם ב</Name><Latitude>32.818329</Latitude><Longitude>34.9707</Longitude><isActive>true</isActive></Station>
+<Station><Code>42493</Code><Name>התשבי/בית אל</Name><Latitude>32.815808</Latitude><Longitude>34.977628</Longitude><isActive>true</isActive></Station>
+<Station><Code>42494</Code><Name>צומת נחל חדרה</Name><Latitude>32.464571</Latitude><Longitude>34.914503</Longitude><isActive>true</isActive></Station>
+<Station><Code>42495</Code><Name>הלל סילבר ג</Name><Latitude>32.793258</Latitude><Longitude>35.00751</Longitude><isActive>true</isActive></Station>
+<Station><Code>42496</Code><Name>המרגנית/הנוריות</Name><Latitude>32.771268</Latitude><Longitude>35.033366</Longitude><isActive>true</isActive></Station>
+<Station><Code>42497</Code><Name>המרגנית</Name><Latitude>32.771379</Latitude><Longitude>35.033289</Longitude><isActive>true</isActive></Station>
+<Station><Code>42498</Code><Name>קניאל/רופין</Name><Latitude>32.798046</Latitude><Longitude>35.000718</Longitude><isActive>true</isActive></Station>
+<Station><Code>42499</Code><Name>בצלאל/השילוח</Name><Latitude>32.803722</Latitude><Longitude>34.999634</Longitude><isActive>true</isActive></Station>
+<Station><Code>42501</Code><Name>סחרוב</Name><Latitude>32.790898</Latitude><Longitude>34.958675</Longitude><isActive>true</isActive></Station>
+<Station><Code>42502</Code><Name>סחרוב</Name><Latitude>32.790081</Latitude><Longitude>34.959742</Longitude><isActive>true</isActive></Station>
+<Station><Code>42503</Code><Name>מרכז הקונגרסים/קדושי יסי</Name><Latitude>32.791559</Latitude><Longitude>34.964341</Longitude><isActive>true</isActive></Station>
+<Station><Code>42504</Code><Name>מרכז הקונגרסים/קדושי יסי</Name><Latitude>32.790998</Latitude><Longitude>34.964608</Longitude><isActive>true</isActive></Station>
+<Station><Code>42505</Code><Name>חלמיש/שוהם</Name><Latitude>32.4823</Latitude><Longitude>34.948061</Longitude><isActive>true</isActive></Station>
+<Station><Code>42506</Code><Name>מרכז הקונגרסים/פלימן</Name><Latitude>32.790444</Latitude><Longitude>34.965229</Longitude><isActive>true</isActive></Station>
+<Station><Code>42507</Code><Name>יעקב דורי/גשר גדוד 21</Name><Latitude>32.793937</Latitude><Longitude>35.02211</Longitude><isActive>true</isActive></Station>
+<Station><Code>42508</Code><Name>התשבי/חורשה</Name><Latitude>32.812766</Latitude><Longitude>34.980076</Longitude><isActive>true</isActive></Station>
+<Station><Code>42510</Code><Name>חטיבת הנחל/הפרדס</Name><Latitude>32.430858</Latitude><Longitude>34.937364</Longitude><isActive>true</isActive></Station>
+<Station><Code>42513</Code><Name>כנרת/העצמאות</Name><Latitude>32.796463</Latitude><Longitude>35.100962</Longitude><isActive>true</isActive></Station>
+<Station><Code>42515</Code><Name>העליה השניה/אלישע</Name><Latitude>32.831726</Latitude><Longitude>34.974277</Longitude><isActive>true</isActive></Station>
+<Station><Code>42516</Code><Name>העליה השניה/הקלעים</Name><Latitude>32.832089</Latitude><Longitude>34.975986</Longitude><isActive>true</isActive></Station>
+<Station><Code>42518</Code><Name>בית לחם/סטפן וייז</Name><Latitude>32.819683</Latitude><Longitude>34.9697</Longitude><isActive>true</isActive></Station>
+<Station><Code>42519</Code><Name>יצחק רבין/פיינברג</Name><Latitude>32.426245</Latitude><Longitude>34.923245</Longitude><isActive>true</isActive></Station>
+<Station><Code>42520</Code><Name>ביאליק/תרנ''א</Name><Latitude>32.431107</Latitude><Longitude>34.922878</Longitude><isActive>true</isActive></Station>
+<Station><Code>42521</Code><Name>ספיר/רוברט סולד</Name><Latitude>32.839608</Latitude><Longitude>35.05816</Longitude><isActive>true</isActive></Station>
+<Station><Code>18179</Code><Name>שלומית/מרכז</Name><Latitude>31.168701</Latitude><Longitude>34.302966</Longitude><isActive>true</isActive></Station>
+<Station><Code>35257</Code><Name>יערות ישראל/יהודה המכבי</Name><Latitude>31.895585</Latitude><Longitude>34.988276</Longitude><isActive>true</isActive></Station>
+<Station><Code>35256</Code><Name>יערות ישראל/יהודה המכבי</Name><Latitude>31.895487</Latitude><Longitude>34.988889</Longitude><isActive>true</isActive></Station>
+<Station><Code>43469</Code><Name>נאות גולף/שדרות רוטשילד</Name><Latitude>32.486128</Latitude><Longitude>34.902005</Longitude><isActive>true</isActive></Station>
+<Station><Code>61400</Code><Name>הגליל/הירדן</Name><Latitude>31.957681</Latitude><Longitude>35.138305</Longitude><isActive>true</isActive></Station>
+<Station><Code>35264</Code><Name>דגניה/דרך יצחק רבין</Name><Latitude>32.086342</Latitude><Longitude>34.862109</Longitude><isActive>true</isActive></Station>
+<Station><Code>35263</Code><Name>דגניה/דנמרק</Name><Latitude>32.086443</Latitude><Longitude>34.862983</Longitude><isActive>true</isActive></Station>
+<Station><Code>35262</Code><Name>צומת אחיסמך</Name><Latitude>31.933237</Latitude><Longitude>34.891738</Longitude><isActive>true</isActive></Station>
+<Station><Code>35261</Code><Name>צומת אחיסמך</Name><Latitude>31.932112</Latitude><Longitude>34.890798</Longitude><isActive>true</isActive></Station>
+<Station><Code>12446</Code><Name>דרך ירושלים/הרצוג</Name><Latitude>31.528935</Latitude><Longitude>34.60723</Longitude><isActive>true</isActive></Station>
+<Station><Code>44302</Code><Name>תחנת מוניות אשקלון הולידי אין</Name><Latitude>31.688741</Latitude><Longitude>34.566006</Longitude><isActive>true</isActive></Station>
+<Station><Code>44307</Code><Name>תחנת מוניות חולון וולפסון</Name><Latitude>32.036459</Latitude><Longitude>34.763131</Longitude><isActive>true</isActive></Station>
+<Station><Code>20472</Code><Name>מורדי הגטאות/צעירי ציון</Name><Latitude>32.170003</Latitude><Longitude>34.858866</Longitude><isActive>true</isActive></Station>
+<Station><Code>20471</Code><Name>הבריגדה היהודית/שמעון ויזנטל</Name><Latitude>32.176795</Latitude><Longitude>34.843029</Longitude><isActive>true</isActive></Station>
+<Station><Code>20470</Code><Name>יהודה הנשיא/יערה</Name><Latitude>32.151037</Latitude><Longitude>34.84973</Longitude><isActive>true</isActive></Station>
+<Station><Code>61410</Code><Name>ענבר/יהלום</Name><Latitude>31.961521</Latitude><Longitude>35.062885</Longitude><isActive>true</isActive></Station>
+<Station><Code>61409</Code><Name>ענבר ג</Name><Latitude>31.959802</Latitude><Longitude>35.05974</Longitude><isActive>true</isActive></Station>
+<Station><Code>61408</Code><Name>ענבר ב</Name><Latitude>31.960884</Latitude><Longitude>35.058165</Longitude><isActive>true</isActive></Station>
+<Station><Code>61407</Code><Name>ענבר/טופז</Name><Latitude>31.962362</Latitude><Longitude>35.058422</Longitude><isActive>true</isActive></Station>
+<Station><Code>61406</Code><Name>ענבר</Name><Latitude>31.962582</Latitude><Longitude>35.060933</Longitude><isActive>true</isActive></Station>
+<Station><Code>1371</Code><Name>האוניברסיטה העברית הר הצופים/מרטין בובר</Name><Latitude>31.795268</Latitude><Longitude>35.243206</Longitude><isActive>true</isActive></Station>
+<Station><Code>1370</Code><Name>מסוף הר הצופים/מרטין בובר</Name><Latitude>31.791037</Latitude><Longitude>35.247036</Longitude><isActive>true</isActive></Station>
+<Station><Code>1369</Code><Name>האוניברסיטה העברית הר הצופים/מרטין בובר</Name><Latitude>31.794753</Latitude><Longitude>35.242256</Longitude><isActive>true</isActive></Station>
+<Station><Code>1368</Code><Name>מחנה עופרית/מרטין בובר</Name><Latitude>31.79418</Latitude><Longitude>35.249122</Longitude><isActive>true</isActive></Station>
+<Station><Code>1367</Code><Name>אקדמיה בצלאל/מרטין בובר</Name><Latitude>31.792778</Latitude><Longitude>35.248272</Longitude><isActive>true</isActive></Station>
+<Station><Code>1366</Code><Name>מסוף הר הצופים/בנימין מזר</Name><Latitude>31.790128</Latitude><Longitude>35.245815</Longitude><isActive>true</isActive></Station>
+<Station><Code>1365</Code><Name>בית ספר לחינוך/בנימין מזר</Name><Latitude>31.79097</Latitude><Longitude>35.244425</Longitude><isActive>true</isActive></Station>
+<Station><Code>1364</Code><Name>כביש 398/שדרות שמואל מאיר</Name><Latitude>31.73099</Latitude><Longitude>35.220471</Longitude><isActive>true</isActive></Station>
+<Station><Code>44304</Code><Name>תחנת מוניות קריית גת תחנת הרכבת</Name><Latitude>31.59995</Latitude><Longitude>34.775828</Longitude><isActive>true</isActive></Station>
+<Station><Code>1373</Code><Name>שדרות לוי אשכול/שדרות יגאל אלון</Name><Latitude>31.752922</Latitude><Longitude>34.996898</Longitude><isActive>true</isActive></Station>
+<Station><Code>1372</Code><Name>שדרות לוי אשכול/החיד''א</Name><Latitude>31.750609</Latitude><Longitude>34.998588</Longitude><isActive>true</isActive></Station>
+<Station><Code>44303</Code><Name>תחנת מוניות דימונה תחנה מרכזית</Name><Latitude>31.068472</Latitude><Longitude>35.03213</Longitude><isActive>true</isActive></Station>
+<Station><Code>56341</Code><Name>מחלף כפר יהושע/קרית חרושת</Name><Latitude>32.683978</Latitude><Longitude>35.120634</Longitude><isActive>true</isActive></Station>
+<Station><Code>12448</Code><Name>צומת שלומית לדרום</Name><Latitude>31.179455</Latitude><Longitude>34.336728</Longitude><isActive>true</isActive></Station>
+<Station><Code>12447</Code><Name>צומת שלומית לצפון</Name><Latitude>31.180304</Latitude><Longitude>34.336826</Longitude><isActive>true</isActive></Station>
+<Station><Code>44305</Code><Name>תחנת מוניות נתיבות באבא סאלי</Name><Latitude>31.426938</Latitude><Longitude>34.587323</Longitude><isActive>true</isActive></Station>
+<Station><Code>56343</Code><Name>צומת אוסם לדרום</Name><Latitude>32.656843</Latitude><Longitude>35.100561</Longitude><isActive>true</isActive></Station>
+<Station><Code>56342</Code><Name>צומת אוסם לצפון</Name><Latitude>32.657563</Latitude><Longitude>35.10176</Longitude><isActive>true</isActive></Station>
+<Station><Code>61412</Code><Name>דרך נחל קדם</Name><Latitude>31.821209</Latitude><Longitude>35.321644</Longitude><isActive>true</isActive></Station>
+<Station><Code>61411</Code><Name>מדבר פארן</Name><Latitude>31.824836</Latitude><Longitude>35.288809</Longitude><isActive>true</isActive></Station>
+<Station><Code>43473</Code><Name>יהודה איתין/דרך יגאל ידין</Name><Latitude>32.816721</Latitude><Longitude>35.052369</Longitude><isActive>true</isActive></Station>
+<Station><Code>35267</Code><Name>צומת המעפיל</Name><Latitude>32.382103</Latitude><Longitude>34.986147</Longitude><isActive>true</isActive></Station>
+<Station><Code>35266</Code><Name>צומת המעפיל</Name><Latitude>32.381779</Latitude><Longitude>34.987537</Longitude><isActive>true</isActive></Station>
+<Station><Code>20473</Code><Name>אלי תבין/מאיר מקס בינט</Name><Latitude>32.128467</Latitude><Longitude>34.827226</Longitude><isActive>true</isActive></Station>
+<Station><Code>12450</Code><Name>צומת שלומית כניסה</Name><Latitude>31.17985</Latitude><Longitude>34.336309</Longitude><isActive>true</isActive></Station>
+<Station><Code>12449</Code><Name>תחנת רכבת קריית גת/יציאה</Name><Latitude>31.603614</Latitude><Longitude>34.777704</Longitude><isActive>true</isActive></Station>
+<Station><Code>61416</Code><Name>רמב''ן/שדרות בית שמאי</Name><Latitude>31.934343</Latitude><Longitude>35.052361</Longitude><isActive>true</isActive></Station>
+<Station><Code>61414</Code><Name>רמב''ן/רשב''ם</Name><Latitude>31.933158</Latitude><Longitude>35.053047</Longitude><isActive>true</isActive></Station>
+<Station><Code>56352</Code><Name>כרם אל ג'מאל/7064</Name><Latitude>32.716546</Latitude><Longitude>35.291271</Longitude><isActive>true</isActive></Station>
+<Station><Code>56351</Code><Name>כרם אל ג'מאל/7028</Name><Latitude>32.714619</Latitude><Longitude>35.293717</Longitude><isActive>true</isActive></Station>
+<Station><Code>56350</Code><Name>כרם אל ג'מאל/7028</Name><Latitude>32.714078</Latitude><Longitude>35.294239</Longitude><isActive>true</isActive></Station>
+<Station><Code>56349</Code><Name>כרם אל ג'מאל/7064</Name><Latitude>32.716192</Latitude><Longitude>35.291614</Longitude><isActive>true</isActive></Station>
+<Station><Code>56348</Code><Name>מרכז מחמוד דרויש</Name><Latitude>32.698694</Latitude><Longitude>35.291047</Longitude><isActive>true</isActive></Station>
+<Station><Code>56347</Code><Name>בי''ס מסאר</Name><Latitude>32.700426</Latitude><Longitude>35.289786</Longitude><isActive>true</isActive></Station>
+<Station><Code>56346</Code><Name>בי''ס לסיעוד/5058</Name><Latitude>32.702053</Latitude><Longitude>35.290428</Longitude><isActive>true</isActive></Station>
+<Station><Code>56345</Code><Name>5058</Name><Latitude>32.702106</Latitude><Longitude>35.288263</Longitude><isActive>true</isActive></Station>
+<Station><Code>56344</Code><Name>5058/אל עומאל אל ערב</Name><Latitude>32.70041</Latitude><Longitude>35.287975</Longitude><isActive>true</isActive></Station>
+<Station><Code>20474</Code><Name>הבריגדה היהודית/הצפצפות</Name><Latitude>32.176724</Latitude><Longitude>34.845301</Longitude><isActive>true</isActive></Station>
+<Station><Code>12459</Code><Name>תחנת התרעננות/ב''ש כניסה צפונית</Name><Latitude>31.278053</Latitude><Longitude>34.792822</Longitude><isActive>true</isActive></Station>
+<Station><Code>12458</Code><Name>תחנת התרעננות/ב''ש יציאה צפונית</Name><Latitude>31.278105</Latitude><Longitude>34.794898</Longitude><isActive>true</isActive></Station>
+<Station><Code>12457</Code><Name>תחנת התרעננות/גן לאומי עבדת</Name><Latitude>30.792364</Latitude><Longitude>34.768374</Longitude><isActive>true</isActive></Station>
+<Station><Code>12456</Code><Name>כליל החורש/אירוס</Name><Latitude>31.302113</Latitude><Longitude>34.61211</Longitude><isActive>true</isActive></Station>
+<Station><Code>12455</Code><Name>כליל החורש/ברוש</Name><Latitude>31.30283</Latitude><Longitude>34.612131</Longitude><isActive>true</isActive></Station>
+<Station><Code>12454</Code><Name>שדרות השיטה/צאלון</Name><Latitude>31.302159</Latitude><Longitude>34.616552</Longitude><isActive>true</isActive></Station>
+<Station><Code>12453</Code><Name>שדרות השיטה/כליל החורש</Name><Latitude>31.300362</Latitude><Longitude>34.613786</Longitude><isActive>true</isActive></Station>
+<Station><Code>12452</Code><Name>שדרות השיטה/כליל החורש</Name><Latitude>31.300162</Latitude><Longitude>34.614387</Longitude><isActive>true</isActive></Station>
+<Station><Code>12451</Code><Name>שדרות השיטה/צאלון</Name><Latitude>31.302646</Latitude><Longitude>34.616304</Longitude><isActive>true</isActive></Station>
+<Station><Code>1415</Code><Name>מצודת אדומים</Name><Latitude>31.796492</Latitude><Longitude>35.25755</Longitude><isActive>true</isActive></Station>
+<Station><Code>56365</Code><Name>התחנה לבריאות המשפחה</Name><Latitude>32.942509</Latitude><Longitude>35.177816</Longitude><isActive>true</isActive></Station>
+<Station><Code>56364</Code><Name>בית ספר ג'וליס</Name><Latitude>32.942317</Latitude><Longitude>35.175302</Longitude><isActive>true</isActive></Station>
+<Station><Code>56363</Code><Name>מסעף אזור תעשיה</Name><Latitude>32.941426</Latitude><Longitude>35.170991</Longitude><isActive>true</isActive></Station>
+<Station><Code>56357</Code><Name>בית חולים איטלקי 3</Name><Latitude>32.705743</Latitude><Longitude>35.312632</Longitude><isActive>true</isActive></Station>
+<Station><Code>56356</Code><Name>בית חולים איטלקי 4</Name><Latitude>32.706354</Latitude><Longitude>35.311807</Longitude><isActive>true</isActive></Station>
+<Station><Code>56355</Code><Name>בית חולים איטלקי 6</Name><Latitude>32.703748</Latitude><Longitude>35.309875</Longitude><isActive>true</isActive></Station>
+<Station><Code>56354</Code><Name>בית חולים איטלקי 2</Name><Latitude>32.704663</Latitude><Longitude>35.312665</Longitude><isActive>true</isActive></Station>
+<Station><Code>56353</Code><Name>בית חולים איטלקי 1</Name><Latitude>32.703837</Latitude><Longitude>35.31083</Longitude><isActive>true</isActive></Station>
+<Station><Code>57997</Code><Name>מסד/מרכז</Name><Latitude>32.843974</Latitude><Longitude>35.424349</Longitude><isActive>true</isActive></Station>
+<Station><Code>56362</Code><Name>מחלף מסד רביד/כניסה למסד</Name><Latitude>32.842438</Latitude><Longitude>35.431617</Longitude><isActive>true</isActive></Station>
+<Station><Code>56361</Code><Name>מחלף מסד לרביד</Name><Latitude>32.843701</Latitude><Longitude>35.432423</Longitude><isActive>true</isActive></Station>
+<Station><Code>56360</Code><Name>מחלב רביד למסד</Name><Latitude>32.845292</Latitude><Longitude>35.434933</Longitude><isActive>true</isActive></Station>
+<Station><Code>56359</Code><Name>רביד/מרכז</Name><Latitude>32.850528</Latitude><Longitude>35.462615</Longitude><isActive>true</isActive></Station>
+<Station><Code>56358</Code><Name>כניסה לרביד</Name><Latitude>32.844873</Latitude><Longitude>35.436042</Longitude><isActive>true</isActive></Station>
+<Station><Code>35279</Code><Name>בי''ס אזורי גבעת ברנר</Name><Latitude>31.869195</Latitude><Longitude>34.804576</Longitude><isActive>true</isActive></Station>
+<Station><Code>35278</Code><Name>בי''ס אזורי גבעת ברנר</Name><Latitude>31.869321</Latitude><Longitude>34.804519</Longitude><isActive>true</isActive></Station>
+<Station><Code>35276</Code><Name>מרכז מסחרי/ גבעת ברנר</Name><Latitude>31.861394</Latitude><Longitude>34.807253</Longitude><isActive>true</isActive></Station>
+<Station><Code>35273</Code><Name>הזית/התמר</Name><Latitude>31.836802</Latitude><Longitude>34.793899</Longitude><isActive>true</isActive></Station>
+<Station><Code>35272</Code><Name>התאנה/הזית</Name><Latitude>31.83529</Latitude><Longitude>34.800375</Longitude><isActive>true</isActive></Station>
+<Station><Code>35271</Code><Name>התאנה/הגפן</Name><Latitude>31.843796</Latitude><Longitude>34.807621</Longitude><isActive>true</isActive></Station>
+<Station><Code>35270</Code><Name>הרימון/התמר</Name><Latitude>31.852816</Latitude><Longitude>34.809874</Longitude><isActive>true</isActive></Station>
+<Station><Code>35269</Code><Name>התמר/הרימון</Name><Latitude>31.853073</Latitude><Longitude>34.806511</Longitude><isActive>true</isActive></Station>
+<Station><Code>35268</Code><Name>התמר/הגפן</Name><Latitude>31.846039</Latitude><Longitude>34.800939</Longitude><isActive>true</isActive></Station>
+<Station><Code>1418</Code><Name>ככר צרפת/שדרות בן מיימון</Name><Latitude>31.774668</Latitude><Longitude>35.217444</Longitude><isActive>true</isActive></Station>
+<Station><Code>1417</Code><Name>יעקב אלעזר/הארי טרומן</Name><Latitude>31.814885</Latitude><Longitude>35.208733</Longitude><isActive>true</isActive></Station>
+<Station><Code>56370</Code><Name>אזור התעשייה/כביש 71</Name><Latitude>32.511805</Latitude><Longitude>35.496841</Longitude><isActive>true</isActive></Station>
+<Station><Code>56369</Code><Name>צים סנטר/אזור התעשייה</Name><Latitude>32.511758</Latitude><Longitude>35.499778</Longitude><isActive>true</isActive></Station>
+<Station><Code>56368</Code><Name>צים סנטר/אזור התעשייה</Name><Latitude>32.511806</Latitude><Longitude>35.501297</Longitude><isActive>true</isActive></Station>
+<Station><Code>35286</Code><Name>המהר''ל מפראג/עובדיה</Name><Latitude>31.948002</Latitude><Longitude>34.822188</Longitude><isActive>true</isActive></Station>
+<Station><Code>35285</Code><Name>המהר''ל מפראג/הרב חיים דוד הלוי</Name><Latitude>31.947125</Latitude><Longitude>34.818151</Longitude><isActive>true</isActive></Station>
+<Station><Code>35284</Code><Name>רבי יהודה הנשיא/הרב חיים דוד הלוי</Name><Latitude>31.947399</Latitude><Longitude>34.817125</Longitude><isActive>true</isActive></Station>
+<Station><Code>35283</Code><Name>רבי יהודה הנשיא/שמגר</Name><Latitude>31.948362</Latitude><Longitude>34.813134</Longitude><isActive>true</isActive></Station>
+<Station><Code>35282</Code><Name>רבי יהודה הנשיא/הסנהדרין</Name><Latitude>31.948039</Latitude><Longitude>34.813806</Longitude><isActive>true</isActive></Station>
+<Station><Code>56380</Code><Name>שז''ר/שפע חיים</Name><Latitude>32.78564</Latitude><Longitude>35.514575</Longitude><isActive>true</isActive></Station>
+<Station><Code>56379</Code><Name>שפע חיים/שז''ר</Name><Latitude>32.785861</Latitude><Longitude>35.514182</Longitude><isActive>true</isActive></Station>
+<Station><Code>56378</Code><Name>שפע חיים/צוק איתן</Name><Latitude>32.785708</Latitude><Longitude>35.512162</Longitude><isActive>true</isActive></Station>
+<Station><Code>56376</Code><Name>הנביאים</Name><Latitude>32.786886</Latitude><Longitude>35.510469</Longitude><isActive>true</isActive></Station>
+<Station><Code>56375</Code><Name>הנביאים</Name><Latitude>32.787274</Latitude><Longitude>35.510503</Longitude><isActive>true</isActive></Station>
+<Station><Code>35281</Code><Name>פנחס אילון/מנחם בגין</Name><Latitude>32.005494</Latitude><Longitude>34.777708</Longitude><isActive>true</isActive></Station>
+<Station><Code>35280</Code><Name>פנחס אילון/מנחם בגין</Name><Latitude>32.005474</Latitude><Longitude>34.777938</Longitude><isActive>true</isActive></Station>
+<Station><Code>20633</Code><Name>ז'בוטינסקי/הרב קוק</Name><Latitude>32.164216</Latitude><Longitude>34.827625</Longitude><isActive>true</isActive></Station>
+<Station><Code>20634</Code><Name>משמר הירדן/הרוגי מלכות</Name><Latitude>32.111778</Latitude><Longitude>34.832055</Longitude><isActive>true</isActive></Station>
+<Station><Code>61421</Code><Name>המייסדים/מי מבוע</Name><Latitude>31.828287</Latitude><Longitude>35.340932</Longitude><isActive>true</isActive></Station>
+<Station><Code>47604</Code><Name>בי''ס קהילתי חט''ב ואדי אלנסור</Name><Latitude>32.509278</Latitude><Longitude>35.155258</Longitude><isActive>true</isActive></Station>
+<Station><Code>43481</Code><Name>עין ח'אלד/עין אל מג'ארה</Name><Latitude>32.510399</Latitude><Longitude>35.150358</Longitude><isActive>true</isActive></Station>
+<Station><Code>43480</Code><Name>בי''ס אלקאוס</Name><Latitude>32.50787</Latitude><Longitude>35.159978</Longitude><isActive>true</isActive></Station>
+<Station><Code>43479</Code><Name>ואדי א נאסר</Name><Latitude>32.508652</Latitude><Longitude>35.156799</Longitude><isActive>true</isActive></Station>
+<Station><Code>43478</Code><Name>עין ח'אלד/אבו לאחם</Name><Latitude>32.509508</Latitude><Longitude>35.151043</Longitude><isActive>true</isActive></Station>
+<Station><Code>43477</Code><Name>א רבאט</Name><Latitude>32.52397</Latitude><Longitude>35.147358</Longitude><isActive>true</isActive></Station>
+<Station><Code>43476</Code><Name>א רבאט</Name><Latitude>32.524162</Latitude><Longitude>35.147255</Longitude><isActive>true</isActive></Station>
+<Station><Code>43475</Code><Name>עין ח'אלד/עלי בן אבי טאלב</Name><Latitude>32.511043</Latitude><Longitude>35.149586</Longitude><isActive>true</isActive></Station>
+<Station><Code>43474</Code><Name>מסגד עראק א שבאב</Name><Latitude>32.525864</Latitude><Longitude>35.144769</Longitude><isActive>true</isActive></Station>
+<Station><Code>56373</Code><Name>צומת מגדל העמק למערב</Name><Latitude>32.661697</Latitude><Longitude>35.247471</Longitude><isActive>true</isActive></Station>
+<Station><Code>56372</Code><Name>צומת מגדל העמק למזרח</Name><Latitude>32.661644</Latitude><Longitude>35.248815</Longitude><isActive>true</isActive></Station>
+<Station><Code>56371</Code><Name>צומת מגדל העמק לצפון</Name><Latitude>32.662383</Latitude><Longitude>35.24814</Longitude><isActive>true</isActive></Station>
+<Station><Code>56374</Code><Name>המגל/דרך העמק</Name><Latitude>32.663946</Latitude><Longitude>35.23849</Longitude><isActive>true</isActive></Station>
+<Station><Code>61422</Code><Name>מחנה נבו</Name><Latitude>31.822234</Latitude><Longitude>35.50534</Longitude><isActive>true</isActive></Station>
+<Station><Code>56381</Code><Name>בית חולים איטלקי 5</Name><Latitude>32.70461</Latitude><Longitude>35.31252</Longitude><isActive>true</isActive></Station>
+<Station><Code>35296</Code><Name>אבשלום גיסין/יהודה לייב פינסקר</Name><Latitude>32.097934</Latitude><Longitude>34.881957</Longitude><isActive>true</isActive></Station>
+<Station><Code>35295</Code><Name>שרגא רפאלי/רבקה גובר</Name><Latitude>32.10719</Latitude><Longitude>34.880046</Longitude><isActive>true</isActive></Station>
+<Station><Code>35294</Code><Name>שרגא רפאלי/רבקה גובר</Name><Latitude>32.10754</Latitude><Longitude>34.879502</Longitude><isActive>true</isActive></Station>
+<Station><Code>35291</Code><Name>מחנה יהודה/צבי הירש קלישר</Name><Latitude>32.080975</Latitude><Longitude>34.893587</Longitude><isActive>true</isActive></Station>
+<Station><Code>35288</Code><Name>מחנה יהודה/עין גנים</Name><Latitude>32.083543</Latitude><Longitude>34.89691</Longitude><isActive>true</isActive></Station>
+<Station><Code>35287</Code><Name>ההסתדרות/רוטשילד</Name><Latitude>32.085699</Latitude><Longitude>34.882356</Longitude><isActive>true</isActive></Station>
+<Station><Code>20635</Code><Name>ארלוזורוב/אבן גבירול</Name><Latitude>32.085186</Latitude><Longitude>34.782537</Longitude><isActive>true</isActive></Station>
+<Station><Code>12470</Code><Name>נחלה ח</Name><Latitude>31.660985</Latitude><Longitude>34.793451</Longitude><isActive>true</isActive></Station>
+<Station><Code>12469</Code><Name>נחלה ב</Name><Latitude>31.65721</Latitude><Longitude>34.791886</Longitude><isActive>true</isActive></Station>
+<Station><Code>12468</Code><Name>דרך המשחררים/שמעוני</Name><Latitude>31.251595</Latitude><Longitude>34.795088</Longitude><isActive>true</isActive></Station>
+<Station><Code>12465</Code><Name>יעקוב מרש/התבונה</Name><Latitude>31.26485</Latitude><Longitude>34.811863</Longitude><isActive>true</isActive></Station>
+<Station><Code>12464</Code><Name>דרך חברון/מקס נורדאו</Name><Latitude>31.240209</Latitude><Longitude>34.800094</Longitude><isActive>true</isActive></Station>
+<Station><Code>12463</Code><Name>רוטשילד/דרך חברון</Name><Latitude>31.241429</Latitude><Longitude>34.801812</Longitude><isActive>true</isActive></Station>
+<Station><Code>12476</Code><Name>שושנה דמארי/עופרה חזה</Name><Latitude>31.274338</Latitude><Longitude>34.75866</Longitude><isActive>true</isActive></Station>
+<Station><Code>12473</Code><Name>קניון הנגב/יצחק בן צבי</Name><Latitude>31.244291</Latitude><Longitude>34.795887</Longitude><isActive>true</isActive></Station>
+<Station><Code>20636</Code><Name>דרך בן צבי/לבון</Name><Latitude>32.043565</Latitude><Longitude>34.770139</Longitude><isActive>true</isActive></Station>
+<Station><Code>61425</Code><Name>אמרי סופר/ישיבת מיר</Name><Latitude>31.707948</Latitude><Longitude>35.117768</Longitude><isActive>true</isActive></Station>
+<Station><Code>61424</Code><Name>אמרי סופר/ישיבת מיר</Name><Latitude>31.707806</Latitude><Longitude>35.116891</Longitude><isActive>true</isActive></Station>
+<Station><Code>61423</Code><Name>אמרי סופר/שבט הלוי</Name><Latitude>31.7076</Latitude><Longitude>35.114676</Longitude><isActive>true</isActive></Station>
+<Station><Code>56382</Code><Name>מסעף איזור תעשיה</Name><Latitude>33.220998</Latitude><Longitude>35.586367</Longitude><isActive>true</isActive></Station>
+<Station><Code>35332</Code><Name>יגאל אלון/גולדה מאיר</Name><Latitude>32.088653</Latitude><Longitude>34.97516</Longitude><isActive>true</isActive></Station>
+<Station><Code>35301</Code><Name>דרך רב אלוף יעקוב דורי/דרך לוי אשכול</Name><Latitude>32.047463</Latitude><Longitude>34.864658</Longitude><isActive>true</isActive></Station>
+<Station><Code>43490</Code><Name>תנופה/הגשמה</Name><Latitude>32.460728</Latitude><Longitude>35.054007</Longitude><isActive>true</isActive></Station>
+<Station><Code>12478</Code><Name>מחלף רבין אשקלון לצפון</Name><Latitude>31.703907</Latitude><Longitude>34.622026</Longitude><isActive>true</isActive></Station>
+<Station><Code>35303</Code><Name>צומת אחיטוב</Name><Latitude>32.381547</Latitude><Longitude>34.990338</Longitude><isActive>true</isActive></Station>
+<Station><Code>56383</Code><Name>מירון שער כחול</Name><Latitude>32.985867</Latitude><Longitude>35.442657</Longitude><isActive>true</isActive></Station>
+<Station><Code>12480</Code><Name>מחלף רבין אשקלון למערב</Name><Latitude>31.704513</Latitude><Longitude>34.619979</Longitude><isActive>true</isActive></Station>
+<Station><Code>12479</Code><Name>מחלף רבין אשקלון לדרום</Name><Latitude>31.703631</Latitude><Longitude>34.620322</Longitude><isActive>true</isActive></Station>
+<Station><Code>43517</Code><Name>סביון/לוטם</Name><Latitude>32.455556</Latitude><Longitude>35.048161</Longitude><isActive>true</isActive></Station>
+<Station><Code>43514</Code><Name>סביון/סחלב</Name><Latitude>32.456222</Latitude><Longitude>35.05082</Longitude><isActive>true</isActive></Station>
+<Station><Code>43512</Code><Name>סביון/סחלב</Name><Latitude>32.45601</Latitude><Longitude>35.052273</Longitude><isActive>true</isActive></Station>
+<Station><Code>43510</Code><Name>לוטם</Name><Latitude>32.453232</Latitude><Longitude>35.050336</Longitude><isActive>true</isActive></Station>
+<Station><Code>43489</Code><Name>תנופה/הגשמה</Name><Latitude>32.461191</Latitude><Longitude>35.053399</Longitude><isActive>true</isActive></Station>
+<Station><Code>43487</Code><Name>קידמה/תנופה</Name><Latitude>32.461896</Latitude><Longitude>35.053225</Longitude><isActive>true</isActive></Station>
+<Station><Code>56394</Code><Name>שכונה מערבית  ו</Name><Latitude>33.086246</Latitude><Longitude>35.225712</Longitude><isActive>true</isActive></Station>
+<Station><Code>56393</Code><Name>שכונה מערבית ה</Name><Latitude>33.088012</Latitude><Longitude>35.224534</Longitude><isActive>true</isActive></Station>
+<Station><Code>56392</Code><Name>שכונה מערבית ד</Name><Latitude>33.088526</Latitude><Longitude>35.2228</Longitude><isActive>true</isActive></Station>
+<Station><Code>56391</Code><Name>שכונה מערבית  ג</Name><Latitude>33.08879</Latitude><Longitude>35.222416</Longitude><isActive>true</isActive></Station>
+<Station><Code>56390</Code><Name>שכונה מערבית  ב</Name><Latitude>33.087917</Latitude><Longitude>35.225299</Longitude><isActive>true</isActive></Station>
+<Station><Code>56389</Code><Name>שכונה מערבית  א</Name><Latitude>33.086134</Latitude><Longitude>35.225776</Longitude><isActive>true</isActive></Station>
+<Station><Code>56388</Code><Name>קופת חולים כללית</Name><Latitude>33.087206</Latitude><Longitude>35.227705</Longitude><isActive>true</isActive></Station>
+<Station><Code>56387</Code><Name>עראמשה 7</Name><Latitude>33.083905</Latitude><Longitude>35.223323</Longitude><isActive>true</isActive></Station>
+<Station><Code>56386</Code><Name>עראמשה 6</Name><Latitude>33.085027</Latitude><Longitude>35.221308</Longitude><isActive>true</isActive></Station>
+<Station><Code>56385</Code><Name>עראמשה 5</Name><Latitude>33.085252</Latitude><Longitude>35.220059</Longitude><isActive>true</isActive></Station>
+<Station><Code>56384</Code><Name>עראמשה 4</Name><Latitude>33.085835</Latitude><Longitude>35.221639</Longitude><isActive>true</isActive></Station>
+<Station><Code>43513</Code><Name>סביון/רקפת</Name><Latitude>32.456447</Latitude><Longitude>35.053759</Longitude><isActive>true</isActive></Station>
+<Station><Code>43499</Code><Name>שדרות ההגשמה/לוטם</Name><Latitude>32.455216</Latitude><Longitude>35.05612</Longitude><isActive>true</isActive></Station>
+<Station><Code>43498</Code><Name>שדרות ההגשמה/סביון</Name><Latitude>32.455983</Latitude><Longitude>35.055688</Longitude><isActive>true</isActive></Station>
+<Station><Code>43497</Code><Name>שדרות ההגשמה/סביון</Name><Latitude>32.457396</Latitude><Longitude>35.055749</Longitude><isActive>true</isActive></Station>
+<Station><Code>43496</Code><Name>שדרות דרך ארץ/תנופה</Name><Latitude>32.459076</Latitude><Longitude>35.054875</Longitude><isActive>true</isActive></Station>
+<Station><Code>43491</Code><Name>תנופה/התמדה</Name><Latitude>32.460127</Latitude><Longitude>35.055569</Longitude><isActive>true</isActive></Station>
+<Station><Code>43486</Code><Name>קידמה/החלומות</Name><Latitude>32.462887</Latitude><Longitude>35.055068</Longitude><isActive>true</isActive></Station>
+<Station><Code>43485</Code><Name>קידמה/החלומות</Name><Latitude>32.462734</Latitude><Longitude>35.054249</Longitude><isActive>true</isActive></Station>
+<Station><Code>43484</Code><Name>קידמה/התמדה</Name><Latitude>32.46286</Latitude><Longitude>35.058234</Longitude><isActive>true</isActive></Station>
+<Station><Code>43483</Code><Name>קידמה/התמדה</Name><Latitude>32.463099</Latitude><Longitude>35.057507</Longitude><isActive>true</isActive></Station>
+<Station><Code>43515</Code><Name>לוטם/סביון</Name><Latitude>32.454785</Latitude><Longitude>35.047703</Longitude><isActive>true</isActive></Station>
+<Station><Code>43511</Code><Name>לוטם</Name><Latitude>32.453291</Latitude><Longitude>35.049699</Longitude><isActive>true</isActive></Station>
+<Station><Code>43509</Code><Name>לוטם/יסמין</Name><Latitude>32.45384</Latitude><Longitude>35.05222</Longitude><isActive>true</isActive></Station>
+<Station><Code>43508</Code><Name>לוטם/יסמין</Name><Latitude>32.454071</Latitude><Longitude>35.053525</Longitude><isActive>true</isActive></Station>
+<Station><Code>43507</Code><Name>לוטם/צבעוני</Name><Latitude>32.454289</Latitude><Longitude>35.054172</Longitude><isActive>true</isActive></Station>
+<Station><Code>35387</Code><Name>פארק רעננה מערב</Name><Latitude>32.186632</Latitude><Longitude>34.84833</Longitude><isActive>true</isActive></Station>
+<Station><Code>61426</Code><Name>נמר המדבר/פסמון המדבר</Name><Latitude>31.824496</Latitude><Longitude>35.291981</Longitude><isActive>true</isActive></Station>
+<Station><Code>35465</Code><Name>מעיין/אפיק</Name><Latitude>32.105554</Latitude><Longitude>34.945797</Longitude><isActive>true</isActive></Station>
+<Station><Code>35464</Code><Name>שמואל הנביא/אחיה השילוני</Name><Latitude>32.078229</Latitude><Longitude>34.982522</Longitude><isActive>true</isActive></Station>
+<Station><Code>35460</Code><Name>חבקוק/מרים הנביאה</Name><Latitude>32.079742</Latitude><Longitude>34.984337</Longitude><isActive>true</isActive></Station>
+<Station><Code>35459</Code><Name>חבקוק/מרים הנביאה</Name><Latitude>32.079569</Latitude><Longitude>34.984444</Longitude><isActive>true</isActive></Station>
+<Station><Code>35458</Code><Name>מרים הנביאה/שמואל הנביא</Name><Latitude>32.07869</Latitude><Longitude>34.985009</Longitude><isActive>true</isActive></Station>
+<Station><Code>35457</Code><Name>מרים הנביאה/שמואל הנביא</Name><Latitude>32.07809</Latitude><Longitude>34.985078</Longitude><isActive>true</isActive></Station>
+<Station><Code>35455</Code><Name>מרים הנביאה/אליהו הנביא</Name><Latitude>32.0766</Latitude><Longitude>34.988838</Longitude><isActive>true</isActive></Station>
+<Station><Code>35453</Code><Name>אליהו הנביא/זכריה</Name><Latitude>32.076849</Latitude><Longitude>34.989087</Longitude><isActive>true</isActive></Station>
+<Station><Code>35452</Code><Name>אליהו הנביא/עמוס הנביא</Name><Latitude>32.079011</Latitude><Longitude>34.988442</Longitude><isActive>true</isActive></Station>
+<Station><Code>35431</Code><Name>אליהו הנביא/שמואל הנביא</Name><Latitude>32.080342</Latitude><Longitude>34.987885</Longitude><isActive>true</isActive></Station>
+<Station><Code>35427</Code><Name>אליהו הנביא/מרים הנביאה</Name><Latitude>32.081507</Latitude><Longitude>34.987658</Longitude><isActive>true</isActive></Station>
+<Station><Code>35408</Code><Name>אליהו הנביא/ירמיהו הנביא</Name><Latitude>32.082675</Latitude><Longitude>34.986822</Longitude><isActive>true</isActive></Station>
+<Station><Code>12483</Code><Name>אשבול</Name><Latitude>31.449688</Latitude><Longitude>34.666431</Longitude><isActive>true</isActive></Station>
+<Station><Code>12482</Code><Name>ניר עקיבא/הרחבה</Name><Latitude>31.471751</Latitude><Longitude>34.653562</Longitude><isActive>true</isActive></Station>
+<Station><Code>12481</Code><Name>עיריית דימונה/שדרות אריאל שרון</Name><Latitude>31.06438</Latitude><Longitude>35.032086</Longitude><isActive>true</isActive></Station>
+<Station><Code>42218</Code><Name>ת. רכבת חדרה</Name><Latitude>32.438755</Latitude><Longitude>34.900363</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42220</Code><Name>ת. רכבת חדרה/רציפים</Name><Latitude>32.438768</Latitude><Longitude>34.900367</Longitude><isActive>true</isActive></Station>
+<Station><Code>42218</Code><Name>ת. רכבת חדרה</Name><Latitude>32.438755</Latitude><Longitude>34.900363</Longitude><isActive>true</isActive></Station>
+<Station><Code>61315</Code><Name>מסוף שער בנימין/הורדה</Name><Latitude>31.864868</Latitude><Longitude>35.261917</Longitude><isActive>true</isActive></Station>
+<Station><Code>61316</Code><Name>מסוף שער בנימין/איסוף</Name><Latitude>31.864886</Latitude><Longitude>35.261684</Longitude><isActive>true</isActive></Station>
+<Station><Code>12513</Code><Name>אבא אחימאיר/יעקוב דורי</Name><Latitude>31.263749</Latitude><Longitude>34.770481</Longitude><isActive>true</isActive></Station>
+<Station><Code>12512</Code><Name>מוטה גור/רבקה</Name><Latitude>31.270945</Latitude><Longitude>34.760994</Longitude><isActive>true</isActive></Station>
+<Station><Code>12496</Code><Name>רוזמרין/קורנית</Name><Latitude>31.257908</Latitude><Longitude>34.756465</Longitude><isActive>true</isActive></Station>
+<Station><Code>12495</Code><Name>רוזמרין/קורנית</Name><Latitude>31.258231</Latitude><Longitude>34.756156</Longitude><isActive>true</isActive></Station>
+<Station><Code>12494</Code><Name>רוזמרין/לימונית</Name><Latitude>31.258783</Latitude><Longitude>34.755176</Longitude><isActive>true</isActive></Station>
+<Station><Code>12493</Code><Name>לימונית/רוזמרין</Name><Latitude>31.258807</Latitude><Longitude>34.754799</Longitude><isActive>true</isActive></Station>
+<Station><Code>12492</Code><Name>לימונית/מרווה</Name><Latitude>31.258021</Latitude><Longitude>34.754165</Longitude><isActive>true</isActive></Station>
+<Station><Code>12491</Code><Name>לימונית/מרווה</Name><Latitude>31.257648</Latitude><Longitude>34.753649</Longitude><isActive>true</isActive></Station>
+<Station><Code>12490</Code><Name>דפנה/לימונית</Name><Latitude>31.25703</Latitude><Longitude>34.753277</Longitude><isActive>true</isActive></Station>
+<Station><Code>12489</Code><Name>דפנה/קורנית</Name><Latitude>31.256541</Latitude><Longitude>34.754299</Longitude><isActive>true</isActive></Station>
+<Station><Code>12488</Code><Name>דפנה/קורנית</Name><Latitude>31.25609</Latitude><Longitude>34.754687</Longitude><isActive>true</isActive></Station>
+<Station><Code>12487</Code><Name>דפנה/רוזמרין</Name><Latitude>31.255632</Latitude><Longitude>34.755645</Longitude><isActive>true</isActive></Station>
+<Station><Code>12486</Code><Name>רוזמרין/דפנה</Name><Latitude>31.255563</Latitude><Longitude>34.756219</Longitude><isActive>true</isActive></Station>
+<Station><Code>35474</Code><Name>דרך רב אלוף יעקב דורי/גילדסגיים</Name><Latitude>32.05293</Latitude><Longitude>34.853028</Longitude><isActive>true</isActive></Station>
+<Station><Code>35472</Code><Name>שדרות בן גוריון/שדרות אהרון קציר</Name><Latitude>32.061543</Latitude><Longitude>34.847066</Longitude><isActive>true</isActive></Station>
+<Station><Code>12484</Code><Name>מואב/רקפת</Name><Latitude>31.261976</Latitude><Longitude>35.22179</Longitude><isActive>true</isActive></Station>
+<Station><Code>56400</Code><Name>מחלף אלמשארף</Name><Latitude>32.726084</Latitude><Longitude>35.284235</Longitude><isActive>true</isActive></Station>
+<Station><Code>56399</Code><Name>סאפוריה/יציאה</Name><Latitude>32.72535</Latitude><Longitude>35.2847</Longitude><isActive>true</isActive></Station>
+<Station><Code>56398</Code><Name>מגרש ספורט/מורן</Name><Latitude>32.724449</Latitude><Longitude>35.330589</Longitude><isActive>true</isActive></Station>
+<Station><Code>56397</Code><Name>דרך הגליל/שדרות מעלה יצחק</Name><Latitude>32.701505</Latitude><Longitude>35.324828</Longitude><isActive>true</isActive></Station>
+<Station><Code>56396</Code><Name>בית ספר חב''ד/התאנה</Name><Latitude>32.696305</Latitude><Longitude>35.318009</Longitude><isActive>true</isActive></Station>
+<Station><Code>56395</Code><Name>יזרעאל/יעל</Name><Latitude>32.688497</Latitude><Longitude>35.31474</Longitude><isActive>true</isActive></Station>
+<Station><Code>12523</Code><Name>מרכז מסחרי/הרכבת</Name><Latitude>31.676657</Latitude><Longitude>34.606399</Longitude><isActive>true</isActive></Station>
+<Station><Code>12522</Code><Name>נווה זהר</Name><Latitude>31.181302</Latitude><Longitude>35.363509</Longitude><isActive>true</isActive></Station>
+<Station><Code>12521</Code><Name>נווה זהר ב</Name><Latitude>31.18505</Latitude><Longitude>35.362384</Longitude><isActive>true</isActive></Station>
+<Station><Code>12520</Code><Name>נווה זהר א</Name><Latitude>31.180827</Latitude><Longitude>35.363903</Longitude><isActive>true</isActive></Station>
+<Station><Code>12519</Code><Name>שדרות ורדימון/ריה''ל</Name><Latitude>30.994652</Latitude><Longitude>34.940973</Longitude><isActive>true</isActive></Station>
+<Station><Code>12518</Code><Name>שדרות ורדימון/רשב''ג</Name><Latitude>30.992608</Latitude><Longitude>34.937901</Longitude><isActive>true</isActive></Station>
+<Station><Code>12517</Code><Name>עין בוקק</Name><Latitude>31.191618</Latitude><Longitude>35.362547</Longitude><isActive>true</isActive></Station>
+<Station><Code>12516</Code><Name>עין בוקק</Name><Latitude>31.190214</Latitude><Longitude>35.362548</Longitude><isActive>true</isActive></Station>
+<Station><Code>12515</Code><Name>מלון הרודס</Name><Latitude>31.172152</Latitude><Longitude>35.366808</Longitude><isActive>true</isActive></Station>
+<Station><Code>31345</Code><Name>מסוף יותם ויואב/רציפים</Name><Latitude>32.092347</Latitude><Longitude>34.865469</Longitude><isActive>true</isActive></Station>
+<Station><Code>31345</Code><Name>מסוף יותם ויואב/רציפים</Name><Latitude>32.092347</Latitude><Longitude>34.865469</Longitude><isActive>true</isActive></Station>
+<Station><Code>31345</Code><Name>מסוף יותם ויואב/רציפים</Name><Latitude>32.092347</Latitude><Longitude>34.865469</Longitude><isActive>true</isActive></Station>
+<Station><Code>31345</Code><Name>מסוף יותם ויואב/רציפים</Name><Latitude>32.092347</Latitude><Longitude>34.865469</Longitude><isActive>true</isActive></Station>
+<Station><Code>61429</Code><Name>נטפים/יציאה</Name><Latitude>32.115493</Latitude><Longitude>35.115639</Longitude><isActive>true</isActive></Station>
+<Station><Code>61428</Code><Name>מבואות יריחו</Name><Latitude>31.907973</Latitude><Longitude>35.418295</Longitude><isActive>true</isActive></Station>
+<Station><Code>56402</Code><Name>מרכז מסחרי מגדלי נצרת</Name><Latitude>32.690928</Latitude><Longitude>35.291599</Longitude><isActive>true</isActive></Station>
+<Station><Code>56401</Code><Name>אזור תעשיה צפוני</Name><Latitude>33.216186</Latitude><Longitude>35.587745</Longitude><isActive>true</isActive></Station>
+<Station><Code>44310</Code><Name>תחנת מוניות לוד תחנה מרכזית</Name><Latitude>31.95674</Latitude><Longitude>34.898462</Longitude><isActive>true</isActive></Station>
+<Station><Code>35479</Code><Name>אלברט איינשטיין/נלי זקס</Name><Latitude>32.086803</Latitude><Longitude>34.965876</Longitude><isActive>true</isActive></Station>
+<Station><Code>35478</Code><Name>אלברט איינשטיין/נלי זקס</Name><Latitude>32.086613</Latitude><Longitude>34.966238</Longitude><isActive>true</isActive></Station>
+<Station><Code>12530</Code><Name>שולמית/נלי זקס</Name><Latitude>30.98285</Latitude><Longitude>34.925248</Longitude><isActive>true</isActive></Station>
+<Station><Code>12529</Code><Name>שולמית/נלי זקס</Name><Latitude>30.983045</Latitude><Longitude>34.924227</Longitude><isActive>true</isActive></Station>
+<Station><Code>12540</Code><Name>המלכים/מוטה גור</Name><Latitude>31.265684</Latitude><Longitude>34.754215</Longitude><isActive>true</isActive></Station>
+<Station><Code>56433</Code><Name>פאטמה אל-זהראא</Name><Latitude>32.858779</Latitude><Longitude>35.19212</Longitude><isActive>true</isActive></Station>
+<Station><Code>56432</Code><Name>עמאן/אל הרבה</Name><Latitude>32.844694</Latitude><Longitude>35.204734</Longitude><isActive>true</isActive></Station>
+<Station><Code>56429</Code><Name>אל ח'וארמזי/אל פרוז</Name><Latitude>32.851264</Latitude><Longitude>35.211571</Longitude><isActive>true</isActive></Station>
+<Station><Code>56428</Code><Name>מסגד אלעין</Name><Latitude>32.853224</Latitude><Longitude>35.211772</Longitude><isActive>true</isActive></Station>
+<Station><Code>56427</Code><Name>אל זראעייה/ביסאן</Name><Latitude>32.862309</Latitude><Longitude>35.184348</Longitude><isActive>true</isActive></Station>
+<Station><Code>44313</Code><Name>תחנת מוניות פתח תקווה עמישב</Name><Latitude>32.070702</Latitude><Longitude>34.915829</Longitude><isActive>true</isActive></Station>
+<Station><Code>56426</Code><Name>האצ''ל/נוף החרמון</Name><Latitude>33.215482</Latitude><Longitude>35.566929</Longitude><isActive>true</isActive></Station>
+<Station><Code>56425</Code><Name>יהלום/יובל יניב</Name><Latitude>33.195138</Latitude><Longitude>35.575802</Longitude><isActive>true</isActive></Station>
+<Station><Code>56424</Code><Name>יהלום/לשם</Name><Latitude>33.198786</Latitude><Longitude>35.576569</Longitude><isActive>true</isActive></Station>
+<Station><Code>56423</Code><Name>האצ''ל ג</Name><Latitude>33.218044</Latitude><Longitude>35.567629</Longitude><isActive>true</isActive></Station>
+<Station><Code>56422</Code><Name>האצ''ל א</Name><Latitude>33.22394</Latitude><Longitude>35.568211</Longitude><isActive>true</isActive></Station>
+<Station><Code>56421</Code><Name>יובל יניב/אחלמה</Name><Latitude>33.194994</Latitude><Longitude>35.574045</Longitude><isActive>true</isActive></Station>
+<Station><Code>56420</Code><Name>הרצל/ ברל כצנלסון</Name><Latitude>33.207254</Latitude><Longitude>35.567037</Longitude><isActive>true</isActive></Station>
+<Station><Code>56419</Code><Name>הרצל/טשרניחובסקי</Name><Latitude>33.209293</Latitude><Longitude>35.567504</Longitude><isActive>true</isActive></Station>
+<Station><Code>56418</Code><Name>הרצל/טשרניחובסקי</Name><Latitude>33.210151</Latitude><Longitude>35.567561</Longitude><isActive>true</isActive></Station>
+<Station><Code>56417</Code><Name>אזור תעשיה צפוני/אלי הורוביץ</Name><Latitude>33.218049</Latitude><Longitude>35.586805</Longitude><isActive>true</isActive></Station>
+<Station><Code>56416</Code><Name>אזור תעשיה צפוני/אלי הורוביץ</Name><Latitude>33.218394</Latitude><Longitude>35.587018</Longitude><isActive>true</isActive></Station>
+<Station><Code>20001</Code><Name>ת. רכבת ת''א מרכז/רציפים</Name><Latitude>32.083157</Latitude><Longitude>34.796091</Longitude><isActive>true</isActive></Station>
+<Station><Code>44315</Code><Name>תחנת מוניות פתח תקווה עמישב</Name><Latitude>32.070489</Latitude><Longitude>34.915816</Longitude><isActive>true</isActive></Station>
+<Station><Code>43534</Code><Name>עופרה חזה/עוזי חיטמן</Name><Latitude>32.84852</Latitude><Longitude>35.088374</Longitude><isActive>true</isActive></Station>
+<Station><Code>43533</Code><Name>עופרה חזה/עוזי חיטמן</Name><Latitude>32.848523</Latitude><Longitude>35.087083</Longitude><isActive>true</isActive></Station>
+<Station><Code>43532</Code><Name>עופרה חזה/יוסי בנאי</Name><Latitude>32.8488</Latitude><Longitude>35.085735</Longitude><isActive>true</isActive></Station>
+<Station><Code>43531</Code><Name>שושנה דמארי/עופרה חזה</Name><Latitude>32.849715</Latitude><Longitude>35.085236</Longitude><isActive>true</isActive></Station>
+<Station><Code>43530</Code><Name>צה''ל/ עופרה חזה</Name><Latitude>32.85079</Latitude><Longitude>35.090609</Longitude><isActive>true</isActive></Station>
+<Station><Code>43529</Code><Name>צה''ל/מנחם בגין</Name><Latitude>32.850938</Latitude><Longitude>35.090633</Longitude><isActive>true</isActive></Station>
+<Station><Code>43528</Code><Name>בית ספר יצחק נבון/ש''י עגנון</Name><Latitude>32.851721</Latitude><Longitude>35.085501</Longitude><isActive>true</isActive></Station>
+<Station><Code>43527</Code><Name>הרקפות/קיבוץ גלויות</Name><Latitude>32.760078</Latitude><Longitude>35.047209</Longitude><isActive>true</isActive></Station>
+<Station><Code>56438</Code><Name>אלזראעיה/ביסאן</Name><Latitude>32.862274</Latitude><Longitude>35.18445</Longitude><isActive>true</isActive></Station>
+<Station><Code>56435</Code><Name>אלמותנבי</Name><Latitude>32.85035</Latitude><Longitude>35.211165</Longitude><isActive>true</isActive></Station>
+<Station><Code>56434</Code><Name>בי''ס חט''ב החמישית</Name><Latitude>32.858789</Latitude><Longitude>35.188165</Longitude><isActive>true</isActive></Station>
+<Station><Code>20638</Code><Name>לח''י/מבצע קדש</Name><Latitude>32.103914</Latitude><Longitude>34.82791</Longitude><isActive>true</isActive></Station>
+<Station><Code>20637</Code><Name>לח''י/מבצע קדש</Name><Latitude>32.104003</Latitude><Longitude>34.827875</Longitude><isActive>true</isActive></Station>
+<Station><Code>20641</Code><Name>ביה''ס בעש''ט/מח''ל</Name><Latitude>32.049042</Latitude><Longitude>34.806271</Longitude><isActive>true</isActive></Station>
+<Station><Code>20640</Code><Name>מח''ל/ הרב אלנקווה</Name><Latitude>32.049425</Latitude><Longitude>34.801942</Longitude><isActive>true</isActive></Station>
+<Station><Code>20639</Code><Name>מח''ל/ הרב אלנקווה</Name><Latitude>32.049633</Latitude><Longitude>34.802053</Longitude><isActive>true</isActive></Station>
+<Station><Code>12550</Code><Name>תחנה רכבת שדרות/רציפים</Name><Latitude>31.51648</Latitude><Longitude>34.587095</Longitude><isActive>true</isActive></Station>
+<Station><Code>35505</Code><Name>הרצל/רוטשילד</Name><Latitude>32.026119</Latitude><Longitude>34.743063</Longitude><isActive>true</isActive></Station>
+<Station><Code>18317</Code><Name>שדרות בר יהודה/מוטה גור</Name><Latitude>31.735511</Latitude><Longitude>34.749105</Longitude><isActive>true</isActive></Station>
+<Station><Code>18316</Code><Name>שדרות בר יהודה/מוטה גור</Name><Latitude>31.735434</Latitude><Longitude>34.749583</Longitude><isActive>true</isActive></Station>
+<Station><Code>18112</Code><Name>מזכירות/אביגדור</Name><Latitude>31.711082</Latitude><Longitude>34.744586</Longitude><isActive>true</isActive></Station>
+<Station><Code>18111</Code><Name>אנדרטה/אביגדור</Name><Latitude>31.712156</Latitude><Longitude>34.739468</Longitude><isActive>true</isActive></Station>
+<Station><Code>12551</Code><Name>מרכז/כפר ורבורג</Name><Latitude>31.716725</Latitude><Longitude>34.732568</Longitude><isActive>true</isActive></Station>
+<Station><Code>35515</Code><Name>מחנה בן עמי/יציאה</Name><Latitude>31.981763</Latitude><Longitude>34.939094</Longitude><isActive>true</isActive></Station>
+<Station><Code>35512</Code><Name>מחנה בן עמי/כניסה</Name><Latitude>31.982104</Latitude><Longitude>34.939</Longitude><isActive>true</isActive></Station>
 </ArrayOfStation>

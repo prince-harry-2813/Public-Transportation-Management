@@ -16,6 +16,7 @@ namespace BL.BO
         /// info should come from Line station entities
         /// </summary>
         public IEnumerable<Line> Lines { get; set; }
+        
         public bool isActive { get; set; }
         public override string ToString()
         {

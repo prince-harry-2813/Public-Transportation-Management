@@ -129,7 +129,7 @@
             <StackPanel
                 Margin="10"
                 Background="White"
-                DataContext="{Binding Line , Mode=TwoWay}"
+                DataContext="{Binding Line ,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 IsEnabled="{Binding IsInEditMode}">
                 <!--  ID  -->
                 <DockPanel HorizontalAlignment="Stretch">
@@ -146,6 +146,7 @@
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
+						IsEnabled="False"
                         Text="{Binding Id , Mode=TwoWay}" />
                 </DockPanel>
                 <!--  Code  -->
@@ -163,7 +164,7 @@
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Text="{Binding Code ,Mode=TwoWay}" />
+                        Text="{Binding Code,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                 </DockPanel>
                 <!--  Area  -->
                 <DockPanel HorizontalAlignment="Stretch">
@@ -180,7 +181,7 @@
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Text="{Binding Area ,Mode=TwoWay}" />
+                        Text="{Binding Area,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
                 </DockPanel>
                 <!--  FirstStation  -->
                 <DockPanel HorizontalAlignment="Stretch">
@@ -197,7 +198,7 @@
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Text="{Binding FirstStation.Station.Name , Mode=TwoWay}" />
+                        Text="{Binding FirstStation.Station.Name ,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
                 <!--  LastStation  -->
                 <DockPanel HorizontalAlignment="Stretch">

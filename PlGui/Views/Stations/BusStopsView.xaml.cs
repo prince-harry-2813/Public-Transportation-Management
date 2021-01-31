@@ -15,5 +15,10 @@ namespace PlGui.Views.Stations
             ViewModelLocationProvider.Register(typeof(BusStopsView).ToString(), typeof(BusStopsViewViewModel));
 
         }
+
+        private void LbBuses_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
+        }
     }
 }

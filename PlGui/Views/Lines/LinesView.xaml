@@ -178,8 +178,8 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            SelectedItem="{Binding Line}"
-            ItemsSource="{Binding LinesCollection}">
+            SelectedItem="{Binding Line,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+            ItemsSource="{Binding LinesCollection, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid
@@ -210,7 +210,7 @@
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding Path=Code}"
+                            Content="{Binding Path=Code,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             ContentStringFormat=" {0} : קו"
                             Foreground="Black"
                             MouseDoubleClick="OnContentChanged" />
