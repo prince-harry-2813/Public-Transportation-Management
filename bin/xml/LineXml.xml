@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ArrayOfLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Line>
+    <Id>1</Id>
+    <Code>8</Code>
+    <Area>General</Area>
+    <FirstStation>1366</FirstStation>
+    <LastStation>1367</LastStation>
+    <isActive>true</isActive>
+  </Line>
+</ArrayOfLine>
