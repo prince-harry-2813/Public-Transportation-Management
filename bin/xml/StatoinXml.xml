@@ -28,4 +28,18 @@
     <Latitude>33</Latitude>
     <isActive>true</isActive>
   </Station>
+  <Station>
+    <Code>3340</Code>
+    <Name>בן נון</Name>
+    <Longitude>34.68314</Longitude>
+    <Latitude>32.653322</Latitude>
+    <isActive>true</isActive>
+  </Station>
+  <Station>
+    <Code>2813</Code>
+    <Name>פסח</Name>
+    <Longitude>34.80875</Longitude>
+    <Latitude>31.97511</Latitude>
+    <isActive>true</isActive>
+  </Station>
 </ArrayOfStation>

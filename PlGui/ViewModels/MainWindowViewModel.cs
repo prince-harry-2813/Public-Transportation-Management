@@ -16,7 +16,7 @@ namespace PlGui.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;

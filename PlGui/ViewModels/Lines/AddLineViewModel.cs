@@ -152,7 +152,6 @@ namespace PlGui.ViewModels.Lines
             {
                 if (args.UserState is int)
                 {
-                    Line.Id = (int)args.UserState + 1;
                 }
                 else
                 {

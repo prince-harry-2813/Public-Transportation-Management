@@ -17,6 +17,11 @@ namespace BL.BO
         /// </summary>
         public IEnumerable<Line> Lines { get; set; }
         public bool isActive { get; set; }
+        public override string ToString()
+        {
+            return $"מספר הקו: {Code}";
+        }
+
 
     }
 }

@@ -41,7 +41,7 @@ namespace PlGui.ViewModels.Stations
         public IBL Bl { get; set; }
         #endregion
 
-        #region Service Decleration
+        #region Service Deceleration
 
         private IRegionManager regionManager;
         private IUnityContainer unityContainer;
@@ -52,7 +52,6 @@ namespace PlGui.ViewModels.Stations
 
         public ICommand AddBusStopButtonCommand { get; set; }
         public ICommand UpdateBusStopButtonCommand { get; set; }
-
         public ICommand DeleteStationButtonCommand { get; set; }
         #endregion
 

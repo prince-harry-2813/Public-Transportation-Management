@@ -178,7 +178,7 @@
 			Margin="10"
 			HorizontalContentAlignment="Stretch"
 			Background="WhiteSmoke"
-			ItemsSource="{Binding BusStops}">
+			ItemsSource="{Binding BusStops ,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid Margin="2">
@@ -194,30 +194,28 @@
 
 						<Label
 							x:Name="LineNumberLabel"
-							Grid.Column="1"
+							Grid.Column="3"
 							Content="{Binding Name}"
 							MouseDoubleClick="OnContentChanged" />
 
-                        <TextBlock
-                            x:Name="frameLB"
-                            Grid.Column="2"
-                            Width="Auto"
-                            Padding="10,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            Foreground="Black"
-                            MouseUp="OnContentChanged">
-                            <Run>
-                                  קוד תחנה:
-                            </Run>
-                            <Run Text="{Binding Code}" />
-                        </TextBlock>
-                        <ComboBox
-							Grid.Column="1">
-                            <ComboBoxItem Content="{Binding Lines}">
-							</ComboBoxItem>
-							</ComboBox>
-                        <!--<TextBlock
+						<TextBlock
+							x:Name="frameLB"
+							Grid.Column="2"
+							Width="Auto"
+							Padding="10,0"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Center"
+							Foreground="Black"
+							MouseUp="OnContentChanged">
+							<Run>
+								קוד תחנה:
+							</Run>
+							<Run Text="{Binding Code}" />
+						</TextBlock>
+						<ComboBox Grid.Column="1">
+							<ComboBoxItem Content="{Binding Lines,UpdateSourceTrigger=PropertyChanged}" />
+						</ComboBox>
+						<!--<TextBlock
 						
                             x:Name="av"
                             Grid.Column="3"
@@ -233,13 +231,13 @@
                             <Run Text="{Binding Latitude}" />
                         </TextBlock>-->
 
-						<Button
+						<!--<Button
 							Grid.Column="4"
 							Height="18pt"
 							Margin="2"
 							Padding="3"
 							Command="{Binding ChooseLineButtonCommand}"
-							Content="Choose BusStop" />
+							Content="Choose BusStop" />-->
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>

@@ -227,17 +227,18 @@
                             </Button.Content>
                         </Button>-->
 
-                        <Button
+						<ComboBox
                             Grid.Column="4"
                             Height="18pt"
                             Margin="2"
                             Padding="3"
-                            Command="{Binding ChooseLineButtonCommand}"
-                            Content="תחנות הקו"
+                            
                             FontFamily="Broadway"
                             FontSize="13"
-                            FontWeight="Bold" />
-                    </Grid>
+                            FontWeight="Bold" >
+							<ComboBoxItem Content="{Binding Stations.Station.Code ,UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
+						</ComboBox>
+					</Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

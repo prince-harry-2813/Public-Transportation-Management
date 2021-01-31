@@ -226,11 +226,11 @@ namespace PlGui.ViewModels.Bus
                                     //|| SelectedItem.PropertyName == "RegisDate"
                                     || SelectedItem.PropertyName == "TotalKM"
                                     || SelectedItem.PropertyName == "KmOnLastTreatment"
-                                    || SelectedItem.PropertyName == "LastTreatmentDate" 
-                                  //  || InternalReadOnly
+                                    || SelectedItem.PropertyName == "LastTreatmentDate"
+                                    //  || InternalReadOnly
                                     );
-                
             }
+
         }
 
         private void RemoveBusButtomClicked()

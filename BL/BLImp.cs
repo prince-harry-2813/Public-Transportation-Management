@@ -362,9 +362,7 @@ namespace BL
                     LastStation = GetLineStation(VARIABLE.Id, VARIABLE.LastStation),
                     FirstStation = GetLineStation(VARIABLE.Id, VARIABLE.FirstStation),
 
-                    Stations = from LS in GetAllLinesStationBy(l => l.IsActive && l.LineId == VARIABLE.Id)
-                               orderby LS.LineStationIndex
-                               select LS,
+                    Stations = GetAllLinesStationBy(l => l.IsActive && l.LineId == VARIABLE.Id).OrderBy(l=>l.LineStationIndex),
 
                 };
                 yield return line;
@@ -401,7 +399,7 @@ namespace BL
 
         #endregion
 
-        #region Bus Stop Implementation
+        #region Station Implementation
         public void AddStation(Station station)
         {
             station.isActive = true;
@@ -459,7 +457,10 @@ namespace BL
         {
             foreach (var VARIABLE in iDal.GetAllStation())
             {
-                yield return (Station)VARIABLE.CopyPropertiesToNew(typeof(Station));
+                var bostation= (Station)VARIABLE.CopyPropertiesToNew(typeof(Station));
+                bostation.Lines = GetAllLines().Where(l => l.Stations.Any(s => s.LineId == l.Id && s.Station.Code == bostation.Code));
+             
+                yield return bostation;
             }
         }
 
@@ -534,7 +535,7 @@ namespace BL
         {
             foreach (var item in iDal.GetAllLinesStation())
             {
-                yield return (LineStation)item.CopyPropertiesToNew(typeof(BO.LineStation));
+                yield return LineStationAdapter(item);
             }
         }
 
@@ -542,8 +543,12 @@ namespace BL
         {
             foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive || !l.isActive))
             {
-                LineStation lineStation = new LineStation();
-                item.CopyPropertiesTo(lineStation);
+                LineStation lineStation = new LineStation() {
+                    LineId = item.LineId,
+                    LineStationIndex=item.LineStationIndex,
+                    IsActive=item.isActive,
+                    
+                };
 
                 lineStation.Station = new Station();
                 lineStation.Station = GetStation(item.StationId);
@@ -575,6 +580,24 @@ namespace BL
                 boLineStation.CopyPropertiesTo(a);
                 iDal.UpdateLineStation(a);
             }
+        }
+
+        public LineStation LineStationAdapter(DO.LineStation linestaDO) {
+            LineStation lsta = new LineStation();
+            DO.Station stationDO;
+            int stationID=linestaDO.StationId;
+            try
+            {
+                stationDO = iDal.GetStation(stationID);
+            }
+            catch (Exception e)
+            {
+
+                throw new BadBusStopIDException("check details", e);
+            }
+            stationDO.CopyPropertiesTo(lsta.Station);
+            linestaDO.CopyPropertiesTo(lsta);
+            return lsta;
         }
 
         #endregion
