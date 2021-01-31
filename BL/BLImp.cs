@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -118,9 +117,12 @@ namespace BL
 
         public IEnumerable<Bus> GetBusBy(Predicate<Bus> predicate)
         {
-            return null;
+            return from bus in iDal.GetAllBusesBy(b => b.isActive || !b.isActive)
+                   let BUS = new Bus().CopyPropertiesToNew(typeof(Bus))
+                   where predicate((Bus)BUS)
+                   orderby ((Bus)BUS).LicenseNum
+                   select BUS as Bus;
         }
-
         public void UpdateBus(Bus bus)
         {
             if (bus == null)
@@ -190,9 +192,9 @@ namespace BL
                         isActive = true,
                         Station1 = FirstStID,
                         Station2 = LastStID,
-                        Distance = CalculateDistance(line.FirstStation.Station, line.LastStation.Station),
+                        Distance = Utilities.CalculateDistance(line.FirstStation.Station, line.LastStation.Station),
                         PairId = iDal.GetAllAdjacentStationsBy(l => l.isActive || !l.isActive).Count() + 1,
-                        Time = CalculateTime(CalculateDistance(line.FirstStation.Station, line.LastStation.Station))
+                        Time = Utilities.CalculateTime(Utilities.CalculateDistance(line.FirstStation.Station, line.LastStation.Station))
                     });
 
                 }
@@ -338,7 +340,7 @@ namespace BL
                 };
                 if (BOLS.LineStationIndex == 0)
                     BOLS.CopyPropertiesTo(line.FirstStation);
-                if (BOLS.LineStationIndex==DOLineStations.Count()-1)
+                if (BOLS.LineStationIndex == DOLineStations.Count() - 1)
                     BOLS.CopyPropertiesTo(line.LastStation);
                 line.Stations.Append(BOLS);
 
@@ -527,7 +529,7 @@ namespace BL
             {
                 LineStation lineStation = new LineStation();
                 item.CopyPropertiesTo(lineStation);
-                
+
                 lineStation.Station = new Station();
                 lineStation.Station = GetStation(item.StationId);
                 lineStation.Station.Lines = new List<Line>();
@@ -641,7 +643,7 @@ namespace BL
             getLineStaionworker.ProgressChanged += (sender, args) =>
             {
                 linesTrips.Add((LineTrip)args.UserState);
-            }; 
+            };
             #endregion
 
             getLineStaionworker.RunWorkerCompleted += (sender, args) =>
@@ -651,22 +653,22 @@ namespace BL
                 int i = 0;
                 foreach (var VARIABLE in linesTrips)
                 {
-                            //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
-                            busesOnTrips.Add(new BusOnTrip()
-                            {
-                                ActualTakeOff = simulationTime,
-                                Id = i,
-                                LineId = VARIABLE.LineId,
-                                isActive = true,
-                                LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum ,
-                                //NextStationAt = idal.GetAdjacentStations()
-                            });
-                        
-                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0 )
+                    //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
+                    busesOnTrips.Add(new BusOnTrip()
+                    {
+                        ActualTakeOff = simulationTime,
+                        Id = i,
+                        LineId = VARIABLE.LineId,
+                        isActive = true,
+                        LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum,
+                        //NextStationAt = idal.GetAdjacentStations()
+                    });
+
+                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0)
                     {
                         busesOnTrips.Add(new BusOnTrip()
                         {
-                            
+
                         });
                     }
 
@@ -686,8 +688,8 @@ namespace BL
                 {
                     LineTiming lineTiming = new LineTiming()
                     {
-                       // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
-                         //   .CopyPropertiesToNew(typeof(Station))
+                        // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
+                        //   .CopyPropertiesToNew(typeof(Station))
                         //,ArrivingTime = 
                     };
                 });
@@ -695,12 +697,11 @@ namespace BL
 
         }
 
-     
 
-        }
 
-        #endregion
-
+    }
+    internal static class Utilities
+    {
         #region Utilities
 
         /// <summary>
@@ -709,7 +710,7 @@ namespace BL
         /// </summary>
         /// <param name="other"> previous or other station </param>
         /// <returns>Short distance in meters </returns>
-        public double CalculateDistance(Station st1, Station st2)
+        internal static double CalculateDistance(Station st1, Station st2)
         {
             double earthRadius = 6371e3;
             double l1 = st1.Latitude * (Math.PI / 180);
@@ -726,7 +727,11 @@ namespace BL
 
 
 
-        private TimeSpan CalculateTime(Double Distance)
+        /// <summary>
+        /// calculate the time of ride to this station from previous 
+        /// one KM per minute
+        /// </summary>
+        internal static TimeSpan CalculateTime(Double Distance)
         {
             TimeSpan time = TimeSpan.Zero;
             double rideDistance = 0.0 + Distance / 1000;
@@ -736,6 +741,10 @@ namespace BL
         }
 
         #endregion
+
     }
+
+
 }
+
 

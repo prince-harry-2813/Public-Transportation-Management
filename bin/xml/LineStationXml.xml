@@ -17,7 +17,7 @@
     <isActive>true</isActive>
   </LineStation>
   <LineStation>
-    <LineId>54321</LineId>
+    <LineId>2</LineId>
     <StationId>321</StationId>
     <LineStationIndex>0</LineStationIndex>
     <PrevStation>0</PrevStation>
@@ -25,7 +25,7 @@
     <isActive>true</isActive>
   </LineStation>
   <LineStation>
-    <LineId>54321</LineId>
+    <LineId>2</LineId>
     <StationId>123</StationId>
     <LineStationIndex>1</LineStationIndex>
     <PrevStation>321</PrevStation>

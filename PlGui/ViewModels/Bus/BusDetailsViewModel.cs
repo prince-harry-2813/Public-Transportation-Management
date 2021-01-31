@@ -212,7 +212,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        public void ListBoxSelectionChanged()
+        public void ListBoxSelectionChanged(System.Windows.Controls.TextBox text)
         {
 
 
@@ -227,8 +227,9 @@ namespace PlGui.ViewModels.Bus
                                     || SelectedItem.PropertyName == "TotalKM"
                                     || SelectedItem.PropertyName == "KmOnLastTreatment"
                                     || SelectedItem.PropertyName == "LastTreatmentDate" 
-                                    || InternalReadOnly
+                                  //  || InternalReadOnly
                                     );
+                text.IsEnabled = BusValueIsReadOnly;
             }
         }
 

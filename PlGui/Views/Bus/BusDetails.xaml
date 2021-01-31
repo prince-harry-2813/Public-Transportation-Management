@@ -131,8 +131,9 @@
                             BorderBrush="Black"
                             BorderThickness="0.5"
                             FontSize="8pt"
-                            IsEnabled="{Binding BusValueIsReadOnly}"
-                            Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                            IsEnabled="{Binding BusValueIsReadOnly,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                          
+							Text="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
