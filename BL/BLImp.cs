@@ -78,7 +78,7 @@ namespace BL
             // TODO :  check if this solution is good enough
             foreach (var VARIABLE in iDal.GetAllBuses())
             {
-                //if (VARIABLE.isActive)  //deleted because DAL does this check    // Ignore deleted bus  
+                //if (VARIABLE.IsActive)  //deleted because DAL does this check    // Ignore deleted bus  
 
                 yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
 
@@ -336,7 +336,7 @@ namespace BL
                     Station = GetStation(item.StationId),
                     PrevStation = item.LineStationIndex - 1 < 0 ? 0 : DOLineStations.ElementAt(item.LineStationIndex - 1).StationId,
                     NextStation = item.LineStationIndex + 1 == DOLineStations.Count() ? 0 : DOLineStations.ElementAt(item.LineStationIndex + 1).StationId,
-                    isActive = true
+                    IsActive = true
                 };
                 if (BOLS.LineStationIndex == 0)
                     BOLS.CopyPropertiesTo(line.FirstStation);
@@ -362,7 +362,7 @@ namespace BL
                     LastStation = GetLineStation(VARIABLE.Id, VARIABLE.LastStation),
                     FirstStation = GetLineStation(VARIABLE.Id, VARIABLE.FirstStation),
 
-                    Stations = from LS in GetAllLinesStationBy(l => l.isActive && l.LineId == VARIABLE.Id)
+                    Stations = from LS in GetAllLinesStationBy(l => l.IsActive && l.LineId == VARIABLE.Id)
                                orderby LS.LineStationIndex
                                select LS,
 
@@ -373,14 +373,29 @@ namespace BL
 
         public IEnumerable<Line> GetLinesBy(Predicate<BO.Line> predicate)
         {
-            foreach (var item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive))
-            {
+            return from item in iDal.GetAllLinesBy(l => l.isActive || !l.isActive)
+                   let stations = iDal.GetAllLinesStationBy(ls => ls.LineId == item.Id && ls.isActive)//get the line station 
+                   let Bol = new Line()
+                   {
+                       LastStation = GetLineStation(item.Id, item.LastStation),
+                       FirstStation = GetLineStation(item.Id, item.FirstStation),
 
-                BO.Line line = (Line)item.CopyPropertiesToNew(typeof(Line));
-                if (predicate(line))
-                    yield return line;
+                       Stations = from LS in GetAllLinesStationBy(l => l.IsActive && l.LineId == item.Id)
+                                  orderby LS.LineStationIndex
+                                  select LS,
+                       Id = item.Id,
+                       IsActive = item.isActive,
+                       Area = (BO.Area)item.Area,
+                       Code = item.Code
 
-            }
+                   }
+                   where predicate(Bol)
+                   orderby Bol.Id
+                   select Bol;
+
+
+
+
         }
 
 

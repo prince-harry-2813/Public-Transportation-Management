@@ -122,7 +122,8 @@
             Padding="1"
             VerticalAlignment="Center"
             FontSize="12pt"
-            Text="{Binding Line.Id, UpdateSourceTrigger=PropertyChanged}" />
+			IsEnabled="true"
+            Text="{Binding Line.Id, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
         <!--#endregion-->
 
         <!--#region Code Details-->

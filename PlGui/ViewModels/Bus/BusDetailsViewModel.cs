@@ -212,7 +212,7 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        public void ListBoxSelectionChanged(System.Windows.Controls.TextBox text)
+        public void ListBoxSelectionChanged()
         {
 
 
@@ -229,7 +229,7 @@ namespace PlGui.ViewModels.Bus
                                     || SelectedItem.PropertyName == "LastTreatmentDate" 
                                   //  || InternalReadOnly
                                     );
-                text.IsEnabled = BusValueIsReadOnly;
+                
             }
         }
 
@@ -266,7 +266,7 @@ namespace PlGui.ViewModels.Bus
             LbItemSource = new ObservableCollection<PropertyDetails>();
             foreach (PropertyInfo VARIABLE in bus.GetType().GetProperties())
             {
-                if (VARIABLE.Name.Equals("isActive"))
+                if (VARIABLE.Name.Equals("IsActive"))
                     continue;
                 LbItemSource.Add(new PropertyDetails()
                 {
@@ -286,7 +286,7 @@ namespace PlGui.ViewModels.Bus
         {
             foreach (var VARIABLE in Bus.GetType().GetProperties())
             {
-                if (VARIABLE.Name == "isActive")
+                if (VARIABLE.Name == "IsActive")
                     continue;
 
                 var property = (PropertyDetails)LbItemSource.Where(details => details.PropertyName == VARIABLE.Name).FirstOrDefault();
