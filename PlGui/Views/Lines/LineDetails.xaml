@@ -3,114 +3,117 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:fa5="http://schemas.fontawesome.com/icons/"
+	xmlns:fa5="http://schemas.fontawesome.com/icons/"
     xmlns:local="clr-namespace:PlGui.Views.Lines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="clr-namespace:PlGui.Converters"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
-        <converters:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </UserControl.Resources>
-    <StackPanel
+	<UserControl.Resources>
+		<converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+		<converters:EditSubmitIconConverter x:Key="EditSubmitIconConverter" />
+		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	</UserControl.Resources>
+	<StackPanel
         Margin="10"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Center">
-        <WrapPanel Margin="10" HorizontalAlignment="Center">
-            <fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
-            <Label FontSize="14pt" FontWeight="SemiBold">
-                פרטי הקו
-            </Label>
-        </WrapPanel>
+		<WrapPanel Margin="10" HorizontalAlignment="Center">
+			<fa5:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
+			<Label FontSize="14pt" FontWeight="SemiBold">
+				פרטי הקו
+			</Label>
+		</WrapPanel>
 
-        <WrapPanel Margin="10">
-            <!--  Edit Bus Button  -->
-            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
-                <Button
+		<WrapPanel Margin="10">
+			<!--  Edit Bus Button  -->
+			<StackPanel HorizontalAlignment="Center" Visibility="Visible">
+				<Button
                     Name="TreatmentButton"
                     Height="30pt"
                     Margin="20,5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
-                    Command="{Binding LineDetailsButtonCommand}"
+                    Command="{Binding BusDetailsButtonCommand}"
                     CommandParameter="Edit"
                     ToolTip="Edit BusStop Properties">
-                    <Button.Content>
-                        <fa5:ImageAwesome
+					<Button.Content>
+						<fa5:ImageAwesome
                             Margin="2"
                             Height="20pt"
                             Foreground="Blue"
                             Icon="{Binding IsInEditMode , Converter={StaticResource  EditSubmitIconConverter}}" />
-                    </Button.Content>
-                </Button>
+					</Button.Content>
+				</Button>
 
-                <Label
+				<Label
                     Padding="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     VerticalContentAlignment="Top"
                     FontSize="10pt"
                     Foreground="Blue">
-                    Edit
-                </Label>
-            </StackPanel>
+					Edit
+				</Label>
+			</StackPanel>
 
-            <!--  Delete Bus Button  -->
-            <StackPanel HorizontalAlignment="Center" Visibility="Visible">
-                <Button
+			<!--  Delete Bus Button  -->
+			<StackPanel HorizontalAlignment="Center" Visibility="Visible">
+				<Button
                     x:Name="RefuleButton"
                     Height="30pt"
                     Margin="5"
                     Background="#00DDDDDD"
                     BorderBrush="#00707070"
                     CommandParameter="Delete"
-                    Command="{Binding LineDetailsButtonCommand}"
+                    Command="{Binding BusDetailsButtonCommand}"
                     ToolTip="Delete BusStop">
-                    <Button.Content>
-                        <fa5:ImageAwesome
+					<Button.Content>
+						<fa5:ImageAwesome
                             Margin="2"
                             Foreground="Blue"
                             Icon="Solid_Trash" />
-                    </Button.Content>
-                </Button>
+					</Button.Content>
+				</Button>
 
-                <Label
+				<Label
                     Padding="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     VerticalContentAlignment="Top"
                     FontSize="10pt"
                     Foreground="Blue">
-                    Delete
-                </Label>
-            </StackPanel>
-        </WrapPanel>
+					Delete
+				</Label>
+			</StackPanel>
+			<CheckBox Content="IsActive"
+					  
+					  IsChecked="{Binding Line.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="140,20,0,0"/>
+		</WrapPanel>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*" />
+				<ColumnDefinition Width="1*" />
+			</Grid.ColumnDefinitions>
 
-            <StackPanel
+			<StackPanel
                 Margin="10"
                 Background="White"
                 IsEnabled="{Binding IsInEditMode}"
                 DataContext="{Binding Line }"
              >
-                <!--  ID  -->
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Label
+				<!--  ID  -->
+				<DockPanel HorizontalAlignment="Stretch">
+					<Label
                         Margin="10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch"
                         FontSize="8pt">
-                        ID : 
-                    </Label>
-                    <TextBox
+						ID :
+					</Label>
+					<TextBox
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
@@ -118,93 +121,99 @@
                         BorderThickness="1"
 						IsEnabled="False"
                         Text="{Binding Id , Mode=TwoWay}" />
-                </DockPanel>
-                <!--  Code  -->
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Label
+				</DockPanel>
+				<!--  Code  -->
+				<DockPanel HorizontalAlignment="Stretch">
+					<Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         FontSize="8pt">
-                        Code :
-                    </Label>
-                    <TextBox
+						Code :
+					</Label>
+					<TextBox
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
                         Text="{Binding Code,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
-                </DockPanel>
-                <!--  Area  -->
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Label
+				</DockPanel>
+				<!--  Area  -->
+				<DockPanel HorizontalAlignment="Stretch">
+					<Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         FontSize="8pt">
-                        Area : 
-                    </Label>
-                    <TextBox
+						Area :
+					</Label>
+					<TextBox
+						IsEnabled="False"
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Text="{Binding Area,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
-                </DockPanel>
-                <!--  FirstStation  -->
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Label
+                        Text="{Binding Area,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Width="221" />
+					<ComboBox 
+						ItemsSource="{Binding Areas}"
+						SelectedItem="{Binding EnumsArea,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+						Width="168" Height="20"/>
+				</DockPanel>
+				<!--  FirstStation  -->
+				<DockPanel HorizontalAlignment="Stretch">
+					<Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         FontSize="8pt">
-                        First Station :
-                    </Label>
-                    <TextBox
+						First Station :
+					</Label>
+					<TextBox
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
+						InputMethod.InputScope="Digits"
                         Text="{Binding FirstStation.Station.Name ,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                </DockPanel>
-                <!--  LastStation  -->
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Label
+				</DockPanel>
+				<!--  LastStation  -->
+				<DockPanel HorizontalAlignment="Stretch">
+					<Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         FontSize="8pt">
-                        LastStation :
-                    </Label>
-                    <TextBox
+						LastStation :
+					</Label>
+					<TextBox
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         BorderBrush="Black"
                         BorderThickness="1"
-                        Text="{Binding LastStation.Station.Name , Mode=TwoWay}" />
-                </DockPanel>
-            </StackPanel>
+                        Text="{Binding Line.Stations , Mode=TwoWay}" />
+				</DockPanel>
+			</StackPanel>
 
-            <!--  Stops of line Details  -->
-            <ScrollViewer Grid.Column="1">
-                <ItemsControl
+			<!--  Stops of line Details  -->
+			<ScrollViewer Grid.Column="1">
+				<ItemsControl
                     Margin="10"
                     HorizontalContentAlignment="Stretch"
                     Background="White"
                     ItemsSource="{Binding Line.Stations , Mode=TwoWay}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
                                 BorderBrush="Black"
                                 BorderThickness="1"
                                 Margin="2">
-                                <TextBlock HorizontalAlignment="Stretch" FontSize="8pt"
+								<TextBlock HorizontalAlignment="Stretch" FontSize="8pt"
                                            Margin="10">
                                 <Run
                                     Text="{Binding Station.Name , Mode=TwoWay}" />
@@ -212,15 +221,15 @@
                                     תחנה מס :
                                 </Run>
                                 <Run Text="{Binding Station.Code , Mode=TwoWay}" />
-                               
-                                </TextBlock>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
 
-        </Grid>
-    </StackPanel>
+								</TextBlock>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+
+		</Grid>
+	</StackPanel>
 
 </UserControl>

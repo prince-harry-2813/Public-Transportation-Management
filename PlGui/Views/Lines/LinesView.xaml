@@ -15,6 +15,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:NumberToVisibiltyConverter x:Key="NumberToVisibiltyConverter" />
         <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
+		<converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
     </UserControl.Resources>
 
     <!--  Main Grid  -->
@@ -198,7 +199,9 @@
                         <fa:FontAwesome
                             Grid.Column="0"
                             VerticalAlignment="Center"
-                            Icon="Solid_Bus" />
+                            Icon="Solid_Bus"
+							Foreground= "{Binding Path = IsActive, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToColorConverter}}"
+							/>
 
                         <Label
                             x:Name="LineNumberLabel"

@@ -49,7 +49,7 @@ namespace BL.BLApi
 
         void DeleteStation(BO.Station station);
 
-        BO.Station GetStation(int lineId);
+        BO.Station GetStation(int ID);
 
         IEnumerable<BO.Station> GetAllStations();
 

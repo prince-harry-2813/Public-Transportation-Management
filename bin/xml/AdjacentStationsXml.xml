@@ -8,4 +8,12 @@
     <Time>00:02:48.2360000</Time>
     <isActive>True</isActive>
   </AdjacentStations>
+  <AdjacentStations>
+    <PairId>2</PairId>
+    <Station1>12470</Station1>
+    <Station2>12448</Station2>
+    <Distance>68884.863701347</Distance>
+    <Time>02:29:36.6250000</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
 </ArrayOfAdjacentStations>

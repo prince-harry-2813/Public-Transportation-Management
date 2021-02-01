@@ -13,9 +13,9 @@ namespace PlGui.Converters
             StringBuilder title = new StringBuilder();
 
             int i = 0;
-            foreach (char VARIABLE in param)
+            foreach (char variable in param)
             {
-                if (char.IsUpper(VARIABLE))
+                if (char.IsUpper(variable))
                 {
                     if (i > 0)
                     {
@@ -24,7 +24,7 @@ namespace PlGui.Converters
 
                     i++;
                 }
-                title.Append(VARIABLE);
+                title.Append(variable);
             }
 
             return title.ToString();

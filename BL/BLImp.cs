@@ -76,11 +76,11 @@ namespace BL
         public IEnumerable<Bus> GetAllBuses()
         {
             // TODO :  check if this solution is good enough
-            foreach (var VARIABLE in iDal.GetAllBuses())
+            foreach (var variable in iDal.GetAllBuses())
             {
-                //if (VARIABLE.IsActive)  //deleted because DAL does this check    // Ignore deleted bus  
+                //if (variable.IsActive)  //deleted because DAL does this check    // Ignore deleted bus  
 
-                yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
+                yield return (Bus)variable.CopyPropertiesToNew(typeof(BO.Bus));
 
             }
 
@@ -185,7 +185,7 @@ namespace BL
                 });
                 //check if there is already an adjacent stations
                 var adjSta = iDal.GetAllAdjacentStationsBy(a => a.Station1 == FirstStID && a.Station2 == FirstStID);
-                if (adjSta.Count() == 0)
+                if (adjSta.FirstOrDefault() == null)
                 {
                     iDal.AddAdjacentStations(new DO.AdjacentStations()
                     {
@@ -259,15 +259,18 @@ namespace BL
             }
             var lineToUpdate = new DO.Line()
             {
-                LastStation = line.LastStation.Station.Code,
+                LastStation = iDal.GetAllLinesStationBy(ls=>ls.LineId==line.Id).OrderBy(b=>b.LineStationIndex).Last().StationId,
                 Area = (DO.Area)line.Area,
                 Code = line.Code,
-                FirstStation = line.FirstStation.Station.Code,
+                FirstStation = iDal.GetAllLinesStationBy(ls => ls.LineId == line.Id ).OrderBy(o=>o.LineStationIndex).First().StationId,
                 Id = line.Id,
                 isActive = true
             };
             try
             {
+                iDal.UpdateLineStation(lineToUpdate.Id, lineToUpdate.FirstStation, b => { b.isActive = true; });
+                iDal.UpdateLineStation(lineToUpdate.Id, lineToUpdate.LastStation, b => { b.isActive = true; });
+                
                 iDal.UpdateLine(lineToUpdate);
             }
             catch (Exception e)
@@ -351,18 +354,18 @@ namespace BL
 
         public IEnumerable<Line> GetAllLines()
         {
-            foreach (var VARIABLE in iDal.GetAllLines())
+            foreach (var variable in iDal.GetAllLines())
             {
                 var line = new Line()
                 {
-                    Id = VARIABLE.Id,
-                    Code = VARIABLE.Code,
-                    Area = (Area)VARIABLE.Area,
-                    IsActive = VARIABLE.isActive,
-                    LastStation = GetLineStation(VARIABLE.Id, VARIABLE.LastStation),
-                    FirstStation = GetLineStation(VARIABLE.Id, VARIABLE.FirstStation),
+                    Id = variable.Id,
+                    Code = variable.Code,
+                    Area = (Area)variable.Area,
+                    IsActive = variable.isActive,
+                    LastStation = GetLineStation(variable.Id, variable.LastStation),
+                    FirstStation = GetLineStation(variable.Id, variable.FirstStation),
 
-                    Stations = GetAllLinesStationBy(l => l.IsActive && l.LineId == VARIABLE.Id).OrderBy(l=>l.LineStationIndex),
+                    Stations = GetAllLinesStationBy(l => l.IsActive && l.LineId == variable.Id).OrderBy(l=>l.LineStationIndex),
 
                 };
                 yield return line;
@@ -375,8 +378,9 @@ namespace BL
                    let stations = iDal.GetAllLinesStationBy(ls => ls.LineId == item.Id && ls.isActive)//get the line station 
                    let Bol = new Line()
                    {
-                       LastStation = GetLineStation(item.Id, item.LastStation),
-                       FirstStation = GetLineStation(item.Id, item.FirstStation),
+                       LastStation = GetAllLinesStationBy(i=>i.LineId==item.Id&&i.Station.Code==item.LastStation).GetEnumerator().Current,
+                       FirstStation = GetAllLinesStationBy(i => i.LineId == item.Id && i.Station.Code == item.FirstStation).GetEnumerator().Current,
+
 
                        Stations = from LS in GetAllLinesStationBy(l => l.IsActive && l.LineId == item.Id)
                                   orderby LS.LineStationIndex
@@ -446,18 +450,18 @@ namespace BL
             iDal.DeleteStation(DOstation.Code);
         }
 
-        public Station GetStation(int lineId)
+        public Station GetStation(int Id)
         {
             Station station = new Station();
-            iDal.GetStation(lineId).CopyPropertiesTo(station);
+            iDal.GetStation(Id).CopyPropertiesTo(station);
             return station;
         }
 
         public IEnumerable<Station> GetAllStations()
         {
-            foreach (var VARIABLE in iDal.GetAllStation())
+            foreach (var variable in iDal.GetAllStation())
             {
-                var bostation= (Station)VARIABLE.CopyPropertiesToNew(typeof(Station));
+                var bostation= (Station)variable.CopyPropertiesToNew(typeof(Station));
                 bostation.Lines = GetAllLines().Where(l => l.Stations.Any(s => s.LineId == l.Id && s.Station.Code == bostation.Code));
              
                 yield return bostation;
@@ -682,20 +686,20 @@ namespace BL
                 linesTrips.Sort((trip, lineTrip) => trip.StartAt.CompareTo(lineTrip.StartAt));
 
                 int i = 0;
-                foreach (var VARIABLE in linesTrips)
+                foreach (var variable in linesTrips)
                 {
-                    //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
+                    //Thread.SpinWait((int)variable.Frequency.TotalSeconds);
                     busesOnTrips.Add(new BusOnTrip()
                     {
                         ActualTakeOff = simulationTime,
                         Id = i,
-                        LineId = VARIABLE.LineId,
+                        LineId = variable.LineId,
                         isActive = true,
                         LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum,
                         //NextStationAt = idal.GetAdjacentStations()
                     });
 
-                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0)
+                    if (simulationTime.Subtract(variable.StartAt).TotalSeconds > 0)
                     {
                         busesOnTrips.Add(new BusOnTrip()
                         {
