@@ -1,20 +1,15 @@
 ﻿using BL.BLApi;
+using BL.BO;
 using PlGui.ViewModels.Bus;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
-using BL.BO;
-using PlGui.ViewModels.Bus;
-using PlGui.Views.Bus;
-using Prism.Regions;
 
 namespace PlGui.ViewModels
 {
@@ -27,12 +22,12 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        #region Properties Decleration
+        #region Properties Deceleration
 
         private int simulationHZ = 20;
-        
+
         /// <summary>
-        /// Simulation Dispatchering timer sec = Simulation time / Real sec 
+        /// Simulation dispatching timer sec = Simulation time / Real sec 
         /// </summary>
         public int SimulationHZ
         {
@@ -45,11 +40,11 @@ namespace PlGui.ViewModels
         private ObservableCollection<LineTiming> lineTimings;
 
         /// <summary>
-        /// Simulation Dispatchering timer sec = Simulation time / Real sec 
+        /// Simulation dispatching timer sec = Simulation time / Real sec 
         /// </summary>
         public ObservableCollection<LineTiming> LineTimings
         {
-            get => lineTimings ; set
+            get => lineTimings; set
             {
                 value.OrderBy(timing => timing.ArrivingTime);
                 SetProperty(ref lineTimings, value);
@@ -59,7 +54,7 @@ namespace PlGui.ViewModels
 
         private bool isSimulationRuning;
         /// <summary>
-        /// Determinds wether simulation started runing
+        /// Determines whether simulation started to run
         /// </summary>
         public bool IsSimulationRuning
         {
@@ -73,7 +68,7 @@ namespace PlGui.ViewModels
 
         private bool isSimulationNotRuning = true;
         /// <summary>
-        /// Determinds wether simulation started runing
+        /// Determines whether simulation started to run
         /// </summary>
         public bool IsSimulationNotRuning
         {
@@ -98,7 +93,9 @@ namespace PlGui.ViewModels
         }
 
         private ObservableCollection<Station> stationCollection;
-        public ObservableCollection<Station> StationCollection { get=> stationCollection;
+        public ObservableCollection<Station> StationCollection
+        {
+            get => stationCollection;
             set
             {
                 SetProperty(ref stationCollection, value);
@@ -151,7 +148,7 @@ namespace PlGui.ViewModels
             {
                 foreach (var item in Bl.GetAllStations())
                 {
-                    getStationsWorker.ReportProgress(0 , item);
+                    getStationsWorker.ReportProgress(0, item);
                 }
             };
             getStationsWorker.WorkerReportsProgress = true;
@@ -215,7 +212,7 @@ namespace PlGui.ViewModels
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                         Bl.StartSimulator(SimulationStartTime , SimulationHZ , span => SimulationStartTime = span);
+                    Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
                 };
 
                 IsSimulationRuning = true;
@@ -227,7 +224,7 @@ namespace PlGui.ViewModels
         #region Public Methoed
 
         public void ComboBoxSelectionChanged()
-        { 
+        {
             //Bl.SetStationPanel(Station.Code , );
             var param = new NavigationParameters()
             {

@@ -15,7 +15,7 @@ namespace PlGui.ViewModels.Lines
     public class LineDetailsViewModel : BindableBase, INavigationAware
     {
 
-        #region Properties Declaraion
+        #region Properties Declaration
 
         private BL.BO.Line line = new Line();
         /// <summary>
@@ -33,14 +33,42 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
-        private Area enumsArea= new Area();
-        public Area EnumsArea
+        private Station stationToAdd;
+        public Station StationToAdd
         {
-            get { return enumsArea; }
-            set {  SetProperty(ref enumsArea, value); }
+            get { return stationToAdd; }
+            set { SetProperty(ref stationToAdd, value); }
         }
 
-        public IEnumerable<Area> Areas= Enum.GetNames(typeof(Area)).Cast<Area>();
+        private List<Station> stations;
+        public List<Station> Stations
+        {
+            get { return stations; }
+            set { SetProperty(ref stations, value); }
+        }
+
+
+        private LineStation lineStToAdj;
+        public LineStation LineStToAdj
+        {
+            get { return lineStToAdj; }
+            set { SetProperty(ref lineStToAdj, value); }
+        }
+
+        //private Area enumsArea= new Area();
+        //public Area EnumsArea
+        //{
+        //    get { return enumsArea; }
+        //    set {  SetProperty(ref enumsArea, value); }
+        //}
+
+        //public ObservableCollection<string> Areas = new ObservableCollection<string>(){
+        // "General",
+        //"South",
+        //"Jerusalem",
+        //"Center",
+        //"North"
+        //};
 
         private bool isInEditMode;
         /// <summary>
@@ -80,7 +108,7 @@ namespace PlGui.ViewModels.Lines
         #region Command deceleration
 
         public ICommand BusDetailsButtonCommand { get; set; }
-
+        public ICommand AddLineStationButtonCommand { get; set; }
         #endregion
 
         public LineDetailsViewModel(IRegionManager manager, IBL bl)
@@ -95,7 +123,7 @@ namespace PlGui.ViewModels.Lines
             #region Command Implementation
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
-
+            AddLineStationButtonCommand = new DelegateCommand<string>(AddLineStationButton);
             #endregion
 
             #region Properties Implementation
@@ -127,7 +155,7 @@ namespace PlGui.ViewModels.Lines
                     }
                     try
                     {
-                        Line.Area = EnumsArea;
+                      //  Line.Area = EnumsArea;
                         Bl.UpdateLine(Line);
                         break;
                     }
@@ -148,6 +176,10 @@ namespace PlGui.ViewModels.Lines
                         break;
                     }
             }
+        }
+
+        private void AddLineStationButton(string commandParameter) {
+        
         }
 
         #endregion

@@ -16,6 +16,7 @@
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+		
     </Window.Resources>
 
 

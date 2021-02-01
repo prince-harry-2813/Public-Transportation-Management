@@ -104,7 +104,7 @@ namespace DalXml
                 if (!bool.Parse(adjElem.Element("isActive").Value))
                     adjElem.Element("isActive").Value = adjacentStations.isActive.ToString();
                 else
-                    throw new DuplicateObjExeption(adjacentStations.PairId, $"Adjacent Stations already exist in system st'1:{adjacentStations.Station1} - st'2 {adjacentStations.Station2}");
+                    return;
             }
             else
             {
