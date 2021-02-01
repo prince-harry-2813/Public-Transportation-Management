@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dotNet5781_01_6671_6650
 {
-    
+
     class Program
     {
         /// <summary>
@@ -40,7 +37,7 @@ namespace dotNet5781_01_6671_6650
         {
 
             Bus bus = new Bus(licensNumber, firstRegistration, fuel, maintenence, totalKM);
-            if (BusList.Exists((b) => b.LicensNmuber == bus.LicensNmuber)||licensNumber=="")
+            if (BusList.Exists((b) => b.LicensNmuber == bus.LicensNmuber) || licensNumber == "")
                 return;
             BusList.Add(bus);
         }
@@ -67,7 +64,7 @@ namespace dotNet5781_01_6671_6650
             else
                 return;
         }
-        
+
 
         /// <summary>
         /// Method to handle with refuel and maintenance request.
@@ -85,18 +82,20 @@ namespace dotNet5781_01_6671_6650
                 Console.WriteLine("Choose 1 for refuel or 2 for main maintenance");
                 switch (Console.ReadLine())
                 {
-                    case "1" :bus.ReFuelBus();
+                    case "1":
+                        bus.ReFuelBus();
                         Console.WriteLine("Refuel complete");
                         break;
-                    case "2": bus.MaintaineBus();
+                    case "2":
+                        bus.MaintaineBus();
                         Console.WriteLine("maintenance complete");
                         break;
-                     default:
+                    default:
                         Console.WriteLine("ERROR");
                         break;
                 }
             }
-                
+
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace dotNet5781_01_6671_6650
                         Flag = false;
                         break;
                     default:
-                        
+
                         Console.WriteLine("Wrong input, please try again");
 
                         break;

@@ -44,9 +44,9 @@ namespace dotNet5781_02_6671_6650
         /// <param name="_lat"></param>
         /// <param name="_long"></param>
         /// <param name="_adress"></param>
-        public BusStation(int _code, double _lat, double _long, string _adress = "") 
+        public BusStation(int _code, double _lat, double _long, string _adress = "")
         {
-            
+
             SetStationCode(_code);
             SetLatitude(_lat);
             SetLongitude(_long);
@@ -95,7 +95,7 @@ namespace dotNet5781_02_6671_6650
         /// The function takes the minimum or maximum value respectively in case latitude is out of range 
         /// </summary>
         /// <param name="longitude">[34.3, 35.5] </param>
-        public void SetLongitude(double? longitude=null)
+        public void SetLongitude(double? longitude = null)
         {
             if (longitude != null)
             {

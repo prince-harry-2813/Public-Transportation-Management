@@ -1,0 +1,159 @@
+﻿<UserControl
+    x:Class="PlGui.Views.Lines.AddLine"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PlGui.Views.Lines"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding EneterKeyCommand}"/>
+    </UserControl.InputBindings>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" 
+                              MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region First Station Details-->
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="First Station"
+            FontSize="14pt" />
+
+        <ComboBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="10"
+            Padding="1"
+            VerticalAlignment="Center"
+            FontSize="12pt"
+            FontFamily="Consulas"
+            ItemsSource="{Binding StationsList}"
+            SelectedItem="{Binding FirstStation}"
+            Text="{Binding FirstStation.Station.Name, UpdateSourceTrigger=PropertyChanged}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                            FontWeight="SemiBold"
+                            FontSize="12pt"
+                            Text="{Binding Name }">
+                            <Run
+                                Text=" ">
+                            </Run>
+                            <Run
+                            Text="{Binding Code}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <!--#endregion-->
+
+        <!--#region Last Station Details-->
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Last Station"
+            FontSize="14pt" />
+
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="10"
+            Padding="1"
+            VerticalAlignment="Center"
+            FontSize="12pt"
+            FontFamily="Consulas"
+            ItemsSource="{Binding StationsList}"
+            SelectedItem="{Binding LastStation}"
+            Text="{Binding LastStation.Station.Name, UpdateSourceTrigger=PropertyChanged}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        FontSize="12pt"
+                        Text="{Binding Name}">
+                        <Run
+                            Text=" ">
+                                
+                        </Run>
+                        <Run
+                            Text="{Binding Code}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <!--#endregion-->
+
+        <!--#region ID Details-->
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="10,10.333,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="ID"
+            FontSize="14pt" />
+
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="10"
+            Padding="1"
+            VerticalAlignment="Center"
+            FontSize="12pt"
+			IsEnabled="False"
+            Text="{Binding Line.Id, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" />
+        <!--#endregion-->
+
+        <!--#region Code Details-->
+        <Label
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Code"
+            FontSize="14pt" />
+
+        <TextBox
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="10"
+            Padding="1"
+            VerticalAlignment="Center"
+            FontSize="12pt"
+            Text="{Binding Line.Code, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!--#endregion-->
+
+        <Button Grid.Row="4"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                Margin="10"
+                Content="Add"
+                Command="{Binding AddLineButtonCommand}"></Button>
+
+
+    </Grid>
+</UserControl>

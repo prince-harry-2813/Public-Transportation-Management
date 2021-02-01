@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassLibrary1
+namespace BL.BO
 {
-    public class Class1
+    class LinesOfStation
     {
+        int  StationIndex {get;set;}
+        public IEnumerable<Line> Lines { get; set; }
+
     }
 }

@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlGui", "PlGui\PlGui.csproj", "{00193676-635A-46AC-9E1E-EBF91AD4DAB7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{0D176B02-BE17-4A5A-8EFA-25A3A62FD19D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0FC4F83-7533-4920-980C-41F2993DBB7F} = {F0FC4F83-7533-4920-980C-41F2993DBB7F}
+		{E33B1EA0-1E83-49FF-B644-F28FE19B6DFF} = {E33B1EA0-1E83-49FF-B644-F28FE19B6DFF}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotNet5781_Project", "dotNet5781_Project", "{1CCDE1E6-D72B-49FE-A3EF-09FDD3F98EE9}"
 EndProject
@@ -26,6 +30,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS", "DS\DS.csproj", "{A1EA6B85-338F-46D0-8994-B820DB5AC3F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{E33B1EA0-1E83-49FF-B644-F28FE19B6DFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3A169D5-2B94-4C4C-978B-052F46DF05C7}"
+	ProjectSection(SolutionItems) = preProject
+		bin\config.xml = bin\config.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

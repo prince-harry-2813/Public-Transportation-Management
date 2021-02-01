@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -56,6 +56,93 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\EditSubmitIconConverter.cs" />
+    <Compile Include="Converters\NumberToVisibiltyConverter.cs" />
+    <Compile Include="Converters\ParameterToTitleConverter.cs" />
+    <Compile Include="Converters\StatusToColorConverter.cs" />
+    <Compile Include="StaticClasses\StringNames.cs" />
+    <Compile Include="ViewModels\Bus\BusDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Lines\AddLineViewModel.cs" />
+    <Compile Include="ViewModels\Lines\LineDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Stations\AddBusStopViewModel.cs" />
+    <Compile Include="ViewModels\Stations\BusStopDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Stations\BusStopsViewViewModel.cs" />
+    <Compile Include="ViewModels\Bus\AddBusViewModel.cs" />
+    <Compile Include="ViewModels\Bus\BusesViewViewModel.cs" />
+    <Compile Include="ViewModels\Lines\LinesViewViewModel.cs" />
+    <Compile Include="ViewModels\UserSimulationViewModel.cs" />
+    <Compile Include="Views\Bus\BusDetails.xaml.cs">
+      <DependentUpon>BusDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lines\AddLine.xaml.cs">
+      <DependentUpon>AddLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lines\LineDetails.xaml.cs">
+      <DependentUpon>LineDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lines\LinesView.xaml.cs">
+      <DependentUpon>LinesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stations\AddBusStop.xaml.cs">
+      <DependentUpon>AddBusStop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stations\BusStopDetails.xaml.cs">
+      <DependentUpon>BusStopDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stations\BusStopsView.xaml.cs">
+      <DependentUpon>BusStopsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Bus\AddBus.xaml.cs">
+      <DependentUpon>AddBus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Bus\BusesView.xaml.cs">
+      <DependentUpon>BusesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManagerLogin.xaml.cs">
+      <DependentUpon>ManagerLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserSimulation.xaml.cs">
+      <DependentUpon>UserSimulation.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Bus\BusDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lines\AddLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lines\LineDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lines\LinesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stations\AddBusStop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stations\BusStopDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stations\BusStopsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Bus\AddBus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Bus\BusesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -64,11 +151,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ManagerLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserSimulation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,13 +194,31 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome5">
+      <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>8.0.0.1909</Version>
+    </PackageReference>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
     <PackageReference Include="Prism.Wpf">
       <Version>8.0.0.1909</Version>
     </PackageReference>
+    <PackageReference Include="QuickConverter">
+      <Version>1.2.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{0d176b02-be17-4a5a-8efa-25a3a62fd19d}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recources\AddBusBG.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

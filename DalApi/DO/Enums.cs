@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DO
+﻿namespace DO
 {
 
-    
+
     /// <summary>
     /// Current status of bus vehicle
     /// </summary>
-    public enum StatusEnum
+    public enum BusStatusEnum
     {
         Ok = 1,
         In_Ride,
-        In_Refuling,
+        In_Refueling,
         In_Maintainceing,
         Not_Available
     }

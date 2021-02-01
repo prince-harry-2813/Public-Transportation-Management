@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DO
 {
@@ -16,7 +12,9 @@ namespace DO
         public DateTime RegisDate { get; set; }
         public int TotalKM { get; set; }
         public int FuelStatus { get; set; }
-        public StatusEnum Status { get; set; }
-
+        public BusStatusEnum Status { get; set; }
+        public bool isActive { get; set; } = true;
+        public uint KmOnLastTreatment { get; set; }
+        public DateTime LastTreatmentDate { get; set; }
     }
 }

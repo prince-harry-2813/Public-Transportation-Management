@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DALConfig.cs" />
     <Compile Include="DalFactory.cs" />
     <Compile Include="DO\AdjacentStations.cs" />
     <Compile Include="DO\Bus.cs" />
     <Compile Include="DO\BusOnTrip.cs" />
     <Compile Include="DO\Enums.cs" />
+    <Compile Include="DO\Exceptions.cs" />
     <Compile Include="DO\Line.cs" />
     <Compile Include="DO\LineStation.cs" />
     <Compile Include="DO\LineTrip.cs" />

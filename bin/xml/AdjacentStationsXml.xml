@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAdjacentStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AdjacentStations>
+    <PairId>1</PairId>
+    <Station1>1366</Station1>
+    <Station2>1367</Station2>
+    <Distance>375.17090436513</Distance>
+    <Time>00:02:48.2360000</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+</ArrayOfAdjacentStations>

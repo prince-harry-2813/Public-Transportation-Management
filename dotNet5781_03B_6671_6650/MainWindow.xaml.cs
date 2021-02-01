@@ -3,22 +3,19 @@ using dotNet5781_03B_6671_6650.Converters;
 using dotNet5781_03B_6671_6650.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace dotNet5781_03B_6671_6650
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window 
+    public partial class MainWindow : Window
     {
-        public  ObservableCollection<Bus> BusesList = BusCarsCollection.Instance.BusesCollection;
+        public ObservableCollection<Bus> BusesList = BusCarsCollection.Instance.BusesCollection;
 
         public MainWindow()
         {
@@ -30,12 +27,12 @@ namespace dotNet5781_03B_6671_6650
                 InsertBus(z.ToString(), DateTime.Now, 1200);
             }
             BusesList.Add(new Bus("1234567", new DateTime(2011, 02, 03), new DateTime(2009, 02, 03), 1200, 0, 0, StatusEnum.Not_Available));
-            BusesList.Add(new Bus("1234568", new DateTime(2011, 02, 03), DateTime.Now, 1200,0, 19900, StatusEnum.Ok));
+            BusesList.Add(new Bus("1234568", new DateTime(2011, 02, 03), DateTime.Now, 1200, 0, 19900, StatusEnum.Ok));
             BusesList.Add(new Bus("1234569", new DateTime(2011, 02, 03), DateTime.Now, 90, 0, 0, StatusEnum.Ok));
-           
+
             LbBuses.DataContext = BusesList;
             LbBuses.SelectedItem = BusesList;
-            
+
         }
 
         #region Initialization Methods

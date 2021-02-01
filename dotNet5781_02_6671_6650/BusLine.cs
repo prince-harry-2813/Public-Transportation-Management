@@ -30,7 +30,7 @@ namespace dotNet5781_02_6671_6650
             LineKey = lineKey;
             FirstStation = new BusStop(firstStop);
             LastStaion = new BusStop(lastStop);
-            
+
         }
         /// <summary>
         /// Ctor with only line key argument, for initialize example bus line in main program.
@@ -59,7 +59,8 @@ namespace dotNet5781_02_6671_6650
         public int LineKey
         {
             get => linekey;
-            set {
+            set
+            {
                 if (value < 1 && value > 999)
                     throw new ArgumentOutOfRangeException("Line code must be positive and less than four digits");
                 linekey = value;
@@ -79,7 +80,7 @@ namespace dotNet5781_02_6671_6650
         /// <summary>
         /// Enumeration of services area
         /// </summary>
-        public Area Area { get; set ; } = Area.General;
+        public Area Area { get; set; } = Area.General;
 
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace dotNet5781_02_6671_6650
             LineStations.Remove(LineStations.FirstOrDefault(station => station.StationCode == stop));
             UpdatingDistance();
         }
-        
+
         /// <summary>
         /// check if the stop in the route of this line
         /// </summary>
@@ -144,7 +145,7 @@ namespace dotNet5781_02_6671_6650
         {
             return LineStations.Any(BusStop => BusStop.StationCode == stationCode);
         }
-        
+
         /// <summary>
         /// calculate the distance between tow stations (Not necessarily close)
         /// </summary>
@@ -161,7 +162,7 @@ namespace dotNet5781_02_6671_6650
             }
             return distance;
         }
-        
+
         /// <summary>
         /// Calculate time of traveling from station to other(Not necessarily close)
         /// Calculate for Half of the Average driving range PH in urban area - Traffic lights etc. 
@@ -180,7 +181,7 @@ namespace dotNet5781_02_6671_6650
 
             return time;
         }
-        
+
         /// <summary>
         /// Return new line bus that have some of the current route stops
         /// </summary>
@@ -214,7 +215,7 @@ namespace dotNet5781_02_6671_6650
             return $"Line number :{LineKey}, activity Area: {Area:g}, \n list of station numbers:\n {stops}";
 
         }
-        
+
         /// <summary>
         /// implementation of comparable to compare time travel of buses from current stop to traveler destination 
         /// </summary>

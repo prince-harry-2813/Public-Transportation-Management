@@ -28,7 +28,7 @@ namespace dotNet5781_02_6671_6650
             }
         }
 
-      public   List<BusLine> busCollection = new List<BusLine>();
+        public List<BusLine> busCollection = new List<BusLine>();
         /// <summary>
         /// implement of IEnumerable on line collection class, return line that store in the internal list of line
         /// </summary>
@@ -125,9 +125,9 @@ namespace dotNet5781_02_6671_6650
                         line.Add(item);
                     }
                 };
-                
+
                 if (line.Count >= 1)/// to do
-                
+
                 {
                     return line.First<BusLine>();
                 }

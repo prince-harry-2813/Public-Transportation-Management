@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DO
+﻿namespace DO
 {
     /// <summary>
     /// Bus Station (can have several lines)
@@ -15,6 +9,7 @@ namespace DO
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-    
+        public bool isActive { get; set; }
+
     }
 }

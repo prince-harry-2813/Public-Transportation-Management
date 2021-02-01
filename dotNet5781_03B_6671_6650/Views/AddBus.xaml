@@ -96,6 +96,7 @@
                             <GradientStop Offset="0.375" Color="#FF718597" />
                             <GradientStop Offset="1" Color="#FF2272AB" />
                         </LinearGradientBrush>
+
                     </TextBox.SelectionTextBrush>
                     <TextBox.BorderBrush>
                         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">

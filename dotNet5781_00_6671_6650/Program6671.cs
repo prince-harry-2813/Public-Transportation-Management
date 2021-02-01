@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dotNet5781_00_6671_6650
 {
@@ -22,6 +18,6 @@ namespace dotNet5781_00_6671_6650
             var name = Console.ReadLine();
             Console.WriteLine("{0}, welcome to my first console application", name);
         }
-        static partial void Welcome6650();  
+        static partial void Welcome6650();
     }
 }

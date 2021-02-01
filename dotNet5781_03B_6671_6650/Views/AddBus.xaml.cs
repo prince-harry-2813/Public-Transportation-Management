@@ -45,22 +45,25 @@ namespace dotNet5781_03B_6671_6650.Views
         /// <param name="e"></param>
         private void checkLicense(object sender, RoutedEventArgs e)
         {
-            
+            if (!new Regex("^[0-9]*$").IsMatch(licenseNumBox.Text))
+            {
+                licenseNumBox.Text = String.Empty;
+            }
             if (licenseNumBox.Text.Length < 7 && !isClosed
                 //&& !licenseNumBox.Focusable
                 )
             {
 
-                licenseNumBox.Text = "";
+                licenseNumBox.Text = String.Empty;
                 MessageBox.Show("Please enter valid number, must contain at least 7 digits");
                 licenseNumBox.Focus();
             }
-            else if (licenseNumBox.Text.Length == 7) 
+            else if (licenseNumBox.Text.Length == 7)
             {
                 RegistrationDate.DisplayDateEnd = new DateTime(2017, 12, 31);
                 RegistrationDate.DisplayDateStart = new DateTime(2000, 1, 1);
             }
-            else if(licenseNumBox.Text.Length == 8)
+            else if (licenseNumBox.Text.Length == 8)
             {
                 RegistrationDate.DisplayDateStart = new DateTime(2018, 01, 01);
                 RegistrationDate.DisplayDateEnd = DateTime.Now;

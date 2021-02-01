@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DO
+﻿namespace DO
 {
     /// <summary>
     /// Line service
@@ -16,5 +10,7 @@ namespace DO
         public Area Area { get; set; }
         public int FirstStation { get; set; }
         public int LastStation { get; set; }
+        public bool isActive { get; set; }
+        
     }
 }
