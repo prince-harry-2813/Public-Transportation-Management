@@ -285,14 +285,9 @@ namespace BL
             {
                 throw new NullReferenceException("Line to delete is Null");
             }
-            DO.Line lineToDelete = new DO.Line()
+            DO.Line lineToDelete = iDal.GetLine(line.Id);
             {
-                LastStation = line.LastStation.Station.Code,
-                FirstStation = line.FirstStation.Station.Code,
-                isActive = line.IsActive,
-                Id = line.Id,
-                Code = line.Code,
-                Area = (DO.Area)line.Area
+             
             };
             try
             {
