@@ -3,18 +3,13 @@ using BL.BO;
 using DalApi;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Threading;
 
 
 namespace BL
 {
     internal class BLImp : IBL
     {
-
         private static IDAL iDal = DalApi.DalFactory.GetIDAL();
 
         #region IBL Bus Implementation
@@ -398,7 +393,7 @@ namespace BL
 
         #endregion
 
-         #region Station Implementation
+        #region Station Implementation
         public void AddStation(Station station)
         {
             station.isActive = true;
@@ -623,6 +618,29 @@ namespace BL
 
         #endregion
 
+
+
+
+        #region Lines of Station
+        /// <summary>
+        /// return list of lines that have stop in some stations.
+        /// TODO also return info for timing or another way....
+        /// </summary>
+        /// <param name="stationCode"></param>
+        /// <returns></returns>
+        public LinesOfStation getLinesOfStation(int stationCode)
+        {
+            LinesOfStation listOfLines = new LinesOfStation();
+
+            var a = GetAllLines().Distinct();
+
+            listOfLines.Lines = a.Where(line => line.Stations.Any(station => station.Station.Code == stationCode));
+
+            return listOfLines;
+        }
+
+
+        #endregion
         #region Ride Operation
 
         public void StopSimulator()
@@ -643,45 +661,20 @@ namespace BL
         }
         #endregion
 
-
-        #region Lines of Station
-        /// <summary>
-        /// return list of lines that have stop in some stations.
-        /// TODO also return info for timing or another way....
-        /// </summary>
-        /// <param name="stationCode"></param>
-        /// <returns></returns>
-        public IEnumerable<LinesOfStation> getLinesOfStation(int stationCode)
-        {
-
-            List<Line> listOfLines = new List<Line>();
-
-            listOfLines.AddRange(
-            from ls in iDal.GetAllLinesStation()
-            let line = GetLine(ls.LineId)
-            where ls.StationId == stationCode
-            select line);
-
-            return (IEnumerable<LinesOfStation>)listOfLines;
-        }
-
-
-        #endregion
-
         void IBL.StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
         {
             throw new NotImplementedException();
         }
 
-        
+
         #region User Simulation
 
 
         #endregion
 
     }
-  
-    
+
+
     internal static class Utilities
     {
         #region Utilities

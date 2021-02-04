@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BL.BO
 {
-    class LinesOfStation
+   public class LinesOfStation
     {
-        int  StationIndex {get;set;}
+       public int  StationCode {get;set;}
         public IEnumerable<Line> Lines { get; set; }
-
     }
 }

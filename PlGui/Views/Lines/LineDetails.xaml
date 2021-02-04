@@ -16,7 +16,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <StackPanel
-        Margin="10"
+        Margin="20"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Center">
         <WrapPanel Margin="10" HorizontalAlignment="Center">
@@ -26,25 +26,23 @@
             </Label>
         </WrapPanel>
 
-        <Grid Margin="10">
-            
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
 
-               <!--Main Buttons Grid-->
+            <!--  Main Buttons Grid  -->
             <DockPanel HorizontalAlignment="Left">
 
                 <!--  Edit Bus Button  -->
-                    <StackPanel HorizontalAlignment="Center" Visibility="Visible">
+                <StackPanel HorizontalAlignment="Center" Visibility="Visible">
                     <Button
                         Name="TreatmentButton"
                         Height="30pt"
@@ -103,26 +101,30 @@
                         Delete
                     </Label>
                 </StackPanel>
+
+
+                <CheckBox
+                    Margin="40,0"
+                    VerticalAlignment="Center"
+                    Content="IsActive"
+                    IsChecked="{Binding Line.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
             </DockPanel>
 
-               <!--Stations List controlers--> 
-            <DockPanel 
+            <!--  Stations List controlers  -->
+            <DockPanel
                 Grid.Row="0"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center">
 
-                <CheckBox
-                    Margin="20"
+
+                <TextBlock
+                    Margin="5"
                     VerticalAlignment="Center"
-                    Content="IsActive"
-                    IsChecked="{Binding Line.IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-
-                <TextBlock VerticalAlignment="Center"
-                           FontSize="10pt"
-                           FontStretch="Medium"
-                           FontWeight="SemiBold">
+                    FontSize="10pt"
+                    FontStretch="Medium"
+                    FontWeight="SemiBold">
                     <Run Text="Choose station index : " />
                     <Run Text="{Binding MaxIndex}" />
                 </TextBlock>
@@ -139,8 +141,10 @@
 
                 <!--  All station available  -->
                 <ComboBox
-                    Margin="171,0,0,0"
+                    Margin="5"
                     HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="10pt"
                     ItemsSource="{Binding Stations}"
                     SelectedItem="{Binding StationToAdd, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBox.ItemTemplate>
@@ -160,11 +164,11 @@
 
                 <!--  Choose station Button  -->
                 <StackPanel
-                    Margin="20,0,0,0"
+                    Margin="5"
                     HorizontalAlignment="Center"
-                    IsEnabled="{Binding CanAddStation}"
-                    RenderTransformOrigin="0.822,0.555"
-                    Visibility="Visible">
+                    VerticalAlignment="Center"
+                    IsEnabled="{Binding CanAddStation}">
+
                     <Button
                         x:Name="AddStation"
                         Width="40"
@@ -194,19 +198,17 @@
                 </StackPanel>
             </DockPanel>
 
-      
-       
 
-            <!-- Line Properties button-->
+
+
+            <!--  Line Properties button  -->
             <StackPanel
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="10"
-                Background="White"
-               >
+                Background="White">
                 <!--  ID  -->
-                <DockPanel HorizontalAlignment="Stretch"
-                           IsEnabled="{Binding IsInEditMode}"  >
+                <DockPanel HorizontalAlignment="Stretch" IsEnabled="{Binding IsInEditMode}">
                     <Label
                         Margin="10"
                         HorizontalAlignment="Left"
@@ -224,8 +226,7 @@
                         Text="{Binding Line.Id, Mode=TwoWay}" />
                 </DockPanel>
                 <!--  Code  -->
-                <DockPanel HorizontalAlignment="Stretch"
-                           IsEnabled="{Binding IsInEditMode}">
+                <DockPanel HorizontalAlignment="Stretch" IsEnabled="{Binding IsInEditMode}">
                     <Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
@@ -242,8 +243,7 @@
                         Text="{Binding Line.Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
                 <!--  Area  -->
-                <DockPanel HorizontalAlignment="Stretch"
-                         >
+                <DockPanel HorizontalAlignment="Stretch">
                     <Label
                         Margin="10"
                         HorizontalAlignment="Stretch"
@@ -252,7 +252,7 @@
                         Area :
                     </Label>
                     <TextBox
-                        Width="221"
+                        MinWidth="180"
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
@@ -262,23 +262,24 @@
                         Text="{Binding Line.Area, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                     <ComboBox
-                      VerticalAlignment="Center"
-                        ItemsSource="{Binding Areas}"
+                        Margin="10"
+                        VerticalAlignment="Center"
                         IsEnabled="{Binding IsInEditMode}"
-                        SelectedItem="{Binding AreaString}" >
+                        ItemsSource="{Binding Areas}"
+                        SelectedItem="{Binding AreaString}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <Label 
-                                    Content="{Binding }"
+                                <Label
+                                    Content="{Binding}"
+                                    FontFamily="Consulas"
                                     FontSize="10pt"
                                     FontWeight="Bold"
-                                    FontFamily="Consulas"
-                                    Foreground="DarkGreen"/>
+                                    Foreground="DarkGreen" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-            
+
             </StackPanel>
 
             <!--  Stops of line Details  -->
@@ -286,31 +287,27 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="10"
+                HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 Background="White"
-                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Line.Stations, Mode=TwoWay}"
                 ScrollViewer.CanContentScroll="True"
                 ScrollViewer.VerticalScrollBarVisibility="Visible"
-                ItemsSource="{Binding Line.Stations, Mode=TwoWay}"
                 SelectedItem="{Binding LineStToAdy}"
                 Selector.IsSelected="True">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
-                            Margin="2"
-                            HorizontalAlignment="Stretch"
+                            Margin="5"
                             VerticalAlignment="Center"
                             BorderBrush="Black"
                             BorderThickness="1">
                             <TextBlock
                                 Margin="10"
-                                HorizontalAlignment="Stretch"
+                                Padding="2"
                                 FontSize="8pt">
                                 <Run Text="{Binding Station.Name, Mode=TwoWay}" />
-                                <Run
-                                    Text="  תחנה מס :  ">
-                                   
-                                </Run>
+                                <Run Text="  תחנה מס :  " />
                                 <Run Text="{Binding Station.Code, Mode=TwoWay}" />
 
                             </TextBlock>

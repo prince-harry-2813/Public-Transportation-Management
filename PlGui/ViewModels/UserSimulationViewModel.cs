@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -92,6 +93,17 @@ namespace PlGui.ViewModels
             }
         }
 
+        private ObservableCollection<Line> linesOfStation = new ObservableCollection<Line>();
+
+        public ObservableCollection<Line> LinesOfStation
+        {
+            get => linesOfStation;
+            set
+            {
+                SetProperty(ref linesOfStation, value);
+            }
+        }
+
         private ObservableCollection<Station> stationCollection;
         public ObservableCollection<Station> StationCollection
         {
@@ -102,13 +114,22 @@ namespace PlGui.ViewModels
             }
         }
 
-        private Station station;
+        private Station station = new Station();
 
         public Station Station
         {
             get => station;
             set
             {
+                if (value != null)
+                {
+                    var a = Bl?.getLinesOfStation(value.Code) ?? null; 
+                    OfStation.Lines = a.Lines;
+                    foreach (var VARIABLE in OfStation.Lines)
+                    {
+                        LinesOfStation.Add(VARIABLE);
+                    }
+                }
                 SetProperty(ref station, value);
             }
         }
@@ -120,6 +141,7 @@ namespace PlGui.ViewModels
         private BackgroundWorker clockWorker;
         private BackgroundWorker getStationsWorker;
 
+        private LinesOfStation OfStation = new LinesOfStation();
 
         #endregion
 
