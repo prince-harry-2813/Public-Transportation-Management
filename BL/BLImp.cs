@@ -399,7 +399,7 @@ namespace BL
 
         #endregion
 
-        #region Station Implementation
+         #region Station Implementation
         public void AddStation(Station station)
         {
             station.isActive = true;
@@ -469,8 +469,6 @@ namespace BL
             throw new NotImplementedException();
         }
         #endregion
-
-        
 
         #region Line Station
 
@@ -557,7 +555,7 @@ namespace BL
 
         public void StopSimulator()
         {
-            Cancel = true;
+            // Cancel = true;
         }
 
         private RideOperation rideOperation = RideOperation.Instance;
@@ -571,166 +569,20 @@ namespace BL
 
             rideOperation.StartSimulation();
         }
+
+        void IBL.StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region User Simulation
 
-        event Action<TimeSpan> clockObserver = null;
-        private DispatcherTimer simulationTimer = new DispatcherTimer();
-        internal volatile bool Cancel;
 
-        /// <summary>
-        /// Start simulator stop watch and update it according 
-        /// </summary>
-        /// <param name="startTime">TIME TO START  </param>
-        /// <param name="Rate"> Hz per minute</param>
-        /// <param name="updateTime">Action</param>
-        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
-        {
-            Cancel = false;
-            clockObserver = updateTime;
-            TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
-                TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes
-                , TimeSpan.FromSeconds(startTime.TotalSeconds).Seconds
-                , TimeSpan.FromSeconds(startTime.TotalSeconds).Milliseconds);
-
-            simulationTimer.Interval = new TimeSpan(0, 0, 0, 0, (1000 / (rate * (10 / 6))));
-            //rideOperation.interval = simulationTimer.Interval.Milliseconds;
-            simulationTimer.Tick += (sender, args) =>
-            {
-                if (Cancel)
-                {
-                    clockObserver = null;
-                    simulationTimer.Stop();
-                    return;
-                }
-
-                simulatorTime += TimeSpan.FromSeconds(1);
-                updateTime.Invoke(simulatorTime);
-                //rideOperation.UpdateSimualtionTime(simulatorTime);
-                Debug.Print(simulatorTime.ToString());
-            };
-            simulationTimer.Start();
-
-        }
         #endregion
 
     }
-    public class RideOperation
-    {
-
-        private static RideOperation instance;
-
-        public static RideOperation Instance
-        {
-            get => instance;
-            set
-            {
-                if (Instance == null)
-                {
-                    value = new RideOperation();
-                }
-                instance = value;
-            }
-        }
-        public int interval;
-        private event EventHandler<LineTiming> updatebusPrivate;
-        private int staionID;
-        List<LineTrip> linesTrips = new List<LineTrip>();
-        private IDAL idal;
-        private IBL bl;
-        private BackgroundWorker getLineStaionworker = new BackgroundWorker();
-        private TimeSpan simulationTime;
-        List<BusOnTrip> busesOnTrips = new List<BusOnTrip>();
-
-        public RideOperation()
-        {
-            idal = DalFactory.GetIDAL();
-            this.bl = bl;
-
-            if (getLineStaionworker.IsBusy)
-            {
-                getLineStaionworker.CancelAsync();
-            }
-
-            #region Rides Operation Worker Initialization 
-            getLineStaionworker.WorkerReportsProgress = true;
-            getLineStaionworker.WorkerReportsProgress = true;
-            getLineStaionworker.DoWork += (sender, args) =>
-            {
-                int i = 0;
-                foreach (var item in idal.GetAllLinesTripBy(trip => trip.isActive))
-                {
-                    if (getLineStaionworker.CancellationPending)
-                        break;
-
-                    getLineStaionworker.ReportProgress(i, item.CopyPropertiesToNew(typeof(LineTrip)));
-                    i++;
-                    if (i == 99)
-                        i = 90;
-                }
-            };
-            getLineStaionworker.ProgressChanged += (sender, args) =>
-            {
-                linesTrips.Add((LineTrip)args.UserState);
-            };
-            #endregion
-
-            getLineStaionworker.RunWorkerCompleted += (sender, args) =>
-            {
-                linesTrips.Sort((trip, lineTrip) => trip.StartAt.CompareTo(lineTrip.StartAt));
-
-                int i = 0;
-                foreach (var VARIABLE in linesTrips)
-                {
-                    //Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
-                    busesOnTrips.Add(new BusOnTrip()
-                    {
-                        ActualTakeOff = simulationTime,
-                        Id = i,
-                        LineId = VARIABLE.LineId,
-                        isActive = true,
-                        LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum,
-                        //NextStationAt = idal.GetAdjacentStations()
-                    });
-
-                    if (simulationTime.Subtract(VARIABLE.StartAt).TotalSeconds > 0)
-                    {
-                        busesOnTrips.Add(new BusOnTrip()
-                        {
-
-                        });
-                    }
-
-                    i++;
-                }
-            };
-
-            getLineStaionworker.RunWorkerAsync();
-        }
-
-        public void StartSimulation()
-        {
-            foreach (var item in linesTrips)
-            {
-                //   for
-                Task.Factory.StartNew(() =>
-                {
-                    LineTiming lineTiming = new LineTiming()
-                    {
-                        // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
-                        //   .CopyPropertiesToNew(typeof(Station))
-                        //,ArrivingTime = 
-                    };
-                });
-            }
-
-        }
-
-
-
-    }
+  
     
     internal static class Utilities
     {
@@ -774,6 +626,11 @@ namespace BL
 
         #endregion
 
+    }
+
+    internal static class ImmaShcha
+    {
+        // imma shcha
     }
 
 
