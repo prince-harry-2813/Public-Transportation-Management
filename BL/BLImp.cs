@@ -76,11 +76,11 @@ namespace BL
         public IEnumerable<Bus> GetAllBuses()
         {
             // TODO :  check if this solution is good enough
-            foreach (var VARIABLE in iDal.GetAllBuses())
+            foreach (var variable in iDal.GetAllBuses())
             {
-                //if (VARIABLE.IsActive)  //deleted because DAL does this check    // Ignore deleted bus  
+                //if (variable.IsActive)  //deleted because DAL does this check    // Ignore deleted bus  
 
-                yield return (Bus)VARIABLE.CopyPropertiesToNew(typeof(BO.Bus));
+                yield return (Bus)variable.CopyPropertiesToNew(typeof(BO.Bus));
 
             }
 
@@ -185,7 +185,7 @@ namespace BL
                 });
                 //check if there is already an adjacent stations
                 var adjSta = iDal.GetAllAdjacentStationsBy(a => a.Station1 == FirstStID && a.Station2 == FirstStID);
-                if (adjSta.Count() == 0)
+                if (adjSta.FirstOrDefault() == null)
                 {
                     iDal.AddAdjacentStations(new DO.AdjacentStations()
                     {
@@ -259,15 +259,18 @@ namespace BL
             }
             var lineToUpdate = new DO.Line()
             {
-                LastStation = line.LastStation.Station.Code,
+                LastStation = iDal.GetAllLinesStationBy(ls => ls.LineId == line.Id).OrderBy(b => b.LineStationIndex).Last().StationId,
                 Area = (DO.Area)line.Area,
                 Code = line.Code,
-                FirstStation = line.FirstStation.Station.Code,
+                FirstStation = iDal.GetAllLinesStationBy(ls => ls.LineId == line.Id).OrderBy(o => o.LineStationIndex).First().StationId,
                 Id = line.Id,
                 isActive = true
             };
             try
             {
+                iDal.UpdateLineStation(lineToUpdate.Id, lineToUpdate.FirstStation, b => { b.isActive = true; });
+                iDal.UpdateLineStation(lineToUpdate.Id, lineToUpdate.LastStation, b => { b.isActive = true; });
+
                 iDal.UpdateLine(lineToUpdate);
             }
             catch (Exception e)
@@ -282,14 +285,9 @@ namespace BL
             {
                 throw new NullReferenceException("Line to delete is Null");
             }
-            DO.Line lineToDelete = new DO.Line()
+            DO.Line lineToDelete = iDal.GetLine(line.Id);
             {
-                LastStation = line.LastStation.Station.Code,
-                FirstStation = line.FirstStation.Station.Code,
-                isActive = line.IsActive,
-                Id = line.Id,
-                Code = line.Code,
-                Area = (DO.Area)line.Area
+
             };
             try
             {
@@ -351,18 +349,18 @@ namespace BL
 
         public IEnumerable<Line> GetAllLines()
         {
-            foreach (var VARIABLE in iDal.GetAllLines())
+            foreach (var variable in iDal.GetAllLines())
             {
                 var line = new Line()
                 {
-                    Id = VARIABLE.Id,
-                    Code = VARIABLE.Code,
-                    Area = (Area)VARIABLE.Area,
-                    IsActive = VARIABLE.isActive,
-                    LastStation = GetLineStation(VARIABLE.Id, VARIABLE.LastStation),
-                    FirstStation = GetLineStation(VARIABLE.Id, VARIABLE.FirstStation),
+                    Id = variable.Id,
+                    Code = variable.Code,
+                    Area = (Area)variable.Area,
+                    IsActive = variable.isActive,
+                    LastStation = GetLineStation(variable.Id, variable.LastStation),
+                    FirstStation = GetLineStation(variable.Id, variable.FirstStation),
 
-                    Stations = GetAllLinesStationBy(l => l.IsActive && l.LineId == VARIABLE.Id).OrderBy(l=>l.LineStationIndex),
+                    Stations = GetAllLinesStationBy(l => l.IsActive && l.LineId == variable.Id).OrderBy(l => l.LineStationIndex),
 
                 };
                 yield return line;
@@ -375,8 +373,9 @@ namespace BL
                    let stations = iDal.GetAllLinesStationBy(ls => ls.LineId == item.Id && ls.isActive)//get the line station 
                    let Bol = new Line()
                    {
-                       LastStation = GetLineStation(item.Id, item.LastStation),
-                       FirstStation = GetLineStation(item.Id, item.FirstStation),
+                       LastStation = GetAllLinesStationBy(i => i.LineId == item.Id && i.Station.Code == item.LastStation).GetEnumerator().Current,
+                       FirstStation = GetAllLinesStationBy(i => i.LineId == item.Id && i.Station.Code == item.FirstStation).GetEnumerator().Current,
+
 
                        Stations = from LS in GetAllLinesStationBy(l => l.IsActive && l.LineId == item.Id)
                                   orderby LS.LineStationIndex
@@ -446,27 +445,37 @@ namespace BL
             iDal.DeleteStation(DOstation.Code);
         }
 
-        public Station GetStation(int lineId)
+        public Station GetStation(int Id)
         {
             Station station = new Station();
-            iDal.GetStation(lineId).CopyPropertiesTo(station);
+            iDal.GetStation(Id).CopyPropertiesTo(station);
             return station;
         }
 
         public IEnumerable<Station> GetAllStations()
         {
-            foreach (var VARIABLE in iDal.GetAllStation())
+            foreach (var variable in iDal.GetAllStation())
             {
-                var bostation= (Station)VARIABLE.CopyPropertiesToNew(typeof(Station));
-                bostation.Lines = GetAllLines().Where(l => l.Stations.Any(s => s.LineId == l.Id && s.Station.Code == bostation.Code));
-             
+                var bostation = (Station)variable.CopyPropertiesToNew(typeof(Station));
+
                 yield return bostation;
             }
         }
 
         public IEnumerable<Station> GetStationBy(Predicate<Station> predicate)
         {
-            throw new NotImplementedException();
+            return from st in iDal.GetAllStationsBy(b => b.Code > 0)
+                   let boSt = new Station()
+                   {
+                       Code = st.Code,
+                       isActive = st.isActive,
+                       Latitude = st.Latitude,
+                       Longitude = st.Longitude,
+                       Name = st.Name
+                   }
+                   where predicate(boSt)
+                   orderby boSt.Code
+                   select boSt;
         }
         #endregion
 
@@ -492,16 +501,16 @@ namespace BL
         {
             foreach (var item in iDal.GetAllLinesStationBy(l => l.isActive || !l.isActive))
             {
-                LineStation lineStation = new LineStation() {
+                LineStation lineStation = new LineStation()
+                {
                     LineId = item.LineId,
-                    LineStationIndex=item.LineStationIndex,
-                    IsActive=item.isActive,
-                    
+                    LineStationIndex = item.LineStationIndex,
+                    IsActive = item.isActive,
+
                 };
 
                 lineStation.Station = new Station();
                 lineStation.Station = GetStation(item.StationId);
-                lineStation.Station.Lines = new List<Line>();
                 if (predicate(lineStation))
                 {
                     yield return lineStation;
@@ -511,7 +520,68 @@ namespace BL
 
         public void AddLineStation(LineStation lineStation)
         {
-            iDal.AddLineStation((DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation)));
+
+            var LineStations = GetAllLinesStationBy(ls => ls.LineId == lineStation.LineId && ls.IsActive);
+            //expending the indexing of line Stations
+            foreach (var item in LineStations.OrderBy(o => o.LineStationIndex))
+            {
+                if (item.LineStationIndex < lineStation.LineStationIndex)
+                    continue;
+                UpdateLineStation(lineStation.LineId, lineStation.Station.Code, l => l.LineStationIndex++);
+            }
+            //create DO obj to add in system
+            var lStDO = new DO.LineStation()
+            {
+                isActive = true,
+                LineId = lineStation.LineId,
+                LineStationIndex = lineStation.LineStationIndex,
+                NextStation = lineStation.NextStation,
+                PrevStation = lineStation.PrevStation,
+                StationId = lineStation.Station.Code
+            };
+            try
+            {
+                iDal.AddLineStation(lStDO);
+            }
+            catch (Exception e) { throw new ArgumentException("couldn't add Station to line", e); }
+
+            //arrange the stations of line and their properties
+            var stationsOfLine = iDal.GetAllLinesStationBy(ls => ls.isActive && ls.LineId == lineStation.LineId).OrderBy(o => o.LineStationIndex);
+            int i = 0, j = stationsOfLine.Count();
+            foreach (var item in stationsOfLine)
+            {
+                item.NextStation = 0;
+                item.PrevStation = 0;
+                if (i != 0)
+                    item.PrevStation = stationsOfLine.ElementAt(i - 1).StationId;
+                if (i < j - 1)
+                    item.NextStation = stationsOfLine.ElementAt(i + 1).StationId;
+                i++;
+            }
+            //create new adjacent stations for the new station
+            foreach (var item in LineStations.OrderBy(o => o.LineStationIndex).Skip(1))
+            {
+                AdjacentStations adjacent = new AdjacentStations()
+                {
+                    isActive = true,
+                    Station2 = item.Station,
+                    Station1 = LineStations.FirstOrDefault(f => f.Station.Code == item.PrevStation).Station,
+
+                    Time = TimeSpan.Zero
+                };
+                adjacent.Distance = Utilities.CalculateDistance(adjacent.Station1, adjacent.Station2);
+                adjacent.Time = Utilities.CalculateTime(adjacent.Distance);
+                try
+                {
+                    iDal.AddAdjacentStations((DO.AdjacentStations)adjacent.CopyPropertiesToNew(typeof(DO.AdjacentStations)));
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+
+            }
+
         }
 
         public void UpdateLineStation(LineStation lineStation)
@@ -522,19 +592,21 @@ namespace BL
         public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
         {
             var a = (DO.LineStation)iDal.GetAllLinesStationBy(station => station.LineId == lineId && station.StationId == stationCode).FirstOrDefault();
-            if (!(a is null))
+            if (!(a == null))
             {
-                LineStation boLineStation = (LineStation)a.CopyPropertiesToNew(typeof(LineStation));
+                LineStation boLineStation = GetLineStation(lineId, stationCode);
                 update(boLineStation);
                 boLineStation.CopyPropertiesTo(a);
+                a.StationId = boLineStation.Station.Code;
                 iDal.UpdateLineStation(a);
             }
         }
 
-        public LineStation LineStationAdapter(DO.LineStation linestaDO) {
+        public LineStation LineStationAdapter(DO.LineStation linestaDO)
+        {
             LineStation lsta = new LineStation();
             DO.Station stationDO;
-            int stationID=linestaDO.StationId;
+            int stationID = linestaDO.StationId;
             try
             {
                 stationDO = iDal.GetStation(stationID);
@@ -569,6 +641,32 @@ namespace BL
 
             rideOperation.StartSimulation();
         }
+        #endregion
+
+
+        #region Lines of Station
+        /// <summary>
+        /// return list of lines that have stop in some stations.
+        /// TODO also return info for timing or another way....
+        /// </summary>
+        /// <param name="stationCode"></param>
+        /// <returns></returns>
+        public IEnumerable<LinesOfStation> getLinesOfStation(int stationCode)
+        {
+
+            List<Line> listOfLines = new List<Line>();
+
+            listOfLines.AddRange(
+            from ls in iDal.GetAllLinesStation()
+            let line = GetLine(ls.LineId)
+            where ls.StationId == stationCode
+            select line);
+
+            return (IEnumerable<LinesOfStation>)listOfLines;
+        }
+
+
+        #endregion
 
         void IBL.StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
         {

@@ -134,9 +134,9 @@ namespace PlGui.ViewModels.Lines
         {
             LinesCollection = new ObservableCollection<Line>();
             LinesCollection.Clear();
-            foreach (var VARIABLE in Bl.GetAllLines())
+            foreach (var variable in Bl.GetLinesBy(l=>l.IsActive||!l.IsActive))
             {
-                LinesCollection.Add(VARIABLE);
+                LinesCollection.Add(variable);
             }
         }
 

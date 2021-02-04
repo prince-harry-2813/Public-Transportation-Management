@@ -104,6 +104,7 @@
                     MinWidth="5"
                     Margin="5"
                     VerticalAlignment="Center"
+					Text="{Binding Station.Name,UpdateSourceTrigger=PropertyChanged}"
                     ItemsSource="{Binding StationCollection}"
                     SelectedItem="{Binding Station}"
                     SelectionChanged="Selector_OnSelectionChanged">

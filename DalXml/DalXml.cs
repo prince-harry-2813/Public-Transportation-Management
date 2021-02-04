@@ -63,7 +63,7 @@ namespace DalXml
                        Station1 = Int32.Parse(s.Element("Station1").Value),
                        Station2 = Int32.Parse(s.Element("Station2").Value),
                        Distance = Double.Parse(s.Element("Distance").Value),
-                       Time = TimeSpan.ParseExact(s.Element("Time").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture)
+                       Time = TimeSpan.ParseExact(s.Element("Time").Value, "c", CultureInfo.InvariantCulture)
                    }
                    where predicate(s1)
                    select s1;
@@ -104,7 +104,7 @@ namespace DalXml
                 if (!bool.Parse(adjElem.Element("isActive").Value))
                     adjElem.Element("isActive").Value = adjacentStations.isActive.ToString();
                 else
-                    throw new DuplicateObjExeption(adjacentStations.PairId, $"Adjacent Stations already exist in system st'1:{adjacentStations.Station1} - st'2 {adjacentStations.Station2}");
+                    return;
             }
             else
             {
@@ -416,7 +416,7 @@ namespace DalXml
         public void UpdateLine(Line line)
         {
             List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
-            var lineCheck = Lines.FirstOrDefault(b => b.isActive && b.Id == line.Id);
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == line.Id);
             if (lineCheck != null)
             {
                 Lines.Remove(lineCheck);
@@ -476,7 +476,7 @@ namespace DalXml
             List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
             return from l in Lines
                    where predicate(l)
-                   orderby l.LineId 
+                   orderby l.LineId
                    orderby l.LineStationIndex
                    select l;
         }
@@ -521,7 +521,26 @@ namespace DalXml
 
         public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+            var lineCheck = Lines.FirstOrDefault(b => b.LineId == lineId && b.StationId == stationCode);
+            if (lineCheck != null)
+            {
+                var newLineSt = new LineStation()
+                {
+                    isActive = lineCheck.isActive,
+                    StationId = lineCheck.StationId,
+                    LineStationIndex = lineCheck.LineStationIndex,
+                    LineId = lineCheck.LineId,
+                    NextStation = lineCheck.NextStation,
+                    PrevStation = lineCheck.PrevStation
+                };
+                update(newLineSt);
+                Lines.Remove(lineCheck);
+                Lines.Add(newLineSt);
+            }
+            else
+                throw new BadIdExeption(stationCode, "Line station doesn't exist or deleted");
+            XMLTools.SaveListToXMLSerializer(Lines, LineStationPath);
         }
 
         public void DeleteLineStation(int lineId, int stationCode)

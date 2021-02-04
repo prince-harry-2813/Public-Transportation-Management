@@ -138,11 +138,11 @@ namespace PlGui.ViewModels.Lines
             getStationsList.WorkerReportsProgress = true;
             getStationsList.DoWork += (sender, args) =>
             {
-                foreach (var VARIABLE in Bl.GetAllStations())
+                foreach (var variable in Bl.GetAllStations())
                 {
-                    if (VARIABLE.isActive)
+                    if (variable.isActive)
                     {
-                        getStationsList.ReportProgress(0, VARIABLE);
+                        getStationsList.ReportProgress(0, variable);
                     }
                 }
                 int a = Bl.GetAllLinesStationBy(station => station.IsActive || !station.IsActive).Count() + 1; 
