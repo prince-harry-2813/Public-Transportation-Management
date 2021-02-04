@@ -287,7 +287,7 @@ namespace BL
             }
             DO.Line lineToDelete = iDal.GetLine(line.Id);
             {
-             
+
             };
             try
             {
@@ -457,7 +457,6 @@ namespace BL
             foreach (var variable in iDal.GetAllStation())
             {
                 var bostation = (Station)variable.CopyPropertiesToNew(typeof(Station));
-                bostation.Lines = GetAllLines().Where(l => l.Stations.Any(s => s.LineId == l.Id && s.Station.Code == bostation.Code));
 
                 yield return bostation;
             }
@@ -472,8 +471,7 @@ namespace BL
                        isActive = st.isActive,
                        Latitude = st.Latitude,
                        Longitude = st.Longitude,
-                       Name = st.Name,
-                       Lines = new List<Line>()
+                       Name = st.Name
                    }
                    where predicate(boSt)
                    orderby boSt.Code
@@ -515,7 +513,6 @@ namespace BL
 
                 lineStation.Station = new Station();
                 lineStation.Station = GetStation(item.StationId);
-                lineStation.Station.Lines = new List<Line>();
                 if (predicate(lineStation))
                 {
                     yield return lineStation;
@@ -648,9 +645,34 @@ namespace BL
         }
         #endregion
 
+
+        #region Lines of Station
+        /// <summary>
+        /// return list of lines that have stop in some stations.
+        /// TODO also return info for timing or another way....
+        /// </summary>
+        /// <param name="stationCode"></param>
+        /// <returns></returns>
+        public IEnumerable<LinesOfStation> getLinesOfStation(int stationCode)
+        {
+
+            List<Line> listOfLines = new List<Line>();
+
+            listOfLines.AddRange(
+            from ls in iDal.GetAllLinesStation()
+            let line = GetLine(ls.LineId)
+            where ls.StationId == stationCode
+            select line);
+
+            return (IEnumerable<LinesOfStation>)listOfLines;
+        }
+
+
+        #endregion
+
         #region User Simulation
 
-        event Action<TimeSpan> clockObserver = null;
+        event Action<TimeSpan> ClockObserver = null;
         private DispatcherTimer simulationTimer = new DispatcherTimer();
         internal volatile bool Cancel;
 
@@ -663,7 +685,7 @@ namespace BL
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
         {
             Cancel = false;
-            clockObserver = updateTime;
+            ClockObserver = updateTime;
             TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
                 TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
                 TimeSpan.FromSeconds(startTime.TotalSeconds).Minutes
@@ -676,7 +698,7 @@ namespace BL
             {
                 if (Cancel)
                 {
-                    clockObserver = null;
+                    ClockObserver = null;
                     simulationTimer.Stop();
                     return;
                 }

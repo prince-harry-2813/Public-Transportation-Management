@@ -234,6 +234,8 @@ namespace PlGui.ViewModels
                 {"BusStop" , null  } //TODO: Insert Last bus in station 
             };
             regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
+
+
         }
 
         #endregion
