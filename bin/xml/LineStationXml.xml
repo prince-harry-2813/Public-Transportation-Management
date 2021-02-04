@@ -1,22 +1,6 @@
 <?xml version="1.0"?>
 <ArrayOfLineStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LineStation>
-    <LineId>1</LineId>
-    <StationId>1366</StationId>
-    <LineStationIndex>0</LineStationIndex>
-    <PrevStation>0</PrevStation>
-    <NextStation>1367</NextStation>
-    <isActive>true</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>1</LineId>
-    <StationId>1367</StationId>
-    <LineStationIndex>1</LineStationIndex>
-    <PrevStation>1366</PrevStation>
-    <NextStation>0</NextStation>
-    <isActive>true</isActive>
-  </LineStation>
-  <LineStation>
     <LineId>2</LineId>
     <StationId>12470</StationId>
     <LineStationIndex>0</LineStationIndex>
@@ -29,6 +13,22 @@
     <StationId>12448</StationId>
     <LineStationIndex>1</LineStationIndex>
     <PrevStation>12470</PrevStation>
+    <NextStation>0</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>1</LineId>
+    <StationId>1366</StationId>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>1367</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>1</LineId>
+    <StationId>1367</StationId>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>1366</PrevStation>
     <NextStation>0</NextStation>
     <isActive>true</isActive>
   </LineStation>

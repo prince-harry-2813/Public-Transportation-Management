@@ -132,7 +132,7 @@ namespace BL
 
                     Task.Factory.StartNew(() =>
                     {
-                        Thread.CurrentThread.Name = $"LineTiming: {i} Line : {item.LineId} {item.}"
+                        //Thread.CurrentThread.Name = $"LineTiming: {i} Line : {item.LineId} {item.}"
                     });
 
                     ////Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);

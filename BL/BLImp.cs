@@ -454,7 +454,7 @@ namespace BL
 
         public IEnumerable<Station> GetAllStations()
         {
-            foreach (var variable in iDal.GetAllStation())
+            foreach (var variable in iDal.GetAllStation().OrderBy(station => station.Code))
             {
                 var bostation = (Station)variable.CopyPropertiesToNew(typeof(Station));
 
@@ -630,7 +630,7 @@ namespace BL
             // Cancel = true;
         }
 
-        private RideOperation rideOperation = RideOperation.Instance;
+        private RidesOperation rideOperation = RidesOperation.Instance;
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
@@ -672,8 +672,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        #endregion
 
+        
         #region User Simulation
 
 

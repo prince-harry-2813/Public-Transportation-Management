@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace PlGui.ViewModels.Lines
 {
@@ -33,15 +34,82 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
+        private uint maxIndex;
+        /// <summary>
+        /// Max Index in line 
+        /// </summary>
+        public uint MaxIndex
+        {
+            get
+            {
+                return maxIndex;
+            }
+            set
+            {
+                SetProperty(ref maxIndex, value);
+            }
+        }
+
+        private uint index = 10000;
+        /// <summary>
+        /// Max Index in line 
+        /// </summary>
+        public uint Index
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                if (value > Line?.Stations.Count())
+                {
+                    value = (uint)Line?.Stations.Count();
+                }
+                SetProperty(ref index, value);
+            }
+        }
+
+        private uint canAddStation;
+        /// <summary>
+        /// true only if index and station was choosen  
+        /// </summary>
+        public uint CanAddStation
+        {
+            get
+            {
+                return canAddStation;
+            }
+            set
+            {
+                SetProperty(ref canAddStation, value);
+            }
+        }
+
+
+
         private Station stationToAdd;
         public Station StationToAdd
         {
             get { return stationToAdd; }
-            set { SetProperty(ref stationToAdd, value); }
+            set
+            {
+
+                lineStToAdj = new LineStation()
+                {
+                    Station = value,
+                    IsActive = true,
+                    LineId = Line.Id,
+                    LineStationIndex = 0,
+                    NextStation = 0,
+                    PrevStation = 0
+                };
+                SetProperty(ref stationToAdd, value);
+            }
         }
 
-        private List<Station> stations;
-        public List<Station> Stations
+        private ObservableCollection<Station> stations;
+        public ObservableCollection<Station> Stations
         {
             get { return stations; }
             set { SetProperty(ref stations, value); }
@@ -55,19 +123,44 @@ namespace PlGui.ViewModels.Lines
             set { SetProperty(ref lineStToAdj, value); }
         }
 
-        //private Area enumsArea= new Area();
-        //public Area EnumsArea
-        //{
-        //    get { return enumsArea; }
-        //    set {  SetProperty(ref enumsArea, value); }
-        //}
+        private Area enumsArea;
+     
 
-        //public ObservableCollection<string> Areas = new ObservableCollection<string>(){
-        // "General",
-        //"South",
-        //"Jerusalem",
-        //"Center",
-        //"North"
+        private string areaString;
+        public string AreaString
+        {
+            get { return areaString; }
+            set
+            {
+                bool sucseed  = Enum.TryParse(value, out enumsArea);
+                if (sucseed)
+                {
+                    Line.Area = enumsArea;
+                    RaisePropertyChanged("Line");
+                }
+                SetProperty(ref areaString, value);
+            }
+        }
+
+        private ObservableCollection<string> areas = new ObservableCollection<string>();
+
+        public ObservableCollection<string> Areas
+        {
+            get => areas;
+            set
+            {
+
+                SetProperty(ref areas, value);
+            }
+        }
+
+        //public ObservableCollection<string> Areas = new ObservableCollection<string>(){ 
+
+        //// "General",
+        ////"South",
+        ////"Jerusalem",
+        ////"Center",
+        ////"North"
         //};
 
         private bool isInEditMode;
@@ -87,7 +180,6 @@ namespace PlGui.ViewModels.Lines
         }
 
 
-        public int LicenseNumber { get; set; }
         #region Private Members
 
         private int lineId;
@@ -120,13 +212,25 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
 
-            #region Command Implementation
+            #region Command Initialization
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
-            AddLineStationButtonCommand = new DelegateCommand<string>(AddLineStationButton);
+            AddLineStationButtonCommand = new DelegateCommand(AddLineStationButton, () => Index <= Line?.Stations?.Count() + 1 && Index != 10000 && StationToAdd != null);
+            Stations = new ObservableCollection<Station>();
+
+            foreach (var item in Bl.GetAllStations())
+            {
+                Stations.Add(item);
+            }
+
             #endregion
 
-            #region Properties Implementation
+            #region Properties Initialization
+
+            foreach (var item in Enum.GetNames(typeof(Area)))
+            {
+                Areas.Add(item);
+            }
 
             #endregion
         }
@@ -155,7 +259,7 @@ namespace PlGui.ViewModels.Lines
                     }
                     try
                     {
-                      //  Line.Area = EnumsArea;
+                        //  Line.Area = EnumsArea;
                         Bl.UpdateLine(Line);
                         break;
                     }
@@ -178,8 +282,16 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
-        private void AddLineStationButton(string commandParameter) {
-        
+        private void AddLineStationButton()
+        {
+            //updating the index number for each station in line trip
+            foreach (var lStation in Line.Stations.Skip((int)index))
+            {
+                lStation.LineStationIndex++;
+            }
+
+
+            Bl.UpdateLine(Line);
         }
 
         #endregion
