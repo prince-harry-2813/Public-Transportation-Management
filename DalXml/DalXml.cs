@@ -69,12 +69,12 @@ namespace DalXml
                    select s1;
         }
 
-        public AdjacentStations GetAdjacentStations(int id)
+        public AdjacentStations GetAdjacentStations(int station1,int staion2)
         {
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
             AdjacentStations adjacents = (from s in AdjacentStationsRootElement.Elements()
-                                          where int.Parse(s.Element("PairId").Value) == id && bool.Parse(s.Element("isActive").Value)
+                                          where int.Parse(s.Element("Station1").Value) == station1 && int.Parse(s.Element("Station2").Value) == staion2 && bool.Parse(s.Element("isActive").Value)
                                           select new AdjacentStations()
                                           {
                                               PairId = int.Parse(s.Element("PairId").Value),

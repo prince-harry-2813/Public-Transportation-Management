@@ -251,6 +251,27 @@ namespace BL
                 {
                     throw new BadBusStopIDException("Couldn't update or add, check inner Exceptions details", e);
                 }
+                if (item.LineStationIndex != 0)
+                {
+                    // adding adjacent Stations
+                    try
+                    {
+                        iDal.GetAdjacentStations(item.PrevStation, item.Station.Code);
+                        iDal.AddAdjacentStations(new DO.AdjacentStations()
+                        {
+                            isActive = true,
+                            Distance = Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code)),
+                            Time= Utilities.CalculateTime(Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code))),
+                            PairId= iDal.GetAllAdjacentStationsBy(aS=>aS.Station1 > 1).Count(),
+                            Station1=item.PrevStation,
+                            Station2 =item.Station.Code
+                        });
+                    }
+                    catch (DO.BadIdExeption)
+                    {
+                        continue;
+                    }
+                }
             }
             var lineToUpdate = new DO.Line()
             {
@@ -719,7 +740,7 @@ namespace BL
 
     }
 
-   
+
 
 
 }

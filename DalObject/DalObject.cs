@@ -40,9 +40,9 @@ namespace DalObject
                    select adjs;
         }
 
-        public AdjacentStations GetAdjacentStations(int id)
+        public AdjacentStations GetAdjacentStations(int station1,int station2)
         {
-            DO.AdjacentStations stations = DataSource.AdjacentStations.FirstOrDefault(adj => adj.PairId == id);
+            DO.AdjacentStations stations = DataSource.AdjacentStations.FirstOrDefault(adj => adj.Station1 == station1&&adj.Station2==station2);
             if (stations != null)
                 return stations;
             else

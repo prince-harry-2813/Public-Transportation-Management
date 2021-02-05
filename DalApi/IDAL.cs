@@ -28,7 +28,7 @@ namespace DalApi
         /// <param name="station1"></param>
         /// <param name="station2"></param>
         /// <returns></returns>
-        DO.AdjacentStations GetAdjacentStations(int pairId);
+        DO.AdjacentStations GetAdjacentStations(int station1, int station2);
 
         /// <summary>
         /// 

@@ -4,12 +4,10 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace PlGui.ViewModels.Lines
 {
@@ -124,7 +122,7 @@ namespace PlGui.ViewModels.Lines
         }
 
         private Area enumsArea;
-     
+
 
         private string areaString;
         public string AreaString
@@ -132,7 +130,7 @@ namespace PlGui.ViewModels.Lines
             get { return areaString; }
             set
             {
-                bool sucseed  = Enum.TryParse(value, out enumsArea);
+                bool sucseed = Enum.TryParse(value, out enumsArea);
                 if (sucseed)
                 {
                     Line.Area = enumsArea;
@@ -284,13 +282,27 @@ namespace PlGui.ViewModels.Lines
 
         private void AddLineStationButton()
         {
+            LineStToAdj.LineStationIndex = (int)index;
+            LineStToAdj.NextStation = Line.Stations.Count() == index ? 0 : line.Stations.ElementAt((int)index).Station.Code;
+            LineStToAdj.PrevStation = index == 0 ? 0 : line.Stations.ElementAt((int)index).PrevStation;
+            var stationsList = Line.Stations.ToList();
+            stationsList.Insert((int)index, LineStToAdj);
+
             //updating the index number for each station in line trip
-            foreach (var lStation in Line.Stations.Skip((int)index))
+            foreach (var lStation in stationsList.Skip((int)index + 1))
             {
                 lStation.LineStationIndex++;
+                if (index != 0)
+                {
+                    lStation.PrevStation = stationsList.ElementAt(lStation.LineStationIndex-1).Station.Code;
+                }
+                if (index != stationsList.Count())
+                {
+                    lStation.NextStation = stationsList.ElementAt(lStation.LineStationIndex + 1).Station.Code;
+                }
             }
 
-
+            Line.Stations = stationsList;
             Bl.UpdateLine(Line);
         }
 
