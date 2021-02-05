@@ -213,7 +213,7 @@ namespace PlGui.ViewModels.Lines
             #region Command Initialization
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
-            AddLineStationButtonCommand = new DelegateCommand(AddLineStationButton, () => Index <= Line?.Stations?.Count() + 1 && Index != 10000 && StationToAdd != null);
+            AddLineStationButtonCommand = new DelegateCommand(AddLineStationButton);
             Stations = new ObservableCollection<Station>();
 
             foreach (var item in Bl.GetAllStations())
@@ -282,21 +282,27 @@ namespace PlGui.ViewModels.Lines
 
         private void AddLineStationButton()
         {
+            if (Index == 10000 || StationToAdd == null)
+            {
+                return;
+            }
+
             LineStToAdj.LineStationIndex = (int)index;
-            LineStToAdj.NextStation = Line.Stations.Count() == index ? 0 : line.Stations.ElementAt((int)index).Station.Code;
-            LineStToAdj.PrevStation = index == 0 ? 0 : line.Stations.ElementAt((int)index).PrevStation;
+            LineStToAdj.NextStation = Line.Stations.Count() == index ? 0 : Line.Stations.ElementAt((int)index).Station.Code;
+            LineStToAdj.PrevStation = index == 0 ? 0 : Line.Stations.ElementAt((int)index-1).Station.Code;
             var stationsList = Line.Stations.ToList();
             stationsList.Insert((int)index, LineStToAdj);
 
             //updating the index number for each station in line trip
-            foreach (var lStation in stationsList.Skip((int)index + 1))
+            foreach (var lStation in stationsList.Where(e=>e.Station.Code!=StationToAdd.Code))
             {
+                if (lStation.LineStationIndex>=index)
                 lStation.LineStationIndex++;
-                if (index != 0)
+                if (lStation.LineStationIndex != 0)
                 {
                     lStation.PrevStation = stationsList.ElementAt(lStation.LineStationIndex-1).Station.Code;
                 }
-                if (index != stationsList.Count())
+                if (lStation.LineStationIndex < stationsList.Count() - 1 )
                 {
                     lStation.NextStation = stationsList.ElementAt(lStation.LineStationIndex + 1).Station.Code;
                 }
@@ -304,6 +310,7 @@ namespace PlGui.ViewModels.Lines
 
             Line.Stations = stationsList;
             Bl.UpdateLine(Line);
+            RaisePropertyChanged("Line");
         }
 
         #endregion

@@ -97,7 +97,7 @@ namespace DalXml
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
             XElement adjElem = (from s in AdjacentStationsRootElement.Elements()
-                                where int.Parse(s.Element("PairId").Value) == adjacentStations.PairId
+                                where int.Parse(s.Element("Station1").Value) == adjacentStations.Station1&& int.Parse(s.Element("Station2").Value)==adjacentStations.Station2
                                 select s).FirstOrDefault();
             if (adjElem != null)
             {

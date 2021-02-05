@@ -257,19 +257,20 @@ namespace BL
                     try
                     {
                         iDal.GetAdjacentStations(item.PrevStation, item.Station.Code);
-                        iDal.AddAdjacentStations(new DO.AdjacentStations()
-                        {
-                            isActive = true,
-                            Distance = Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code)),
-                            Time= Utilities.CalculateTime(Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code))),
-                            PairId= iDal.GetAllAdjacentStationsBy(aS=>aS.Station1 > 1).Count(),
-                            Station1=item.PrevStation,
-                            Station2 =item.Station.Code
-                        });
+                        continue;
                     }
                     catch (DO.BadIdExeption)
                     {
-                        continue;
+                        DO.AdjacentStations adjacent = new DO.AdjacentStations()
+                        {
+                            isActive = true,
+                            Distance = Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code)),
+                            Time = Utilities.CalculateTime(Utilities.CalculateDistance(GetStation(item.PrevStation), GetStation(item.Station.Code))),
+                            PairId = iDal.GetAllAdjacentStationsBy(aS => aS.Station1 > 1).Count(),
+                            Station1 = item.PrevStation,
+                            Station2 = item.Station.Code
+                        };
+                        iDal.AddAdjacentStations(adjacent);
                     }
                 }
             }

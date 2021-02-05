@@ -16,4 +16,20 @@
     <Time>02:29:36.6250000</Time>
     <isActive>True</isActive>
   </AdjacentStations>
+  <AdjacentStations>
+    <PairId>2</PairId>
+    <Station1>1366</Station1>
+    <Station2>1370</Station2>
+    <Distance>153.407139794793</Distance>
+    <Time>00:02:19.7240000</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>3</PairId>
+    <Station1>1370</Station1>
+    <Station2>1367</Station2>
+    <Distance>226.10486815644</Distance>
+    <Time>00:02:29.0710000</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
 </ArrayOfAdjacentStations>
