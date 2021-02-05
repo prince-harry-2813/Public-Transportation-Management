@@ -726,10 +726,7 @@ namespace BL
 
     }
 
-    internal static class ImmaShcha
-    {
-        // imma shcha
-    }
+   
 
 
 }
