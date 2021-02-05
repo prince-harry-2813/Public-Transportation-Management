@@ -46,7 +46,7 @@ namespace DalObject
             if (stations != null)
                 return stations;
             else
-                throw new BadIdExeption(id, $"there is no direct tripping between those stations");
+                throw new BadIdExeption(station1 , $"there is no direct tripping between those stations");
         }
 
         public void AddAdjacentStations(AdjacentStations adjacentStations)

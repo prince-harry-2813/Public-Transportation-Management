@@ -87,7 +87,7 @@ namespace DalXml
 
             if (adjacents == null)
             {
-                throw new BadIdExeption(id, $"Those adjacent Stations doesn't exist {id}");
+                throw new BadIdExeption(station1, $"Those adjacent Stations doesn't exist {station1}{staion2}");
             }
             return adjacents;
         }
