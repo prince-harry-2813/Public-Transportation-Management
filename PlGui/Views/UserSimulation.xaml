@@ -186,7 +186,7 @@
                     Grid.Row="1"
                     Margin="5"
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Station}">
+                    ItemsSource="{Binding LinesOfStation}">
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -199,12 +199,12 @@
 
                             <Label
                                 Grid.Column="0"
-                                Content="{Binding Lines.Code}"
+                                Content="{Binding Code}"
                                 FontSize="10pt" />
 
                             <Label
                                 Grid.Column="1"
-                                Content="{Binding Lines.LastStation}"
+                                Content="{Binding LastStation.Station.Name}"
                                 FontSize="10pt" />
                         </Grid>
                         </DataTemplate>

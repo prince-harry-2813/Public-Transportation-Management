@@ -8,6 +8,7 @@
     <NextStation>12448</NextStation>
     <isActive>true</isActive>
   </LineStation>
+
   <LineStation>
     <LineId>2</LineId>
     <StationId>12448</StationId>

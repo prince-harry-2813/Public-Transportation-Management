@@ -15,6 +15,7 @@ namespace BL
 {
     class RidesOperation
     {
+       
         #region Singalton 
 
         private static RidesOperation instance;
@@ -40,6 +41,7 @@ namespace BL
         private event EventHandler<LineTiming> updateBusPrivate;
         private int staionID;
         List<LineTrip> linesTrips = new List<LineTrip>();
+        private List<LineTiming> lineTimes = new List<LineTiming>();
         private IDAL idal;
         private IBL bl;
         private BackgroundWorker getLineStaionworker = new BackgroundWorker();
@@ -86,7 +88,7 @@ namespace BL
             simulationTimer.Start();
 
         }
-        public RidesOperation()
+        private RidesOperation()
         {
             idal = DalFactory.GetIDAL();
 
@@ -129,6 +131,7 @@ namespace BL
                 int i = 0;
                 foreach (var item in linesTrips)
                 {
+
 
                     Task.Factory.StartNew(() =>
                     {

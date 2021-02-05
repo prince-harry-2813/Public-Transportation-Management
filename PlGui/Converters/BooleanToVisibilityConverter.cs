@@ -48,8 +48,12 @@ namespace PlGui.Converters
 
                 }
             }
+            else
+            {
+                return Binding.DoNothing;
+            }
 
-            return Binding.DoNothing;
+            return color;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

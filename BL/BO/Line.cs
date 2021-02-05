@@ -15,6 +15,7 @@ namespace BL.BO
         /// Line number - Also name of the line. 
         /// </summary>
         public int Code { get; set; }
+
         /// <summary>
         /// List of Stations in Line by order 
         /// info should come from Line station entities

@@ -92,5 +92,7 @@ namespace BL.BLApi
 
         #endregion
 
+        LinesOfStation getLinesOfStation(int stationCode);
+
     }
 }
