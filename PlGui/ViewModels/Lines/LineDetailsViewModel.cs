@@ -282,7 +282,7 @@ namespace PlGui.ViewModels.Lines
 
         private void AddLineStationButton()
         {
-            if (Index == 10000 || StationToAdd == null)
+            if (Index == 10000 || StationToAdd == null||Line.Stations.Any(s=>s.Station.Code==LineStToAdj.Station.Code))
             {
                 return;
             }
