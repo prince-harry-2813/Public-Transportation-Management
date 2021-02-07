@@ -226,7 +226,7 @@ namespace PlGui.ViewModels.Lines
                         FirstStation = new LineStation() { Station = new Station() },
                         Stations = new List<LineStation>(),
                         Id = Bl.GetLinesBy(l => l.IsActive || !l.IsActive).Count() + 1
-                };
+                     };
                 };
                 addWorker.RunWorkerAsync();
 
