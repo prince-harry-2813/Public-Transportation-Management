@@ -110,6 +110,7 @@ namespace PlGui.ViewModels
             get => stationCollection;
             set
             {
+                value.Distinct();
                 SetProperty(ref stationCollection, value);
             }
         }
@@ -125,6 +126,7 @@ namespace PlGui.ViewModels
                 {
                     var a = Bl?.getLinesOfStation(value.Code) ?? null; 
                     OfStation.Lines = a.Lines;
+                    LinesOfStation.Clear();
                     foreach (var VARIABLE in OfStation.Lines)
                     {
                         LinesOfStation.Add(VARIABLE);
@@ -165,10 +167,11 @@ namespace PlGui.ViewModels
             #region Properties Decleration
 
             StationCollection = new ObservableCollection<Station>();
+            var listLS = Bl.GetAllLinesStation().ToList();
             getStationsWorker = new BackgroundWorker();
             getStationsWorker.DoWork += (sender, args) =>
             {
-                foreach (var item in Bl.GetAllStations())
+                foreach (var item in Bl.GetStationBy(s=> listLS.Any(ls=>ls.Station.Code==s.Code)))
                 {
                     getStationsWorker.ReportProgress(0, item);
                 }

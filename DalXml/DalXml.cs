@@ -69,7 +69,7 @@ namespace DalXml
                    select s1;
         }
 
-        public AdjacentStations GetAdjacentStations(int station1,int staion2)
+        public AdjacentStations GetAdjacentStations(int station1, int staion2)
         {
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
@@ -97,7 +97,7 @@ namespace DalXml
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
             XElement adjElem = (from s in AdjacentStationsRootElement.Elements()
-                                where int.Parse(s.Element("Station1").Value) == adjacentStations.Station1&& int.Parse(s.Element("Station2").Value)==adjacentStations.Station2
+                                where int.Parse(s.Element("Station1").Value) == adjacentStations.Station1 && int.Parse(s.Element("Station2").Value) == adjacentStations.Station2
                                 select s).FirstOrDefault();
             if (adjElem != null)
             {
@@ -113,7 +113,7 @@ namespace DalXml
                     new XElement("Station1", adjacentStations.Station1.ToString()),
                     new XElement("Station2", adjacentStations.Station2.ToString()),
                     new XElement("Distance", adjacentStations.Distance.ToString()),
-                    new XElement("Time", adjacentStations.Time.ToString()),
+                    new XElement("Time", adjacentStations.Time.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
                     new XElement("isActive", adjacentStations.isActive.ToString()));
                 AdjacentStationsRootElement.Add(adjElem1);
             }

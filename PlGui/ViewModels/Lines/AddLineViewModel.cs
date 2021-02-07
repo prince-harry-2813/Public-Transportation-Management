@@ -230,6 +230,7 @@ namespace PlGui.ViewModels.Lines
             finally
             {
                 // GO Back to Bus Details Info 
+                Line = new Line();
                 regionManager.RequestNavigate(StringNames.MainRegion,StringNames.LinesView);
             }
         }
@@ -241,7 +242,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Interface Implementaion
+        #region Interface Implementation
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {

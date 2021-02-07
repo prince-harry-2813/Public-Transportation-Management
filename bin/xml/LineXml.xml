@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <ArrayOfLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Line>
-    <Id>2</Id>
-    <Code>544</Code>
+    <Id>3</Id>
+    <Code>123</Code>
     <Area>General</Area>
-    <FirstStation>12470</FirstStation>
-    <LastStation>12448</LastStation>
+    <FirstStation>12453</FirstStation>
+    <LastStation>31345</LastStation>
     <isActive>true</isActive>
   </Line>
   <Line>
@@ -13,7 +13,15 @@
     <Code>8</Code>
     <Area>General</Area>
     <FirstStation>1366</FirstStation>
-    <LastStation>12450</LastStation>
+    <LastStation>20641</LastStation>
+    <isActive>true</isActive>
+  </Line>
+  <Line>
+    <Id>2</Id>
+    <Code>544</Code>
+    <Area>General</Area>
+    <FirstStation>12470</FirstStation>
+    <LastStation>12550</LastStation>
     <isActive>true</isActive>
   </Line>
 </ArrayOfLine>

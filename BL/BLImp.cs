@@ -621,8 +621,8 @@ namespace BL
 
         public LineStation LineStationAdapter(DO.LineStation linestaDO)
         {
-            LineStation lsta = new LineStation();
-            DO.Station stationDO;
+            LineStation lsta = new LineStation() { Station=new Station()};
+            DO.Station stationDO=new DO.Station();
             int stationID = linestaDO.StationId;
             try
             {
@@ -654,7 +654,7 @@ namespace BL
         {
             LinesOfStation listOfLines = new LinesOfStation();
 
-            var a = GetAllLines().Distinct();
+            var a = GetAllLines();
 
             listOfLines.Lines = a.Where(line => line.Stations.Any(station => station.Station.Code == stationCode));
 

@@ -15,7 +15,7 @@ namespace BL.BO
         public bool isActive { get; set; }
         public override string ToString()
         {
-            return $"מספר הקו: {Code}";
+            return $"{Code} - {Name}";
         }
 
 

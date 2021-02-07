@@ -284,6 +284,7 @@ namespace PlGui.ViewModels.Lines
         {
             if (Index == 10000 || StationToAdd == null||Line.Stations.Any(s=>s.Station.Code==LineStToAdj.Station.Code))
             {
+                MessageBox.Show(".לא ניתן להוסיף תחנה זאת \n אנא בדוק הפרטים שהוזנו", "שגיאה בהוספת תחנה", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
