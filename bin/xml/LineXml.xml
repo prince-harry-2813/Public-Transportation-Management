@@ -40,4 +40,12 @@
     <LastStation>35296</LastStation>
     <isActive>true</isActive>
   </Line>
+  <Line>
+    <Id>6</Id>
+    <Code>432</Code>
+    <Area>General</Area>
+    <FirstStation>12551</FirstStation>
+    <LastStation>1369</LastStation>
+    <isActive>true</isActive>
+  </Line>
 </ArrayOfLine>
