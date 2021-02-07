@@ -6,5 +6,6 @@
     <StartAt>15:00:00</StartAt>
     <Frequency>01:00:00</Frequency>
     <FinishAt>00:00:00</FinishAt>
-    <isActive />True</LineTrip>
+    <isActive>true</isActive>
+  </LineTrip>
 </ArrayOfLineTrip>

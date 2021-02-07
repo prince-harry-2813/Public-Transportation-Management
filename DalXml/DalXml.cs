@@ -615,7 +615,7 @@ namespace DalXml
                     new XElement("StartAt", lineTrip.StartAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
                     new XElement("Frequency", lineTrip.Frequency.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
                     new XElement("FinishAt", lineTrip.FinishAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
-                    new XElement("isActive"),lineTrip.isActive.ToString());
+                   new XElement("isActive", lineTrip.isActive.ToString()));
                 LineTripsRootElement.Add(adjElem1);
             }
             XMLTools.SaveListToXMLElement(LineTripsRootElement, LineTripPath);
