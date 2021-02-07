@@ -299,7 +299,7 @@ namespace PlGui.ViewModels.Lines
             foreach (var lStation in stationsList.Where(e=>e.Station.Code!=StationToAdd.Code))
             {
                 if (lStation.LineStationIndex>=index)
-                lStation.LineStationIndex++;
+                lStation.LineStationIndex+=1;
                 if (lStation.LineStationIndex != 0)
                 {
                     lStation.PrevStation = stationsList.ElementAt(lStation.LineStationIndex-1).Station.Code;

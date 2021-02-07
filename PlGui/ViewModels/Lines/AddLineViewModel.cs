@@ -262,7 +262,7 @@ namespace PlGui.ViewModels.Lines
             if (addWorker?.IsBusy == true)
             {
                 addWorker.CancelAsync();
-                MessageBox.Show("Failed to add line please wait a minute before navigating from the window");
+               // MessageBox.Show("Failed to add line please wait a minute before navigating from the window");
             }
 
             if (updaeteWorker?.IsBusy == true)

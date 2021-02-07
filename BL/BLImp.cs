@@ -10,7 +10,7 @@ namespace BL
 {
     internal class BLImp : IBL
     {
-        #region Private members \
+        #region Private members 
 
         /// <summary>
         /// Oparates the rides functions 
@@ -243,8 +243,9 @@ namespace BL
             {
                 iDal.DeleteLineStation(line.Id, item.StationId);
             }
+            var p = line.Stations.OrderBy(o => o.LineStationIndex);
             //update the line- stations
-            foreach (var item in line.Stations)
+            foreach (var item in p)
             {
                 var DOLineStation = new DO.LineStation()
                 {
@@ -252,8 +253,8 @@ namespace BL
                     LineStationIndex = item.LineStationIndex,
                     isActive = true,
                     StationId = item.Station.Code,
-                    NextStation = item.LineStationIndex == line.Stations.Count() - 1 ? 0 : line.Stations.ElementAt(item.LineStationIndex + 1).Station.Code,
-                    PrevStation = item.LineStationIndex > 0 ? line.Stations.ElementAt(item.LineStationIndex - 1).Station.Code : 0,
+                    NextStation = item.NextStation,
+                    PrevStation = item.PrevStation
                 };
                 try
                 {

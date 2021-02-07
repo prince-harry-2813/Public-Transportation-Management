@@ -63,7 +63,7 @@ namespace DalXml
                        Station1 = Int32.Parse(s.Element("Station1").Value),
                        Station2 = Int32.Parse(s.Element("Station2").Value),
                        Distance = Double.Parse(s.Element("Distance").Value),
-                       Time = TimeSpan.ParseExact(s.Element("Time").Value, "c", CultureInfo.InvariantCulture)
+                       Time = TimeSpan.ParseExact(s.Element("Time").Value, "hh\\:mm\\:ss", CultureInfo.InvariantCulture)
                    }
                    where predicate(s1)
                    select s1;
@@ -490,8 +490,10 @@ namespace DalXml
             if (lineCheck != null)
             {
                 if (!lineCheck.isActive)
+                {
                     lineCheck.isActive = true;
-
+                    UpdateLineStation(lineStation);
+                }
                 else
                     throw new DuplicateObjExeption(lineStation.StationId, "Line Station already exist in system");
             }
