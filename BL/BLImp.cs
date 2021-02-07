@@ -243,9 +243,8 @@ namespace BL
             {
                 iDal.DeleteLineStation(line.Id, item.StationId);
             }
-            var p = line.Stations.OrderBy(o => o.LineStationIndex);
             //update the line- stations
-            foreach (var item in p)
+            foreach (var item in line.Stations)
             {
                 var DOLineStation = new DO.LineStation()
                 {
@@ -485,9 +484,9 @@ namespace BL
         public IEnumerable<Station> GetAllStations()
         {
             iDal.AddLineTrip(new DO.LineTrip() { 
-            LineId=1,
-            StartAt=new TimeSpan(15,0,0),
-            Id=1 
+            LineId=2,
+            StartAt=new TimeSpan(14,0,0),
+            Id=2 
             ,isActive= true,
             FinishAt=new TimeSpan(0,0,0),
             Frequency=new TimeSpan(1,0,0)

@@ -80,4 +80,44 @@
     <Time>02:05:57</Time>
     <isActive>True</isActive>
   </AdjacentStations>
+  <AdjacentStations>
+    <PairId>11</PairId>
+    <Station1>12453</Station1>
+    <Station2>12478</Station2>
+    <Distance>44878.9564150176</Distance>
+    <Time>01:38:10</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>12</PairId>
+    <Station1>20634</Station1>
+    <Station2>12495</Station2>
+    <Distance>95181.4079133651</Distance>
+    <Time>03:25:57</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>13</PairId>
+    <Station1>12517</Station1>
+    <Station2>20639</Station2>
+    <Distance>109173.845428825</Distance>
+    <Time>03:55:56</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>13</PairId>
+    <Station1>20638</Station1>
+    <Station2>12480</Station2>
+    <Distance>48555.4000120941</Distance>
+    <Time>01:46:02</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>14</PairId>
+    <Station1>12478</Station1>
+    <Station2>12521</Station2>
+    <Distance>90892.3276040249</Distance>
+    <Time>03:16:46</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
 </ArrayOfAdjacentStations>
