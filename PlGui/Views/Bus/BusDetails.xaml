@@ -34,7 +34,7 @@
             Visibility="{Binding LabelVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <fa:ImageAwesome Height="14pt" Icon="Solid_BusAlt" />
             <Label
-                Width="110"
+                Width="118"
                 Content="{Binding MainLabelContent}"
                 FontSize="14pt"
                 FontWeight="SemiBold" />

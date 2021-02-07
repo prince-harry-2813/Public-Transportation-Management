@@ -8,4 +8,12 @@
     <FinishAt>00:00:00</FinishAt>
     <isActive>true</isActive>
   </LineTrip>
+  <LineTrip>
+    <Id>2</Id>
+    <LineId>2</LineId>
+    <StartAt>14:00:00</StartAt>
+    <Frequency>01:00:00</Frequency>
+    <FinishAt>00:00:00</FinishAt>
+    <isActive>true</isActive>
+  </LineTrip>
 </ArrayOfLineTrip>
