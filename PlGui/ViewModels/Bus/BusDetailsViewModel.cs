@@ -306,8 +306,16 @@ namespace PlGui.ViewModels.Bus
             ButtonsVisibility = true;
             MainLabelContent = "";
             InternalReadOnly = false;
-            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+            BusStop = null;
+            Bus = null;
 
+            BusDetaisVisibilty = false;
+            BusStopVisibilty = false;
+            BusValueIsReadOnly = false;
+            ButtonsVisibility = false;
+            IsInEditMode = false;
+            MainLabelContent = "Bus Details";
+            
         }
 
         #endregion

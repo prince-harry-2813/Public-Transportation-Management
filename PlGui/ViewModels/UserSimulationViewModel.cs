@@ -9,8 +9,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace PlGui.ViewModels
 {
@@ -38,7 +40,7 @@ namespace PlGui.ViewModels
             }
         }
 
-        private ObservableCollection<LineTiming> lineTimings;
+        private ObservableCollection<LineTiming> lineTimings = new ObservableCollection<LineTiming>();
 
         /// <summary>
         /// Simulation dispatching timer sec = Simulation time / Real sec 
@@ -166,12 +168,13 @@ namespace PlGui.ViewModels
 
             #region Properties Decleration
 
+            #region Get stations Worker
             StationCollection = new ObservableCollection<Station>();
             var listLS = Bl.GetAllLinesStation().ToList();
             getStationsWorker = new BackgroundWorker();
             getStationsWorker.DoWork += (sender, args) =>
             {
-                foreach (var item in Bl.GetStationBy(s=> listLS.Any(ls=>ls.Station.Code==s.Code)))
+                foreach (var item in Bl.GetStationBy(s => listLS.Any(ls => ls.Station.Code == s.Code)))
                 {
                     getStationsWorker.ReportProgress(0, item);
                 }
@@ -186,6 +189,11 @@ namespace PlGui.ViewModels
             Station = StationCollection?.FirstOrDefault();
 
             SimulationStartTime = DateTime.Now.TimeOfDay;
+            #endregion
+
+            #region Line timing list initialization 
+
+            #endregion
 
             // Call Navigate to bus details when region BusDetailsRegion added to the collection 
             regionManager.Regions.CollectionChanged += (sender, args) =>
@@ -222,6 +230,8 @@ namespace PlGui.ViewModels
         private void StartStopToggel(string parameter)
         {
 
+            #region Stop Region
+
             if (parameter.Equals("Stop") && clockWorker != null)
             {
                 Bl.StopSimulator();
@@ -230,19 +240,54 @@ namespace PlGui.ViewModels
                 IsSimulationRuning = false;
             }
 
+            #endregion
+
+            #region Start 
+
             if (parameter.Equals("Start"))
             {
+                if (Station is null)
+                {
+                    MessageBox.Show("Please choose station before statrting the simulator");
+                    return;
+                }
                 clockWorker = new BackgroundWorker();
                 clockWorker.WorkerReportsProgress = true;
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
                     Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
+                    Bl.SetStationPanel(station.Code , timing =>
+                    {
+                        // get line timing instance from list 
+                       var a =  (LineTiming)LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID);
+                           // if therisnt add new instance 
+                       if (a is null)
+                       {
+                           a = new LineTiming();
+                           a = timing;
+                           LineTimings.Add(a);
+                        }
+                       // update the item
+                       else
+                       {
+                           a = timing;
+                       }
+
+                       // sort 
+                       LineTimings.OrderBy(lineTiming => lineTiming.ArrivingTime);
+                       // update view 
+                       RaisePropertyChanged("LineTimings");
+                       // update last bus 
+                       BusDetailsDataContext.BusStop = LineTimings.LastOrDefault();
+                    });
                 };
 
                 IsSimulationRuning = true;
                 clockWorker.RunWorkerAsync();
             }
+            
+            #endregion
         }
         #endregion
 

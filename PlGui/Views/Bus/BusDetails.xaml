@@ -118,6 +118,7 @@
                     FontSize="8pt">
                     Line Code :
                 </Label>
+
                 <TextBox
                     Margin="10"
                     HorizontalAlignment="Stretch"
@@ -126,6 +127,7 @@
                     BorderThickness="1"
                     Text="{Binding BusStop.LineCode, Mode=TwoWay}" />
             </DockPanel>
+
             <!--  Started Time  -->
             <DockPanel HorizontalAlignment="Stretch">
                 <Label

@@ -699,6 +699,10 @@ namespace BL
             {
                 //TODO: Shut down
             }
+            else
+            {
+                ridesOperation.SetSimulationPanel(station , updateBus);
+            }
 
 
         }
