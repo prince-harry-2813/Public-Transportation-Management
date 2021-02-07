@@ -137,7 +137,9 @@ namespace PlGui.ViewModels.Lines
             foreach (var variable in Bl.GetLinesBy(l=>l.IsActive||!l.IsActive))
             {
                 LinesCollection.Add(variable);
+               
             }
+            
         }
 
         #region INavigation Aware Implementation 

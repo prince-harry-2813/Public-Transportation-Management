@@ -218,14 +218,6 @@
   </LineStation>
   <LineStation>
     <LineId>1</LineId>
-    <StationId>1366</StationId>
-    <LineStationIndex>0</LineStationIndex>
-    <PrevStation>0</PrevStation>
-    <NextStation>1367</NextStation>
-    <isActive>true</isActive>
-  </LineStation>
-  <LineStation>
-    <LineId>1</LineId>
     <StationId>20641</StationId>
     <LineStationIndex>10</LineStationIndex>
     <PrevStation>42356</PrevStation>
@@ -262,6 +254,54 @@
     <LineStationIndex>13</LineStationIndex>
     <PrevStation>43469</PrevStation>
     <NextStation>0</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>4</LineId>
+    <StationId>12495</StationId>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>35387</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>4</LineId>
+    <StationId>35387</StationId>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>12495</PrevStation>
+    <NextStation>0</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>5</LineId>
+    <StationId>12491</StationId>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>20001</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>5</LineId>
+    <StationId>20001</StationId>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>12491</PrevStation>
+    <NextStation>0</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>1</LineId>
+    <StationId>1366</StationId>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>1367</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>1</LineId>
+    <StationId>35296</StationId>
+    <LineStationIndex>13</LineStationIndex>
+    <PrevStation>12530</PrevStation>
+    <NextStation>20641</NextStation>
     <isActive>true</isActive>
   </LineStation>
 </ArrayOfLineStation>

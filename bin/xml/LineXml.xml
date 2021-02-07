@@ -9,19 +9,35 @@
     <isActive>true</isActive>
   </Line>
   <Line>
-    <Id>1</Id>
-    <Code>8</Code>
-    <Area>General</Area>
-    <FirstStation>1366</FirstStation>
-    <LastStation>20641</LastStation>
-    <isActive>true</isActive>
-  </Line>
-  <Line>
     <Id>2</Id>
     <Code>544</Code>
     <Area>General</Area>
     <FirstStation>12470</FirstStation>
     <LastStation>12550</LastStation>
+    <isActive>true</isActive>
+  </Line>
+  <Line>
+    <Id>4</Id>
+    <Code>28</Code>
+    <Area>General</Area>
+    <FirstStation>12495</FirstStation>
+    <LastStation>35387</LastStation>
+    <isActive>true</isActive>
+  </Line>
+  <Line>
+    <Id>5</Id>
+    <Code>18</Code>
+    <Area>General</Area>
+    <FirstStation>12491</FirstStation>
+    <LastStation>20001</LastStation>
+    <isActive>true</isActive>
+  </Line>
+  <Line>
+    <Id>1</Id>
+    <Code>8</Code>
+    <Area>Jerusalem</Area>
+    <FirstStation>1366</FirstStation>
+    <LastStation>35296</LastStation>
     <isActive>true</isActive>
   </Line>
 </ArrayOfLine>

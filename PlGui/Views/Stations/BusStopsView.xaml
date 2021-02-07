@@ -220,7 +220,7 @@
                             <Run Text="{Binding Code}" />
                         </TextBlock>
 
-                        <ComboBox
+                        <!--<ComboBox
                             Grid.Column="1"
                             Margin="10"
                             ItemsSource="{Binding Lines}">
@@ -237,7 +237,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
 
-                        </ComboBox>
+                        </ComboBox>-->
                         <!--<TextBlock
 						
                             x:Name="av"

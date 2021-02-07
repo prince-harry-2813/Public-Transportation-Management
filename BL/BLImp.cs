@@ -404,7 +404,7 @@ namespace BL
 
                    }
                    where predicate(Bol)
-                   orderby Bol.Id
+                   orderby Bol.Code
                    select Bol;
 
 
