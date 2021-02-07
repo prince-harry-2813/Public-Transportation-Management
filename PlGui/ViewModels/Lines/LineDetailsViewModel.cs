@@ -61,6 +61,7 @@ namespace PlGui.ViewModels.Lines
             }
             set
             {
+                
                 if (value > Line?.Stations.Count())
                 {
                     value = (uint)Line?.Stations.Count();

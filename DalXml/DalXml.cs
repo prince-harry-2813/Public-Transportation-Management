@@ -22,12 +22,12 @@ namespace DalXml
         // static XElement configXml;
 
         static readonly string
-            AdjacentStationsPath = "AdjacentStationsXml.xml",
+            AdjacentStationsPath = @"AdjacentStationsXml.xml",
             BusPath = "BusXml.xml",
             BusOnTripPath = "BusOnTripXMl.xml",
             LinePath = "LineXml.xml",
             LineStationPath = "LineStationXml.xml",
-            LineTripPath = "LineTripXml.xml",
+            LineTripPath = @"LineTripXml.xml",
             StationPath = "StatoinXml.xml",
             TripPath = "TripXml.xml",
             UserPath = "UserXml.xml";
@@ -594,23 +594,31 @@ namespace DalXml
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-
             List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            XElement LineTripsRootElement = XMLTools.LoadListFromXMLElement(LineTripPath);
 
-            var lineCheck = Lines.FirstOrDefault(b => b.Id == lineTrip.Id);
-            if (lineCheck != null)
+            XElement adjElem = (from s in LineTripsRootElement.Elements()
+                                where int.Parse(s.Element("Id").Value) == lineTrip.Id
+                                select s).FirstOrDefault();
+            if (adjElem != null)
             {
-                if (!lineCheck.isActive)
-                    lineCheck.isActive = true;
-
+                if (!bool.Parse(adjElem.Element("isActive").Value))
+                    adjElem.Element("isActive").Value = lineTrip.isActive.ToString();
                 else
-                    throw new DuplicateObjExeption(lineTrip.Id, "Line Trip already exist in system");
+                    return;
             }
             else
             {
-                Lines.Add(lineTrip);
+                XElement adjElem1 = new XElement("LineTrip",
+                    new XElement("Id", lineTrip.Id.ToString()),
+                    new XElement("LineId", lineTrip.LineId.ToString()),
+                    new XElement("StartAt", lineTrip.StartAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                    new XElement("Frequency", lineTrip.Frequency.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                    new XElement("FinishAt", lineTrip.FinishAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                    new XElement("isActive"),lineTrip.isActive.ToString());
+                LineTripsRootElement.Add(adjElem1);
             }
-            XMLTools.SaveListToXMLSerializer(Lines, LineTripPath);
+            XMLTools.SaveListToXMLElement(LineTripsRootElement, LineTripPath);
 
         }
 

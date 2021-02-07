@@ -56,4 +56,28 @@
     <Time>00:02:20</Time>
     <isActive>True</isActive>
   </AdjacentStations>
+  <AdjacentStations>
+    <PairId>8</PairId>
+    <Station1>12480</Station1>
+    <Station2>12482</Station2>
+    <Distance>26076.6962264519</Distance>
+    <Time>00:57:52</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>8</PairId>
+    <Station1>12480</Station1>
+    <Station2>12481</Station2>
+    <Distance>81220.9825729829</Distance>
+    <Time>02:56:02</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
+  <AdjacentStations>
+    <PairId>9</PairId>
+    <Station1>12481</Station1>
+    <Station2>12482</Station2>
+    <Distance>57845.9476073405</Distance>
+    <Time>02:05:57</Time>
+    <isActive>True</isActive>
+  </AdjacentStations>
 </ArrayOfAdjacentStations>

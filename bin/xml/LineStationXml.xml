@@ -56,4 +56,28 @@
     <NextStation>0</NextStation>
     <isActive>true</isActive>
   </LineStation>
+  <LineStation>
+    <LineId>2</LineId>
+    <StationId>12480</StationId>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>12481</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>2</LineId>
+    <StationId>12482</StationId>
+    <LineStationIndex>2</LineStationIndex>
+    <PrevStation>12481</PrevStation>
+    <NextStation>0</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
+  <LineStation>
+    <LineId>2</LineId>
+    <StationId>12481</StationId>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>12480</PrevStation>
+    <NextStation>12482</NextStation>
+    <isActive>true</isActive>
+  </LineStation>
 </ArrayOfLineStation>

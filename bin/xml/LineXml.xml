@@ -8,4 +8,12 @@
     <LastStation>1366</LastStation>
     <isActive>true</isActive>
   </Line>
+  <Line>
+    <Id>2</Id>
+    <Code>2</Code>
+    <Area>General</Area>
+    <FirstStation>12480</FirstStation>
+    <LastStation>12481</LastStation>
+    <isActive>true</isActive>
+  </Line>
 </ArrayOfLine>

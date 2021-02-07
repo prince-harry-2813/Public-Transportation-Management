@@ -484,6 +484,14 @@ namespace BL
 
         public IEnumerable<Station> GetAllStations()
         {
+            iDal.AddLineTrip(new DO.LineTrip() { 
+            LineId=1,
+            StartAt=new TimeSpan(15,0,0),
+            Id=1 
+            ,isActive= true,
+            FinishAt=new TimeSpan(0,0,0),
+            Frequency=new TimeSpan(1,0,0)
+            });
             foreach (var variable in iDal.GetAllStation().OrderBy(station => station.Code))
             {
                 var bostation = (Station)variable.CopyPropertiesToNew(typeof(Station));
