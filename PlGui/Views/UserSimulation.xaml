@@ -279,7 +279,7 @@
 						Grid.Row="1"
 						Grid.ColumnSpan="3"
 						Margin="5,5.333,5,5"
-						ItemsSource="{Binding}">
+						ItemsSource="{Binding LineTimings}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
 								<!--  Up coming buses grid  -->
@@ -293,14 +293,14 @@
 									<!--  Coming in...  -->
 									<Label
 										HorizontalAlignment="Right"
-										Content="{Binding}"
+										Content="{Binding ArrivingTime}"
 										FontSize="8pt" />
 
 									<!--  Last station  -->
 									<Label
 										Grid.Column="1"
 										HorizontalAlignment="Right"
-										Content="{Binding}"
+										Content="{Binding LastStation.Name}"
 										FontSize="8pt" />
 
 									<!--  Bus Number  -->
@@ -308,7 +308,7 @@
 										Grid.Column="2"
 										HorizontalAlignment="Right"
 										HorizontalContentAlignment="Center"
-										Content="{Binding}"
+										Content="{Binding LineCode}"
 										FontSize="8pt" />
 								</Grid>
 							</DataTemplate>

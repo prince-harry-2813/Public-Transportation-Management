@@ -147,6 +147,37 @@ namespace PlGui.ViewModels
 
         private LinesOfStation OfStation = new LinesOfStation();
 
+        private LineTiming recivedLineTiming;
+        public LineTiming RecivedLineTiming
+        {
+            get => recivedLineTiming;
+            set
+            {
+                var timing = value;
+                var a = LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID).FirstOrDefault();
+                // if therisnt add new instance 
+                if (a is null)
+                {
+                    var b = new LineTiming();
+                    b = timing;
+                    LineTimings.Add(b);
+                }
+                // update the item
+                else
+                {
+                    LineTiming z = (LineTiming)a;
+                }
+
+                // sort 
+                LineTimings.OrderBy(lineTiming => lineTiming.ArrivingTime);
+                // update view 
+                RaisePropertyChanged("LineTimings");
+                // update last bus 
+                BusDetailsDataContext.BusStop = LineTimings.LastOrDefault();
+                RaisePropertyChanged("BusStop");
+            }
+        }
+
         #endregion
 
         #endregion
@@ -208,7 +239,7 @@ namespace PlGui.ViewModels
                     };
                     regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
                     var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
-                    //BusDetailsDataContext.InsertBusPropertiesToCollection(TTODO: ADD the dispaly properties object);
+                    BusDetailsDataContext = (BusDetailsViewModel) a.DataContext;
                 }
             };
 
@@ -251,38 +282,20 @@ namespace PlGui.ViewModels
                     MessageBox.Show("Please choose station before statrting the simulator");
                     return;
                 }
+
+                 
+                
+
                 clockWorker = new BackgroundWorker();
                 clockWorker.WorkerReportsProgress = true;
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                    Bl.SetStationPanel(station.Code , timing =>
-                    { 
-                       // get line timing instance from list 
-                       var a =  LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID);
-                           // if therisnt add new instance 
-                       if (a is null)
-                       {
-                           var b  = new LineTiming();
-                           b = timing;
-                           LineTimings.Add(b);
-                       }
-                       // update the item
-                       else
-                       {
-                           LineTiming z = (LineTiming) a;
-                       }
-
-                       // sort 
-                       LineTimings.OrderBy(lineTiming => lineTiming.ArrivingTime);
-                       // update view 
-                       RaisePropertyChanged("LineTimings");
-                       // update last bus 
-                       BusDetailsDataContext.BusStop = LineTimings.LastOrDefault();
-                    });
+                    Bl.SetStationPanel(station.Code, timing => RecivedLineTiming = timing);
                     Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
                 };
 
+             
                 IsSimulationRuning = true;
                 clockWorker.RunWorkerAsync();
             }
@@ -301,7 +314,7 @@ namespace PlGui.ViewModels
                 {"InternalReadOnly", true},
                 {"ButtonsVisibility" , false },
                 {"MainLabelContent" , (object)"Last Arriving Bus" },
-                {"BusStop" , null  } //TODO: Insert Last bus in station 
+                {"BusStopVisibilty" , true  } //TODO: Insert Last bus in station 
             };
             regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
 

@@ -693,11 +693,11 @@ namespace BL
         }
 
 
-        public void SetStationPanel(int station, Action<LineTiming> updateBus)
+        public void SetStationPanel(int station, Func<LineTiming, LineTiming> updateBus)
         {
             if (station == -1)
             {
-                //TODO: Shut down
+                 StopSimulator();
             }
             else
             {

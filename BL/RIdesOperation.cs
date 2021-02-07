@@ -53,7 +53,7 @@ namespace BL
 
         event Action<TimeSpan> clockObserver = null;
 
-        private event Action<LineTiming> updateLineProgress = null; 
+        private event Func<LineTiming , LineTiming> updateLineProgress = null; 
          
         /// <summary>
         /// 
@@ -201,7 +201,7 @@ namespace BL
                         }
 
 
-
+                        
                         while (true)
                         {
                             lineTiming.ArrivingTime = timeToArrive - simulationTime;
@@ -242,7 +242,7 @@ namespace BL
             Cancel = true;
         }
 
-        public void SetSimulationPanel(int station, Action<LineTiming> updateBus)
+        public void SetSimulationPanel(int station, Func< LineTiming , LineTiming> updateBus)
         {
             stationNumber = station;
             updateLineProgress = updateBus;
