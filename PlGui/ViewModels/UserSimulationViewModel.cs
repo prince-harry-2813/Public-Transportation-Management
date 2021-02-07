@@ -256,22 +256,21 @@ namespace PlGui.ViewModels
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                    Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
                     Bl.SetStationPanel(station.Code , timing =>
-                    {
-                        // get line timing instance from list 
-                       var a =  (LineTiming)LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID);
+                    { 
+                       // get line timing instance from list 
+                       var a =  LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID);
                            // if therisnt add new instance 
                        if (a is null)
                        {
-                           a = new LineTiming();
-                           a = timing;
-                           LineTimings.Add(a);
-                        }
+                           var b  = new LineTiming();
+                           b = timing;
+                           LineTimings.Add(b);
+                       }
                        // update the item
                        else
                        {
-                           a = timing;
+                           LineTiming z = (LineTiming) a;
                        }
 
                        // sort 
@@ -281,6 +280,7 @@ namespace PlGui.ViewModels
                        // update last bus 
                        BusDetailsDataContext.BusStop = LineTimings.LastOrDefault();
                     });
+                    Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
                 };
 
                 IsSimulationRuning = true;

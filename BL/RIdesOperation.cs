@@ -107,19 +107,6 @@ namespace BL
                 Debug.Print(simulatorTime.ToString());
             };
             simulationTimer.Start();
-        }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        private RidesOperation()
-        {
-            idal = DalFactory.GetIDAL();
-
-            if (getLineStaionworker.IsBusy)
-            {
-                getLineStaionworker.CancelAsync();
-            }
 
             #region Rides Operation Worker Initialization 
 
@@ -155,7 +142,7 @@ namespace BL
                 int i = 0;
                 foreach (var item in linesTrips)
                 {
-                    
+
                     Task.Factory.StartNew(() =>
                     {
                         TimeSpan timeToArrive = item.StartAt;
@@ -213,22 +200,38 @@ namespace BL
                             timeToArrive += idal.GetAdjacentStations(lineStation.Station.Code, lineStation.NextStation).Time;
                         }
 
-                        lineTiming.ArrivingTime = timeToArrive;
+
 
                         while (true)
                         {
-                            Thread.SpinWait(interval);
+                            lineTiming.ArrivingTime = timeToArrive - simulationTime;
+                            Thread.Sleep(50);
                             updateLineProgress(lineTiming);
                         }
                     });
 
 
-                
+
                     i++;
                 }
             };
 
             getLineStaionworker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        private RidesOperation()
+        {
+            idal = DalFactory.GetIDAL();
+
+            if (getLineStaionworker.IsBusy)
+            {
+                getLineStaionworker.CancelAsync();
+            }
+
+          
         }
 
         /// <summary>
