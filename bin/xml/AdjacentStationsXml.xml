@@ -562,10 +562,10 @@
   </AdjacentStations>
   <AdjacentStations>
     <PairId>71</PairId>
-    <Station1>43514</Station1>
-    <Station2>1367</Station2>
-    <Distance>76078.7957109332</Distance>
-    <Time>02:45:01</Time>
+    <Station1>12551</Station1>
+    <Station2>1369</Station2>
+    <Distance>48965.2578439651</Distance>
+    <Time>01:46:55</Time>
     <isActive>True</isActive>
   </AdjacentStations>
 </ArrayOfAdjacentStations>

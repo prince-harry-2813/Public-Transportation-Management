@@ -306,17 +306,17 @@
   </LineStation>
   <LineStation>
     <LineId>6</LineId>
-    <StationId>43514</StationId>
+    <StationId>12551</StationId>
     <LineStationIndex>0</LineStationIndex>
     <PrevStation>0</PrevStation>
-    <NextStation>1367</NextStation>
+    <NextStation>1369</NextStation>
     <isActive>true</isActive>
   </LineStation>
   <LineStation>
     <LineId>6</LineId>
-    <StationId>1367</StationId>
+    <StationId>1369</StationId>
     <LineStationIndex>1</LineStationIndex>
-    <PrevStation>43514</PrevStation>
+    <PrevStation>12551</PrevStation>
     <NextStation>0</NextStation>
     <isActive>true</isActive>
   </LineStation>

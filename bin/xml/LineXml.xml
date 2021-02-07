@@ -42,10 +42,10 @@
   </Line>
   <Line>
     <Id>6</Id>
-    <Code>4321</Code>
+    <Code>432</Code>
     <Area>General</Area>
-    <FirstStation>43514</FirstStation>
-    <LastStation>1367</LastStation>
+    <FirstStation>12551</FirstStation>
+    <LastStation>1369</LastStation>
     <isActive>true</isActive>
   </Line>
 </ArrayOfLine>
