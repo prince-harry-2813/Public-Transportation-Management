@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,13 +44,31 @@ namespace BL
         List<LineTrip> linesTrips = new List<LineTrip>();
         private List<LineTiming> lineTimes = new List<LineTiming>();
         private IDAL idal;
-        private IBL bl;
         private BackgroundWorker getLineStaionworker = new BackgroundWorker();
+
+        /// <summary>
+        /// private member that holds the global simulator time 
+        /// </summary>
         private TimeSpan simulationTime;
-        List<BusOnTrip> busesOnTrips = new List<BusOnTrip>();
+
         event Action<TimeSpan> clockObserver = null;
+
+        private event Action<LineTiming> updateLineProgress = null; 
+         
+        /// <summary>
+        /// 
+        /// </summary>
         private DispatcherTimer simulationTimer = new DispatcherTimer();
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal volatile bool Cancel;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int stationNumber;
 
         #endregion
 
@@ -62,6 +81,7 @@ namespace BL
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
         {
             Cancel = false;
+
             clockObserver = updateTime;
             TimeSpan simulatorTime = new TimeSpan(TimeSpan.FromSeconds(startTime.TotalSeconds).Days,
                 TimeSpan.FromSeconds(startTime.TotalSeconds).Hours,
@@ -82,12 +102,16 @@ namespace BL
 
                 simulatorTime += TimeSpan.FromSeconds(1);
                 updateTime.Invoke(simulatorTime);
+                simulationTime = simulatorTime;
                 //rideOperation.UpdateSimualtionTime(simulatorTime);
                 Debug.Print(simulatorTime.ToString());
             };
             simulationTimer.Start();
-
         }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
         private RidesOperation()
         {
             idal = DalFactory.GetIDAL();
@@ -131,37 +155,75 @@ namespace BL
                 int i = 0;
                 foreach (var item in linesTrips)
                 {
+                    
                     Task.Factory.StartNew(() =>
                     {
+                        TimeSpan timeToArrive = item.StartAt;
+
+                        #region Get All station Of line trip 
+
+                        List<BO.LineStation> lineStationsOfLine = new List<LineStation>();
+                        foreach (var stationItem in idal.GetAllLinesStationBy(station => station.LineId == item.LineId))
+                        {
+                            #region Adapter from DO to BO 
+                            var tmpLineStation = (LineStation)stationItem.CopyPropertiesToNew(typeof(LineStation));
+                            tmpLineStation.Station = new Station();
+                            DO.Station stationDO = new DO.Station();
+                            int stationID = stationItem.StationId;
+                            try
+                            {
+                                stationDO = idal.GetStation(stationID);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new BadBusStopIDException("check details", e);
+                            }
+
+                            stationDO.CopyPropertiesTo(tmpLineStation.Station);
+
+                            #endregion
+
+                            lineStationsOfLine.Add(tmpLineStation);
+                        }
+
+                        lineStationsOfLine.OrderBy(station => station.LineStationIndex);
+
+                        #endregion
+
                         LineTiming lineTiming = new LineTiming()
                         {
-                            LastStation = (Station)idal.GetStation(idal.GetLine(item.LineId).LastStation)
-                                .CopyPropertiesToNew(typeof(Station)),
+                            LastStation = lineStationsOfLine.Last().Station,
                             LineCode = item.LineId,
-                            
+                            LineID = item.LineId,
+                            StartedTime = item.StartAt,
                         };
-                        //Thread.CurrentThread.Name = $"LineTiming: {i} Line : {item.LineId} {item.}"
+
+                        Thread.CurrentThread.Name =
+                            $"{i} , {lineTiming.LineCode} , {lineTiming.LineID},{lineTiming.StartedTime}";
+
+                        if (lineStationsOfLine.Count() == 0)
+                            return;
+
+                        foreach (var lineStation in lineStationsOfLine)
+                        {
+                            if (lineStation.NextStation == 0)
+                            {
+                                break;
+                            }
+                            timeToArrive += idal.GetAdjacentStations(lineStation.Station.Code, lineStation.NextStation).Time;
+                        }
+
+                        lineTiming.ArrivingTime = timeToArrive;
+
+                        while (true)
+                        {
+                            Thread.SpinWait(interval);
+                            updateLineProgress(lineTiming);
+                        }
                     });
 
-                    ////Thread.SpinWait((int)VARIABLE.Frequency.TotalSeconds);
-                    //busesOnTrips.Add(new BusOnTrip()
-                    //{
-                    //    ActualTakeOff = simulationTime,
-                    //    Id = i,
-                    //    LineId = VARIABLE.LineId,
-                    //    isActive = true,
-                    //    LicenseNum = idal.GetAllBusesBy(bus => bus.Status == DO.BusStatusEnum.Ok).FirstOrDefault().LicenseNum,
-                    //    //NextStationAt = idal.GetAdjacentStations()
-                    //});
 
-                    //if (simulationTime.Subtract(item.StartAt).TotalSeconds > 0)
-                    //{
-                    //    busesOnTrips.Add(new BusOnTrip()
-                    //    {
-
-                    //    });
-                    //}
-
+                
                     i++;
                 }
             };
@@ -169,29 +231,18 @@ namespace BL
             getLineStaionworker.RunWorkerAsync();
         }
 
-
+        /// <summary>
+        /// cancel all simultor
+        /// </summary>
         public void StopSimulator()
         {
             Cancel = true;
         }
 
-
-        //public void StartSimulation()
-        //{
-        //    foreach (var item in linesTrips)
-        //    {
-        //        //   for
-        //        Task.Factory.StartNew(() =>
-        //        {
-        //            LineTiming lineTiming = new LineTiming()
-        //            {
-        //                // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
-        //                //   .CopyPropertiesToNew(typeof(Station))
-        //                //,ArrivingTime = 
-        //            };
-        //        });
-        //    }
-
-        //}
+        public void SetSimulationPanel(int station, Action<LineTiming> updateBus)
+        {
+            stationNumber = station;
+            updateLineProgress = updateBus;
+        }
     }
 }
