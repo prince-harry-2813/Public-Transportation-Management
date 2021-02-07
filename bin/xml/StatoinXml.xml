@@ -3052,4 +3052,11 @@
     <Latitude>31.982104</Latitude>
     <isActive>true</isActive>
   </Station>
+  <Station>
+    <Code>999920</Code>
+    <Name>המאבק </Name>
+    <Longitude>34.59743</Longitude>
+    <Latitude>31.57008</Latitude>
+    <isActive>true</isActive>
+  </Station>
 </ArrayOfStation>

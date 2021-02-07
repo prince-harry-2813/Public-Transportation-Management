@@ -22,7 +22,7 @@ namespace BL
 
         public static RidesOperation Instance
         {
-            get => instance;
+            get => instance ?? new RidesOperation();
             set
             {
                 if (Instance == null)
@@ -131,10 +131,15 @@ namespace BL
                 int i = 0;
                 foreach (var item in linesTrips)
                 {
-
-
                     Task.Factory.StartNew(() =>
                     {
+                        LineTiming lineTiming = new LineTiming()
+                        {
+                            LastStation = (Station)idal.GetStation(idal.GetLine(item.LineId).LastStation)
+                                .CopyPropertiesToNew(typeof(Station)),
+                            LineCode = item.LineId,
+                            
+                        };
                         //Thread.CurrentThread.Name = $"LineTiming: {i} Line : {item.LineId} {item.}"
                     });
 
@@ -164,22 +169,29 @@ namespace BL
             getLineStaionworker.RunWorkerAsync();
         }
 
-        public void StartSimulation()
-        {
-            foreach (var item in linesTrips)
-            {
-                //   for
-                Task.Factory.StartNew(() =>
-                {
-                    LineTiming lineTiming = new LineTiming()
-                    {
-                        // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
-                        //   .CopyPropertiesToNew(typeof(Station))
-                        //,ArrivingTime = 
-                    };
-                });
-            }
 
+        public void StopSimulator()
+        {
+            Cancel = true;
         }
+
+
+        //public void StartSimulation()
+        //{
+        //    foreach (var item in linesTrips)
+        //    {
+        //        //   for
+        //        Task.Factory.StartNew(() =>
+        //        {
+        //            LineTiming lineTiming = new LineTiming()
+        //            {
+        //                // LastStation = (LineStation)idal.GetStation(idal.GetLineStation(item.LineId).LastStation)
+        //                //   .CopyPropertiesToNew(typeof(Station))
+        //                //,ArrivingTime = 
+        //            };
+        //        });
+        //    }
+
+        //}
     }
 }

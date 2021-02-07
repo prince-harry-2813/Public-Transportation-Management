@@ -67,11 +67,11 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        private BL.BO.LineTiming busStop;
+        private LineTiming busStop;
         /// <summary>
         /// Hold Bus data 
         /// </summary>
-        public BL.BO.LineTiming BusStop
+        public LineTiming BusStop
         {
             get
             {
@@ -306,6 +306,8 @@ namespace PlGui.ViewModels.Bus
             ButtonsVisibility = true;
             MainLabelContent = "";
             InternalReadOnly = false;
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
 
         #endregion

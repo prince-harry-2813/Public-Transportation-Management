@@ -10,7 +10,19 @@ namespace BL
 {
     internal class BLImp : IBL
     {
-        private static IDAL iDal = DalApi.DalFactory.GetIDAL();
+        #region Private members \
+
+        /// <summary>
+        /// Oparates the rides functions 
+        /// </summary>
+        private RidesOperation ridesOperation = RidesOperation.Instance;
+
+        /// <summary>
+        /// static idal 
+        /// </summary>
+        private static IDAL iDal = DalApi.DalFactory.GetIDAL(); 
+
+        #endregion
 
         #region IBL Bus Implementation
 
@@ -663,14 +675,14 @@ namespace BL
 
 
         #endregion
+
         #region Ride Operation
 
         public void StopSimulator()
         {
-            // Cancel = true;
+            ridesOperation.StopSimulator();
         }
 
-        private RidesOperation rideOperation = RidesOperation.Instance;
 
         public void SetStationPanel(int station, Action<LineTiming> updateBus)
         {
@@ -679,13 +691,13 @@ namespace BL
                 //TODO: Shut down
             }
 
-            rideOperation.StartSimulation();
+
         }
         #endregion
 
-        void IBL.StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
+        void IBL.StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> updateTime)
         {
-            throw new NotImplementedException();
+            ridesOperation.StartSimulator(startTime , rate , updateTime);
         }
 
 

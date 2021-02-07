@@ -39,6 +39,7 @@
                 FontSize="14pt"
                 FontWeight="SemiBold" />
         </WrapPanel>
+
         <WrapPanel
             Height="70"
             Margin="5"

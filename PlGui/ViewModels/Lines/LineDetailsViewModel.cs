@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using PlGui.StaticClasses;
 
 namespace PlGui.ViewModels.Lines
 {
@@ -325,6 +326,7 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
         }
 
         /// <summary>

@@ -208,6 +208,8 @@ namespace PlGui.ViewModels.Bus
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
 
         /// <summary>

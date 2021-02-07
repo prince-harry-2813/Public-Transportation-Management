@@ -11,8 +11,8 @@ using Unity;
 
 namespace PlGui.ViewModels.Stations
 {
-    public class AddBusStopViewModel : BindableBase
-    {
+    public class AddBusStopViewModel : BindableBase , INavigationAware
+    { 
         #region Service Deceleration
 
         private IRegionManager regionManager;
@@ -100,6 +100,7 @@ namespace PlGui.ViewModels.Stations
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
         }
 
         /// <summary>
@@ -108,8 +109,8 @@ namespace PlGui.ViewModels.Stations
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
-            BusStop = (BL.BO.Station)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBusStop).FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
+            BusStop = (BL.BO.Station)navigationContext.Parameters.Where(pair => pair.Key == StringNames.SelectedBusStop).FirstOrDefault().Value ?? BusStop;
         }
         #endregion
     }

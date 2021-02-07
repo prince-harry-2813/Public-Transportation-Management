@@ -21,6 +21,7 @@ namespace PlGui.Views
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             viewModel.ComboBoxSelectionChanged();
         }
     }

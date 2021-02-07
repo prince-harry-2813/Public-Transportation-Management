@@ -14,7 +14,7 @@ using Unity;
 
 namespace PlGui.ViewModels.Lines
 {
-    public class AddLineViewModel : BindableBase
+    public class AddLineViewModel : BindableBase , INavigationAware
     {
         #region Service Deceleration
 
@@ -258,9 +258,17 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+
+            if (addWorker?.IsBusy == true)
+            {
+                addWorker.CancelAsync();
+                MessageBox.Show("Failed to add line please wait a minute before navigating from the window");
+            }
+
+            if (updaeteWorker?.IsBusy == true)
+                updaeteWorker.CancelAsync();
+            
             regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
-            addWorker.CancelAsync();
-            updaeteWorker.CancelAsync();
         }
 
         /// <summary>
@@ -269,8 +277,8 @@ namespace PlGui.ViewModels.Lines
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
-            Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
+            Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value ?? Line;
         }
         #endregion
     }

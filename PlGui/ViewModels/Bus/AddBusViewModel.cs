@@ -194,6 +194,8 @@ namespace PlGui.ViewModels.Bus
         {
             LicenseNum = "";
             RegistrationDate = DateTime.Now;
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
 
         /// <summary>

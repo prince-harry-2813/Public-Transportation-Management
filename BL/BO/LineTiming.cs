@@ -20,7 +20,7 @@ namespace BL.BO
         /// </summary>
         public TimeSpan StartedTime { get; set; }
 
-        public LineStation LastStation { get; set; }
+        public Station LastStation { get; set; }
 
         /// <summary>
         /// Arriving to station time
