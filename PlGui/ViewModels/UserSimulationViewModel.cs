@@ -1,4 +1,5 @@
 ﻿using BL.BLApi;
+using BL.BO;
 using PlGui.ViewModels.Bus;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -8,13 +9,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Media3D;
-using BL.BO;
-using PlGui.ViewModels.Bus;
-using PlGui.Views.Bus;
-using Prism.Regions;
+using System.Windows.Media.Imaging;
 
 namespace PlGui.ViewModels
 {
@@ -27,12 +25,12 @@ namespace PlGui.ViewModels
 
         #endregion
 
-        #region Properties Decleration
+        #region Properties Deceleration
 
         private int simulationHZ = 20;
-        
+
         /// <summary>
-        /// Simulation Dispatchering timer sec = Simulation time / Real sec 
+        /// Simulation dispatching timer sec = Simulation time / Real sec 
         /// </summary>
         public int SimulationHZ
         {
@@ -42,14 +40,14 @@ namespace PlGui.ViewModels
             }
         }
 
-        private ObservableCollection<LineTiming> lineTimings;
+        private ObservableCollection<LineTiming> lineTimings = new ObservableCollection<LineTiming>();
 
         /// <summary>
-        /// Simulation Dispatchering timer sec = Simulation time / Real sec 
+        /// Simulation dispatching timer sec = Simulation time / Real sec 
         /// </summary>
         public ObservableCollection<LineTiming> LineTimings
         {
-            get => lineTimings ; set
+            get => lineTimings; set
             {
                 value.OrderBy(timing => timing.ArrivingTime);
                 SetProperty(ref lineTimings, value);
@@ -59,7 +57,7 @@ namespace PlGui.ViewModels
 
         private bool isSimulationRuning;
         /// <summary>
-        /// Determinds wether simulation started runing
+        /// Determines whether simulation started to run
         /// </summary>
         public bool IsSimulationRuning
         {
@@ -73,7 +71,7 @@ namespace PlGui.ViewModels
 
         private bool isSimulationNotRuning = true;
         /// <summary>
-        /// Determinds wether simulation started runing
+        /// Determines whether simulation started to run
         /// </summary>
         public bool IsSimulationNotRuning
         {
@@ -97,21 +95,45 @@ namespace PlGui.ViewModels
             }
         }
 
-        private ObservableCollection<Station> stationCollection;
-        public ObservableCollection<Station> StationCollection { get=> stationCollection;
+        private ObservableCollection<Line> linesOfStation = new ObservableCollection<Line>();
+
+        public ObservableCollection<Line> LinesOfStation
+        {
+            get => linesOfStation;
             set
             {
+                SetProperty(ref linesOfStation, value);
+            }
+        }
+
+        private ObservableCollection<Station> stationCollection;
+        public ObservableCollection<Station> StationCollection
+        {
+            get => stationCollection;
+            set
+            {
+                value.Distinct();
                 SetProperty(ref stationCollection, value);
             }
         }
 
-        private Station station;
+        private Station station = new Station();
 
         public Station Station
         {
             get => station;
             set
             {
+                if (value != null)
+                {
+                    var a = Bl?.getLinesOfStation(value.Code) ?? null; 
+                    OfStation.Lines = a.Lines;
+                    LinesOfStation.Clear();
+                    foreach (var VARIABLE in OfStation.Lines)
+                    {
+                        LinesOfStation.Add(VARIABLE);
+                    }
+                }
                 SetProperty(ref station, value);
             }
         }
@@ -123,6 +145,38 @@ namespace PlGui.ViewModels
         private BackgroundWorker clockWorker;
         private BackgroundWorker getStationsWorker;
 
+        private LinesOfStation OfStation = new LinesOfStation();
+
+        private LineTiming recivedLineTiming;
+        public LineTiming RecivedLineTiming
+        {
+            get => recivedLineTiming;
+            set
+            {
+                var timing = value;
+                var a = LineTimings.Where(lineTiming => lineTiming.LineID == timing.LineID).FirstOrDefault();
+                // if therisnt add new instance 
+                if (a is null)
+                {
+                    var b = new LineTiming();
+                    b = timing;
+                    LineTimings.Add(b);
+                }
+                // update the item
+                else
+                {
+                    LineTiming z = (LineTiming)a;
+                }
+
+                // sort 
+                LineTimings.OrderBy(lineTiming => lineTiming.ArrivingTime);
+                // update view 
+                RaisePropertyChanged("LineTimings");
+                // update last bus 
+                BusDetailsDataContext.BusStop = LineTimings.LastOrDefault();
+                RaisePropertyChanged("BusStop");
+            }
+        }
 
         #endregion
 
@@ -145,13 +199,15 @@ namespace PlGui.ViewModels
 
             #region Properties Decleration
 
+            #region Get stations Worker
             StationCollection = new ObservableCollection<Station>();
+            var listLS = Bl.GetAllLinesStation().ToList();
             getStationsWorker = new BackgroundWorker();
             getStationsWorker.DoWork += (sender, args) =>
             {
-                foreach (var item in Bl.GetAllStations())
+                foreach (var item in Bl.GetStationBy(s => listLS.Any(ls => ls.Station.Code == s.Code)))
                 {
-                    getStationsWorker.ReportProgress(0 , item);
+                    getStationsWorker.ReportProgress(0, item);
                 }
             };
             getStationsWorker.WorkerReportsProgress = true;
@@ -164,6 +220,11 @@ namespace PlGui.ViewModels
             Station = StationCollection?.FirstOrDefault();
 
             SimulationStartTime = DateTime.Now.TimeOfDay;
+            #endregion
+
+            #region Line timing list initialization 
+
+            #endregion
 
             // Call Navigate to bus details when region BusDetailsRegion added to the collection 
             regionManager.Regions.CollectionChanged += (sender, args) =>
@@ -178,7 +239,7 @@ namespace PlGui.ViewModels
                     };
                     regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
                     var a = (UserControl)regionManager.Regions["BusDetailsRegion"].Views.FirstOrDefault();
-                    //BusDetailsDataContext.InsertBusPropertiesToCollection(TTODO: ADD the dispaly properties object);
+                    BusDetailsDataContext = (BusDetailsViewModel) a.DataContext;
                 }
             };
 
@@ -200,6 +261,8 @@ namespace PlGui.ViewModels
         private void StartStopToggel(string parameter)
         {
 
+            #region Stop Region
+
             if (parameter.Equals("Stop") && clockWorker != null)
             {
                 Bl.StopSimulator();
@@ -208,35 +271,54 @@ namespace PlGui.ViewModels
                 IsSimulationRuning = false;
             }
 
+            #endregion
+
+            #region Start 
+
             if (parameter.Equals("Start"))
             {
+                if (Station is null)
+                {
+                    MessageBox.Show("Please choose station before statrting the simulator");
+                    return;
+                }
+
+                 
+                
+
                 clockWorker = new BackgroundWorker();
                 clockWorker.WorkerReportsProgress = true;
                 clockWorker.WorkerSupportsCancellation = true;
                 clockWorker.DoWork += (sender, args) =>
                 {
-                         Bl.StartSimulator(SimulationStartTime , SimulationHZ , span => SimulationStartTime = span);
+                    Bl.SetStationPanel(station.Code, timing => RecivedLineTiming = timing);
+                    Bl.StartSimulator(SimulationStartTime, SimulationHZ, span => SimulationStartTime = span);
                 };
 
+             
                 IsSimulationRuning = true;
                 clockWorker.RunWorkerAsync();
             }
+            
+            #endregion
         }
         #endregion
 
         #region Public Methoed
 
         public void ComboBoxSelectionChanged()
-        { 
+        {
             //Bl.SetStationPanel(Station.Code , );
             var param = new NavigationParameters()
             {
                 {"InternalReadOnly", true},
                 {"ButtonsVisibility" , false },
                 {"MainLabelContent" , (object)"Last Arriving Bus" },
-                {"BusStop" , null  } //TODO: Insert Last bus in station 
+                {"BusStopVisibilty" , true  } //TODO: Insert Last bus in station 
             };
             regionManager.RequestNavigate("BusDetailsRegion", "BusDetails", param);
+
+
         }
 
         #endregion

@@ -63,6 +63,7 @@ namespace PlGui.ViewModels.Stations
         #region Service Decleration
 
         public IBL Bl { get; set; }
+        private IRegionManager regionManager;
 
         #endregion
 
@@ -72,11 +73,11 @@ namespace PlGui.ViewModels.Stations
 
         #endregion
 
-        public BusStopDetailsViewModel(IBL bl)
+        public BusStopDetailsViewModel(IBL bl , IRegionManager manager)
         {
 
             Bl = bl;
-
+            regionManager = manager;
             #region Command Implemetaion
 
             BusStopDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
@@ -136,6 +137,8 @@ namespace PlGui.ViewModels.Stations
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
 
         /// <summary>

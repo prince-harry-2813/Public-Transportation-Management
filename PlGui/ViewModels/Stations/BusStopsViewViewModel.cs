@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using BL.BLApi;
@@ -13,7 +14,7 @@ using Unity;
 
 namespace PlGui.ViewModels.Stations
 {
-    public class BusStopsViewViewModel : BindableBase
+    public class BusStopsViewViewModel : BindableBase , INavigationAware
     {
 
         #region Properties Decleration
@@ -115,6 +116,21 @@ namespace PlGui.ViewModels.Stations
                     return;
             }
             Bl.DeleteStation(BusStop);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
         #endregion
     }

@@ -6,6 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Unity;
 
@@ -134,10 +135,12 @@ namespace PlGui.ViewModels.Lines
         {
             LinesCollection = new ObservableCollection<Line>();
             LinesCollection.Clear();
-            foreach (var VARIABLE in Bl.GetAllLines())
+            foreach (var variable in Bl.GetLinesBy(l=>l.IsActive||!l.IsActive))
             {
-                LinesCollection.Add(VARIABLE);
+                LinesCollection.Add(variable);
+               
             }
+            
         }
 
         #region INavigation Aware Implementation 
@@ -154,8 +157,9 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-           //throw new System.NotImplementedException();
-        } 
+            regionManager.Regions[StringNames.MainRegion]
+                .Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+        }
         #endregion
 
         #endregion

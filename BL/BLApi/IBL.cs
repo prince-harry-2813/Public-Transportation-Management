@@ -49,7 +49,7 @@ namespace BL.BLApi
 
         void DeleteStation(BO.Station station);
 
-        BO.Station GetStation(int lineId);
+        BO.Station GetStation(int ID);
 
         IEnumerable<BO.Station> GetAllStations();
 
@@ -62,7 +62,7 @@ namespace BL.BLApi
 
         void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
         void StopSimulator();
-        void SetStationPanel(int station, Action<LineTiming> updateBus);
+        void SetStationPanel(int station, Func<LineTiming ,LineTiming> updateBus);
 
         #endregion
 
@@ -91,6 +91,8 @@ namespace BL.BLApi
 
 
         #endregion
+
+        LinesOfStation getLinesOfStation(int stationCode);
 
     }
 }

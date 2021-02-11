@@ -15,6 +15,7 @@
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:NumberToVisibiltyConverter x:Key="NumberToVisibiltyConverter" />
         <converters:StatusToColorConverter x:Key="StatusToColorConverter" />
+        <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
     </UserControl.Resources>
 
     <!--  Main Grid  -->
@@ -178,9 +179,9 @@
             Margin="10"
             HorizontalContentAlignment="Stretch"
             Background="WhiteSmoke"
-            SelectedItem="{Binding Line}"
+            ItemsSource="{Binding LinesCollection}"
             MouseDoubleClick="LbBuses_OnMouseUp"
-            ItemsSource="{Binding LinesCollection}">
+            SelectedItem="{Binding Line}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid
@@ -198,6 +199,7 @@
                         <fa:FontAwesome
                             Grid.Column="0"
                             VerticalAlignment="Center"
+                            Foreground="{Binding IsActive, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToColorConverter}}"
                             Icon="Solid_Bus" />
 
                         <Label
@@ -211,7 +213,7 @@
                             x:Name="frameLB"
                             Grid.Column="2"
                             Width="Auto"
-                            Content="{Binding Path=Code,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Content="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             ContentStringFormat=" {0} : קו"
                             Foreground="Black"
                             MouseDoubleClick="OnContentChanged" />
@@ -228,22 +230,22 @@
                             </Button.Content>
                         </Button>-->
 
-                      
-						<!--<ComboBox
+
+                        <!--<ComboBox
                             Grid.Column="4"
                             Height="18pt"
                             Margin="2"
                             Padding="3"
                             MouseUp="UIElement_OnMouseUp"
                             Content="תחנות הקו"
-                            
+
                             FontFamily="Broadway"
                             FontSize="13"
                             FontWeight="Bold" />
 
 							<ComboBoxItem Content="{Binding Stations.Station.Code ,UpdateSourceTrigger=PropertyChanged}"></ComboBoxItem>
 						</ComboBox>-->
-					</Grid>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

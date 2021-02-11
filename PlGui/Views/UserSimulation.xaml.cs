@@ -18,13 +18,10 @@ namespace PlGui.Views
             LastArrivadBusVM = (BusDetailsViewModel)viewModel.BusDetailsDataContext;
         }
 
-        private void DatePickerTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             viewModel.ComboBoxSelectionChanged();
         }
     }

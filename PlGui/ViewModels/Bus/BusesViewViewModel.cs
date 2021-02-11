@@ -191,9 +191,9 @@ namespace PlGui.ViewModels.Bus
         private void RefreshView()
         {
             LbItemSource.Clear();
-            foreach (var VARIABLE in Bl.GetAllBuses())
+            foreach (var variable in Bl.GetAllBuses())
             {
-                LbItemSource.Add(VARIABLE);
+                LbItemSource.Add(variable);
             }
         }
 
@@ -208,6 +208,8 @@ namespace PlGui.ViewModels.Bus
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
+
         }
 
         /// <summary>

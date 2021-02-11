@@ -1,23 +1,21 @@
 ﻿using BL.BLApi;
-using PlGui.StaticClasses;
+using BL.BO;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
-using BL.BO;
+using PlGui.StaticClasses;
 
 namespace PlGui.ViewModels.Lines
 {
-    public class LineDetailsViewModel : BindableBase , INavigationAware
+    public class LineDetailsViewModel : BindableBase, INavigationAware
     {
 
-        #region Properties Declaraion
+        #region Properties Declaration
 
         private BL.BO.Line line = new Line();
         /// <summary>
@@ -35,11 +33,142 @@ namespace PlGui.ViewModels.Lines
             }
         }
 
+        private uint maxIndex;
+        /// <summary>
+        /// Max Index in line 
+        /// </summary>
+        public uint MaxIndex
+        {
+            get
+            {
+                return maxIndex;
+            }
+            set
+            {
+                SetProperty(ref maxIndex, value);
+            }
+        }
+
+        private uint index = 10000;
+        /// <summary>
+        /// Max Index in line 
+        /// </summary>
+        public uint Index
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                
+                if (value > Line?.Stations.Count())
+                {
+                    value = (uint)Line?.Stations.Count();
+                }
+                SetProperty(ref index, value);
+            }
+        }
+
+        private uint canAddStation;
+        /// <summary>
+        /// true only if index and station was choosen  
+        /// </summary>
+        public uint CanAddStation
+        {
+            get
+            {
+                return canAddStation;
+            }
+            set
+            {
+                SetProperty(ref canAddStation, value);
+            }
+        }
+
+
+
+        private Station stationToAdd;
+        public Station StationToAdd
+        {
+            get { return stationToAdd; }
+            set
+            {
+
+                lineStToAdj = new LineStation()
+                {
+                    Station = value,
+                    IsActive = true,
+                    LineId = Line.Id,
+                    LineStationIndex = 0,
+                    NextStation = 0,
+                    PrevStation = 0
+                };
+                SetProperty(ref stationToAdd, value);
+            }
+        }
+
+        private ObservableCollection<Station> stations;
+        public ObservableCollection<Station> Stations
+        {
+            get { return stations; }
+            set { SetProperty(ref stations, value); }
+        }
+
+
+        private LineStation lineStToAdj;
+        public LineStation LineStToAdj
+        {
+            get { return lineStToAdj; }
+            set { SetProperty(ref lineStToAdj, value); }
+        }
+
+        private Area enumsArea;
+
+
+        private string areaString;
+        public string AreaString
+        {
+            get { return areaString; }
+            set
+            {
+                bool sucseed = Enum.TryParse(value, out enumsArea);
+                if (sucseed)
+                {
+                    Line.Area = enumsArea;
+                    RaisePropertyChanged("Line");
+                }
+                SetProperty(ref areaString, value);
+            }
+        }
+
+        private ObservableCollection<string> areas = new ObservableCollection<string>();
+
+        public ObservableCollection<string> Areas
+        {
+            get => areas;
+            set
+            {
+
+                SetProperty(ref areas, value);
+            }
+        }
+
+        //public ObservableCollection<string> Areas = new ObservableCollection<string>(){ 
+
+        //// "General",
+        ////"South",
+        ////"Jerusalem",
+        ////"Center",
+        ////"North"
+        //};
+
         private bool isInEditMode;
         /// <summary>
         /// Hold Bus data 
         /// </summary>
-        public bool IsInEditMode { 
+        public bool IsInEditMode
+        {
             get
             {
                 return isInEditMode;
@@ -51,7 +180,6 @@ namespace PlGui.ViewModels.Lines
         }
 
 
-        public int LicenseNumber { get; set; }
         #region Private Members
 
         private int lineId;
@@ -72,7 +200,7 @@ namespace PlGui.ViewModels.Lines
         #region Command deceleration
 
         public ICommand BusDetailsButtonCommand { get; set; }
-
+        public ICommand AddLineStationButtonCommand { get; set; }
         #endregion
 
         public LineDetailsViewModel(IRegionManager manager, IBL bl)
@@ -84,13 +212,25 @@ namespace PlGui.ViewModels.Lines
 
             #endregion
 
-            #region Command Implementation
+            #region Command Initialization
 
             BusDetailsButtonCommand = new DelegateCommand<string>(LineDetailsButton);
+            AddLineStationButtonCommand = new DelegateCommand(AddLineStationButton);
+            Stations = new ObservableCollection<Station>();
+
+            foreach (var item in Bl.GetAllStations())
+            {
+                Stations.Add(item);
+            }
 
             #endregion
 
-            #region Properties Implementation
+            #region Properties Initialization
+
+            foreach (var item in Enum.GetNames(typeof(Area)))
+            {
+                Areas.Add(item);
+            }
 
             #endregion
         }
@@ -99,7 +239,16 @@ namespace PlGui.ViewModels.Lines
 
         private void LineDetailsButton(string commandParameter)
         {
-           
+            if (Line.FirstStation == null)
+            {
+                Line.FirstStation = new LineStation();
+                Line.FirstStation = Bl.GetAllLinesStationBy(ls => ls.LineId == Line.Id).OrderBy(o => o.LineStationIndex).First();
+            }
+            if (Line.LastStation == null)
+            {
+                Line.LastStation = new LineStation();
+                Line.LastStation = Bl.GetAllLinesStationBy(ls => ls.LineId == Line.Id).OrderBy(o => o.LineStationIndex).Last();
+            }
             switch (commandParameter)
             {
                 case "Edit":
@@ -108,12 +257,63 @@ namespace PlGui.ViewModels.Lines
                         IsInEditMode = true;
                         break;
                     }
-                   Bl.UpdateLine(Line);
-                    break;
+                    try
+                    {
+                        //  Line.Area = EnumsArea;
+                        Bl.UpdateLine(Line);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.InnerException.Message + " couldn't update", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    }
                 case "Delete":
-                    Bl.DeleteLine(Line);
-                    break;
+                    try
+                    {
+                        Bl.DeleteLine(Line);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.InnerException.Message + " couldn't Delete", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    }
             }
+        }
+
+        private void AddLineStationButton()
+        {
+            if (Index == 10000 || StationToAdd == null||Line.Stations.Any(s=>s.Station.Code==LineStToAdj.Station.Code))
+            {
+                MessageBox.Show(".לא ניתן להוסיף תחנה זאת \n אנא בדוק הפרטים שהוזנו", "שגיאה בהוספת תחנה", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            LineStToAdj.LineStationIndex = (int)index;
+            LineStToAdj.NextStation = Line.Stations.Count() == index ? 0 : Line.Stations.ElementAt((int)index).Station.Code;
+            LineStToAdj.PrevStation = index == 0 ? 0 : Line.Stations.ElementAt((int)index-1).Station.Code;
+            var stationsList = Line.Stations.ToList();
+            stationsList.Insert((int)index, LineStToAdj);
+
+            //updating the index number for each station in line trip
+            foreach (var lStation in stationsList.Where(e=>e.Station.Code!=StationToAdd.Code))
+            {
+                if (lStation.LineStationIndex>=index)
+                lStation.LineStationIndex+=1;
+                if (lStation.LineStationIndex != 0)
+                {
+                    lStation.PrevStation = stationsList.ElementAt(lStation.LineStationIndex-1).Station.Code;
+                }
+                if (lStation.LineStationIndex < stationsList.Count() - 1 )
+                {
+                    lStation.NextStation = stationsList.ElementAt(lStation.LineStationIndex + 1).Station.Code;
+                }
+            }
+
+            Line.Stations = stationsList;
+            Bl.UpdateLine(Line);
+            RaisePropertyChanged("Line");
         }
 
         #endregion
@@ -127,6 +327,7 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
         }
 
         /// <summary>
@@ -136,11 +337,11 @@ namespace PlGui.ViewModels.Lines
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             // Initialize Interface 
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
+            // Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
 
             // Initialize View object 
             Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value;
-                  //  InsertBusPropertiesToCollection(Line);
+            //  InsertBusPropertiesToCollection(Line);
         }
 
         #endregion
@@ -155,38 +356,38 @@ namespace PlGui.ViewModels.Lines
         ////    insertingSecondListWorker.DoWork += (sender, args) =>
         //        foreach (var item in line.Stations)
         //        {
-                    
+
         //        }
         //}
 
         //private void InsertBusPropertiesToCollection(BL.BO.Line line)
         //{
         //    if (line == null ) return;
-            
+
         //    LbItemSource = new ObservableCollection<PropertyDetails>();
-        //    foreach (PropertyInfo VARIABLE in line.GetType().GetProperties())
+        //    foreach (PropertyInfo variable in line.GetType().GetProperties())
         //    {
-        //        if (VARIABLE.PropertyType is IEnumerable<Station>)
+        //        if (variable.PropertyType is IEnumerable<Station>)
         //        {
         //            continue;
         //        }
 
         //        LbItemSource.Add(new PropertyDetails()
         //        {
-        //            PropertyType = VARIABLE.PropertyType,
-        //            PropertyName = VARIABLE.Name,
-        //            PropertyValue = VARIABLE.GetValue(obj: line, null).ToString()
+        //            PropertyType = variable.PropertyType,
+        //            PropertyName = variable.Name,
+        //            PropertyValue = variable.GetValue(obj: line, null).ToString()
         //        });
         //    }
         //}
 
         //private void InsertCollectionToBus()
         //{
-        //    foreach (var VARIABLE in Line.GetType().GetProperties())
+        //    foreach (var variable in Line.GetType().GetProperties())
         //    {
-        //        var property = LbItemSource.Where(details => details.PropertyName == VARIABLE.Name);
+        //        var property = LbItemSource.Where(details => details.PropertyName == variable.Name);
 
-        //        VARIABLE.SetValue(Line, property.GetEnumerator().Current.PropertyValue);
+        //        variable.SetValue(Line, property.GetEnumerator().Current.PropertyValue);
         //    }
         //}
 

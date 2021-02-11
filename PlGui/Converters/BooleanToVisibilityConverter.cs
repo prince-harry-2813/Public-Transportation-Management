@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PlGui.Converters
 {
@@ -27,6 +28,37 @@ namespace PlGui.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (value.Equals(Visibility.Collapsed));
+        }
+    }
+    public class BooleanToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var color = new SolidColorBrush(Colors.Red);
+
+            if (value != null)
+            {
+                if ((bool)value)
+                {
+                    color = new SolidColorBrush(Colors.Green);
+                }
+                else
+                {
+                    color = new SolidColorBrush(Colors.Red);
+
+                }
+            }
+            else
+            {
+                return Binding.DoNothing;
+            }
+
+            return color;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value.Equals(Colors.Red));
         }
     }
 }

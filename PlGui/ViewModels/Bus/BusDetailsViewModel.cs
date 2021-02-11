@@ -67,11 +67,11 @@ namespace PlGui.ViewModels.Bus
             }
         }
 
-        private BL.BO.LineTiming busStop;
+        private LineTiming busStop;
         /// <summary>
         /// Hold Bus data 
         /// </summary>
-        public BL.BO.LineTiming BusStop
+        public LineTiming BusStop
         {
             get
             {
@@ -306,6 +306,16 @@ namespace PlGui.ViewModels.Bus
             ButtonsVisibility = true;
             MainLabelContent = "";
             InternalReadOnly = false;
+            BusStop = null;
+            Bus = null;
+
+            BusDetaisVisibilty = false;
+            BusStopVisibilty = false;
+            BusValueIsReadOnly = false;
+            ButtonsVisibility = false;
+            IsInEditMode = false;
+            MainLabelContent = "Bus Details";
+            
         }
 
         #endregion

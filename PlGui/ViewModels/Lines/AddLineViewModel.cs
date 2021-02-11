@@ -10,12 +10,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using PlGui.Views.Lines;
 using Unity;
 
 namespace PlGui.ViewModels.Lines
 {
-    public class AddLineViewModel : BindableBase
+    public class AddLineViewModel : BindableBase , INavigationAware
     {
         #region Service Deceleration
 
@@ -25,7 +24,7 @@ namespace PlGui.ViewModels.Lines
         #endregion
 
         #region Properties Declaration
-        
+
 
         private BL.BO.Line line = new BL.BO.Line()
         {
@@ -35,9 +34,10 @@ namespace PlGui.ViewModels.Lines
             },
             FirstStation = new LineStation()
             {
-                Station =  new Station()
+                Station = new Station()
             }
-            ,Stations =  new List<LineStation>()
+            ,
+            Stations = new List<LineStation>()
         };
         /// <summary>
         /// Hold Bus data 
@@ -76,7 +76,7 @@ namespace PlGui.ViewModels.Lines
             get => firstStation;
             set
             {
-                Line.FirstStation.Station = FirstStation;
+                Line.FirstStation.Station = value;
                 SetProperty(ref firstStation, value);
             }
         }
@@ -98,7 +98,7 @@ namespace PlGui.ViewModels.Lines
 
         private BackgroundWorker updaeteWorker;
         private BackgroundWorker addWorker;
-        BackgroundWorker getStationsList ;
+        BackgroundWorker getStationsList;
 
         public BL.BLApi.IBL Bl { get; set; }
 
@@ -112,12 +112,12 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        public AddLineViewModel(IRegionManager manager, IUnityContainer container , IBL bl)
+        public AddLineViewModel(IRegionManager manager, IUnityContainer container, IBL bl)
         {
             #region Service Init
 
             Bl = bl;
-            Line.Id = bl.GetLinesBy(l => l.IsActive || !l.IsActive).Count()+1;
+            Line.Id = bl.GetLinesBy(l => l.IsActive || !l.IsActive).Count() + 1;
             #endregion
 
             #region Properties Initialization
@@ -138,15 +138,15 @@ namespace PlGui.ViewModels.Lines
             getStationsList.WorkerReportsProgress = true;
             getStationsList.DoWork += (sender, args) =>
             {
-                foreach (var VARIABLE in Bl.GetAllStations())
+                foreach (var variable in Bl.GetAllStations())
                 {
-                    if (VARIABLE.isActive)
+                    if (variable.isActive)
                     {
-                        getStationsList.ReportProgress(0, VARIABLE);
+                        getStationsList.ReportProgress(0, variable);
                     }
                 }
-                int a = Bl.GetAllLinesStationBy(station => station.IsActive || !station.IsActive).Count() + 1; 
-                getStationsList.ReportProgress(0 , a);
+                int a = Bl.GetAllLinesStationBy(station => station.IsActive || !station.IsActive).Count() + 1;
+                getStationsList.ReportProgress(0, a);
             };
             getStationsList.ProgressChanged += (sender, args) =>
             {
@@ -214,23 +214,31 @@ namespace PlGui.ViewModels.Lines
                 addWorker.WorkerSupportsCancellation = true;
                 addWorker.DoWork += (sender, args) =>
                 {
+                    Line = this.Line;
                     Line.FirstStation.Station = FirstStation;
                     Line.LastStation.Station = LastStation;
                     Line.FirstStation.LineStationIndex = 0;
                     Line.LastStation.LineStationIndex = Line.Stations.Count();
                     Bl.AddLine(Line);
+                    Line = new Line()
+                    {
+                        LastStation = new LineStation() { Station = new Station() },
+                        FirstStation = new LineStation() { Station = new Station() },
+                        Stations = new List<LineStation>(),
+                        Id = Bl.GetLinesBy(l => l.IsActive || !l.IsActive).Count() + 1
+                     };
                 };
                 addWorker.RunWorkerAsync();
 
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Couldn't Add line please check the new information \n {exception.Message}" );
+                MessageBox.Show($"Couldn't Add line please check the new information \n {exception.Message}");
             }
             finally
             {
                 // GO Back to Bus Details Info 
-                regionManager.RequestNavigate(StringNames.MainRegion,StringNames.LinesView);
+                regionManager.RequestNavigate(StringNames.MainRegion, StringNames.LinesView);
             }
         }
 
@@ -241,7 +249,7 @@ namespace PlGui.ViewModels.Lines
 
         #endregion
 
-        #region Interface Implementaion
+        #region Interface Implementation
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -250,9 +258,17 @@ namespace PlGui.ViewModels.Lines
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-           regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
-           addWorker.CancelAsync();
-           updaeteWorker.CancelAsync();
+
+            if (addWorker?.IsBusy == true)
+            {
+                addWorker.CancelAsync();
+               // MessageBox.Show("Failed to add line please wait a minute before navigating from the window");
+            }
+
+            if (updaeteWorker?.IsBusy == true)
+                updaeteWorker.CancelAsync();
+            
+            regionManager.Regions[StringNames.MainRegion].Remove(regionManager.Regions[StringNames.MainRegion].ActiveViews.FirstOrDefault());
         }
 
         /// <summary>
@@ -261,8 +277,8 @@ namespace PlGui.ViewModels.Lines
         /// <param name="navigationContext"></param>
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value;
-            Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value;
+            Bl = (IBL)navigationContext.Parameters.Where(pair => pair.Key == StringNames.BL).FirstOrDefault().Value ?? Bl;
+            Line = (BL.BO.Line)navigationContext.Parameters.Where(pair => pair.Key == "Line").FirstOrDefault().Value ?? Line;
         }
         #endregion
     }

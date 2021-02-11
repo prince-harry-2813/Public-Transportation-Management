@@ -6,16 +6,17 @@
     xmlns:fa="http://schemas.fontawesome.com/icons/"
     xmlns:ns="clr-namespace:PlGui.ViewModels"
     xmlns:prism="http://prismlibrary.com/"
-    MinWidth="525"
     Title="{Binding Title}"
     Width="525"
     Height="350"
+    MinWidth="525"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="WhiteSmoke"
     SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParameterToTitleConverter x:Key="ParameterToTitleConverter" />
+
     </Window.Resources>
 
 

@@ -22,12 +22,12 @@ namespace DalXml
         // static XElement configXml;
 
         static readonly string
-            AdjacentStationsPath = "AdjacentStationsXml.xml",
+            AdjacentStationsPath = @"AdjacentStationsXml.xml",
             BusPath = "BusXml.xml",
             BusOnTripPath = "BusOnTripXMl.xml",
             LinePath = "LineXml.xml",
             LineStationPath = "LineStationXml.xml",
-            LineTripPath = "LineTripXml.xml",
+            LineTripPath = @"LineTripXml.xml",
             StationPath = "StatoinXml.xml",
             TripPath = "TripXml.xml",
             UserPath = "UserXml.xml";
@@ -69,12 +69,12 @@ namespace DalXml
                    select s1;
         }
 
-        public AdjacentStations GetAdjacentStations(int id)
+        public AdjacentStations GetAdjacentStations(int station1, int staion2)
         {
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
             AdjacentStations adjacents = (from s in AdjacentStationsRootElement.Elements()
-                                          where int.Parse(s.Element("PairId").Value) == id && bool.Parse(s.Element("isActive").Value)
+                                          where int.Parse(s.Element("Station1").Value) == station1 && int.Parse(s.Element("Station2").Value) == staion2 && bool.Parse(s.Element("isActive").Value)
                                           select new AdjacentStations()
                                           {
                                               PairId = int.Parse(s.Element("PairId").Value),
@@ -87,7 +87,7 @@ namespace DalXml
 
             if (adjacents == null)
             {
-                throw new BadIdExeption(id, $"Those adjacent Stations doesn't exist {id}");
+                throw new BadIdExeption(station1, $"Those adjacent Stations doesn't exist {station1}{staion2}");
             }
             return adjacents;
         }
@@ -97,14 +97,14 @@ namespace DalXml
             XElement AdjacentStationsRootElement = XMLTools.LoadListFromXMLElement(AdjacentStationsPath);
 
             XElement adjElem = (from s in AdjacentStationsRootElement.Elements()
-                                where int.Parse(s.Element("PairId").Value) == adjacentStations.PairId
+                                where int.Parse(s.Element("Station1").Value) == adjacentStations.Station1 && int.Parse(s.Element("Station2").Value) == adjacentStations.Station2
                                 select s).FirstOrDefault();
             if (adjElem != null)
             {
                 if (!bool.Parse(adjElem.Element("isActive").Value))
                     adjElem.Element("isActive").Value = adjacentStations.isActive.ToString();
                 else
-                    throw new DuplicateObjExeption(adjacentStations.PairId, $"Adjacent Stations already exist in system st'1:{adjacentStations.Station1} - st'2 {adjacentStations.Station2}");
+                    return;
             }
             else
             {
@@ -113,7 +113,7 @@ namespace DalXml
                     new XElement("Station1", adjacentStations.Station1.ToString()),
                     new XElement("Station2", adjacentStations.Station2.ToString()),
                     new XElement("Distance", adjacentStations.Distance.ToString()),
-                    new XElement("Time", adjacentStations.Time.ToString()),
+                    new XElement("Time", adjacentStations.Time.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
                     new XElement("isActive", adjacentStations.isActive.ToString()));
                 AdjacentStationsRootElement.Add(adjElem1);
             }
@@ -416,7 +416,7 @@ namespace DalXml
         public void UpdateLine(Line line)
         {
             List<Line> Lines = XMLTools.LoadListFromXMLSerializer<Line>(LinePath);
-            var lineCheck = Lines.FirstOrDefault(b => b.isActive && b.Id == line.Id);
+            var lineCheck = Lines.FirstOrDefault(b => b.Id == line.Id);
             if (lineCheck != null)
             {
                 Lines.Remove(lineCheck);
@@ -476,7 +476,7 @@ namespace DalXml
             List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
             return from l in Lines
                    where predicate(l)
-                   orderby l.LineId 
+                   orderby l.LineId
                    orderby l.LineStationIndex
                    select l;
         }
@@ -490,8 +490,10 @@ namespace DalXml
             if (lineCheck != null)
             {
                 if (!lineCheck.isActive)
+                {
                     lineCheck.isActive = true;
-
+                    UpdateLineStation(lineStation);
+                }
                 else
                     throw new DuplicateObjExeption(lineStation.StationId, "Line Station already exist in system");
             }
@@ -521,7 +523,26 @@ namespace DalXml
 
         public void UpdateLineStation(int lineId, int stationCode, Action<LineStation> update)
         {
-            throw new NotImplementedException();
+            List<LineStation> Lines = XMLTools.LoadListFromXMLSerializer<LineStation>(LineStationPath);
+            var lineCheck = Lines.FirstOrDefault(b => b.LineId == lineId && b.StationId == stationCode);
+            if (lineCheck != null)
+            {
+                var newLineSt = new LineStation()
+                {
+                    isActive = lineCheck.isActive,
+                    StationId = lineCheck.StationId,
+                    LineStationIndex = lineCheck.LineStationIndex,
+                    LineId = lineCheck.LineId,
+                    NextStation = lineCheck.NextStation,
+                    PrevStation = lineCheck.PrevStation
+                };
+                update(newLineSt);
+                Lines.Remove(lineCheck);
+                Lines.Add(newLineSt);
+            }
+            else
+                throw new BadIdExeption(stationCode, "Line station doesn't exist or deleted");
+            XMLTools.SaveListToXMLSerializer(Lines, LineStationPath);
         }
 
         public void DeleteLineStation(int lineId, int stationCode)
@@ -573,23 +594,31 @@ namespace DalXml
 
         public void AddLineTrip(LineTrip lineTrip)
         {
-
             List<LineTrip> Lines = XMLTools.LoadListFromXMLSerializer<LineTrip>(LineTripPath);
+            XElement LineTripsRootElement = XMLTools.LoadListFromXMLElement(LineTripPath);
 
-            var lineCheck = Lines.FirstOrDefault(b => b.Id == lineTrip.Id);
-            if (lineCheck != null)
+            XElement adjElem = (from s in LineTripsRootElement.Elements()
+                                where int.Parse(s.Element("Id").Value) == lineTrip.Id
+                                select s).FirstOrDefault();
+            if (adjElem != null)
             {
-                if (!lineCheck.isActive)
-                    lineCheck.isActive = true;
-
+                if (!bool.Parse(adjElem.Element("isActive").Value))
+                    adjElem.Element("isActive").Value = lineTrip.isActive.ToString();
                 else
-                    throw new DuplicateObjExeption(lineTrip.Id, "Line Trip already exist in system");
+                    return;
             }
             else
             {
-                Lines.Add(lineTrip);
+                XElement adjElem1 = new XElement("LineTrip",
+                    new XElement("Id", lineTrip.Id.ToString()),
+                    new XElement("LineId", lineTrip.LineId.ToString()),
+                    new XElement("StartAt", lineTrip.StartAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                    new XElement("Frequency", lineTrip.Frequency.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                    new XElement("FinishAt", lineTrip.FinishAt.ToString("hh\\:mm\\:ss", CultureInfo.InvariantCulture)),
+                   new XElement("isActive", lineTrip.isActive.ToString()));
+                LineTripsRootElement.Add(adjElem1);
             }
-            XMLTools.SaveListToXMLSerializer(Lines, LineTripPath);
+            XMLTools.SaveListToXMLElement(LineTripsRootElement, LineTripPath);
 
         }
 
